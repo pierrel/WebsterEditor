@@ -19,6 +19,16 @@
 		A20CB1DD16B8F4CF00AF858B /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A20CB1DC16B8F4CF00AF858B /* WEViewController.m */; };
 		A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */; };
 		A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */; };
+		A20CB1F616B9792700AF858B /* bootstrap-responsive.css in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1EC16B9792700AF858B /* bootstrap-responsive.css */; };
+		A20CB1F716B9792700AF858B /* bootstrap-responsive.min.css in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1ED16B9792700AF858B /* bootstrap-responsive.min.css */; };
+		A20CB1F816B9792700AF858B /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1EE16B9792700AF858B /* bootstrap.css */; };
+		A20CB1F916B9792700AF858B /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1EF16B9792700AF858B /* bootstrap.min.css */; };
+		A20CB1FA16B9792700AF858B /* glyphicons-halflings-white.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1F116B9792700AF858B /* glyphicons-halflings-white.png */; };
+		A20CB1FB16B9792700AF858B /* glyphicons-halflings.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1F216B9792700AF858B /* glyphicons-halflings.png */; };
+		A20CB1FC16B9792700AF858B /* bootstrap.js in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1F416B9792700AF858B /* bootstrap.js */; };
+		A20CB1FD16B9792700AF858B /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1F516B9792700AF858B /* bootstrap.min.js */; };
+		A20CB1FF16B9797F00AF858B /* starter.html in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1FE16B9797F00AF858B /* starter.html */; };
+		A20CB20116B97F5200AF858B /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +49,16 @@
 		A20CB1DC16B8F4CF00AF858B /* WEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
 		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPhone.xib; sourceTree = "<group>"; };
 		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPad.xib; sourceTree = "<group>"; };
+		A20CB1EC16B9792700AF858B /* bootstrap-responsive.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "bootstrap-responsive.css"; sourceTree = "<group>"; };
+		A20CB1ED16B9792700AF858B /* bootstrap-responsive.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "bootstrap-responsive.min.css"; sourceTree = "<group>"; };
+		A20CB1EE16B9792700AF858B /* bootstrap.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.css; sourceTree = "<group>"; };
+		A20CB1EF16B9792700AF858B /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
+		A20CB1F116B9792700AF858B /* glyphicons-halflings-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glyphicons-halflings-white.png"; sourceTree = "<group>"; };
+		A20CB1F216B9792700AF858B /* glyphicons-halflings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glyphicons-halflings.png"; sourceTree = "<group>"; };
+		A20CB1F416B9792700AF858B /* bootstrap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.js; sourceTree = "<group>"; };
+		A20CB1F516B9792700AF858B /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.min.js; sourceTree = "<group>"; };
+		A20CB1FE16B9797F00AF858B /* starter.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = starter.html; sourceTree = "<group>"; };
+		A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.0.min.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +105,7 @@
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				A20CB1E916B8FAB100AF858B /* Resources */,
 				A20CB1D216B8F4CF00AF858B /* WEAppDelegate.h */,
 				A20CB1D316B8F4CF00AF858B /* WEAppDelegate.m */,
 				A20CB1DB16B8F4CF00AF858B /* WEViewController.h */,
@@ -108,6 +129,55 @@
 				A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A20CB1E916B8FAB100AF858B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */,
+				A20CB1EA16B9792700AF858B /* bootstrap */,
+				A20CB1FE16B9797F00AF858B /* starter.html */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		A20CB1EA16B9792700AF858B /* bootstrap */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB1EB16B9792700AF858B /* css */,
+				A20CB1F016B9792700AF858B /* img */,
+				A20CB1F316B9792700AF858B /* js */,
+			);
+			path = bootstrap;
+			sourceTree = "<group>";
+		};
+		A20CB1EB16B9792700AF858B /* css */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB1EC16B9792700AF858B /* bootstrap-responsive.css */,
+				A20CB1ED16B9792700AF858B /* bootstrap-responsive.min.css */,
+				A20CB1EE16B9792700AF858B /* bootstrap.css */,
+				A20CB1EF16B9792700AF858B /* bootstrap.min.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		A20CB1F016B9792700AF858B /* img */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB1F116B9792700AF858B /* glyphicons-halflings-white.png */,
+				A20CB1F216B9792700AF858B /* glyphicons-halflings.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
+		A20CB1F316B9792700AF858B /* js */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB1F416B9792700AF858B /* bootstrap.js */,
+				A20CB1F516B9792700AF858B /* bootstrap.min.js */,
+			);
+			path = js;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,12 +232,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A20CB1FC16B9792700AF858B /* bootstrap.js in Resources */,
+				A20CB1FD16B9792700AF858B /* bootstrap.min.js in Resources */,
+				A20CB20116B97F5200AF858B /* jquery-1.9.0.min.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
 				A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */,
 				A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */,
 				A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */,
+				A20CB1F616B9792700AF858B /* bootstrap-responsive.css in Resources */,
+				A20CB1F716B9792700AF858B /* bootstrap-responsive.min.css in Resources */,
+				A20CB1F816B9792700AF858B /* bootstrap.css in Resources */,
+				A20CB1F916B9792700AF858B /* bootstrap.min.css in Resources */,
+				A20CB1FA16B9792700AF858B /* glyphicons-halflings-white.png in Resources */,
+				A20CB1FB16B9792700AF858B /* glyphicons-halflings.png in Resources */,
+				A20CB1FF16B9797F00AF858B /* starter.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
