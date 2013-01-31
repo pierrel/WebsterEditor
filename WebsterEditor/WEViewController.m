@@ -18,7 +18,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [WebViewJavascriptBridge enableLogging];
     
     jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
                                                  handler:^(id data, WVJBResponseCallback responseCallback) {
@@ -29,6 +28,10 @@
                       handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"testObjcCallback called: %@", data);
         responseCallback(@"Response from testObjcCallback");
+    }];
+    [jsBridge registerHandler:@"elementHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"Someone clicked on the element '%@'", [data objectForKey:@"element"]);
+        responseCallback(@"thanks element");
     }];
     [jsBridge send:@"A string sent from ObjC before Webview has loaded."
   responseCallback:^(id responseData) {

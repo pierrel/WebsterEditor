@@ -26,27 +26,15 @@ function onBridgeReady(event) {
                            log('JS responding with', responseData)
                            responseCallback(responseData)
                            })
-    
-    var button = document.getElementById('buttons').appendChild(document.createElement('button'))
-    button.innerHTML = 'Send message to ObjC'
-    button.ontouchstart = function(e) {
-        e.preventDefault()
-        var data = 'Hello from JS button'
-        log('JS sending message', data)
-        bridge.send(data, function(responseData) {
-                    log('JS got response', responseData)
-                    })
-    }
-    
-    document.body.appendChild(document.createElement('br'))
-    
-    var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'))
-    callbackButton.innerHTML = 'Fire testObjcCallback'
-    callbackButton.ontouchstart = function(e) {
-        e.preventDefault()
-        log('JS calling handler "testObjcCallback"')
-        bridge.callHandler('testObjcCallback', {'foo': 'bar'}, function(response) {
-                           log('JS got response', response)
-                           })
+            
+    var callbackContainer = document.getElementsByClassName('container-fluid')[0];
+    log("the container!");
+    log(callbackContainer);
+    callbackContainer.ontouchstart = function(e) {
+        e.preventDefault();
+        log("clicked the container");
+        bridge.callHandler('elementHandler', {'element': 'container'}, function(response) {
+                           log('Container got response', response);
+                           });
     }
 }
