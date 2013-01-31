@@ -29,8 +29,8 @@
 		A20CB1FD16B9792700AF858B /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1F516B9792700AF858B /* bootstrap.min.js */; };
 		A20CB1FF16B9797F00AF858B /* starter.html in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1FE16B9797F00AF858B /* starter.html */; };
 		A20CB20116B97F5200AF858B /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */; };
-		A23A707C16BA48BF007450E1 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A23A707A16BA48BF007450E1 /* WebViewJavascriptBridge.js.txt */; };
-		A23A707D16BA48BF007450E1 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A23A707B16BA48BF007450E1 /* WebViewJavascriptBridge.m */; };
+		A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */; };
+		A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */; };
 		A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A27CE9E716BA4DB300C7BF43 /* custom.js */; };
 /* End PBXBuildFile section */
 
@@ -62,9 +62,9 @@
 		A20CB1F516B9792700AF858B /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.min.js; sourceTree = "<group>"; };
 		A20CB1FE16B9797F00AF858B /* starter.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = starter.html; sourceTree = "<group>"; };
 		A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.0.min.js"; sourceTree = "<group>"; };
-		A23A707916BA48BF007450E1 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
-		A23A707A16BA48BF007450E1 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
-		A23A707B16BA48BF007450E1 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		A20F992616BAD1E900B519A4 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		A27CE9E716BA4DB300C7BF43 /* custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = custom.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,22 +189,22 @@
 			path = js;
 			sourceTree = "<group>";
 		};
+		A20F992516BAD1E900B519A4 /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				A20F992616BAD1E900B519A4 /* WebViewJavascriptBridge.h */,
+				A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */,
+				A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */,
+			);
+			path = WebViewJavascriptBridge;
+			sourceTree = "<group>";
+		};
 		A23A707716BA4892007450E1 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A23A707816BA48BF007450E1 /* WebViewJavascriptBridge */,
+				A20F992516BAD1E900B519A4 /* WebViewJavascriptBridge */,
 			);
 			name = Libraries;
-			sourceTree = "<group>";
-		};
-		A23A707816BA48BF007450E1 /* WebViewJavascriptBridge */ = {
-			isa = PBXGroup;
-			children = (
-				A23A707916BA48BF007450E1 /* WebViewJavascriptBridge.h */,
-				A23A707A16BA48BF007450E1 /* WebViewJavascriptBridge.js.txt */,
-				A23A707B16BA48BF007450E1 /* WebViewJavascriptBridge.m */,
-			);
-			path = WebViewJavascriptBridge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,7 +276,7 @@
 				A20CB1FA16B9792700AF858B /* glyphicons-halflings-white.png in Resources */,
 				A20CB1FB16B9792700AF858B /* glyphicons-halflings.png in Resources */,
 				A20CB1FF16B9797F00AF858B /* starter.html in Resources */,
-				A23A707C16BA48BF007450E1 /* WebViewJavascriptBridge.js.txt in Resources */,
+				A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +290,7 @@
 				A20CB1D016B8F4CF00AF858B /* main.m in Sources */,
 				A20CB1D416B8F4CF00AF858B /* WEAppDelegate.m in Sources */,
 				A20CB1DD16B8F4CF00AF858B /* WEViewController.m in Sources */,
-				A23A707D16BA48BF007450E1 /* WebViewJavascriptBridge.m in Sources */,
+				A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

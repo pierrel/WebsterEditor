@@ -7,32 +7,41 @@
 //
 
 #import "WEViewController.h"
-#import "WebViewJavascriptBridge.h"
 
 @interface WEViewController ()
 - (NSString*)html;
 @end
 
 @implementation WEViewController
+@synthesize jsBridge;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [WebViewJavascriptBridge enableLogging];
     
+    jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
+                                                 handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"ObjC received message from JS: %@", data);
+        responseCallback(@"Response for message from ObjC");
+    }];
+    [jsBridge registerHandler:@"testObjcCallback"
+                      handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"testObjcCallback called: %@", data);
+        responseCallback(@"Response from testObjcCallback");
+    }];
+    [jsBridge send:@"A string sent from ObjC before Webview has loaded."
+  responseCallback:^(id responseData) {
+        NSLog(@"objc got response! %@", responseData);
+    }];
+    [jsBridge callHandler:@"testJavascriptHandler"
+                     data:[NSDictionary dictionaryWithObject:@"before ready" forKey:@"foo"]];
+
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
     
-    WebViewJavascriptBridge *bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"Received message from javascript: %@", data);
-        responseCallback(@"Right back atcha");
-    }];
-    
-    [bridge send:@"Well hello there"];
-    [bridge send:[NSDictionary dictionaryWithObject:@"Foo" forKey:@"Bar"]];
-    [bridge send:@"Give me a response, will you?" responseCallback:^(id responseData) {
-        NSLog(@"ObjC got its response! %@", responseData);
-    }];
+    [jsBridge send:@"A string sent from ObjC after Webview has loaded."];
 }
 
 - (NSString*)html {
