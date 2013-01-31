@@ -7,6 +7,7 @@
 //
 
 #import "WEViewController.h"
+#import "WebViewJavascriptBridge.h"
 
 @interface WEViewController ()
 - (NSString*)html;
@@ -21,6 +22,17 @@
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
+    
+    WebViewJavascriptBridge *bridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"Received message from javascript: %@", data);
+        responseCallback(@"Right back atcha");
+    }];
+    
+    [bridge send:@"Well hello there"];
+    [bridge send:[NSDictionary dictionaryWithObject:@"Foo" forKey:@"Bar"]];
+    [bridge send:@"Give me a response, will you?" responseCallback:^(id responseData) {
+        NSLog(@"ObjC got its response! %@", responseData);
+    }];
 }
 
 - (NSString*)html {
@@ -30,6 +42,7 @@
     NSString *bootstrapResponsiveFile = [[NSBundle mainBundle] pathForResource:@"bootstrap-responsive.min" ofType:@"css"];
     NSString *jQueryFile = [[NSBundle mainBundle] pathForResource:@"jquery-1.9.0.min" ofType:@"js"];
     NSString *bootstrapJSFile = [[NSBundle mainBundle] pathForResource:@"bootstrap.min" ofType:@"js"];
+    NSString *customJSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"js"];
     
     NSString *bootstrapJS = [NSString stringWithContentsOfFile:bootstrapJSFile
                                                       encoding:NSUTF8StringEncoding
@@ -43,6 +56,8 @@
     NSString *bootstrapResponsive = [NSString stringWithContentsOfFile:bootstrapResponsiveFile
                                                               encoding:NSUTF8StringEncoding
                                                                  error:nil];
+    NSString *customJS = [NSString stringWithContentsOfFile:customJSFile encoding:NSUTF8StringEncoding error:nil];
+    
     NSString *finalHTML = [NSString stringWithContentsOfFile:htmlFile
                                                     encoding:NSUTF8StringEncoding
                                                        error:nil];
@@ -55,6 +70,8 @@
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@\n</script>", jQuery]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[bootstrapJS]]"
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@\n</script>", bootstrapJS]];
+    finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customJS]]"
+                                                     withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@</script>", customJS]];
     
     return finalHTML;
 }
