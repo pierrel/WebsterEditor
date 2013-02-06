@@ -116,13 +116,12 @@
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				A2CCDEAE16C1F29100E30540 /* Controllers */,
 				A2CCDEA516BE0F3000E30540 /* client */,
 				A23A707716BA4892007450E1 /* Libraries */,
 				A20CB1E916B8FAB100AF858B /* Resources */,
 				A20CB1D216B8F4CF00AF858B /* WEAppDelegate.h */,
 				A20CB1D316B8F4CF00AF858B /* WEAppDelegate.m */,
-				A20CB1DB16B8F4CF00AF858B /* WEViewController.h */,
-				A20CB1DC16B8F4CF00AF858B /* WEViewController.m */,
 				A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */,
 				A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */,
 				A20CB1CA16B8F4CF00AF858B /* Supporting Files */,
@@ -227,6 +226,15 @@
 				A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */,
 			);
 			name = vendor;
+			sourceTree = "<group>";
+		};
+		A2CCDEAE16C1F29100E30540 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB1DB16B8F4CF00AF858B /* WEViewController.h */,
+				A20CB1DC16B8F4CF00AF858B /* WEViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

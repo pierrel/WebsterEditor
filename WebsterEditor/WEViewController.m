@@ -10,6 +10,7 @@
 
 @interface WEViewController ()
 - (NSString*)html;
+- (void)openDialogWithData:(id)data;
 @end
 
 @implementation WEViewController
@@ -19,19 +20,8 @@
 {
     [super viewDidLoad];
     
-    jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
-                                                 handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"ObjC received message from JS: %@", data);
-        responseCallback(@"Response for message from ObjC");
-    }];
-    [jsBridge registerHandler:@"testObjcCallback"
-                      handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"testObjcCallback called: %@", data);
-        responseCallback(@"Response from testObjcCallback");
-    }];
-    [jsBridge registerHandler:@"elementHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"Someone clicked on the element '%@'", [data objectForKey:@"element"]);
-        responseCallback(@"thanks element");
+    jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"bridge enabled");
     }];
     [jsBridge send:@"A string sent from ObjC before Webview has loaded."
   responseCallback:^(id responseData) {
@@ -39,11 +29,30 @@
     }];
     [jsBridge callHandler:@"testJavascriptHandler"
                      data:[NSDictionary dictionaryWithObject:@"before ready" forKey:@"foo"]];
+    
+    [jsBridge registerHandler:@"containerSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"got %@", data);
+        [self openDialogWithData:data];
+    }];
 
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
     [jsBridge send:@"A string sent from ObjC after Webview has loaded."];
+}
+
+- (void)openDialogWithData:(id)data {
+    CGFloat dialogWidth = 100;
+    CGFloat dialogHeight = 50;
+    CGFloat x = [[data valueForKey:@"left"] floatValue] + ([[data valueForKey:@"width"] floatValue]/2) - (dialogWidth/2);
+    CGFloat y = [[data valueForKey:@"top"] floatValue] + [[data valueForKey:@"height"] floatValue];
+    CGRect viewR = CGRectMake(x,
+                              y,
+                              dialogWidth,
+                              dialogHeight);
+    UIView *newView = [[UIView alloc] initWithFrame:viewR];
+    [newView setBackgroundColor:[UIColor greenColor]];
+    [self.view addSubview:newView];
 }
 
 - (NSString*)html {

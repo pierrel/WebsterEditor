@@ -23,7 +23,6 @@ function onBridgeReady(event) {
         log('JS responding with', responseData);
         responseCallback(responseData);
     });
-    document.body.appendChild(document.createElement('br'));
 
     var els = document.getElementsByClassName('container-fluid');
     for (var i = 0, len = els.length; i < len; i++) {
@@ -33,12 +32,16 @@ function onBridgeReady(event) {
     function containerListener(event) {
 	var sel = 'selected';
 	var el = $(event.target);
-	console.log(el);
 	
 	if (el.hasClass(sel)) {
 	    el.removeClass(sel);
 	} else {
 	    el.addClass(sel);
+	    // get dimensions
+	    var pos = el.offset();
+	    var width = el.width();
+	    var height = el.height();
+	    bridge.callHandler('containerSelectedHandler', {top: pos.top, left: pos.left, width: width, height: height});
 	}
     }   
 }
