@@ -24,6 +24,11 @@ function onBridgeReady(event) {
         responseCallback(responseData);
     });
 
+    bridge.registerHandler('removeElementHandler', function(data, responseCallback) {
+	// remove selected
+	$('.selected').remove();
+    });
+
     var els = document.getElementsByClassName('container-fluid');
     for (var i = 0, len = els.length; i < len; i++) {
 	var element = els[i];

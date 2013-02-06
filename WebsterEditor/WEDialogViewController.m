@@ -7,9 +7,10 @@
 //
 
 #import "WEDialogViewController.h"
+#import "WEPageManager.h"
 
 @interface WEDialogViewController ()
-
+@property (strong, nonatomic) NSArray *dataSource;
 @end
 
 @implementation WEDialogViewController
@@ -18,6 +19,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
     }
     return self;
 }
@@ -56,11 +58,30 @@
         cell = [[UITableViewCell alloc] init];
     }
     
-    [cell.textLabel setText:@"remove"];
+    [cell.textLabel setText:[self.dataSource objectAtIndex:indexPath.row]];
     
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case 0:
+            [[WEPageManager sharedManager] removeSelectedElement];
+            break;
+            
+        default:
+            break;
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.view setAlpha:0];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self.view setHidden:YES];
+            [self.view setAlpha:1];
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning
 {

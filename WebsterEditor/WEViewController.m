@@ -7,6 +7,7 @@
 //
 
 #import "WEViewController.h"
+#import "WEPageManager.h"
 
 @interface WEViewController ()
 - (NSString*)html;
@@ -14,13 +15,12 @@
 @end
 
 @implementation WEViewController
-@synthesize jsBridge;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
+    WebViewJavascriptBridge *jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"bridge enabled");
     }];
     [jsBridge send:@"A string sent from ObjC before Webview has loaded."
@@ -39,7 +39,11 @@
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
     
-    //Dialog view
+    // setup the page manager
+    WEPageManager *manager = [WEPageManager sharedManager];
+    [manager setBridge:jsBridge];
+    
+    // Dialog view
     self.dialogController = [[WEDialogViewController alloc] init];
     [self.view addSubview:self.dialogController.view];
 }

@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WebViewJavascriptBridge.h"
 #import "WEDialogViewController.h"
+#import "WebViewJavascriptBridge.h"
 
 @interface WEViewController : UIViewController <UIWebViewDelegate>
-@property (strong, nonatomic) WebViewJavascriptBridge *jsBridge;
 @property (strong, nonatomic) WEDialogViewController *dialogController;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;

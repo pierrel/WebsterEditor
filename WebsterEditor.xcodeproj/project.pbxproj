@@ -36,6 +36,7 @@
 		A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA916C1E2E200E30540 /* custom.css */; };
 		A2CCDEB216C1FEAB00E30540 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */; };
 		A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */; };
+		A2CCDEBC16C20FE200E30540 /* WEPageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2CCDEBB16C20FE200E30540 /* WEPageManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,8 @@
 		A2CCDEAF16C1FEAB00E30540 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
 		A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
 		A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEDialogViewController.xib; sourceTree = "<group>"; };
+		A2CCDEBA16C20FE200E30540 /* WEPageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageManager.h; sourceTree = "<group>"; };
+		A2CCDEBB16C20FE200E30540 /* WEPageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,7 @@
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				A2CCDEBD16C2105A00E30540 /* Managers */,
 				A2CCDEAE16C1F29100E30540 /* Controllers */,
 				A2CCDEA516BE0F3000E30540 /* client */,
 				A23A707716BA4892007450E1 /* Libraries */,
@@ -245,6 +249,15 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		A2CCDEBD16C2105A00E30540 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A2CCDEBA16C20FE200E30540 /* WEPageManager.h */,
+				A2CCDEBB16C20FE200E30540 /* WEPageManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -350,6 +363,7 @@
 				A20CB1DD16B8F4CF00AF858B /* WEViewController.m in Sources */,
 				A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */,
 				A2CCDEB216C1FEAB00E30540 /* WEDialogViewController.m in Sources */,
+				A2CCDEBC16C20FE200E30540 /* WEPageManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
