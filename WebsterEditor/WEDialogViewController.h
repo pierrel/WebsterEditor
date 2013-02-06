@@ -12,4 +12,5 @@
 @property (strong, atomic) IBOutlet UITableView *tableView;
 
 -(void)openWithData:(id)data andConstraints:(CGRect)constraints;
+-(void)close;
 @end

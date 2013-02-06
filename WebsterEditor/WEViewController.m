@@ -12,6 +12,7 @@
 @interface WEViewController ()
 - (NSString*)html;
 - (void)openDialogWithData:(id)data;
+- (void)closeDialog;
 @end
 
 @implementation WEViewController
@@ -34,6 +35,10 @@
         NSLog(@"got %@", data);
         [self openDialogWithData:data];
     }];
+    
+    [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self closeDialog];
+    }];
 
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
@@ -50,6 +55,10 @@
 
 - (void)openDialogWithData:(id)data {
     [self.dialogController openWithData:data andConstraints:self.view.frame];
+}
+
+- (void)closeDialog {
+    [self.dialogController close];
 }
 
 - (NSString*)html {

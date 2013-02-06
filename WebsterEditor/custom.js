@@ -29,24 +29,41 @@ function onBridgeReady(event) {
 	$('.selected').remove();
     });
 
+    // add container events
     var els = document.getElementsByClassName('container-fluid');
     for (var i = 0, len = els.length; i < len; i++) {
 	var element = els[i];
 	element.addEventListener("click", containerListener, false);
     }
+
+    // add default event
+    document.addEventListener("click", defaultListener, false);
+
+
+    var sel = 'selected';
     function containerListener(event) {
-	var sel = 'selected';
-	var el = $(event.target);
+	var el = $(event.currentTarget);
 	
-	if (el.hasClass(sel)) {
-	    el.removeClass(sel);
-	} else {
+	if (!el.hasClass(sel)) {
 	    el.addClass(sel);
 	    // get dimensions
 	    var pos = el.offset();
 	    var width = el.width();
 	    var height = el.height();
-	    bridge.callHandler('containerSelectedHandler', {top: pos.top, left: pos.left, width: width, height: height});
+	    bridge.callHandler('containerSelectedHandler', {
+		top: pos.top, 
+		left: pos.left, 
+		width: width, 
+		height: height, 
+		classes: el.attr('class').split(' ')
+	    });
+	    event.stopPropagation();
+	    event.preventDefault();
 	}
-    }   
+    }
+
+    function defaultListener(event) {
+	$('.' + sel).removeClass(sel);
+	bridge.callHandler('defaultSelectedHandler', {});
+    }
 }

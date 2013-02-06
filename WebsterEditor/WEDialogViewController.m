@@ -73,6 +73,10 @@
             break;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self close];
+}
+
+-(void)close {
     [UIView animateWithDuration:0.2 animations:^{
         [self.view setAlpha:0];
     } completion:^(BOOL finished) {
