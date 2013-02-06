@@ -34,6 +34,8 @@
 		A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A27CE9E716BA4DB300C7BF43 /* custom.js */; };
 		A2CCDEA716BE0F3000E30540 /* main.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA616BE0F3000E30540 /* main.cljs */; };
 		A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA916C1E2E200E30540 /* custom.css */; };
+		A2CCDEB216C1FEAB00E30540 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */; };
+		A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,9 @@
 		A27CE9E716BA4DB300C7BF43 /* custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = custom.js; sourceTree = "<group>"; };
 		A2CCDEA616BE0F3000E30540 /* main.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.cljs; sourceTree = "<group>"; };
 		A2CCDEA916C1E2E200E30540 /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
+		A2CCDEAF16C1FEAB00E30540 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
+		A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
+		A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEDialogViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +238,9 @@
 			children = (
 				A20CB1DB16B8F4CF00AF858B /* WEViewController.h */,
 				A20CB1DC16B8F4CF00AF858B /* WEViewController.m */,
+				A2CCDEAF16C1FEAB00E30540 /* WEDialogViewController.h */,
+				A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */,
+				A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -310,6 +318,7 @@
 				A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */,
 				A2CCDEA716BE0F3000E30540 /* main.cljs in Resources */,
 				A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */,
+				A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +349,7 @@
 				A20CB1D416B8F4CF00AF858B /* WEAppDelegate.m in Sources */,
 				A20CB1DD16B8F4CF00AF858B /* WEViewController.m in Sources */,
 				A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */,
+				A2CCDEB216C1FEAB00E30540 /* WEDialogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

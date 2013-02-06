@@ -38,21 +38,14 @@
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
-    [jsBridge send:@"A string sent from ObjC after Webview has loaded."];
+    
+    //Dialog view
+    self.dialogController = [[WEDialogViewController alloc] init];
+    [self.view addSubview:self.dialogController.view];
 }
 
 - (void)openDialogWithData:(id)data {
-    CGFloat dialogWidth = 100;
-    CGFloat dialogHeight = 50;
-    CGFloat x = [[data valueForKey:@"left"] floatValue] + ([[data valueForKey:@"width"] floatValue]/2) - (dialogWidth/2);
-    CGFloat y = [[data valueForKey:@"top"] floatValue] + [[data valueForKey:@"height"] floatValue];
-    CGRect viewR = CGRectMake(x,
-                              y,
-                              dialogWidth,
-                              dialogHeight);
-    UIView *newView = [[UIView alloc] initWithFrame:viewR];
-    [newView setBackgroundColor:[UIColor greenColor]];
-    [self.view addSubview:newView];
+    [self.dialogController openWithData:data andConstraints:self.view.frame];
 }
 
 - (NSString*)html {
