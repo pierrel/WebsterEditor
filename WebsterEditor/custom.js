@@ -12982,9 +12982,12 @@ var webster = {on_bridge_ready:function(a) {
       }(c, e, d), !1);
       c = cljs.core.next.call(null, c)
     }else {
-      return null
+      break
     }
   }
+  return document.addEventListener("click", function(a) {
+    return webster.default_listener.call(null, a, b)
+  }, !1)
 }, container_listener:function(a, b) {
   var c = $(a.currentTarget);
   if(cljs.core.not.call(null, c.hasClass("selected"))) {
@@ -12995,6 +12998,9 @@ var webster = {on_bridge_ready:function(a) {
     return a.preventDefault()
   }
   return null
+}, default_listener:function(a, b) {
+  $(".selected").removeClass("selected");
+  return b.callHandler("defaultSelectedHandler", {})
 }};
 document.addEventListener("WebViewJavascriptBridgeReady", webster.on_bridge_ready, !1);
 
