@@ -32,7 +32,6 @@
 		A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */; };
 		A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */; };
 		A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A27CE9E716BA4DB300C7BF43 /* custom.js */; };
-		A2CCDEA716BE0F3000E30540 /* main.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA616BE0F3000E30540 /* main.cljs */; };
 		A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA916C1E2E200E30540 /* custom.css */; };
 		A2CCDEB216C1FEAB00E30540 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */; };
 		A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */; };
@@ -265,9 +264,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A20CB1E616B8F4CF00AF858B /* Build configuration list for PBXNativeTarget "WebsterEditor" */;
 			buildPhases = (
+				A2CCDEA816C1AB2600E30540 /* Compile cljs */,
 				A20CB1BC16B8F4CF00AF858B /* Sources */,
 				A20CB1BD16B8F4CF00AF858B /* Frameworks */,
-				A2CCDEA816C1AB2600E30540 /* ShellScript */,
 				A20CB1BE16B8F4CF00AF858B /* Resources */,
 			);
 			buildRules = (
@@ -329,7 +328,6 @@
 				A20CB1FB16B9792700AF858B /* glyphicons-halflings.png in Resources */,
 				A20CB1FF16B9797F00AF858B /* starter.html in Resources */,
 				A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */,
-				A2CCDEA716BE0F3000E30540 /* main.cljs in Resources */,
 				A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */,
 				A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */,
 			);
@@ -338,18 +336,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A2CCDEA816C1AB2600E30540 /* ShellScript */ = {
+		A2CCDEA816C1AB2600E30540 /* Compile cljs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Compile cljs";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#/Users/pierrelarochelle/Documents/Source/clojurescript/bin/cljsc WebsterEditor/client '{:optimizations :simple :pretty-print true}' > WebsterEditor/custom.js";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
