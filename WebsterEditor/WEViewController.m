@@ -43,7 +43,6 @@
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
-    
     [jsBridge send:@"A string sent from ObjC after Webview has loaded."];
 }
 
@@ -55,6 +54,7 @@
     NSString *jQueryFile = [[NSBundle mainBundle] pathForResource:@"jquery-1.9.0.min" ofType:@"js"];
     NSString *bootstrapJSFile = [[NSBundle mainBundle] pathForResource:@"bootstrap.min" ofType:@"js"];
     NSString *customJSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"js"];
+    NSString *customCSSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"css"];
     
     NSString *bootstrapJS = [NSString stringWithContentsOfFile:bootstrapJSFile
                                                       encoding:NSUTF8StringEncoding
@@ -69,6 +69,7 @@
                                                               encoding:NSUTF8StringEncoding
                                                                  error:nil];
     NSString *customJS = [NSString stringWithContentsOfFile:customJSFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *customCSS = [NSString stringWithContentsOfFile:customCSSFile encoding:NSUTF8StringEncoding error:nil];
     
     NSString *finalHTML = [NSString stringWithContentsOfFile:htmlFile
                                                     encoding:NSUTF8StringEncoding
@@ -78,12 +79,15 @@
                                                      withString:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", bootstrap]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[bootstrapResponsiveCSS]]"
                                                      withString:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", bootstrapResponsive]];
+    finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customCSS]]"
+                                                     withString:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", customCSS]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[jqueryJS]]"
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@\n</script>", jQuery]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[bootstrapJS]]"
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@\n</script>", bootstrapJS]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customJS]]"
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@</script>", customJS]];
+    finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customJS]]" withString:@""];
     
     return finalHTML;
 }

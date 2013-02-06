@@ -32,6 +32,8 @@
 		A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */; };
 		A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */; };
 		A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A27CE9E716BA4DB300C7BF43 /* custom.js */; };
+		A2CCDEA716BE0F3000E30540 /* main.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA616BE0F3000E30540 /* main.cljs */; };
+		A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA916C1E2E200E30540 /* custom.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		A27CE9E716BA4DB300C7BF43 /* custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = custom.js; sourceTree = "<group>"; };
+		A2CCDEA616BE0F3000E30540 /* main.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.cljs; sourceTree = "<group>"; };
+		A2CCDEA916C1E2E200E30540 /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				A2CCDEA516BE0F3000E30540 /* client */,
 				A23A707716BA4892007450E1 /* Libraries */,
 				A20CB1E916B8FAB100AF858B /* Resources */,
 				A20CB1D216B8F4CF00AF858B /* WEAppDelegate.h */,
@@ -142,10 +147,10 @@
 		A20CB1E916B8FAB100AF858B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */,
-				A20CB1EA16B9792700AF858B /* bootstrap */,
-				A20CB1FE16B9797F00AF858B /* starter.html */,
+				A2CCDEA916C1E2E200E30540 /* custom.css */,
 				A27CE9E716BA4DB300C7BF43 /* custom.js */,
+				A20CB1FE16B9797F00AF858B /* starter.html */,
+				A2CCDEAB16C1E33F00E30540 /* vendor */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -207,6 +212,23 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		A2CCDEA516BE0F3000E30540 /* client */ = {
+			isa = PBXGroup;
+			children = (
+				A2CCDEA616BE0F3000E30540 /* main.cljs */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+		A2CCDEAB16C1E33F00E30540 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				A20CB1EA16B9792700AF858B /* bootstrap */,
+				A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */,
+			);
+			name = vendor;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,6 +238,7 @@
 			buildPhases = (
 				A20CB1BC16B8F4CF00AF858B /* Sources */,
 				A20CB1BD16B8F4CF00AF858B /* Frameworks */,
+				A2CCDEA816C1AB2600E30540 /* ShellScript */,
 				A20CB1BE16B8F4CF00AF858B /* Resources */,
 			);
 			buildRules = (
@@ -277,10 +300,28 @@
 				A20CB1FB16B9792700AF858B /* glyphicons-halflings.png in Resources */,
 				A20CB1FF16B9797F00AF858B /* starter.html in Resources */,
 				A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */,
+				A2CCDEA716BE0F3000E30540 /* main.cljs in Resources */,
+				A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A2CCDEA816C1AB2600E30540 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#/Users/pierrelarochelle/Documents/Source/clojurescript/bin/cljsc WebsterEditor/client '{:optimizations :simple :pretty-print true}' > WebsterEditor/custom.js";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A20CB1BC16B8F4CF00AF858B /* Sources */ = {
