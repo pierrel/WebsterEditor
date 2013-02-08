@@ -12971,6 +12971,7 @@ cljs.core.ex_cause = function(a) {
 };
 var webster = {on_bridge_ready:function(a) {
   var b = a.bridge;
+  b.init("handler?");
   a = document.getElementsByClassName("container-fluid");
   for(var c = cljs.core.seq.call(null, cljs.core.range.call(null, a.length));;) {
     if(c) {
@@ -12985,9 +12986,12 @@ var webster = {on_bridge_ready:function(a) {
       break
     }
   }
-  return document.addEventListener("click", function(a) {
+  document.addEventListener("click", function(a) {
     return webster.default_listener.call(null, a, b)
-  }, !1)
+  }, !1);
+  return b.registerHandler("removeElementHandler", webster.remove_element_handler)
+}, remove_element_handler:function() {
+  return $(".selected").remove()
 }, container_listener:function(a, b) {
   var c = $(a.currentTarget);
   if(cljs.core.not.call(null, c.hasClass("selected"))) {
