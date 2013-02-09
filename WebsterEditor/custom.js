@@ -13036,7 +13036,10 @@ webster.main.edit_element_handler = function() {
 };
 webster.main.container_listener = function(a, b) {
   var c = $(a.currentTarget);
-  if(cljs.core.not.call(null, c.hasClass("selected"))) {
+  if(cljs.core.truth_(function() {
+    var a = cljs.core.not.call(null, c.hasClass("selected"));
+    return a ? webster.main.nothing_selected.call(null) : a
+  }())) {
     var d = c.offset(), e = c.width(), f = c.height();
     webster.main.make_selected.call(null, c);
     b.callHandler("containerSelectedHandler", {top:d.top, left:d.left, width:e, height:f, tag:c.prop("tagName"), classes:c.attr("class").split(" ")});
@@ -13045,16 +13048,24 @@ webster.main.container_listener = function(a, b) {
   }
   return null
 };
+webster.main.nothing_selected = function() {
+  return cljs.core._EQ_.call(null, $(".selected").length, 0)
+};
 webster.main.make_selected = function(a) {
+  var b = a.get(0);
   a.addClass("selected");
-  return a.get(0).addEventListener("click", webster.main.selected_listener)
+  return cljs.core.truth_(b) ? b.addEventListener("click", webster.main.selected_listener) : null
 };
 webster.main.make_unselected = function(a) {
+  var b = a.get(0);
   a.removeClass("selected");
-  return a.get(0).removeEventListener("click", webster.main.selected_listener)
+  return cljs.core.truth_(b) ? b.removeEventListener("click", webster.main.selected_listener) : null
+};
+webster.main.is_selected = function(a) {
+  return a.hasClass("selected")
 };
 webster.main.selected_listener = function(a) {
-  return a.stopPropagation()
+  return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stropPropagation() : null
 };
 webster.main.default_listener = function(a, b) {
   webster.main.make_unselected.call(null, $(".selected"));

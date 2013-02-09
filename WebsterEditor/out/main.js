@@ -31,7 +31,13 @@ return webster.dom.make_editable.call(null,node,true);
 });
 webster.main.container_listener = (function container_listener(event,bridge){
 var el = $(event.currentTarget);
-if(cljs.core.not.call(null,el.hasClass("selected")))
+if(cljs.core.truth_((function (){var and__3822__auto__ = cljs.core.not.call(null,el.hasClass("selected"));
+if(and__3822__auto__)
+{return webster.main.nothing_selected.call(null);
+} else
+{return and__3822__auto__;
+}
+})()))
 {var pos = el.offset();
 var width = el.width();
 var height = el.height();
@@ -43,16 +49,36 @@ return event.preventDefault();
 {return null;
 }
 });
+webster.main.nothing_selected = (function nothing_selected(){
+return cljs.core._EQ_.call(null,$(".selected").length,0);
+});
 webster.main.make_selected = (function make_selected(jnode){
+var node = jnode.get(0);
 jnode.addClass("selected");
-return jnode.get(0).addEventListener("click",webster.main.selected_listener);
+if(cljs.core.truth_(node))
+{return node.addEventListener("click",webster.main.selected_listener);
+} else
+{return null;
+}
 });
 webster.main.make_unselected = (function make_unselected(jnode){
+var node = jnode.get(0);
 jnode.removeClass("selected");
-return jnode.get(0).removeEventListener("click",webster.main.selected_listener);
+if(cljs.core.truth_(node))
+{return node.removeEventListener("click",webster.main.selected_listener);
+} else
+{return null;
+}
+});
+webster.main.is_selected = (function is_selected(jnode){
+return jnode.hasClass("selected");
 });
 webster.main.selected_listener = (function selected_listener(event,bridge){
-return event.stopPropagation();
+if(cljs.core._EQ_.call(null,event.target,event.currentTarget))
+{return event.stropPropagation();
+} else
+{return null;
+}
 });
 webster.main.default_listener = (function default_listener(event,bridge){
 webster.main.make_unselected.call(null,$(".selected"));

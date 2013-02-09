@@ -39,7 +39,7 @@
   [event bridge]
   
   (let [el (js/$ (.-currentTarget event))]
-    (if (not (.hasClass el "selected"))
+    (if (and (not (.hasClass el "selected")) (nothing-selected))
       (let [pos (.offset el)
             width (.width el)
             height (.height el)]
@@ -55,18 +55,27 @@
         (.stopPropagation event)
         (.preventDefault event)))))
 
+(defn nothing-selected []
+  (= (.-length (js/$ ".selected")) 0))
+
 (defn make-selected
   [jnode]
-  (.addClass jnode "selected")
-  (.addEventListener (.get jnode 0) "click" selected-listener))
+  (let [node (.get jnode 0)]
+    (.addClass jnode "selected")
+    (if node (.addEventListener node "click" selected-listener))))
 (defn make-unselected
   [jnode]
-  (.removeClass jnode "selected")
-  (.removeEventListener (.get jnode 0) "click" selected-listener))
+  (let [node (.get jnode 0)]
+    (.removeClass jnode "selected")
+    (if node (.removeEventListener node "click" selected-listener))))
+(defn is-selected
+  [jnode]
+  (.hasClass jnode "selected"))
 
 (defn selected-listener
   [event bridge]
-  (.stopPropagation event))
+  (if (= (.-target event) (.-currentTarget event))
+    (.stropPropagation event)))
 
 (defn default-listener
   [event bridge]
