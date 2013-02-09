@@ -33,6 +33,9 @@ return event.preventDefault();
 {return null;
 }
 });
+webster.listeners.get_selected = (function get_selected(){
+return $(".selected");
+});
 webster.listeners.nothing_selected = (function nothing_selected(){
 return cljs.core._EQ_.call(null,$(".selected").length,0);
 });

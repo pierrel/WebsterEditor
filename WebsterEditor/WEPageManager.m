@@ -21,6 +21,11 @@ static WEPageManager *gSharedManager;
     [bridge callHandler:@"editElementHandler" data:[NSDictionary dictionary]];
 }
 
+-(void)addRowUnderSelectedElement {
+    [bridge callHandler:@"addRowUnderSelectedElement" data:[NSDictionary dictionary]];
+}
+
+
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {
         gSharedManager = [[WEPageManager alloc] init];

@@ -14,6 +14,7 @@
 
 -(void)removeSelectedElement;
 -(void)editSelectedElement;
+-(void)addRowUnderSelectedElement;
 
 +(WEPageManager *)sharedManager;
 @end

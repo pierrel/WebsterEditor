@@ -52,3 +52,6 @@ make_editable.cljs$lang$arity$variadic = make_editable__delegate;
 return make_editable;
 })()
 ;
+webster.dom.new_row = (function new_row(){
+return $("<div class=\"row\"></div>");
+});

@@ -1,3 +1,7 @@
 .selected {
     outline: 1px solid blue;
 }
+
+.row {
+    min-height: 20px;
+}

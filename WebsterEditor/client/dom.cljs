@@ -14,3 +14,6 @@
       (.setStart r (.get node 0) 0)
       (.collapse r true)
       (.setSingleRange (.getSelection js/rangy) r))))
+
+(defn new-row []
+  (js/$ "<div class=\"row\"></div>"))

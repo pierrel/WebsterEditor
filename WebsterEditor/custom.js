@@ -13005,6 +13005,9 @@ webster.dom.make_editable = function() {
   b.cljs$lang$arity$variadic = a;
   return b
 }();
+webster.dom.new_row = function() {
+  return $('\x3cdiv class\x3d"row"\x3e\x3c/div\x3e')
+};
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13028,6 +13031,9 @@ webster.listeners.container_listener = function(a, b) {
   }
   return null
 };
+webster.listeners.get_selected = function() {
+  return $(".selected")
+};
 webster.listeners.nothing_selected = function() {
   return cljs.core._EQ_.call(null, $(".selected").length, 0)
 };
@@ -13045,24 +13051,47 @@ webster.listeners.is_selected = function(a) {
   return a.hasClass("selected")
 };
 webster.main = {};
+webster.main.container_classes = cljs.core.PersistentVector.fromArray(["container-fluid", "row"], !0);
+webster.main.container_tags = cljs.core.PersistentVector.fromArray(["h1"], !0);
 webster.main.on_bridge_ready = function(a) {
   var b = a.bridge;
   b.init("handler?");
-  webster.dom.each_node.call(null, document.getElementsByClassName("container-fluid"), function(a) {
-    return a.addEventListener("click", function(a) {
-      return webster.listeners.container_listener.call(null, a, b)
-    }, !1)
-  });
-  webster.dom.each_node.call(null, document.getElementsByTagName("h1"), function(a) {
-    return a.addEventListener("click", function(a) {
-      return webster.listeners.container_listener.call(null, a, b)
-    }, !1)
-  });
+  for(a = cljs.core.seq.call(null, webster.main.container_classes);;) {
+    if(a) {
+      var c = cljs.core.first.call(null, a);
+      webster.dom.each_node.call(null, document.getElementsByClassName(c), function() {
+        return function(a) {
+          return a.addEventListener("click", function(a) {
+            return webster.listeners.container_listener.call(null, a, b)
+          }, !1)
+        }
+      }(a, c));
+      a = cljs.core.next.call(null, a)
+    }else {
+      break
+    }
+  }
+  for(a = cljs.core.seq.call(null, webster.main.container_tags);;) {
+    if(a) {
+      c = cljs.core.first.call(null, a), webster.dom.each_node.call(null, document.getElementsByTagName(c), function() {
+        return function(a) {
+          return a.addEventListener("click", function(a) {
+            return webster.listeners.container_listener.call(null, a, b)
+          }, !1)
+        }
+      }(a, c)), a = cljs.core.next.call(null, a)
+    }else {
+      break
+    }
+  }
   document.addEventListener("click", function(a) {
     return webster.listeners.default_listener.call(null, a, b)
   }, !1);
   b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
-  return b.registerHandler("editElementHandler", webster.main.edit_element_handler)
+  b.registerHandler("editElementHandler", webster.main.edit_element_handler);
+  return b.registerHandler("addRowUnderSelectedElement", function(a, c) {
+    return webster.main.add_row_handler.call(null, a, c, b)
+  })
 };
 webster.main.remove_element_handler = function() {
   var a = $(".selected");
@@ -13072,6 +13101,15 @@ webster.main.remove_element_handler = function() {
 webster.main.edit_element_handler = function() {
   var a = $(".selected");
   return webster.dom.make_editable.call(null, a, !0)
+};
+webster.main.add_row_handler = function(a, b, c) {
+  a = webster.listeners.get_selected.call(null);
+  b = webster.dom.new_row.call(null);
+  a.append(b);
+  webster.listeners.default_listener.call(null, null, c);
+  return b.get(0).addEventListener("click", function() {
+    return c
+  })
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
 

@@ -32,7 +32,7 @@
 - (void)openWithData:(id)data andConstraints:(CGRect)constraints {
     // positional
     CGFloat dialogWidth = 100;
-    CGFloat dialogHeight = 50;
+    CGFloat dialogHeight = 300;
     CGFloat x = [[data valueForKey:@"left"] floatValue] + ([[data valueForKey:@"width"] floatValue]/2) - (dialogWidth/2);
     CGFloat y = [[data valueForKey:@"top"] floatValue] + [[data valueForKey:@"height"] floatValue];
     CGRect viewR = CGRectMake(x,
@@ -47,7 +47,7 @@
     }
     self.classes = [data valueForKey:@"classes"];
     if ([self.classes containsObject:@"container-fluid"]) {
-        self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
+        self.dataSource = [NSArray arrayWithObjects:@"Remove", @"Add Row", nil];
     }
 
     // reload
@@ -85,6 +85,8 @@
         [pageManager removeSelectedElement];
     else if ([item isEqualToString:@"Edit"])
         [pageManager editSelectedElement];
+    else if ([item isEqualToString:@"Add Row"])
+        [pageManager addRowUnderSelectedElement];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self close];

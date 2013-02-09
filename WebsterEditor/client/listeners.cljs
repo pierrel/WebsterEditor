@@ -33,6 +33,8 @@
         (.stopPropagation event)
         (.preventDefault event)))))
 
+(defn get-selected []
+  (js/$ ".selected"))
 (defn nothing-selected []
   (= (.-length (js/$ ".selected")) 0))
 
