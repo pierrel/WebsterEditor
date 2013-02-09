@@ -30,12 +30,8 @@
 
 (defn edit-element-handler
   [data callback]
-  (let [node (js/$ ".selected")
-        r (.createRange js/rangy)]
-    (.attr node "contenteditable" "true")
-    (.setStart r (.get node 0) 0) ;; TODO put all this stuff in a function...
-    (.collapse r true)
-    (.setSingleRange (.getSelection js/rangy) r)))
+  (let [node (js/$ ".selected")]
+    (dom/make-editable node true)))
 
 (defn container-listener
   [event bridge]

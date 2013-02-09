@@ -25,11 +25,7 @@ return $(".selected").remove();
 });
 webster.main.edit_element_handler = (function edit_element_handler(data,callback){
 var node = $(".selected");
-var r = rangy.createRange();
-node.attr("contenteditable","true");
-r.setStart(node.get(0),0);
-r.collapse(true);
-return rangy.getSelection().setSingleRange(r);
+return webster.dom.make_editable.call(null,node,true);
 });
 webster.main.container_listener = (function container_listener(event,bridge){
 var el = $(event.currentTarget);

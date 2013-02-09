@@ -5,3 +5,12 @@
   [node-list callback]
   (doseq [index (range (.-length node-list))]
     (callback (.item node-list index))))
+
+(defn make-editable
+  [node & focus]
+  (.attr node "contenteditable" "true")
+  (if focus
+    (let [r (.createRange js/rangy)]
+      (.setStart r (.get node 0) 0)
+      (.collapse r true)
+      (.setSingleRange (.getSelection js/rangy) r))))

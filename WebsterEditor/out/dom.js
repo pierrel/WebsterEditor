@@ -20,3 +20,35 @@ continue;
 break;
 }
 });
+/**
+* @param {...*} var_args
+*/
+webster.dom.make_editable = (function() { 
+var make_editable__delegate = function (node,focus){
+node.attr("contenteditable","true");
+if(cljs.core.truth_(focus))
+{var r = rangy.createRange();
+r.setStart(node.get(0),0);
+r.collapse(true);
+return rangy.getSelection().setSingleRange(r);
+} else
+{return null;
+}
+};
+var make_editable = function (node,var_args){
+var focus = null;
+if (goog.isDef(var_args)) {
+  focus = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1),0);
+} 
+return make_editable__delegate.call(this, node, focus);
+};
+make_editable.cljs$lang$maxFixedArity = 1;
+make_editable.cljs$lang$applyTo = (function (arglist__2431){
+var node = cljs.core.first(arglist__2431);
+var focus = cljs.core.rest(arglist__2431);
+return make_editable__delegate(node, focus);
+});
+make_editable.cljs$lang$arity$variadic = make_editable__delegate;
+return make_editable;
+})()
+;

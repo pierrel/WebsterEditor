@@ -12981,6 +12981,30 @@ webster.dom.each_node = function(a, b) {
     }
   }
 };
+webster.dom.make_editable = function() {
+  var a = function(a, b) {
+    a.attr("contenteditable", "true");
+    if(cljs.core.truth_(b)) {
+      var e = rangy.createRange();
+      e.setStart(a.get(0), 0);
+      e.collapse(!0);
+      return rangy.getSelection().setSingleRange(e)
+    }
+    return null
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b);
+    b = cljs.core.rest(b);
+    return a(d, b)
+  };
+  b.cljs$lang$arity$variadic = a;
+  return b
+}();
 webster.main = {};
 webster.main.on_bridge_ready = function(a) {
   var b = a.bridge;
@@ -13005,11 +13029,8 @@ webster.main.remove_element_handler = function() {
   return $(".selected").remove()
 };
 webster.main.edit_element_handler = function() {
-  var a = $(".selected"), b = rangy.createRange();
-  a.attr("contenteditable", "true");
-  b.setStart(a.get(0), 0);
-  b.collapse(!0);
-  return rangy.getSelection().setSingleRange(b)
+  var a = $(".selected");
+  return webster.dom.make_editable.call(null, a, !0)
 };
 webster.main.container_listener = function(a, b) {
   var c = $(a.currentTarget);
