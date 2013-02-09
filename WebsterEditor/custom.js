@@ -13005,72 +13005,73 @@ webster.dom.make_editable = function() {
   b.cljs$lang$arity$variadic = a;
   return b
 }();
-webster.main = {};
-webster.main.on_bridge_ready = function(a) {
-  var b = a.bridge;
-  b.init("handler?");
-  webster.dom.each_node.call(null, document.getElementsByClassName("container-fluid"), function(a) {
-    return a.addEventListener("click", function(a) {
-      return webster.main.container_listener.call(null, a, b)
-    }, !1)
-  });
-  webster.dom.each_node.call(null, document.getElementsByTagName("h1"), function(a) {
-    return a.addEventListener("click", function(a) {
-      return webster.main.container_listener.call(null, a, b)
-    }, !1)
-  });
-  document.addEventListener("click", function(a) {
-    return webster.main.default_listener.call(null, a, b)
-  }, !1);
-  b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
-  return b.registerHandler("editElementHandler", webster.main.edit_element_handler)
+webster.listeners = {};
+webster.listeners.selected_listener = function(a) {
+  return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
 };
-webster.main.remove_element_handler = function() {
-  var a = $(".selected");
-  webster.main.make_unselected.call(null, a);
-  return a.remove()
+webster.listeners.default_listener = function(a, b) {
+  webster.listeners.make_unselected.call(null, $(".selected"));
+  $("[contenteditable\x3dtrue]").removeAttr("contenteditable");
+  return b.callHandler("defaultSelectedHandler", {})
 };
-webster.main.edit_element_handler = function() {
-  var a = $(".selected");
-  return webster.dom.make_editable.call(null, a, !0)
-};
-webster.main.container_listener = function(a, b) {
+webster.listeners.container_listener = function(a, b) {
   var c = $(a.currentTarget);
   if(cljs.core.truth_(function() {
     var a = cljs.core.not.call(null, c.hasClass("selected"));
-    return a ? webster.main.nothing_selected.call(null) : a
+    return a ? webster.listeners.nothing_selected.call(null) : a
   }())) {
     var d = c.offset(), e = c.width(), f = c.height();
-    webster.main.make_selected.call(null, c);
+    webster.listeners.make_selected.call(null, c);
     b.callHandler("containerSelectedHandler", {top:d.top, left:d.left, width:e, height:f, tag:c.prop("tagName"), classes:c.attr("class").split(" ")});
     a.stopPropagation();
     return a.preventDefault()
   }
   return null
 };
-webster.main.nothing_selected = function() {
+webster.listeners.nothing_selected = function() {
   return cljs.core._EQ_.call(null, $(".selected").length, 0)
 };
-webster.main.make_selected = function(a) {
+webster.listeners.make_selected = function(a) {
   var b = a.get(0);
   a.addClass("selected");
-  return cljs.core.truth_(b) ? b.addEventListener("click", webster.main.selected_listener) : null
+  return cljs.core.truth_(b) ? b.addEventListener("click", webster.listeners.selected_listener) : null
 };
-webster.main.make_unselected = function(a) {
+webster.listeners.make_unselected = function(a) {
   var b = a.get(0);
   a.removeClass("selected");
-  return cljs.core.truth_(b) ? b.removeEventListener("click", webster.main.selected_listener) : null
+  return cljs.core.truth_(b) ? b.removeEventListener("click", webster.listeners.selected_listener) : null
 };
-webster.main.is_selected = function(a) {
+webster.listeners.is_selected = function(a) {
   return a.hasClass("selected")
 };
-webster.main.selected_listener = function(a) {
-  return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stropPropagation() : null
+webster.main = {};
+webster.main.on_bridge_ready = function(a) {
+  var b = a.bridge;
+  b.init("handler?");
+  webster.dom.each_node.call(null, document.getElementsByClassName("container-fluid"), function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.listeners.container_listener.call(null, a, b)
+    }, !1)
+  });
+  webster.dom.each_node.call(null, document.getElementsByTagName("h1"), function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.listeners.container_listener.call(null, a, b)
+    }, !1)
+  });
+  document.addEventListener("click", function(a) {
+    return webster.listeners.default_listener.call(null, a, b)
+  }, !1);
+  b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
+  return b.registerHandler("editElementHandler", webster.main.edit_element_handler)
 };
-webster.main.default_listener = function(a, b) {
-  webster.main.make_unselected.call(null, $(".selected"));
-  $("[contenteditable\x3dtrue]").removeAttr("contenteditable");
-  return b.callHandler("defaultSelectedHandler", {})
+webster.main.remove_element_handler = function() {
+  var a = $(".selected");
+  webster.listeners.make_unselected.call(null, a);
+  return a.remove()
+};
+webster.main.edit_element_handler = function() {
+  var a = $(".selected");
+  return webster.dom.make_editable.call(null, a, !0)
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
 
