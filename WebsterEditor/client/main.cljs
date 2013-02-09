@@ -50,6 +50,7 @@
         new-row (dom/new-row)]
     (.append jnode new-row)
     (listeners/default-listener nil bridge)
-    (.addEventListener (.get new-row 0) "click" (fn [event] listeners/container-listener event bridge))))
+    (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
+    (listeners/select-node new-row bridge)))
 
 (.addEventListener js/document "WebViewJavascriptBridgeReady" on-bridge-ready false)

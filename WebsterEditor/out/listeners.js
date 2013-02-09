@@ -22,16 +22,19 @@ if(and__3822__auto__)
 {return and__3822__auto__;
 }
 })()))
-{var pos = el.offset();
-var width = el.width();
-var height = el.height();
-webster.listeners.make_selected.call(null,el);
-bridge.callHandler("containerSelectedHandler",{"top":pos.top,"left":pos.left,"width":width,"height":height,"tag":el.prop("tagName"),"classes":el.attr("class").split(" ")});
+{webster.listeners.select_node.call(null,el,bridge);
 event.stopPropagation();
 return event.preventDefault();
 } else
 {return null;
 }
+});
+webster.listeners.select_node = (function select_node(jnode,bridge){
+var pos = jnode.offset();
+var width = jnode.width();
+var height = jnode.height();
+webster.listeners.make_selected.call(null,jnode);
+return bridge.callHandler("containerSelectedHandler",{"top":pos.top,"left":pos.left,"width":width,"height":height,"tag":jnode.prop("tagName"),"classes":jnode.attr("class").split(" ")});
 });
 webster.listeners.get_selected = (function get_selected(){
 return $(".selected");

@@ -74,8 +74,9 @@ var jnode = webster.listeners.get_selected.call(null);
 var new_row = webster.dom.new_row.call(null);
 jnode.append(new_row);
 webster.listeners.default_listener.call(null,null,bridge);
-return new_row.get(0).addEventListener("click",(function (event){
-return bridge;
+new_row.get(0).addEventListener("click",(function (event){
+return webster.listeners.container_listener.call(null,event,bridge);
 }));
+return webster.listeners.select_node.call(null,new_row,bridge);
 });
 document.addEventListener("WebViewJavascriptBridgeReady",webster.main.on_bridge_ready,false);

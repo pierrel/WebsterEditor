@@ -13019,17 +13019,15 @@ webster.listeners.default_listener = function(a, b) {
 };
 webster.listeners.container_listener = function(a, b) {
   var c = $(a.currentTarget);
-  if(cljs.core.truth_(function() {
+  return cljs.core.truth_(function() {
     var a = cljs.core.not.call(null, c.hasClass("selected"));
     return a ? webster.listeners.nothing_selected.call(null) : a
-  }())) {
-    var d = c.offset(), e = c.width(), f = c.height();
-    webster.listeners.make_selected.call(null, c);
-    b.callHandler("containerSelectedHandler", {top:d.top, left:d.left, width:e, height:f, tag:c.prop("tagName"), classes:c.attr("class").split(" ")});
-    a.stopPropagation();
-    return a.preventDefault()
-  }
-  return null
+  }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
+};
+webster.listeners.select_node = function(a, b) {
+  var c = a.offset(), d = a.width(), e = a.height();
+  webster.listeners.make_selected.call(null, a);
+  return b.callHandler("containerSelectedHandler", {top:c.top, left:c.left, width:d, height:e, tag:a.prop("tagName"), classes:a.attr("class").split(" ")})
 };
 webster.listeners.get_selected = function() {
   return $(".selected")
@@ -13107,9 +13105,10 @@ webster.main.add_row_handler = function(a, b, c) {
   b = webster.dom.new_row.call(null);
   a.append(b);
   webster.listeners.default_listener.call(null, null, c);
-  return b.get(0).addEventListener("click", function() {
-    return c
-  })
+  b.get(0).addEventListener("click", function(a) {
+    return webster.listeners.container_listener.call(null, a, c)
+  });
+  return webster.listeners.select_node.call(null, b, c)
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
 

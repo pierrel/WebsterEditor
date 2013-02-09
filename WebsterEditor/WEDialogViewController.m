@@ -48,6 +48,8 @@
     self.classes = [data valueForKey:@"classes"];
     if ([self.classes containsObject:@"container-fluid"]) {
         self.dataSource = [NSArray arrayWithObjects:@"Remove", @"Add Row", nil];
+    } else if ([self.classes containsObject:@"row"]) {
+        self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
     }
 
     // reload
@@ -56,6 +58,10 @@
     // render
     [self.view setFrame:viewR];
     [self.view setHidden:NO];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.view setAlpha:1];
+        NSLog(@"opened!");
+    }];
 }
 
 // Data source stuff
@@ -98,7 +104,6 @@
     } completion:^(BOOL finished) {
         if (finished) {
             [self.view setHidden:YES];
-            [self.view setAlpha:1];
         }
     }];
 }
