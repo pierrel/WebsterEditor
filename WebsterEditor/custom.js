@@ -12969,42 +12969,63 @@ cljs.core.ex_message = function(a) {
 cljs.core.ex_cause = function(a) {
   return cljs.core.instance_QMARK_.call(null, cljs.core.ExceptionInfo, a) ? a.cause : null
 };
-var webster = {on_bridge_ready:function(a) {
-  var b = a.bridge;
-  b.init("handler?");
-  a = document.getElementsByClassName("container-fluid");
+var webster = {dom:{}};
+webster.dom.each_node = function(a, b) {
   for(var c = cljs.core.seq.call(null, cljs.core.range.call(null, a.length));;) {
     if(c) {
-      var d = cljs.core.first.call(null, c), e = a.item(d);
-      e.addEventListener("click", function() {
-        return function(a) {
-          return webster.container_listener.call(null, a, b)
-        }
-      }(c, e, d), !1);
+      var d = cljs.core.first.call(null, c);
+      b.call(null, a.item(d));
       c = cljs.core.next.call(null, c)
     }else {
-      break
+      return null
     }
   }
+};
+webster.main = {};
+webster.main.on_bridge_ready = function(a) {
+  var b = a.bridge;
+  b.init("handler?");
+  webster.dom.each_node.call(null, document.getElementsByClassName("container-fluid"), function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.main.container_listener.call(null, a, b)
+    }, !1)
+  });
+  webster.dom.each_node.call(null, document.getElementsByTagName("h1"), function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.main.container_listener.call(null, a, b)
+    }, !1)
+  });
   document.addEventListener("click", function(a) {
-    return webster.default_listener.call(null, a, b)
+    return webster.main.default_listener.call(null, a, b)
   }, !1);
-  return b.registerHandler("removeElementHandler", webster.remove_element_handler)
-}, remove_element_handler:function() {
+  b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
+  return b.registerHandler("editElementHandler", webster.main.edit_element_handler)
+};
+webster.main.remove_element_handler = function() {
   return $(".selected").remove()
-}, container_listener:function(a, b) {
+};
+webster.main.edit_element_handler = function() {
+  var a = $(".selected"), b = rangy.createRange();
+  a.attr("contenteditable", "true");
+  b.setStart(a.get(0), 0);
+  b.collapse(!0);
+  return rangy.getSelection().setSingleRange(b)
+};
+webster.main.container_listener = function(a, b) {
   var c = $(a.currentTarget);
   if(cljs.core.not.call(null, c.hasClass("selected"))) {
     var d = c.offset(), e = c.width(), f = c.height();
     c.addClass("selected");
-    b.callHandler("containerSelectedHandler", {top:d.top, left:d.left, width:e, height:f});
+    b.callHandler("containerSelectedHandler", {top:d.top, left:d.left, width:e, height:f, tag:c.prop("tagName"), classes:c.attr("class").split(" ")});
     a.stopPropagation();
     return a.preventDefault()
   }
   return null
-}, default_listener:function(a, b) {
+};
+webster.main.default_listener = function(a, b) {
   $(".selected").removeClass("selected");
+  $("[contenteditable\x3dtrue]").removeAttr("contenteditable");
   return b.callHandler("defaultSelectedHandler", {})
-}};
-document.addEventListener("WebViewJavascriptBridgeReady", webster.on_bridge_ready, !1);
+};
+document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
 

@@ -11,6 +11,9 @@
 @interface WEDialogViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, atomic) IBOutlet UITableView *tableView;
 
+@property (strong, atomic) NSArray *classes;
+@property (strong, atomic) NSString *tag;
+
 -(void)openWithData:(id)data andConstraints:(CGRect)constraints;
 -(void)close;
 @end

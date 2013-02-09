@@ -43,6 +43,7 @@
     NSString *html = [self html];
     NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
     [self.webView loadHTMLString:html baseURL:base];
+    self.webView.keyboardDisplayRequiresUserAction = NO;
     
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];
@@ -69,6 +70,7 @@
     NSString *jQueryFile = [[NSBundle mainBundle] pathForResource:@"jquery-1.9.0.min" ofType:@"js"];
     NSString *bootstrapJSFile = [[NSBundle mainBundle] pathForResource:@"bootstrap.min" ofType:@"js"];
     NSString *customJSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"js"];
+    NSString *rangyJSFile = [[NSBundle mainBundle] pathForResource:@"rangy" ofType:@"js"];
     NSString *customCSSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"css"];
     
     NSString *bootstrapJS = [NSString stringWithContentsOfFile:bootstrapJSFile
@@ -84,6 +86,7 @@
                                                               encoding:NSUTF8StringEncoding
                                                                  error:nil];
     NSString *customJS = [NSString stringWithContentsOfFile:customJSFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *rangyJS = [NSString stringWithContentsOfFile:rangyJSFile encoding:NSUTF8StringEncoding error:nil];
     NSString *customCSS = [NSString stringWithContentsOfFile:customCSSFile encoding:NSUTF8StringEncoding error:nil];
     
     NSString *finalHTML = [NSString stringWithContentsOfFile:htmlFile
@@ -102,7 +105,9 @@
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@\n</script>", bootstrapJS]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customJS]]"
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@</script>", customJS]];
-    finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customJS]]" withString:@""];
+    finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[rangyJS]]"
+                                                     withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@</script>", rangyJS]];
+
     
     return finalHTML;
 }

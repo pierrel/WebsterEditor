@@ -19,7 +19,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
     }
     return self;
 }
@@ -31,6 +30,7 @@
 }
 
 - (void)openWithData:(id)data andConstraints:(CGRect)constraints {
+    // positional
     CGFloat dialogWidth = 100;
     CGFloat dialogHeight = 50;
     CGFloat x = [[data valueForKey:@"left"] floatValue] + ([[data valueForKey:@"width"] floatValue]/2) - (dialogWidth/2);
@@ -39,6 +39,21 @@
                               y,
                               dialogWidth,
                               dialogHeight);
+    
+    // content
+    self.tag = [data valueForKey:@"tag"];
+    if ([self.tag isEqualToString:@"H1"]) {
+        self.dataSource = [NSArray arrayWithObjects:@"Up", @"Edit", @"Remove", nil];
+    }
+    self.classes = [data valueForKey:@"classes"];
+    if ([self.classes containsObject:@"container-fluid"]) {
+        self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
+    }
+
+    // reload
+    [self.tableView reloadData];
+    
+    // render
     [self.view setFrame:viewR];
     [self.view setHidden:NO];
 }
@@ -48,7 +63,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    return self.dataSource.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,14 +79,13 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 0:
-            [[WEPageManager sharedManager] removeSelectedElement];
-            break;
-            
-        default:
-            break;
-    }
+    NSString *item = (NSString*)[self.dataSource objectAtIndex:indexPath.row];
+    WEPageManager *pageManager = [WEPageManager sharedManager];
+    if ([item isEqualToString:@"Remove"])
+        [pageManager removeSelectedElement];
+    else if ([item isEqualToString:@"Edit"])
+        [pageManager editSelectedElement];
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self close];
 }

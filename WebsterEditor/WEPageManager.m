@@ -14,8 +14,11 @@ static WEPageManager *gSharedManager;
 @synthesize bridge;
 
 -(void)removeSelectedElement {
-    NSLog(@"calling handler removeElementHandler");
-    [bridge callHandler:@"removeElementHandler" data:[NSDictionary dictionaryWithObjectsAndKeys:@"hey", @"you", nil]];
+    [bridge callHandler:@"removeElementHandler" data:[NSDictionary dictionary]];
+}
+
+-(void)editSelectedElement {
+    [bridge callHandler:@"editElementHandler" data:[NSDictionary dictionary]];
 }
 
 +(WEPageManager*)sharedManager {

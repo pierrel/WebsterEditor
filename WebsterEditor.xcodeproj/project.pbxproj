@@ -32,6 +32,8 @@
 		A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */; };
 		A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */; };
 		A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A27CE9E716BA4DB300C7BF43 /* custom.js */; };
+		A28E76F916C4EAC800665242 /* dom.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A28E76F816C4EAC800665242 /* dom.cljs */; };
+		A28E76FB16C4F5B400665242 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A28E76FA16C4F5B400665242 /* rangy.js */; };
 		A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEA916C1E2E200E30540 /* custom.css */; };
 		A2CCDEB216C1FEAB00E30540 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */; };
 		A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */; };
@@ -70,6 +72,8 @@
 		A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		A27CE9E716BA4DB300C7BF43 /* custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = custom.js; sourceTree = "<group>"; };
+		A28E76F816C4EAC800665242 /* dom.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dom.cljs; sourceTree = "<group>"; };
+		A28E76FA16C4F5B400665242 /* rangy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rangy.js; sourceTree = "<group>"; };
 		A2CCDEA616BE0F3000E30540 /* main.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.cljs; sourceTree = "<group>"; };
 		A2CCDEA916C1E2E200E30540 /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
 		A2CCDEAF16C1FEAB00E30540 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 		A2CCDEA516BE0F3000E30540 /* client */ = {
 			isa = PBXGroup;
 			children = (
+				A28E76F816C4EAC800665242 /* dom.cljs */,
 				A2CCDEA616BE0F3000E30540 /* main.cljs */,
 			);
 			path = client;
@@ -230,6 +235,7 @@
 		A2CCDEAB16C1E33F00E30540 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				A28E76FA16C4F5B400665242 /* rangy.js */,
 				A20CB1EA16B9792700AF858B /* bootstrap */,
 				A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */,
 			);
@@ -310,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A28E76FB16C4F5B400665242 /* rangy.js in Resources */,
 				A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */,
 				A20CB1FC16B9792700AF858B /* bootstrap.js in Resources */,
 				A20CB1FD16B9792700AF858B /* bootstrap.min.js in Resources */,
@@ -330,6 +337,7 @@
 				A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */,
 				A2CCDEAA16C1E2E200E30540 /* custom.css in Resources */,
 				A2CCDEB316C1FEAB00E30540 /* WEDialogViewController.xib in Resources */,
+				A28E76F916C4EAC800665242 /* dom.cljs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

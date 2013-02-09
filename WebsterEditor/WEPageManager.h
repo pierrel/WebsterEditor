@@ -13,6 +13,7 @@
 @property (strong, nonatomic) WebViewJavascriptBridge *bridge;
 
 -(void)removeSelectedElement;
+-(void)editSelectedElement;
 
 +(WEPageManager *)sharedManager;
 @end
