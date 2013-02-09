@@ -21,7 +21,9 @@ bridge.registerHandler("removeElementHandler",webster.main.remove_element_handle
 return bridge.registerHandler("editElementHandler",webster.main.edit_element_handler);
 });
 webster.main.remove_element_handler = (function remove_element_handler(data,callback){
-return $(".selected").remove();
+var jnode = $(".selected");
+webster.main.make_unselected.call(null,jnode);
+return jnode.remove();
 });
 webster.main.edit_element_handler = (function edit_element_handler(data,callback){
 var node = $(".selected");
@@ -33,7 +35,7 @@ if(cljs.core.not.call(null,el.hasClass("selected")))
 {var pos = el.offset();
 var width = el.width();
 var height = el.height();
-el.addClass("selected");
+webster.main.make_selected.call(null,el);
 bridge.callHandler("containerSelectedHandler",{"top":pos.top,"left":pos.left,"width":width,"height":height,"tag":el.prop("tagName"),"classes":el.attr("class").split(" ")});
 event.stopPropagation();
 return event.preventDefault();
@@ -41,8 +43,19 @@ return event.preventDefault();
 {return null;
 }
 });
+webster.main.make_selected = (function make_selected(jnode){
+jnode.addClass("selected");
+return jnode.get(0).addEventListener("click",webster.main.selected_listener);
+});
+webster.main.make_unselected = (function make_unselected(jnode){
+jnode.removeClass("selected");
+return jnode.get(0).removeEventListener("click",webster.main.selected_listener);
+});
+webster.main.selected_listener = (function selected_listener(event,bridge){
+return event.stopPropagation();
+});
 webster.main.default_listener = (function default_listener(event,bridge){
-$(".selected").removeClass("selected");
+webster.main.make_unselected.call(null,$(".selected"));
 $("[contenteditable=true]").removeAttr("contenteditable");
 return bridge.callHandler("defaultSelectedHandler",{});
 });

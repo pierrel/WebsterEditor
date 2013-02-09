@@ -26,7 +26,9 @@
 
 (defn remove-element-handler
   [data callback]
-  (.remove (js/$ ".selected")))
+  (let [jnode (js/$ ".selected")]
+    (make-unselected jnode)
+    (.remove jnode)))
 
 (defn edit-element-handler
   [data callback]
@@ -41,7 +43,7 @@
       (let [pos (.offset el)
             width (.width el)
             height (.height el)]
-        (.addClass el "selected")
+        (make-selected el)
         (.callHandler bridge
                       "containerSelectedHandler"
                       (js-obj "top" (.-top pos)
@@ -53,9 +55,22 @@
         (.stopPropagation event)
         (.preventDefault event)))))
 
+(defn make-selected
+  [jnode]
+  (.addClass jnode "selected")
+  (.addEventListener (.get jnode 0) "click" selected-listener))
+(defn make-unselected
+  [jnode]
+  (.removeClass jnode "selected")
+  (.removeEventListener (.get jnode 0) "click" selected-listener))
+
+(defn selected-listener
+  [event bridge]
+  (.stopPropagation event))
+
 (defn default-listener
   [event bridge]
-  (.removeClass (js/$ ".selected") "selected")
+  (make-unselected (js/$ ".selected"))
   (.removeAttr (js/$ "[contenteditable=true]") "contenteditable")
   (.callHandler bridge "defaultSelectedHandler" (js-obj)))
 
