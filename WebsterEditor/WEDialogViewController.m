@@ -60,7 +60,6 @@
     [self.view setHidden:NO];
     [UIView animateWithDuration:0.2 animations:^{
         [self.view setAlpha:1];
-        NSLog(@"opened!");
     }];
 }
 
