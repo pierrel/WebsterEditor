@@ -32,10 +32,10 @@
 
 - (void)openWithData:(id)data andConstraints:(CGRect)constraints {
     // positional
-    CGFloat dialogWidth = 100;
+    CGFloat dialogWidth = 200;
     CGFloat dialogHeight = 300;
     CGFloat x = [[data valueForKey:@"left"] floatValue] + ([[data valueForKey:@"width"] floatValue]/2) - (dialogWidth/2);
-    CGFloat y = [[data valueForKey:@"top"] floatValue] + [[data valueForKey:@"height"] floatValue];
+    CGFloat y = [[data valueForKey:@"top"] floatValue] + [[data valueForKey:@"height"] floatValue] + 10;
     CGRect viewR = CGRectMake(x,
                               y,
                               dialogWidth,
