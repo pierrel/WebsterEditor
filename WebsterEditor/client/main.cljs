@@ -2,31 +2,19 @@
   (:require [webster.dom :as dom]
             [webster.listeners :as listeners]))
 
-(def container-classes
-  ["container-fluid" "row"])
-(def container-tags
-  ["h1"])
-
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
     ;; initialize the bridge
     (.init bridge "handler?")
-    ;; Setup container classes
-    (doseq [class container-classes]
-      (dom/each-node (.getElementsByClassName js/document class)
-                     (fn [node]
-                       (.addEventListener node
-                                          "click"
-                                          (fn [event] (listeners/container-listener event bridge))
-                                          false))))
-    (doseq [tag container-tags]
-      (dom/each-node (.getElementsByTagName js/document tag)
-                     (fn [node]
-                       (.addEventListener node
-                                          "click"
-                                          (fn [event] (listeners/container-listener event bridge))
-                                          false))))
+
+    ;; Setup selectable containers
+    (dom/each-node (.getElementsByClassName js/document "selectable")
+                   (fn [node]
+                     (.addEventListener node
+                                        "click"
+                                        (fn [event] (listeners/container-listener event bridge))
+                                        false)))
     ;; Setup default listener
     (.addEventListener js/document "click" (fn [event] (listeners/default-listener event bridge)) false)
     (.registerHandler bridge "removeElementHandler" remove-element-handler)

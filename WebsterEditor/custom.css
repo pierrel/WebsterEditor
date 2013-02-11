@@ -1,7 +1,11 @@
 .selected {
-    outline: 1px solid blue;
+    -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+}
+.selectable {
+    -webkit-transition: -webkit-box-shadow 0.3s ease-in-out 0s;
 }
 
 .row {
     min-height: 20px;
 }
+
