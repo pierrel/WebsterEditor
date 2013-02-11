@@ -49,7 +49,7 @@
     self.classes = [data valueForKey:@"classes"];
     if ([self.classes containsObject:@"container-fluid"]) {
         self.dataSource = [NSArray arrayWithObjects:@"Remove", @"Add Row", nil];
-    } else if ([self.classes containsObject:@"row"]) {
+    } else if ([self.classes containsObject:@"row-fluid"]) {
         self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
     }
 
