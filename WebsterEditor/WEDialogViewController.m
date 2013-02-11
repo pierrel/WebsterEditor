@@ -11,6 +11,7 @@
 
 @interface WEDialogViewController ()
 @property (strong, nonatomic) NSArray *dataSource;
+@property (assign, nonatomic) BOOL wantsOpen;
 @end
 
 @implementation WEDialogViewController
@@ -57,9 +58,12 @@
     
     // render
     [self.view setFrame:viewR];
+    self.wantsOpen = YES;
     [self.view setHidden:NO];
     [UIView animateWithDuration:0.2 animations:^{
         [self.view setAlpha:1];
+    } completion:^(BOOL finished) {
+        if (finished) self.wantsOpen = NO;
     }];
 }
 
@@ -101,7 +105,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         [self.view setAlpha:0];
     } completion:^(BOOL finished) {
-        if (finished) {
+        if (finished && !self.wantsOpen) {
             [self.view setHidden:YES];
         }
     }];
