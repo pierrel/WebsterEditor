@@ -13006,7 +13006,7 @@ webster.dom.make_editable = function() {
   return b
 }();
 webster.dom.new_row = function() {
-  return $('\x3cdiv class\x3d"row"\x3e\x3c/div\x3e')
+  return $('\x3cdiv class\x3d"row selectable"\x3e\x3c/div\x3e')
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
@@ -13049,46 +13049,21 @@ webster.listeners.is_selected = function(a) {
   return a.hasClass("selected")
 };
 webster.main = {};
-webster.main.container_classes = cljs.core.PersistentVector.fromArray(["container-fluid", "row"], !0);
-webster.main.container_tags = cljs.core.PersistentVector.fromArray(["h1"], !0);
 webster.main.on_bridge_ready = function(a) {
   var b = a.bridge;
   b.init("handler?");
-  for(a = cljs.core.seq.call(null, webster.main.container_classes);;) {
-    if(a) {
-      var c = cljs.core.first.call(null, a);
-      webster.dom.each_node.call(null, document.getElementsByClassName(c), function() {
-        return function(a) {
-          return a.addEventListener("click", function(a) {
-            return webster.listeners.container_listener.call(null, a, b)
-          }, !1)
-        }
-      }(a, c));
-      a = cljs.core.next.call(null, a)
-    }else {
-      break
-    }
-  }
-  for(a = cljs.core.seq.call(null, webster.main.container_tags);;) {
-    if(a) {
-      c = cljs.core.first.call(null, a), webster.dom.each_node.call(null, document.getElementsByTagName(c), function() {
-        return function(a) {
-          return a.addEventListener("click", function(a) {
-            return webster.listeners.container_listener.call(null, a, b)
-          }, !1)
-        }
-      }(a, c)), a = cljs.core.next.call(null, a)
-    }else {
-      break
-    }
-  }
+  webster.dom.each_node.call(null, document.getElementsByClassName("selectable"), function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.listeners.container_listener.call(null, a, b)
+    }, !1)
+  });
   document.addEventListener("click", function(a) {
     return webster.listeners.default_listener.call(null, a, b)
   }, !1);
   b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
   b.registerHandler("editElementHandler", webster.main.edit_element_handler);
-  return b.registerHandler("addRowUnderSelectedElement", function(a, c) {
-    return webster.main.add_row_handler.call(null, a, c, b)
+  return b.registerHandler("addRowUnderSelectedElement", function(a, d) {
+    return webster.main.add_row_handler.call(null, a, d, b)
   })
 };
 webster.main.remove_element_handler = function() {

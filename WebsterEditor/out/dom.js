@@ -53,5 +53,5 @@ return make_editable;
 })()
 ;
 webster.dom.new_row = (function new_row(){
-return $("<div class=\"row\"></div>");
+return $("<div class=\"row selectable\"></div>");
 });
