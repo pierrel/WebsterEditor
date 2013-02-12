@@ -18,7 +18,7 @@ static const int ICON_DIM = 13;
         rightResize = [[UIButton alloc] init];
         [rightResize setBackgroundImage:[UIImage imageNamed:@"icon_blue.png"] forState:UIControlStateNormal];
         leftResize = [[UIButton alloc] init];
-        [leftResize setBackgroundImage:[UIImage imageNamed:@"icon_green.png"] forState:UIControlStateNormal];
+        [leftResize setBackgroundImage:[UIImage imageNamed:@"icon_blue.png"] forState:UIControlStateNormal];
         
         [self addSubview:rightResize];
         [self addSubview:leftResize];

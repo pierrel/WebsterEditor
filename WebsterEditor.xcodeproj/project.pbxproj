@@ -32,7 +32,6 @@
 		A20CB20116B97F5200AF858B /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A20CB20016B97F5200AF858B /* jquery-1.9.0.min.js */; };
 		A20F992916BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */; };
 		A20F992A16BAD1E900B519A4 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */; };
-		A248905F16CAA1F600997127 /* icon_green.png in Resources */ = {isa = PBXBuildFile; fileRef = A248905E16CAA1F600997127 /* icon_green.png */; };
 		A27CE9E816BA4DB300C7BF43 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A27CE9E716BA4DB300C7BF43 /* custom.js */; };
 		A28E76F916C4EAC800665242 /* dom.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A28E76F816C4EAC800665242 /* dom.cljs */; };
 		A28E76FB16C4F5B400665242 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A28E76FA16C4F5B400665242 /* rangy.js */; };
@@ -216,7 +215,6 @@
 		A20F992616BAD1E900B519A4 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
 		A20F992716BAD1E900B519A4 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		A20F992816BAD1E900B519A4 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
-		A248905E16CAA1F600997127 /* icon_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_green.png; sourceTree = "<group>"; };
 		A27CE9E716BA4DB300C7BF43 /* custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = custom.js; sourceTree = "<group>"; };
 		A28E76F816C4EAC800665242 /* dom.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dom.cljs; sourceTree = "<group>"; };
 		A28E76FA16C4F5B400665242 /* rangy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rangy.js; sourceTree = "<group>"; };
@@ -516,7 +514,6 @@
 		A29E880616CA0EA500696FFB /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				A248905E16CAA1F600997127 /* icon_green.png */,
 				A29E892D16CA292F00696FFB /* icon_blue.png */,
 				A29E880716CA0EA500696FFB /* alarm.png */,
 				A29E880816CA0EA500696FFB /* alarm@2x.png */,
@@ -922,7 +919,6 @@
 				A29E891D16CA0EA600696FFB /* waste_basket.png in Resources */,
 				A29E891E16CA0EA600696FFB /* waste_basket@2x.png in Resources */,
 				A29E892E16CA292F00696FFB /* icon_blue.png in Resources */,
-				A248905F16CAA1F600997127 /* icon_green.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,9 +11,8 @@
 
 @interface WEColumnResizeView : UIView
 @property (assign, nonatomic) NSInteger elementIndex;
-@property (assign, nonatomic) CGRect elementFrame;
-@property (strong, nonatomic) UIImageView *rightResize;
-@property (strong, nonatomic) UIImageView *leftResize;
+@property (strong, nonatomic) UIButton *rightResize;
+@property (strong, nonatomic) UIButton *leftResize;
 
 - (id)initWithFrame:(CGRect)frame withElementIndex:(NSInteger)elementIndex;
 - (void)position;
