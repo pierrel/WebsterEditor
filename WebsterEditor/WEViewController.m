@@ -10,6 +10,8 @@
 #import "WEPageManager.h"
 #import "WEColumnResizeView.h"
 
+static const int ICON_DIM = 13;
+
 @interface WEViewController ()
 - (NSString*)html;
 - (void)openDialogWithData:(id)data;
@@ -64,14 +66,19 @@
     if (children) {
         for (int i = 0; i < children.count; i++) {
             id childData = [children objectAtIndex:i];
-            CGRect childFrame = CGRectMake([[childData objectForKey:@"left"] floatValue],
-                                           [[childData objectForKey:@"top"] floatValue] - yConstraint,
-                                           [[childData objectForKey:@"width"] floatValue],
-                                           [[childData objectForKey:@"height"] floatValue]);
-            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:self.view.frame
+            CGFloat left = [[childData objectForKey:@"left"] floatValue];
+            CGFloat top = [[childData objectForKey:@"top"] floatValue];
+            CGFloat width = [[childData objectForKey:@"width"] floatValue];
+            CGFloat height = [[childData objectForKey:@"height"] floatValue];
+            
+            CGRect columnFrame = CGRectMake(left - ICON_DIM/2,
+                                            top,
+                                            width + ICON_DIM,
+                                            height);
+            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
                                                                    withElementIndex:i];
             [self.view addSubview:newView];
-            [newView positionAndSetElementFrame:childFrame];
+            [newView position];
         }
     }
 
@@ -79,6 +86,12 @@
 
 - (void)closeDialog {
     [self.dialogController close];
+    
+    for (UIView *subview in self.view.subviews) {
+        if ([subview isKindOfClass:[WEColumnResizeView class]]) {
+            [subview removeFromSuperview];
+        }
+    }
 }
 
 - (NSString*)html {

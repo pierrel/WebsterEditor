@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 pierre larochelle. All rights reserved.
 //
 
-#import "WEColumnResizeView.h"
-
 static const int ICON_DIM = 13;
 
 @implementation WEColumnResizeView
@@ -17,8 +15,10 @@ static const int ICON_DIM = 13;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        rightResize = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_blue.png"]];
-        leftResize = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_blue.png"]];
+        rightResize = [[UIButton alloc] init];
+        [rightResize setBackgroundImage:[UIImage imageNamed:@"icon_blue.png"] forState:UIControlStateNormal];
+        leftResize = [[UIButton alloc] init];
+        [leftResize setBackgroundImage:[UIImage imageNamed:@"icon_green.png"] forState:UIControlStateNormal];
         
         [self addSubview:rightResize];
         [self addSubview:leftResize];
@@ -34,24 +34,14 @@ static const int ICON_DIM = 13;
     return self;
 }
 
--(void)positionAndSetElementFrame:(CGRect)elementFrame {
-    self.elementFrame = elementFrame;
-    [self position];
-}
-
 -(void)position {
-    CGFloat halfDim = ICON_DIM/2;
-    CGFloat leftX = self.elementFrame.origin.x - halfDim;
-    CGFloat leftY = self.elementFrame.origin.y + (self.elementFrame.size.height/2) - halfDim;
-    CGFloat rightX = leftX + self.elementFrame.size.width;
-    CGFloat rightY = leftY;
-    
-    [rightResize setFrame:CGRectMake(rightX,
-                                     rightY,
+    CGFloat y = (self.frame.size.height/2) - (ICON_DIM/2);
+    [rightResize setFrame:CGRectMake(self.frame.size.width - ICON_DIM,
+                                     y,
                                      ICON_DIM,
-                                      ICON_DIM)];
-    [leftResize setFrame:CGRectMake(leftX,
-                                    leftY,
+                                     ICON_DIM)];
+    [leftResize setFrame:CGRectMake(0,
+                                    y,
                                     ICON_DIM,
                                     ICON_DIM)];
     [self setNeedsDisplay];

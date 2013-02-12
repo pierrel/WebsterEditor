@@ -16,5 +16,5 @@
 @property (strong, nonatomic) UIImageView *leftResize;
 
 - (id)initWithFrame:(CGRect)frame withElementIndex:(NSInteger)elementIndex;
--(void)positionAndSetElementFrame:(CGRect)elementFrame;
+- (void)position;
 @end
