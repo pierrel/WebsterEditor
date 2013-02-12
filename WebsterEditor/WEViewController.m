@@ -8,6 +8,7 @@
 
 #import "WEViewController.h"
 #import "WEPageManager.h"
+#import "WEColumnResizeView.h"
 
 @interface WEViewController ()
 - (NSString*)html;
@@ -55,7 +56,25 @@
 }
 
 - (void)openDialogWithData:(id)data {
+    CGFloat yConstraint = self.view.frame.origin.y;
     [self.dialogController openWithData:data andConstraints:self.view.frame];
+    
+    // add resizers if any
+    NSArray *children = [data objectForKey:@"children"];
+    if (children) {
+        for (int i = 0; i < children.count; i++) {
+            id childData = [children objectAtIndex:i];
+            CGRect childFrame = CGRectMake([[childData objectForKey:@"left"] floatValue],
+                                           [[childData objectForKey:@"top"] floatValue] - yConstraint,
+                                           [[childData objectForKey:@"width"] floatValue],
+                                           [[childData objectForKey:@"height"] floatValue]);
+            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:self.view.frame
+                                                                   withElementIndex:i];
+            [self.view addSubview:newView];
+            [newView positionAndSetElementFrame:childFrame];
+        }
+    }
+
 }
 
 - (void)closeDialog {
