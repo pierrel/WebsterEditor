@@ -33,8 +33,9 @@ webster.listeners.select_node = (function select_node(jnode,bridge){
 var pos = jnode.offset();
 var width = jnode.width();
 var height = jnode.height();
+var obj = {"top":pos.top,"left":pos.left,"width":width,"height":height,"tag":jnode.prop("tagName"),"classes":jnode.attr("class").split(" ")};
 webster.listeners.make_selected.call(null,jnode);
-return bridge.callHandler("containerSelectedHandler",{"top":pos.top,"left":pos.left,"width":width,"height":height,"tag":jnode.prop("tagName"),"classes":jnode.attr("class").split(" ")});
+return bridge.callHandler("containerSelectedHandler",obj);
 });
 webster.listeners.get_selected = (function get_selected(){
 return $(".selected");
@@ -62,4 +63,7 @@ if(cljs.core.truth_(node))
 });
 webster.listeners.is_selected = (function is_selected(jnode){
 return jnode.hasClass("selected");
+});
+webster.listeners.is_row_QMARK_ = (function is_row_QMARK_(jnode){
+return jnode.hasClass("row-fluid");
 });

@@ -6,6 +6,11 @@
   (doseq [index (range (.-length node-list))]
     (callback (.item node-list index))))
 
+(defn map-nodes
+  [callback node-list]
+  (map (fn [index] (callback (js/$ (.get node-list index))))
+       (range (.-length node-list))))
+
 (defn make-editable
   [node & focus]
   (.attr node "contenteditable" "true")

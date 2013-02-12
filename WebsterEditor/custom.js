@@ -2745,23 +2745,23 @@ cljs.core.with_meta = void 0;
 cljs.core.IWithMeta["function"] = !0;
 cljs.core._with_meta["function"] = function(a, b) {
   return cljs.core.with_meta.call(null, function() {
-    if(void 0 === cljs.core.t2446) {
-      cljs.core.t2446 = {};
-      cljs.core.t2446 = function(a, b, c) {
+    if(void 0 === cljs.core.t2474) {
+      cljs.core.t2474 = {};
+      cljs.core.t2474 = function(a, b, c) {
         this.meta = a;
         this.f = b;
-        this.meta2447 = c;
+        this.meta2475 = c;
         this.cljs$lang$protocol_mask$partition1$ = 0;
         this.cljs$lang$protocol_mask$partition0$ = 393217
       };
-      cljs.core.t2446.cljs$lang$type = !0;
-      cljs.core.t2446.cljs$lang$ctorPrSeq = function() {
-        return cljs.core.list.call(null, "cljs.core/t2446")
+      cljs.core.t2474.cljs$lang$type = !0;
+      cljs.core.t2474.cljs$lang$ctorPrSeq = function() {
+        return cljs.core.list.call(null, "cljs.core/t2474")
       };
-      cljs.core.t2446.cljs$lang$ctorPrWriter = function(a, b) {
-        return cljs.core._write.call(null, b, "cljs.core/t2446")
+      cljs.core.t2474.cljs$lang$ctorPrWriter = function(a, b) {
+        return cljs.core._write.call(null, b, "cljs.core/t2474")
       };
-      var c = cljs.core.t2446.prototype, d = function(a, b) {
+      var c = cljs.core.t2474.prototype, d = function(a, b) {
         return cljs.core.apply.call(null, a.f, b)
       }, e = function(a, b) {
         a = this;
@@ -2777,19 +2777,19 @@ cljs.core._with_meta["function"] = function(a, b) {
       };
       e.cljs$lang$arity$variadic = d;
       c.call = e;
-      cljs.core.t2446.prototype.apply = function(a, b) {
+      cljs.core.t2474.prototype.apply = function(a, b) {
         a = this;
         return a.call.apply(a, [a].concat(b.slice()))
       };
-      cljs.core.t2446.prototype.cljs$core$Fn$ = !0;
-      cljs.core.t2446.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-        return this.meta2447
+      cljs.core.t2474.prototype.cljs$core$Fn$ = !0;
+      cljs.core.t2474.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+        return this.meta2475
       };
-      cljs.core.t2446.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-        return new cljs.core.t2446(this.meta, this.f, b)
+      cljs.core.t2474.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+        return new cljs.core.t2474(this.meta, this.f, b)
       }
     }
-    return new cljs.core.t2446(b, a, null)
+    return new cljs.core.t2474(b, a, null)
   }(), b)
 };
 cljs.core.IMeta["function"] = !0;
@@ -12969,7 +12969,8 @@ cljs.core.ex_message = function(a) {
 cljs.core.ex_cause = function(a) {
   return cljs.core.instance_QMARK_.call(null, cljs.core.ExceptionInfo, a) ? a.cause : null
 };
-var webster = {dom:{}};
+var webster = {utils:{}};
+webster.dom = {};
 webster.dom.each_node = function(a, b) {
   for(var c = cljs.core.seq.call(null, cljs.core.range.call(null, a.length));;) {
     if(c) {
@@ -12980,6 +12981,11 @@ webster.dom.each_node = function(a, b) {
       return null
     }
   }
+};
+webster.dom.map_nodes = function(a, b) {
+  return cljs.core.map.call(null, function(c) {
+    return a.call(null, $(b.get(c)))
+  }, cljs.core.range.call(null, b.length))
 };
 webster.dom.make_editable = function() {
   var a = function(a, b) {
@@ -13006,7 +13012,7 @@ webster.dom.make_editable = function() {
   return b
 }();
 webster.dom.new_row = function() {
-  return $('\x3cdiv class\x3d"row selectable"\x3e\x3c/div\x3e')
+  return $('\x3cdiv class\x3d"row-fluid selectable"\x3e\x3cdiv class\x3d"span4"\x3e\x3c/div\x3e\x3cdiv class\x3d"span8"\x3e\x3c/div\x3e\x3c/div\x3e')
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
@@ -13025,9 +13031,13 @@ webster.listeners.container_listener = function(a, b) {
   }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
 };
 webster.listeners.select_node = function(a, b) {
-  var c = a.offset(), d = a.width(), e = a.height();
+  var c = webster.listeners.node_info.call(null, a);
   webster.listeners.make_selected.call(null, a);
-  return b.callHandler("containerSelectedHandler", {top:c.top, left:c.left, width:d, height:e, tag:a.prop("tagName"), classes:a.attr("class").split(" ")})
+  return b.callHandler("containerSelectedHandler", c)
+};
+webster.listeners.node_info = function node_info(b) {
+  var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.ObjMap.fromObject("\ufdd0:top \ufdd0:left \ufdd0:width \ufdd0:height \ufdd0:tag \ufdd0:classes".split(" "), {"\ufdd0:top":c.top, "\ufdd0:left":c.left, "\ufdd0:width":d, "\ufdd0:height":e, "\ufdd0:tag":b.prop("tagName"), "\ufdd0:classes":b.attr("class").split(" ")});
+  return cljs.core.clj__GT_js.call(null, cljs.core.truth_(webster.listeners.is_row_QMARK_.call(null, b)) ? cljs.core.conj.call(null, c, cljs.core.PersistentVector.fromArray(["\ufdd0:children", webster.dom.map_nodes.call(null, node_info, b.find("\x3e div"))], !0)) : c)
 };
 webster.listeners.get_selected = function() {
   return $(".selected")
@@ -13047,6 +13057,9 @@ webster.listeners.make_unselected = function(a) {
 };
 webster.listeners.is_selected = function(a) {
   return a.hasClass("selected")
+};
+webster.listeners.is_row_QMARK_ = function(a) {
+  return a.hasClass("row-fluid")
 };
 webster.main = {};
 webster.main.on_bridge_ready = function(a) {
@@ -13086,4 +13099,3 @@ webster.main.add_row_handler = function(a, b, c) {
   return webster.listeners.select_node.call(null, b, c)
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
-

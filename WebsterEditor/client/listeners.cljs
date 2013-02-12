@@ -23,19 +23,27 @@
         (.preventDefault event)))))
 
 (defn select-node [jnode bridge]
-  (let [pos (.offset jnode)
-        width (.width jnode)
-        height (.height jnode)]
+  (let [row-info (node-info jnode)]
     (make-selected jnode)
     (.callHandler bridge
                   "containerSelectedHandler"
-                  (js-obj "top" (.-top pos)
-                          "left" (.-left pos)
-                          "width" width
-                          "height" height
-                          "tag" (.prop jnode "tagName")
-                          "classes" (.split (.attr jnode "class") " ")))))
-
+                  row-info)))
+ 
+(defn node-info
+  [jnode]
+  (let [pos (.offset jnode)
+        width (.width jnode)
+        height (.height jnode)
+        the-info {:top (.-top pos)
+                  :left (.-left pos)
+                  :width width
+                  :height height
+                  :tag (.prop jnode "tagName")
+                  :classes (.split (.attr jnode "class") " ")}]
+    (clj->js (if (is-row? jnode)
+               (conj the-info [:children (dom/map-nodes  node-info (.find jnode "> div"))])
+               the-info))))
+ 
 (defn get-selected []
   (js/$ ".selected"))
 (defn nothing-selected []
@@ -55,3 +63,6 @@
   [jnode]
   (.hasClass jnode "selected"))
 
+(defn is-row?
+      [jnode]
+      (.hasClass jnode "row-fluid"))
