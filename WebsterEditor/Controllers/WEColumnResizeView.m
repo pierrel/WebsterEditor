@@ -8,8 +8,20 @@
 
 static const int ICON_DIM = 13;
 
+#import "WEColumnResizeView.h"
+
+@interface WEColumnResizeView ()
+@property (assign, nonatomic) BOOL leftDown;
+@property (assign, nonatomic) BOOL rightDown;
+
+-(void)rightLongPressed:(UILongPressGestureRecognizer*)recognizer;
+-(void)leftLongPressed:(UILongPressGestureRecognizer*)recognizer;
+@end
+
+
 @implementation WEColumnResizeView
 @synthesize rightResize, leftResize;
+@synthesize leftDown, rightDown;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -22,6 +34,16 @@ static const int ICON_DIM = 13;
         
         [self addSubview:rightResize];
         [self addSubview:leftResize];
+        [rightResize addTarget:self
+                        action:@selector(rightLongPressed:)
+              forControlEvents:UIControlEventTouchDown];
+        [leftResize addTarget:self
+                       action:@selector(leftLongPressed:)
+             forControlEvents:UIControlEventTouchDown];
+        NSLog(@"set interaction %@", self);
+        
+        leftDown = NO;
+        rightDown = NO;
     }
     return self;
 }
@@ -47,14 +69,10 @@ static const int ICON_DIM = 13;
     [self setNeedsDisplay];
 }
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+-(void)leftLongPressed:(UIButton *)sender {
+    NSLog(@"left longed!");
 }
-*/
-
+-(void)rightLongPressed:(UIButton*)sender {
+    NSLog(@"right longed!");
+}
 @end
