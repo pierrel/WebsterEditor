@@ -28,7 +28,8 @@
         index (js/parseInt (aget data "index") 10)
         jcolumn (js/$ (.get (.find jselected "> div") index))
         span-num (dom/get-column-count jcolumn)]
-    (dom/set-column-count jcolumn (+ 1 span-num))))
+    (dom/set-column-count jcolumn (+ 1 span-num))
+    (callback (listeners/node-info jcolumn))))
  
 (defn remove-element-handler
   [data callback]

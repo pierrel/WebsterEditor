@@ -146,7 +146,7 @@ static const int ICON_DIM = 13;
 
 -(void)resizeView:(WEColumnResizeView*)resizeView incrementSpanAtColumnIndex:(NSInteger)columnIndex {
     [[WEPageManager sharedManager] incrementSpanAtColumnIndex:columnIndex withCallback:^(id responseData) {
-        NSLog(@"got something %@", responseData);
+        NSLog(@"data: %@", responseData);
     }];
 }
 

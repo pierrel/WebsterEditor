@@ -13089,12 +13089,10 @@ webster.main.on_bridge_ready = function(a) {
   });
   return b.registerHandler("incrementColumn", webster.main.increment_column)
 };
-webster.main.increment_column = function(a) {
-  var b = webster.listeners.get_selected.call(null);
-  a = parseInt(a.index, 10);
-  b = $(b.find("\x3e div").get(a));
-  a = webster.dom.get_column_count.call(null, b);
-  return webster.dom.set_column_count.call(null, b, 1 + a)
+webster.main.increment_column = function(a, b) {
+  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), c = $(c.find("\x3e div").get(d)), d = webster.dom.get_column_count.call(null, c);
+  webster.dom.set_column_count.call(null, c, 1 + d);
+  return b.call(null, webster.listeners.node_info.call(null, c))
 };
 webster.main.remove_element_handler = function() {
   var a = $(".selected");
