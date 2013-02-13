@@ -9,12 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "WebViewJavascriptBridge.h"
 
+typedef void (^WEResponseCallback)(id responseData);
+
 @interface WEPageManager : NSObject
 @property (strong, nonatomic) WebViewJavascriptBridge *bridge;
 
 -(void)removeSelectedElement;
 -(void)editSelectedElement;
 -(void)addRowUnderSelectedElement;
+
+-(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 
 +(WEPageManager *)sharedManager;
 @end

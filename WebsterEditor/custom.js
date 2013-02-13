@@ -12987,6 +12987,15 @@ webster.dom.map_nodes = function(a, b) {
     return a.call(null, $(b.get(c)))
   }, cljs.core.range.call(null, b.length))
 };
+webster.dom.get_column_count = function(a) {
+  a = cljs.core.re_find.call(null, /span(\d+)/, a.attr("class"));
+  return 1 < cljs.core.count.call(null, a) ? parseInt(cljs.core.second.call(null, a), 10) : 0
+};
+webster.dom.set_column_count = function(a, b) {
+  var c = webster.dom.get_column_count.call(null, a);
+  a.removeClass([cljs.core.str("span"), cljs.core.str(c)].join(""));
+  return a.addClass([cljs.core.str("span"), cljs.core.str(b)].join(""))
+};
 webster.dom.make_editable = function() {
   var a = function(a, b) {
     a.attr("contenteditable", "true");
@@ -13075,9 +13084,17 @@ webster.main.on_bridge_ready = function(a) {
   }, !1);
   b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
   b.registerHandler("editElementHandler", webster.main.edit_element_handler);
-  return b.registerHandler("addRowUnderSelectedElement", function(a, d) {
+  b.registerHandler("addRowUnderSelectedElement", function(a, d) {
     return webster.main.add_row_handler.call(null, a, d, b)
-  })
+  });
+  return b.registerHandler("incrementColumn", webster.main.increment_column)
+};
+webster.main.increment_column = function(a) {
+  var b = webster.listeners.get_selected.call(null);
+  a = parseInt(a.index, 10);
+  b = $(b.find("\x3e div").get(a));
+  a = webster.dom.get_column_count.call(null, b);
+  return webster.dom.set_column_count.call(null, b, 1 + a)
 };
 webster.main.remove_element_handler = function() {
   var a = $(".selected");

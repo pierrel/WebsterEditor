@@ -414,6 +414,7 @@
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				A2EC4F6716CB5DB3008A548B /* Views */,
 				A2CCDEBD16C2105A00E30540 /* Managers */,
 				A2CCDEAE16C1F29100E30540 /* Controllers */,
 				A2CCDEA516BE0F3000E30540 /* client */,
@@ -687,8 +688,6 @@
 				A2CCDEAF16C1FEAB00E30540 /* WEDialogViewController.h */,
 				A2CCDEB016C1FEAB00E30540 /* WEDialogViewController.m */,
 				A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */,
-				A29E892A16CA172A00696FFB /* WEColumnResizeView.h */,
-				A29E892B16CA172A00696FFB /* WEColumnResizeView.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -700,6 +699,15 @@
 				A2CCDEBB16C20FE200E30540 /* WEPageManager.m */,
 			);
 			name = Managers;
+			sourceTree = "<group>";
+		};
+		A2EC4F6716CB5DB3008A548B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A29E892A16CA172A00696FFB /* WEColumnResizeView.h */,
+				A29E892B16CA172A00696FFB /* WEColumnResizeView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

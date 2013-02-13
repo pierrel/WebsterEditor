@@ -11,6 +11,19 @@
   (map (fn [index] (callback (js/$ (.get node-list index))))
        (range (.-length node-list))))
 
+(defn get-column-count
+  [jnode]
+  (let [matches (re-find #"span(\d+)" (.attr jnode "class"))]
+    (if (> (count matches) 1)
+      (js/parseInt (second matches) 10)
+      0)))
+
+(defn set-column-count
+  [jnode count]
+  (let [old-count (get-column-count jnode)]
+    (.removeClass jnode (str "span" old-count))
+    (.addClass jnode (str "span" count))))
+
 (defn make-editable
   [node & focus]
   (.attr node "contenteditable" "true")

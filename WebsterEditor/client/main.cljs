@@ -19,8 +19,17 @@
     (.addEventListener js/document "click" (fn [event] (listeners/default-listener event bridge)) false)
     (.registerHandler bridge "removeElementHandler" remove-element-handler)
     (.registerHandler bridge "editElementHandler" edit-element-handler)
-    (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))))
+    (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
+    (.registerHandler bridge "incrementColumn" increment-column)))
 
+(defn increment-column
+  [data callback]
+  (let [jselected (listeners/get-selected)
+        index (js/parseInt (aget data "index") 10)
+        jcolumn (js/$ (.get (.find jselected "> div") index))
+        span-num (dom/get-column-count jcolumn)]
+    (dom/set-column-count jcolumn (+ 1 span-num))))
+ 
 (defn remove-element-handler
   [data callback]
   (let [jnode (js/$ ".selected")]

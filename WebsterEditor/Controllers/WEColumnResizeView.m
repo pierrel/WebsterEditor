@@ -13,6 +13,7 @@ static const int ICON_DIM = 13;
 @interface WEColumnResizeView ()
 @property (assign, nonatomic) CGFloat touchOriginX;
 @property (assign, nonatomic) CGFloat handleOriginX;
+@property (assign, nonatomic) BOOL changeRequestSent;
 @property (strong, nonatomic) UIButton *movingHandle;
 
 -(void)longPressed:(UILongPressGestureRecognizer*)recognizer;
@@ -21,6 +22,7 @@ static const int ICON_DIM = 13;
 
 @implementation WEColumnResizeView
 @synthesize rightResize, leftResize, movingHandle;
+@synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -41,7 +43,7 @@ static const int ICON_DIM = 13;
         [rightResize addGestureRecognizer:rightLongPress];
         [leftResize addGestureRecognizer:leftLongPress];
 
-        NSLog(@"set interaction %@", self);        
+        self.changeRequestSent = NO;
     }
     return self;
 }
@@ -86,6 +88,11 @@ static const int ICON_DIM = 13;
                                         movingHandle.frame.origin.y,
                                         movingHandle.frame.size.width,
                                         movingHandle.frame.size.height);
+        
+        if (delta > 60 && delegate && !self.changeRequestSent) {
+            self.changeRequestSent = YES;
+            [delegate incrementSpanAtColumnIndex:self.elementIndex];
+        }
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {
         [UIView animateWithDuration:0.3 animations:^{
             movingHandle.frame = CGRectMake(self.handleOriginX,

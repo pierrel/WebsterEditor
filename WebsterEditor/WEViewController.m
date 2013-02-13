@@ -58,7 +58,6 @@ static const int ICON_DIM = 13;
 }
 
 - (void)openDialogWithData:(id)data {
-    CGFloat yConstraint = self.view.frame.origin.y;
     [self.dialogController openWithData:data andConstraints:self.view.frame];
     
     // add resizers if any
@@ -77,6 +76,7 @@ static const int ICON_DIM = 13;
                                             height);
             WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
                                                                    withElementIndex:i];
+            newView.delegate = self;
             [self.view addSubview:newView];
             [newView position];
         }
@@ -142,6 +142,12 @@ static const int ICON_DIM = 13;
 
     
     return finalHTML;
+}
+
+-(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex {
+    [[WEPageManager sharedManager] incrementSpanAtColumnIndex:columnIndex withCallback:^(id responseData) {
+        NSLog(@"got something %@", responseData);
+    }];
 }
 
 - (void)didReceiveMemoryWarning

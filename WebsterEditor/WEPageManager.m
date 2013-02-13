@@ -25,6 +25,15 @@ static WEPageManager *gSharedManager;
     [bridge callHandler:@"addRowUnderSelectedElement" data:[NSDictionary dictionary]];
 }
 
+-(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback {
+    [bridge callHandler:@"incrementColumn"
+                   data:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%i", columnIndex]
+                                                    forKey:@"index"]
+       responseCallback:^(id responseData) {
+           return responseCallback(responseData);
+       }];
+}
+
 
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {
