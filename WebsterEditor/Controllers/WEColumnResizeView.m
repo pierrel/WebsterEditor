@@ -82,11 +82,10 @@ static const int ICON_DIM = 13;
         CGPoint currentLocation = [recognizer locationInView:self];
         CGFloat delta = currentLocation.x - self.touchOriginX;
         
-        movingHandle.frame = CGRectMake(movingHandle.frame.origin.x + delta,
+        movingHandle.frame = CGRectMake(self.handleOriginX + delta,
                                         movingHandle.frame.origin.y,
                                         movingHandle.frame.size.width,
                                         movingHandle.frame.size.height);
-        self.touchOriginX += delta;
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {
         [UIView animateWithDuration:0.3 animations:^{
             movingHandle.frame = CGRectMake(self.handleOriginX,
