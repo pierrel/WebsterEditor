@@ -91,7 +91,7 @@ static const int ICON_DIM = 13;
         
         if (delta > 60 && delegate && !self.changeRequestSent) {
             self.changeRequestSent = YES;
-            [delegate incrementSpanAtColumnIndex:self.elementIndex];
+            [delegate resizeView:self incrementSpanAtColumnIndex:self.elementIndex];
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {
         [UIView animateWithDuration:0.3 animations:^{

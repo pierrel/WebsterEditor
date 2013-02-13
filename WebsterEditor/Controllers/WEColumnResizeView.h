@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "WEDialogViewController.h"
 
+@class WEColumnResizeView;
 @protocol WEResizeColumnDelegate <NSObject>
--(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex;
+-(void)resizeView:(WEColumnResizeView*)resizeView incrementSpanAtColumnIndex:(NSInteger)columnIndex;
 @end
 
 @interface WEColumnResizeView : UIView
@@ -22,4 +23,5 @@
 - (id)initWithFrame:(CGRect)frame withElementIndex:(NSInteger)elementIndex;
 - (void)position;
 @end
+
 
