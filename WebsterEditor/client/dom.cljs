@@ -11,6 +11,11 @@
   (map (fn [index] (callback (js/$ (.get node-list index))))
        (range (.-length node-list))))
 
+(defn get-jnode
+  "grabs the node at index in jnodes and returns the corresponding jnode"
+  [jnodes index]
+  (js/$ (.get jnodes index)))
+
 (defn get-column-count
   [jnode]
   (let [matches (re-find #"span(\d+)" (.attr jnode "class"))]

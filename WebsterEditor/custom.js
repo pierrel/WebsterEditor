@@ -12987,6 +12987,9 @@ webster.dom.map_nodes = function(a, b) {
     return a.call(null, $(b.get(c)))
   }, cljs.core.range.call(null, b.length))
 };
+webster.dom.get_jnode = function(a, b) {
+  return $(a.get(b))
+};
 webster.dom.get_column_count = function(a) {
   a = cljs.core.re_find.call(null, /span(\d+)/, a.attr("class"));
   return 1 < cljs.core.count.call(null, a) ? parseInt(cljs.core.second.call(null, a), 10) : 0
@@ -13090,9 +13093,12 @@ webster.main.on_bridge_ready = function(a) {
   return b.registerHandler("incrementColumn", webster.main.increment_column)
 };
 webster.main.increment_column = function(a, b) {
-  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), c = $(c.find("\x3e div").get(d)), d = webster.dom.get_column_count.call(null, c);
-  webster.dom.set_column_count.call(null, c, 1 + d);
-  return b.call(null, webster.listeners.node_info.call(null, c))
+  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_count.call(null, g);
+  return f - 1 > d && (d = cljs.core.map.call(null, function(a) {
+    return webster.dom.get_jnode.call(null, e, a)
+  }, cljs.core.range.call(null, d + 1, f)), d = cljs.core.filter.call(null, function(a) {
+    return 1 < webster.dom.get_column_count.call(null, a)
+  }, d), d = cljs.core.first.call(null, d), cljs.core.truth_(d)) ? (webster.dom.set_column_count.call(null, d, webster.dom.get_column_count.call(null, d) - 1), webster.dom.set_column_count.call(null, g, 1 + h), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
 webster.main.remove_element_handler = function() {
   var a = $(".selected");
