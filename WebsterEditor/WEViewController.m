@@ -16,6 +16,7 @@ static const int ICON_DIM = 13;
 - (NSString*)html;
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
+- (WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index;
 @end
 
 @implementation WEViewController
@@ -65,15 +66,7 @@ static const int ICON_DIM = 13;
     if (children) {
         for (int i = 0; i < children.count; i++) {
             id childData = [children objectAtIndex:i];
-            CGFloat left = [[childData objectForKey:@"left"] floatValue];
-            CGFloat top = [[childData objectForKey:@"top"] floatValue];
-            CGFloat width = [[childData objectForKey:@"width"] floatValue];
-            CGFloat height = [[childData objectForKey:@"height"] floatValue];
-            
-            CGRect columnFrame = CGRectMake(left - ICON_DIM/2,
-                                            top,
-                                            width + ICON_DIM,
-                                            height);
+            CGRect columnFrame = [self frameFromData:childData];
             WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
                                                                    withElementIndex:i];
             newView.delegate = self;
@@ -92,6 +85,30 @@ static const int ICON_DIM = 13;
             [subview removeFromSuperview];
         }
     }
+}
+
+-(WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index {
+    for (UIView *view in self.view.subviews) {
+        if ([view isKindOfClass:[WEColumnResizeView class]]) {
+            WEColumnResizeView *resizeView = (WEColumnResizeView*)view;
+            if (resizeView.elementIndex == index) {
+                return resizeView;
+            }
+        }
+    }
+    return NULL;
+}
+
+-(CGRect)frameFromData:(id)data {
+    CGFloat left = [[data objectForKey:@"left"] floatValue];
+    CGFloat top = [[data objectForKey:@"top"] floatValue];
+    CGFloat width = [[data objectForKey:@"width"] floatValue];
+    CGFloat height = [[data objectForKey:@"height"] floatValue];
+    
+    return CGRectMake(left - ICON_DIM/2,
+                      top,
+                      width + ICON_DIM,
+                      height);
 }
 
 - (NSString*)html {
@@ -146,7 +163,14 @@ static const int ICON_DIM = 13;
 
 -(void)resizeView:(WEColumnResizeView*)resizeView incrementSpanAtColumnIndex:(NSInteger)columnIndex {
     [[WEPageManager sharedManager] incrementSpanAtColumnIndex:columnIndex withCallback:^(id responseData) {
-        NSLog(@"data: %@", responseData);
+        NSArray *columns = [responseData objectForKey:@"children"];
+        for (int i = 0; i < columns.count; i++) {
+            id columnData = columns[i];
+            WEColumnResizeView *resizeView = [self resizeViewAtIndex:i];
+            CGRect newFrame = [self frameFromData:columnData];
+            [resizeView resetFrame:(CGRect)newFrame];
+        }
+        NSLog(@"got something data: %@", responseData);
     }];
 }
 

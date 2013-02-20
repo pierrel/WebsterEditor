@@ -22,6 +22,7 @@
 
 - (id)initWithFrame:(CGRect)frame withElementIndex:(NSInteger)elementIndex;
 - (void)position;
+- (void)resetFrame:(CGRect)newFrame;
 @end
 
 
