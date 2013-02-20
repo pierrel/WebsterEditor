@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cljs-watch client/ '{:optimizations :simple :pretty-print true :output-to "custom.js"}'
