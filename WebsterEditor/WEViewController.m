@@ -170,9 +170,16 @@ static const int ICON_DIM = 13;
             CGRect newFrame = [self frameFromData:columnData];
             [resizeView resetFrame:(CGRect)newFrame];
         }
-        NSLog(@"got something data: %@", responseData);
     }];
 }
+
+-(void)resizeView:(WEColumnResizeView *)resizeView incrementOffsetAtColumnIndex:(NSInteger)columnIndex {
+    [[WEPageManager sharedManager] incrementOffsetAtColumnIndex:columnIndex withCallback:^(id responseData) {
+        NSLog(@"got %@", responseData);
+    }];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -368,7 +368,6 @@
 		A2CCDEB116C1FEAB00E30540 /* WEDialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEDialogViewController.xib; sourceTree = "<group>"; };
 		A2CCDEBA16C20FE200E30540 /* WEPageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageManager.h; sourceTree = "<group>"; };
 		A2CCDEBB16C20FE200E30540 /* WEPageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageManager.m; sourceTree = "<group>"; };
-		A2EC4F6916CB716A008A548B /* WEResizeColumnDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEResizeColumnDelegate.h; path = Protocols/WEResizeColumnDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,7 +414,6 @@
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
 			isa = PBXGroup;
 			children = (
-				A2EC4F6816CB714E008A548B /* Protocols */,
 				A2EC4F6716CB5DB3008A548B /* Views */,
 				A2CCDEBD16C2105A00E30540 /* Managers */,
 				A2CCDEAE16C1F29100E30540 /* Controllers */,
@@ -710,14 +708,6 @@
 				A29E892B16CA172A00696FFB /* WEColumnResizeView.m */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		A2EC4F6816CB714E008A548B /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				A2EC4F6916CB716A008A548B /* WEResizeColumnDelegate.h */,
-			);
-			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

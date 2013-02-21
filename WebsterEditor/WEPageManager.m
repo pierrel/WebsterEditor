@@ -34,6 +34,16 @@ static WEPageManager *gSharedManager;
        }];
 }
 
+-(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback {
+    [bridge callHandler:@"incrementColumnOffset"
+                   data:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%i", columnIndex]
+                                                    forKey:@"index"]
+       responseCallback:^(id responseData) {
+           return responseCallback(responseData);
+       }];
+}
+
+
 
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {

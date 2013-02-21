@@ -13090,7 +13090,11 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("addRowUnderSelectedElement", function(a, d) {
     return webster.main.add_row_handler.call(null, a, d, b)
   });
-  return b.registerHandler("incrementColumn", webster.main.increment_column)
+  b.registerHandler("incrementColumn", webster.main.increment_column);
+  return b.registerHandler("incrementColumnOffset", webster.main.increment_column_offset)
+};
+webster.main.increment_column_offset = function(a, b) {
+  return b.call(null, {got:"it"})
 };
 webster.main.increment_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_count.call(null, g);

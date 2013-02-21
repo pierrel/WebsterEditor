@@ -20,7 +20,12 @@
     (.registerHandler bridge "removeElementHandler" remove-element-handler)
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
-    (.registerHandler bridge "incrementColumn" increment-column)))
+    (.registerHandler bridge "incrementColumn" increment-column)
+    (.registerHandler bridge "incrementColumnOffset" increment-column-offset)))
+
+(defn increment-column-offset
+  [data callback]
+  (callback (js-obj "got" "it")))
 
 (defn increment-column
   [data callback]
