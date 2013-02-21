@@ -29,6 +29,38 @@
     (.removeClass jnode (str "span" old-count))
     (.addClass jnode (str "span" count))))
 
+(defn increment-column-count
+  [jnode]
+  (set-column-count jnode (+ (get-column-count jnode) 1)))
+(defn decrement-column-count
+  [jnode]
+  (set-column-count jnode (- (get-column-count jnode) 1)))
+
+
+(defn get-column-offset
+  [jnode]
+    (let [matches (re-find #"offset(\d+)" (.attr jnode "class"))]
+    (if (> (count matches) 1)
+      (js/parseInt (second matches) 10)
+      0)))
+
+(defn set-column-offset
+  [jnode count]
+  (let [old-count (get-column-offset jnode)]
+    (.removeClass jnode (str "offset" old-count))
+    (.addClass jnode (str "offset" count))))
+
+(defn increment-column-offset
+  [jnode]
+  (set-column-offset jnode (+ (get-column-offset jnode) 1)))
+(defn decrement-column-offset
+  [jnode]
+  (set-column-offset jnode (- (get-column-offset jnode) 1)))
+
+(defn get-column-grid-width
+  [jnode]
+  (- (get-column-count jnode) (get-column-offset jnode)))
+
 (defn make-editable
   [node & focus]
   (.attr node "contenteditable" "true")

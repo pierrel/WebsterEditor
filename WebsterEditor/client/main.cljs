@@ -25,7 +25,15 @@
 
 (defn increment-column-offset
   [data callback]
-  (callback (js-obj "got" "it")))
+  (let [jselected (listeners/get-selected)
+        index (js/parseInt (aget data "index"))
+        all-columns (.find jselected "> div")
+        jcolumn (dom/get-jnode all-columns index)]
+    (if (> (dom/get-column-grid-width jcolumn) 1)
+      (do
+        (dom/decrement-column-count jcolumn)
+        (dom/increment-column-offset jcolumn)
+        (callback (listeners/node-info jselected))))))
 
 (defn increment-column
   [data callback]
