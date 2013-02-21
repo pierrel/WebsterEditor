@@ -16,25 +16,25 @@
   [jnodes index]
   (js/$ (.get jnodes index)))
 
-(defn get-column-count
+(defn get-column-span
   [jnode]
   (let [matches (re-find #"span(\d+)" (.attr jnode "class"))]
     (if (> (count matches) 1)
       (js/parseInt (second matches) 10)
       0)))
 
-(defn set-column-count
+(defn set-column-span
   [jnode count]
-  (let [old-count (get-column-count jnode)]
+  (let [old-count (get-column-span jnode)]
     (.removeClass jnode (str "span" old-count))
     (.addClass jnode (str "span" count))))
 
-(defn increment-column-count
+(defn increment-column-span
   [jnode]
-  (set-column-count jnode (+ (get-column-count jnode) 1)))
-(defn decrement-column-count
+  (set-column-span jnode (+ (get-column-span jnode) 1)))
+(defn decrement-column-span
   [jnode]
-  (set-column-count jnode (- (get-column-count jnode) 1)))
+  (set-column-span jnode (- (get-column-span jnode) 1)))
 
 
 (defn get-column-offset
@@ -59,7 +59,7 @@
 
 (defn get-column-grid-width
   [jnode]
-  (- (get-column-count jnode) (get-column-offset jnode)))
+  (- (get-column-span jnode) (get-column-offset jnode)))
 
 (defn make-editable
   [node & focus]
