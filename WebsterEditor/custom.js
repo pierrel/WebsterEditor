@@ -13122,7 +13122,7 @@ webster.main.increment_column_offset = function(a, b) {
   return 1 < webster.dom.get_column_grid_width.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), webster.dom.increment_column_offset.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
 webster.main.increment_column = function(a, b) {
-  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_count.call(null, g);
+  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_span.call(null, g);
   return f - 1 > d && (d = cljs.core.map.call(null, function(a) {
     return webster.dom.get_jnode.call(null, e, a)
   }, cljs.core.range.call(null, d + 1, f)), d = cljs.core.filter.call(null, function(a) {

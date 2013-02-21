@@ -42,7 +42,7 @@
         all-columns (.find jselected "> div")
         column-count (.-length all-columns)
         jcolumn (dom/get-jnode all-columns index)
-        span-num (dom/get-column-count jcolumn)]
+        span-num (dom/get-column-span jcolumn)]
     (if (> (- column-count 1) index)
       (let [jcols-after-jcolumn (map (fn [i] (dom/get-jnode all-columns i)) (range (+ index 1) column-count))
             jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-span jcol) 1)) jcols-after-jcolumn)]
