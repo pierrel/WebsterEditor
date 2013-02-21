@@ -72,11 +72,16 @@ static const int ICON_DIM = 13;
 - (void)resetFrame:(CGRect)newFrame {
     self.frame = newFrame;
     if (movingHandle) {
-        // reposition the non-moving handle
-        // set *OriginX's to the new place
+        if (movingHandle == rightResize) {
+            self.touchOriginX = newFrame.size.width - ICON_DIM;
+        } else {
+            self.touchOriginX = 0;
+        }
+        self.handleOriginX = self.touchOriginX;
     } else {
         [self position];
     }
+    self.changeRequestSent = NO;
 }
 
 -(void)longPressed:(UILongPressGestureRecognizer *)recognizer {
