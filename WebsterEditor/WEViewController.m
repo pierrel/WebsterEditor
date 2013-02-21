@@ -163,20 +163,23 @@ static const int ICON_DIM = 13;
 
 -(void)resizeView:(WEColumnResizeView*)resizeView incrementSpanAtColumnIndex:(NSInteger)columnIndex {
     [[WEPageManager sharedManager] incrementSpanAtColumnIndex:columnIndex withCallback:^(id responseData) {
-        NSArray *columns = [responseData objectForKey:@"children"];
-        for (int i = 0; i < columns.count; i++) {
-            id columnData = columns[i];
-            WEColumnResizeView *resizeView = [self resizeViewAtIndex:i];
-            CGRect newFrame = [self frameFromData:columnData];
-            [resizeView resetFrame:(CGRect)newFrame];
-        }
+        [self resetResizeViews:(NSArray*)[responseData objectForKey:@"children"]];
     }];
 }
 
 -(void)resizeView:(WEColumnResizeView *)resizeView incrementOffsetAtColumnIndex:(NSInteger)columnIndex {
     [[WEPageManager sharedManager] incrementOffsetAtColumnIndex:columnIndex withCallback:^(id responseData) {
-        NSLog(@"got %@", responseData);
+        [self resetResizeViews:(NSArray*)[responseData objectForKey:@"children"]];
     }];
+}
+
+-(void)resetResizeViews:(NSArray*)columns {
+    for (int i = 0; i < columns.count; i++) {
+        id columnData = columns[i];
+        WEColumnResizeView *resizeView = [self resizeViewAtIndex:i];
+        CGRect newFrame = [self frameFromData:columnData];
+        [resizeView resetFrame:(CGRect)newFrame];
+    }
 }
 
 

@@ -56,16 +56,25 @@ static const int ICON_DIM = 13;
     return self;
 }
 
--(void)position {
+-(void)positionRight {
     CGFloat y = (self.frame.size.height/2) - (ICON_DIM/2);
     [rightResize setFrame:CGRectMake(self.frame.size.width - ICON_DIM,
                                      y,
                                      ICON_DIM,
                                      ICON_DIM)];
+}
+
+-(void)positionLeft {
+    CGFloat y = (self.frame.size.height/2) - (ICON_DIM/2);
     [leftResize setFrame:CGRectMake(0,
                                     y,
                                     ICON_DIM,
                                     ICON_DIM)];
+}
+
+-(void)position {
+    [self positionLeft];
+    [self positionRight];
     [self setNeedsDisplay];
 }
 
@@ -74,8 +83,10 @@ static const int ICON_DIM = 13;
     if (movingHandle) {
         if (movingHandle == rightResize) {
             self.touchOriginX = newFrame.size.width - ICON_DIM;
+            [self positionLeft];
         } else {
             self.touchOriginX = 0;
+            [self positionRight];
         }
         self.handleOriginX = self.touchOriginX;
     } else {
