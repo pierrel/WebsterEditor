@@ -61,6 +61,12 @@
   [jnode]
   (- (get-column-span jnode) (get-column-offset jnode)))
 
+(defn get-column-width
+  [jnode]
+  (+ (get-column-span jnode) (get-column-offset jnode)))
+
+(def column-max 12)
+
 (defn make-editable
   [node & focus]
   (.attr node "contenteditable" "true")
