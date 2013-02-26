@@ -13122,15 +13122,18 @@ webster.main.on_bridge_ready = function(a) {
 };
 webster.main.increment_column_offset = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
-  return 1 < webster.dom.get_column_span.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), webster.dom.increment_column_offset.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
+  1 < webster.dom.get_column_span.call(null, d) && (webster.dom.decrement_column_span.call(null, d), webster.dom.increment_column_offset.call(null, d));
+  return b.call(null, webster.listeners.node_info.call(null, c))
 };
 webster.main.decrement_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
-  return 1 < webster.dom.get_column_span.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
+  1 < webster.dom.get_column_span.call(null, d) && webster.dom.decrement_column_span.call(null, d);
+  return b.call(null, webster.listeners.node_info.call(null, c))
 };
 webster.main.decrement_column_offset = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d), e = webster.dom.get_column_offset.call(null, d);
-  return 0 < e ? (console.log(e), webster.dom.set_column_offset.call(null, d, e - 1), webster.dom.set_column_span.call(null, d, webster.dom.get_column_span.call(null, d) + 1), b.call(null, webster.listeners.node_info.call(null, c))) : null
+  0 < e && (console.log(e), webster.dom.set_column_offset.call(null, d, e - 1), webster.dom.set_column_span.call(null, d, webster.dom.get_column_span.call(null, d) + 1));
+  return b.call(null, webster.listeners.node_info.call(null, c))
 };
 webster.main.increment_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_span.call(null, g), j = cljs.core.map.call(null, function(a) {
@@ -13143,7 +13146,8 @@ webster.main.increment_column = function(a, b) {
     return 0 < webster.dom.get_column_offset.call(null, a)
   }, f), d = cljs.core.first.call(null, d), f = cljs.core.first.call(null, f), j = cljs.core._EQ_.call(null, 12, cljs.core.reduce.call(null, cljs.core._PLUS_, cljs.core.map.call(null, webster.dom.get_column_width, j)));
   cljs.core.truth_(f) ? webster.dom.set_column_offset.call(null, f, webster.dom.get_column_offset.call(null, f) - 1) : cljs.core.truth_(j ? d : j) && webster.dom.set_column_span.call(null, d, webster.dom.get_column_span.call(null, d) - 1);
-  return cljs.core.truth_(cljs.core.truth_(f) ? f : cljs.core.truth_(d) ? d : !j) ? (webster.dom.set_column_span.call(null, g, 1 + h), b.call(null, webster.listeners.node_info.call(null, c))) : null
+  cljs.core.truth_(cljs.core.truth_(f) ? f : cljs.core.truth_(d) ? d : !j) && webster.dom.set_column_span.call(null, g, 1 + h);
+  return b.call(null, webster.listeners.node_info.call(null, c))
 };
 webster.main.remove_element_handler = function() {
   var a = $(".selected");

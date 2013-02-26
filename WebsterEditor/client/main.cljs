@@ -34,8 +34,8 @@
     (if (> (dom/get-column-span jcolumn) 1)
       (do
         (dom/decrement-column-span jcolumn)
-        (dom/increment-column-offset jcolumn)
-        (callback (listeners/node-info jselected))))))
+        (dom/increment-column-offset jcolumn)))
+    (callback (listeners/node-info jselected))))
 
 (defn decrement-column
   [data callback]
@@ -45,8 +45,8 @@
         jcolumn (dom/get-jnode all-columns index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
-        (dom/decrement-column-span jcolumn)
-        (callback (listeners/node-info jselected))))))
+        (dom/decrement-column-span jcolumn)))
+    (callback (listeners/node-info jselected))))
 
 (defn decrement-column-offset
   [data callback]
@@ -60,8 +60,8 @@
       (do
         (.log js/console offset-num)
         (dom/set-column-offset jcolumn (- offset-num 1))
-        (dom/set-column-span jcolumn (+ (dom/get-column-span jcolumn) 1))
-        (callback (listeners/node-info jselected))))))
+        (dom/set-column-span jcolumn (+ (dom/get-column-span jcolumn) 1))))
+    (callback (listeners/node-info jselected))))
 
 (defn increment-column
   [data callback]
@@ -84,8 +84,8 @@
             (dom/set-column-span jcol-to-decrement (- (dom/get-column-span jcol-to-decrement) 1))))
         (if (or jcol-to-inset jcol-to-decrement (not is-full-width))
           (do
-            (dom/set-column-span jcolumn (+ 1 span-num))
-            (callback (listeners/node-info jselected))))))))
+            (dom/set-column-span jcolumn (+ 1 span-num))))))
+    (callback (listeners/node-info jselected))))
  
 (defn remove-element-handler
   [data callback]
