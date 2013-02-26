@@ -73,4 +73,4 @@
       (.setSingleRange (.getSelection js/rangy) r))))
 
 (defn new-row []
-  (js/$ "<div class=\"row-fluid selectable\"><div class=\"span4\"></div><div class=\"span8\"></div></div>"))
+  (js/$ "<div class=\"row-fluid selectable\"><div class=\"span4 empty\"></div><div class=\"span8 empty\"></div></div>"))
