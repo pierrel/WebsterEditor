@@ -13049,7 +13049,7 @@ webster.dom.make_editable = function() {
   return b
 }();
 webster.dom.new_row = function() {
-  return $('\x3cdiv class\x3d"row-fluid selectable"\x3e\x3cdiv class\x3d"span4"\x3e\x3c/div\x3e\x3cdiv class\x3d"span8"\x3e\x3c/div\x3e\x3c/div\x3e')
+  return $('\x3cdiv class\x3d"row-fluid selectable"\x3e\x3cdiv class\x3d"span4 empty"\x3e\x3c/div\x3e\x3cdiv class\x3d"span8 empty"\x3e\x3c/div\x3e\x3c/div\x3e')
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
@@ -13110,7 +13110,9 @@ webster.main.on_bridge_ready = function(a) {
   document.addEventListener("click", function(a) {
     return webster.listeners.default_listener.call(null, a, b)
   }, !1);
-  b.registerHandler("removeElementHandler", webster.main.remove_element_handler);
+  b.registerHandler("removeElementHandler", function(a, d) {
+    return webster.main.remove_element_handler.call(null, a, d, b)
+  });
   b.registerHandler("editElementHandler", webster.main.edit_element_handler);
   b.registerHandler("addRowUnderSelectedElement", function(a, d) {
     return webster.main.add_row_handler.call(null, a, d, b)
@@ -13150,10 +13152,26 @@ webster.main.increment_column = function(a, b) {
   return b.call(null, webster.listeners.node_info.call(null, c))
 };
 webster.main.remove_element_handler = function() {
-  var a = $(".selected");
-  webster.listeners.make_unselected.call(null, a);
-  return a.remove()
-};
+  var a = null, b = function() {
+    var a = $(".selected");
+    webster.listeners.make_unselected.call(null, a);
+    return a.remove()
+  }, c = function(b, c, f) {
+    a.call(null, b, c);
+    return webster.listeners.default_listener.call(null, null, f)
+  }, a = function(a, e, f) {
+    switch(arguments.length) {
+      case 2:
+        return b.call(this, a, e);
+      case 3:
+        return c.call(this, a, e, f)
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$lang$arity$2 = b;
+  a.cljs$lang$arity$3 = c;
+  return a
+}();
 webster.main.edit_element_handler = function() {
   var a = $(".selected");
   return webster.dom.make_editable.call(null, a, !0)

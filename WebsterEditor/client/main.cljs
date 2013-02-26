@@ -17,7 +17,7 @@
                                         false)))
     ;; Setup default listener
     (.addEventListener js/document "click" (fn [event] (listeners/default-listener event bridge)) false)
-    (.registerHandler bridge "removeElementHandler" remove-element-handler)
+    (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
     (.registerHandler bridge "incrementColumn" increment-column)
@@ -88,10 +88,13 @@
     (callback (listeners/node-info jselected))))
  
 (defn remove-element-handler
-  [data callback]
-  (let [jnode (js/$ ".selected")]
-    (listeners/make-unselected jnode)
-    (.remove jnode)))
+  ([data callback]
+     (let [jnode (js/$ ".selected")]
+       (listeners/make-unselected jnode)
+       (.remove jnode)))
+  ([data callback bridge]
+     (remove-element-handler data callback)
+     (listeners/default-listener nil bridge)))
 
 (defn edit-element-handler
   [data callback]
