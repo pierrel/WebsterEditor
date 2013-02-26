@@ -19,7 +19,9 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)addRowUnderSelectedElement;
 
 -(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
+-(void)decrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
+-(void)decrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 
 +(WEPageManager *)sharedManager;
 @end

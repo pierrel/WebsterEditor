@@ -34,6 +34,16 @@ static WEPageManager *gSharedManager;
        }];
 }
 
+-(void)decrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback {
+    [bridge callHandler:@"decrementColumn"
+                   data:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%i", columnIndex]
+                                                    forKey:@"index"]
+       responseCallback:^(id responseData) {
+           return responseCallback(responseData);
+       }];
+}
+
+
 -(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback {
     [bridge callHandler:@"incrementColumnOffset"
                    data:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%i", columnIndex]
@@ -42,6 +52,16 @@ static WEPageManager *gSharedManager;
            return responseCallback(responseData);
        }];
 }
+
+-(void)decrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback {
+    [bridge callHandler:@"decrementColumnOffset"
+                   data:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%i", columnIndex]
+                                                    forKey:@"index"]
+       responseCallback:^(id responseData) {
+           return responseCallback(responseData);
+       }];
+}
+
 
 
 

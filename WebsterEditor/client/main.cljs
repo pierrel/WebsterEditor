@@ -21,7 +21,9 @@
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
     (.registerHandler bridge "incrementColumn" increment-column)
-    (.registerHandler bridge "incrementColumnOffset" increment-column-offset)))
+    (.registerHandler bridge "decrementColumn" decrement-column)
+    (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
+    (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)))
 
 (defn increment-column-offset
   [data callback]
@@ -33,6 +35,17 @@
       (do
         (dom/decrement-column-span jcolumn)
         (dom/increment-column-offset jcolumn)
+        (callback (listeners/node-info jselected))))))
+
+(defn decrement-column
+  [data callback]
+  (let [jselected (listeners/get-selected)
+        index (js/parseInt (aget data "index"))
+        all-columns (.find jselected "> div")
+        jcolumn (dom/get-jnode all-columns index)]
+    (if (> (dom/get-column-grid-width jcolumn) 1)
+      (do
+        (dom/decrement-column-span jcolumn)
         (callback (listeners/node-info jselected))))))
 
 (defn increment-column

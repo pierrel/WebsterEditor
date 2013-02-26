@@ -13050,6 +13050,12 @@ webster.dom.make_editable = function() {
 webster.dom.new_row = function() {
   return $('\x3cdiv class\x3d"row-fluid selectable"\x3e\x3cdiv class\x3d"span4"\x3e\x3c/div\x3e\x3cdiv class\x3d"span8"\x3e\x3c/div\x3e\x3c/div\x3e')
 };
+webster.dom.new_row1 = function() {
+  return $('\x3cdiv class\x3d"row-fluid selectable"\x3e\x3cdiv class\x3d"span4"\x3e\x3c/div\x3e\x3cdiv class\x3d"offset1 span1"\x3e\x3c/div\x3e\x3cdiv class\x3d"span6"\x3e\x3c/div\x3e\x3c/div\x3e')
+};
+webster.dom.new_row2 = function() {
+  return $('\x3cdiv class\x3d"row-fluid selectable"\x3e\x3cdiv class\x3d"span4"\x3e\x3c/div\x3e\x3cdiv class\x3d"span1"\x3e\x3c/div\x3e\x3cdiv class\x3d"offset1 span6"\x3e\x3c/div\x3e\x3c/div\x3e')
+};
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13115,19 +13121,27 @@ webster.main.on_bridge_ready = function(a) {
     return webster.main.add_row_handler.call(null, a, d, b)
   });
   b.registerHandler("incrementColumn", webster.main.increment_column);
-  return b.registerHandler("incrementColumnOffset", webster.main.increment_column_offset)
+  b.registerHandler("decrementColumn", webster.main.decrement_column);
+  b.registerHandler("incrementColumnOffset", webster.main.increment_column_offset);
+  return b.registerHandler("decrementColumnOffset", webster.main.decrement_column_offset)
 };
 webster.main.increment_column_offset = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
   return 1 < webster.dom.get_column_grid_width.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), webster.dom.increment_column_offset.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
+webster.main.decrement_column = function(a, b) {
+  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
+  return 1 < webster.dom.get_column_grid_width.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
+};
 webster.main.increment_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_span.call(null, g);
-  return f - 1 > d && (d = cljs.core.map.call(null, function(a) {
+  return f - 1 > d && (f = cljs.core.map.call(null, function(a) {
     return webster.dom.get_jnode.call(null, e, a)
   }, cljs.core.range.call(null, d + 1, f)), d = cljs.core.filter.call(null, function(a) {
-    return 1 < webster.dom.get_column_span.call(null, a)
-  }, d), d = cljs.core.first.call(null, d), cljs.core.truth_(d)) ? (webster.dom.set_column_span.call(null, d, webster.dom.get_column_span.call(null, d) - 1), webster.dom.set_column_span.call(null, g, 1 + h), b.call(null, webster.listeners.node_info.call(null, c))) : null
+    return 1 < webster.dom.get_column_grid_width.call(null, a)
+  }, f), f = cljs.core.filter.call(null, function(a) {
+    return 0 < webster.dom.get_column_offset.call(null, a)
+  }, f), d = cljs.core.first.call(null, d), f = cljs.core.first.call(null, f), cljs.core.truth_(f) ? webster.dom.set_column_offset.call(null, f, webster.dom.get_column_offset.call(null, f) - 1) : cljs.core.truth_(d) && webster.dom.set_column_span.call(null, d, webster.dom.get_column_span.call(null, d) - 1), cljs.core.truth_(cljs.core.truth_(f) ? f : d)) ? (webster.dom.set_column_span.call(null, g, 1 + h), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
 webster.main.remove_element_handler = function() {
   var a = $(".selected");
@@ -13140,7 +13154,7 @@ webster.main.edit_element_handler = function() {
 };
 webster.main.add_row_handler = function(a, b, c) {
   a = webster.listeners.get_selected.call(null);
-  b = webster.dom.new_row.call(null);
+  b = webster.dom.new_row2.call(null);
   a.append(b);
   webster.listeners.default_listener.call(null, null, c);
   b.get(0).addEventListener("click", function(a) {

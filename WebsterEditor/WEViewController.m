@@ -167,11 +167,24 @@ static const int ICON_DIM = 13;
     }];
 }
 
+-(void)resizeView:(WEColumnResizeView*)resizeView decrementSpanAtColumnIndex:(NSInteger)columnIndex {
+    [[WEPageManager sharedManager] decrementSpanAtColumnIndex:columnIndex withCallback:^(id responseData) {
+        [self resetResizeViews:(NSArray*)[responseData objectForKey:@"children"]];
+    }];
+}
+
 -(void)resizeView:(WEColumnResizeView *)resizeView incrementOffsetAtColumnIndex:(NSInteger)columnIndex {
     [[WEPageManager sharedManager] incrementOffsetAtColumnIndex:columnIndex withCallback:^(id responseData) {
         [self resetResizeViews:(NSArray*)[responseData objectForKey:@"children"]];
     }];
 }
+
+-(void)resizeView:(WEColumnResizeView *)resizeView decrementOffsetAtColumnIndex:(NSInteger)columnIndex {
+    [[WEPageManager sharedManager] decrementOffsetAtColumnIndex:columnIndex withCallback:^(id responseData) {
+        [self resetResizeViews:(NSArray*)[responseData objectForKey:@"children"]];
+    }];
+}
+
 
 -(void)resetResizeViews:(NSArray*)columns {
     for (int i = 0; i < columns.count; i++) {

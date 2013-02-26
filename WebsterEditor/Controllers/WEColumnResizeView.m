@@ -97,6 +97,7 @@ static const int ICON_DIM = 13;
 
 -(void)longPressed:(UILongPressGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+        self.changeRequestSent = NO;
         if (recognizer.view == rightResize) {
             movingHandle = rightResize;
         } else {
@@ -121,6 +122,13 @@ static const int ICON_DIM = 13;
                 [delegate resizeView:self incrementSpanAtColumnIndex:self.elementIndex];
             } else if (movingHandle == leftResize) {
                 [delegate resizeView:self incrementOffsetAtColumnIndex:self.elementIndex];
+            }
+        } else if (delta < -60 && delegate && !self.changeRequestSent) {
+            self.changeRequestSent = YES;
+            if (movingHandle == rightResize) {
+                [delegate resizeView:self decrementSpanAtColumnIndex:self.elementIndex];
+            } else if (movingHandle == leftResize) {
+                [delegate resizeView:self decrementOffsetAtColumnIndex:self.elementIndex];
             }
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {

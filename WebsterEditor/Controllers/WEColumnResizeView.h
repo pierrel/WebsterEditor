@@ -12,7 +12,10 @@
 @class WEColumnResizeView;
 @protocol WEResizeColumnDelegate <NSObject>
 -(void)resizeView:(WEColumnResizeView*)resizeView incrementSpanAtColumnIndex:(NSInteger)columnIndex;
+-(void)resizeView:(WEColumnResizeView*)resizeView decrementSpanAtColumnIndex:(NSInteger)columnIndex;
 -(void)resizeView:(WEColumnResizeView*)resizeView incrementOffsetAtColumnIndex:(NSInteger)columnIndex;
+-(void)resizeView:(WEColumnResizeView*)resizeView decrementOffsetAtColumnIndex:(NSInteger)columnIndex;
+
 @end
 
 @interface WEColumnResizeView : UIView
