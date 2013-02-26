@@ -13020,9 +13020,6 @@ webster.dom.increment_column_offset = function(a) {
 webster.dom.decrement_column_offset = function(a) {
   return webster.dom.set_column_offset.call(null, a, webster.dom.get_column_offset.call(null, a) - 1)
 };
-webster.dom.get_column_grid_width = function(a) {
-  return webster.dom.get_column_span.call(null, a) - webster.dom.get_column_offset.call(null, a)
-};
 webster.dom.get_column_width = function(a) {
   return webster.dom.get_column_span.call(null, a) + webster.dom.get_column_offset.call(null, a)
 };
@@ -13129,7 +13126,7 @@ webster.main.increment_column_offset = function(a, b) {
 };
 webster.main.decrement_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
-  return 1 < webster.dom.get_column_grid_width.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
+  return 1 < webster.dom.get_column_span.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
 webster.main.decrement_column_offset = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d), e = webster.dom.get_column_offset.call(null, d);
@@ -13141,7 +13138,7 @@ webster.main.increment_column = function(a, b) {
   }, cljs.core.range.call(null, f)), f = cljs.core.map.call(null, function(a) {
     return webster.dom.get_jnode.call(null, e, a)
   }, cljs.core.range.call(null, d + 1, f)), d = cljs.core.filter.call(null, function(a) {
-    return 1 < webster.dom.get_column_grid_width.call(null, a)
+    return 1 < webster.dom.get_column_span.call(null, a)
   }, f), f = cljs.core.filter.call(null, function(a) {
     return 0 < webster.dom.get_column_offset.call(null, a)
   }, f), d = cljs.core.first.call(null, d), f = cljs.core.first.call(null, f), j = cljs.core._EQ_.call(null, 12, cljs.core.reduce.call(null, cljs.core._PLUS_, cljs.core.map.call(null, webster.dom.get_column_width, j)));

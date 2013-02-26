@@ -57,10 +57,6 @@
   [jnode]
   (set-column-offset jnode (- (get-column-offset jnode) 1)))
 
-(defn get-column-grid-width
-  [jnode]
-  (- (get-column-span jnode) (get-column-offset jnode)))
-
 (defn get-column-width
   [jnode]
   (+ (get-column-span jnode) (get-column-offset jnode)))

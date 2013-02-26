@@ -43,7 +43,7 @@
         index (js/parseInt (aget data "index"))
         all-columns (.find jselected "> div")
         jcolumn (dom/get-jnode all-columns index)]
-    (if (> (dom/get-column-grid-width jcolumn) 1)
+    (if (> (dom/get-column-span jcolumn) 1)
       (do
         (dom/decrement-column-span jcolumn)
         (callback (listeners/node-info jselected))))))
@@ -73,7 +73,7 @@
         span-num (dom/get-column-span jcolumn)]
     (let [all-jcols (map (fn [i] (dom/get-jnode all-columns i)) (range column-count))
           jcols-after-jcolumn (map (fn [i] (dom/get-jnode all-columns i)) (range (+ index 1) column-count))
-          jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-grid-width jcol) 1)) jcols-after-jcolumn)
+          jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-span jcol) 1)) jcols-after-jcolumn)
           jcols-to-inset (filter (fn [jcol] (> (dom/get-column-offset jcol) 0)) jcols-after-jcolumn)]
       (let [jcol-to-decrement (first jcols-to-decrement)
             jcol-to-inset (first jcols-to-inset)
