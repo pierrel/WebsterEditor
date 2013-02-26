@@ -31,7 +31,7 @@
         index (js/parseInt (aget data "index"))
         all-columns (.find jselected "> div")
         jcolumn (dom/get-jnode all-columns index)]
-    (if (> (dom/get-column-grid-width jcolumn) 1)
+    (if (> (dom/get-column-span jcolumn) 1)
       (do
         (dom/decrement-column-span jcolumn)
         (dom/increment-column-offset jcolumn)

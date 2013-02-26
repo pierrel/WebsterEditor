@@ -13127,7 +13127,7 @@ webster.main.on_bridge_ready = function(a) {
 };
 webster.main.increment_column_offset = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
-  return 1 < webster.dom.get_column_grid_width.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), webster.dom.increment_column_offset.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
+  return 1 < webster.dom.get_column_span.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), webster.dom.increment_column_offset.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
 webster.main.decrement_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
