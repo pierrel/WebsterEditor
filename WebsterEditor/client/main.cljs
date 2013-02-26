@@ -45,13 +45,19 @@
         span-num (dom/get-column-span jcolumn)]
     (if (> (- column-count 1) index)
       (let [jcols-after-jcolumn (map (fn [i] (dom/get-jnode all-columns i)) (range (+ index 1) column-count))
-            jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-span jcol) 1)) jcols-after-jcolumn)]
-        (let [jcol-to-decrement (first jcols-to-decrement)]
-          (if jcol-to-decrement
-            (do
-              (dom/set-column-span jcol-to-decrement (- (dom/get-column-span jcol-to-decrement) 1))
-              (dom/set-column-span jcolumn (+ 1 span-num))
-              (callback (listeners/node-info jselected)))))))))
+            jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-grid-width jcol) 1)) jcols-after-jcolumn)
+            jcols-to-inset (filter (fn [jcol] (> (dom/get-column-offset jcol) 0)) jcols-after-jcolumn)]
+        (let [jcol-to-decrement (first jcols-to-decrement)
+              jcol-to-inset (first jcols-to-inset)]
+          (do
+            (if jcol-to-inset
+              (dom/set-column-offset jcol-to-inset (- (dom/get-column-offset jcol-to-inset) 1))
+              (if jcol-to-decrement
+                (dom/set-column-span jcol-to-decrement (- (dom/get-column-span jcol-to-decrement) 1))))
+            (if (or jcol-to-inset jcol-to-decrement)
+              (do
+                (dom/set-column-span jcolumn (+ 1 span-num))
+                (callback (listeners/node-info jselected))))))))))
  
 (defn remove-element-handler
   [data callback]
