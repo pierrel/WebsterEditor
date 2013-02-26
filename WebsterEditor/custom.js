@@ -13133,6 +13133,10 @@ webster.main.decrement_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);
   return 1 < webster.dom.get_column_grid_width.call(null, d) ? (webster.dom.decrement_column_span.call(null, d), b.call(null, webster.listeners.node_info.call(null, c))) : null
 };
+webster.main.decrement_column_offset = function(a, b) {
+  var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d), e = webster.dom.get_column_offset.call(null, d);
+  return 0 < e ? (console.log(e), webster.dom.set_column_offset.call(null, d, e - 1), webster.dom.set_column_span.call(null, d, webster.dom.get_column_span.call(null, d) + 1), b.call(null, webster.listeners.node_info.call(null, c))) : null
+};
 webster.main.increment_column = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index, 10), e = c.find("\x3e div"), f = e.length, g = webster.dom.get_jnode.call(null, e, d), h = webster.dom.get_column_span.call(null, g);
   return f - 1 > d && (f = cljs.core.map.call(null, function(a) {

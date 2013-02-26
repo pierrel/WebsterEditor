@@ -48,6 +48,36 @@
         (dom/decrement-column-span jcolumn)
         (callback (listeners/node-info jselected))))))
 
+(defn decrement-column-offset
+  [data callback]
+  (let [jselected (listeners/get-selected)
+        index (js/parseInt (aget data "index") 10)
+        all-columns (.find jselected "> div")
+        column-count (.-length all-columns)
+        jcolumn (dom/get-jnode all-columns index)
+        offset-num (dom/get-column-offset jcolumn)]
+    (if (> offset-num 0)
+      (do
+        (.log js/console offset-num)
+        (dom/set-column-offset jcolumn (- offset-num 1))
+        (dom/set-column-span jcolumn (+ (dom/get-column-span jcolumn) 1))
+        (callback (listeners/node-info jselected)))
+      ;; (let [jcols-after-jcolumn (map (fn [i] (dom/get-jnode all-columns i)) (range (+ index 1) column-count))
+      ;;       jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-grid-width jcol) 1)) jcols-after-jcolumn)
+      ;;       jcols-to-inset (filter (fn [jcol] (> (dom/get-column-offset jcol) 0)) jcols-after-jcolumn)]
+      ;;   (let [jcol-to-decrement (first jcols-to-decrement)
+      ;;         jcol-to-inset (first jcols-to-inset)]
+      ;;     (do
+      ;;       (if jcol-to-inset
+      ;;         (dom/set-column-offset jcol-to-inset (- (dom/get-column-offset jcol-to-inset) 1))
+      ;;         (if jcol-to-decrement
+      ;;           (dom/set-column-span jcol-to-decrement (- (dom/get-column-span jcol-to-decrement) 1))))
+      ;;       (if (or jcol-to-inset jcol-to-decrement)
+      ;;         (do
+      ;;           (dom/set-column-span jcolumn (+ 1 span-num))
+      ;;           (callback (listeners/node-info jselected)))))))
+      )))
+
 (defn increment-column
   [data callback]
   (let [jselected (listeners/get-selected)
