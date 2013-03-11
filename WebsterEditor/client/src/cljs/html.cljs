@@ -27,4 +27,8 @@
                             contents-str (cond
                                           (string? contents) contents
                                           :else (compile contents))]
-                        (format "<%s %s>%s</%s>" tag-str attrs-str contents-str tag-str))))
+                        (format "<%s%s>%s</%s>"
+                                tag-str
+                                (if (or (empty? attrs-str) (nil? attrs-str)) "" (str " " attrs-str))
+                                contents-str
+                                tag-str))))
