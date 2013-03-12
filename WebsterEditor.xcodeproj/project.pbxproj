@@ -24,9 +24,6 @@
 		A29CF1BE16EBD37400AB6D38 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1B416EBD37400AB6D38 /* WebViewJavascriptBridge.m */; };
 		A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1B716EBD37400AB6D38 /* WEPageManager.m */; };
 		A29CF1C016EBD37400AB6D38 /* WEColumnResizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1BA16EBD37400AB6D38 /* WEColumnResizeView.m */; };
-		A29CF1DA16EBD37C00AB6D38 /* dom.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1C416EBD37C00AB6D38 /* dom.cljs */; };
-		A29CF1DB16EBD37C00AB6D38 /* listeners.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1C516EBD37C00AB6D38 /* listeners.cljs */; };
-		A29CF1DC16EBD37C00AB6D38 /* main.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1C616EBD37C00AB6D38 /* main.cljs */; };
 		A29CF1DD16EBD37C00AB6D38 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1C816EBD37C00AB6D38 /* custom.css */; };
 		A29CF1DE16EBD37C00AB6D38 /* custom.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1CA16EBD37C00AB6D38 /* custom.js */; };
 		A29CF1DF16EBD37C00AB6D38 /* bootstrap-responsive.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1CE16EBD37C00AB6D38 /* bootstrap-responsive.css */; };
@@ -39,6 +36,9 @@
 		A29CF1E616EBD37C00AB6D38 /* bootstrap.min.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D716EBD37C00AB6D38 /* bootstrap.min.js */; };
 		A29CF1E716EBD37C00AB6D38 /* jquery-1.9.0.min.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */; };
 		A29CF1E816EBD37C00AB6D38 /* rangy.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
+		A29CF1E916ED9AD500AB6D38 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1CA16EBD37C00AB6D38 /* custom.js */; };
+		A29CF1EA16ED9AE900AB6D38 /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */; };
+		A29CF1EB16ED9AE900AB6D38 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -359,6 +359,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29CF1EA16ED9AE900AB6D38 /* jquery-1.9.0.min.js in Resources */,
+				A29CF1EB16ED9AE900AB6D38 /* rangy.js in Resources */,
+				A29CF1E916ED9AD500AB6D38 /* custom.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
@@ -366,9 +369,6 @@
 				A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */,
 				A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */,
 				A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */,
-				A29CF1DA16EBD37C00AB6D38 /* dom.cljs in Resources */,
-				A29CF1DB16EBD37C00AB6D38 /* listeners.cljs in Resources */,
-				A29CF1DC16EBD37C00AB6D38 /* main.cljs in Resources */,
 				A29CF1DD16EBD37C00AB6D38 /* custom.css in Resources */,
 				A29CF1DF16EBD37C00AB6D38 /* bootstrap-responsive.css in Resources */,
 				A29CF1E016EBD37C00AB6D38 /* bootstrap-responsive.min.css in Resources */,
