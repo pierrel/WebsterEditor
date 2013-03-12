@@ -13444,6 +13444,12 @@ webster.dom.make_editable = function() {
 webster.dom.new_row = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span4 empty"], !0)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span8 empty"], !0)], !0)], !0)))
 };
+webster.dom.new_image_gallery = function() {
+  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0), webster.dom.empty_image_thumbnail.call(null, 4)], !0)], !0)))
+};
+webster.dom.empty_image_thumbnail = function(a) {
+  return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty", cljs.core.truth_(a) ? a : 4)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
+};
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13509,6 +13515,9 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("editElementHandler", webster.main.edit_element_handler);
   b.registerHandler("addRowUnderSelectedElement", function(a, d) {
     return webster.main.add_row_handler.call(null, a, d, b)
+  });
+  b.registerHandler("addGalleryUnderSelectedElement", function(a, d) {
+    return webster.main.add_gallery_handler.call(null, a, d, b)
   });
   b.registerHandler("incrementColumn", webster.main.increment_column);
   b.registerHandler("decrementColumn", webster.main.decrement_column);
@@ -13578,5 +13587,19 @@ webster.main.add_row_handler = function(a, b, c) {
     return webster.listeners.container_listener.call(null, a, c)
   });
   return webster.listeners.select_node.call(null, b, c)
+};
+webster.main.add_gallery_handler = function(a, b, c) {
+  a = webster.listeners.get_selected.call(null);
+  b = webster.dom.new_image_gallery.call(null);
+  var d = b.find("li.empty");
+  a.append(b);
+  webster.listeners.default_listener.call(null, null, c);
+  b.get(0).addEventListener("click", function(a) {
+    return webster.listeners.container_listener.call(null, a, c)
+  });
+  d.get(0).addEventListener("click", function(a) {
+    return webster.listeners.thumbnail_listener.call(null, a, c)
+  });
+  return webster.listeners.select_node.call(null, d, c)
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);

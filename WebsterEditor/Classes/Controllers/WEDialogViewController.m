@@ -48,7 +48,7 @@
     }
     self.classes = [data valueForKey:@"classes"];
     if ([self.classes containsObject:@"container-fluid"]) {
-        self.dataSource = [NSArray arrayWithObjects:@"Remove", @"Add Row", nil];
+        self.dataSource = [NSArray arrayWithObjects:@"Remove", @"Add Row", @"Add Image Gallery",nil];
     } else if ([self.classes containsObject:@"row-fluid"]) {
         self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
     }
@@ -96,7 +96,9 @@
         [pageManager editSelectedElement];
     else if ([item isEqualToString:@"Add Row"])
         [pageManager addRowUnderSelectedElement];
-
+    else if ([item isEqualToString:@"Add Image Gallery"])
+        [pageManager addGalleryUnderSelectedElement];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self close];
 }

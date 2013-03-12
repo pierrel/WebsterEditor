@@ -77,3 +77,11 @@
   (js/$ (html/compile [:div {:class "row-fluid selectable"}
                        [:div {:class "span4 empty"}]
                        [:div {:class "span8 empty"}]])))
+
+(defn new-image-gallery []
+  (js/$ (html/compile [:div {:class "row-fluid selectable"}
+                       [:ul {:class "thumbnails" :data-span "4"}
+                        (empty-image-thumbnail 4)]])))
+
+(defn empty-image-thumbnail [span]
+  (html/compile [:li {:class (format "span%s empty" (or span 4))} [:div {:class "empty-decorations"} "Add Image"]]))

@@ -20,6 +20,7 @@
     (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
+    (.registerHandler bridge "addGalleryUnderSelectedElement" (fn [data callback] (add-gallery-handler data callback bridge)))
     (.registerHandler bridge "incrementColumn" increment-column)
     (.registerHandler bridge "decrementColumn" decrement-column)
     (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
@@ -109,5 +110,16 @@
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
     (listeners/select-node new-row bridge)))
+
+(defn add-gallery-handler
+  [data callback bridge]
+  (let [jnode (listeners/get-selected)
+        new-row (dom/new-image-gallery)
+        first-image (.find new-row "li.empty")]
+    (.append jnode new-row)
+    (listeners/default-listener nil bridge)
+    (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
+    (.addEventListener (.get first-image 0) "click" (fn [event] (listeners/thumbnail-listener event bridge)))
+    (listeners/select-node  first-image bridge)))
 
 (.addEventListener js/document "WebViewJavascriptBridgeReady" on-bridge-ready false)
