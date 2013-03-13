@@ -18,6 +18,8 @@
 		A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */; };
 		A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */; };
 		A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */; };
+		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
+		A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E816F0287700BEDBC6 /* WEUtils.m */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
 		A29CF1BC16EBD37400AB6D38 /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AF16EBD37400AB6D38 /* WEViewController.m */; };
 		A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1B316EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt */; };
@@ -57,6 +59,10 @@
 		A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPhone.xib; sourceTree = "<group>"; };
 		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPad.xib; sourceTree = "<group>"; };
+		A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WEViewController+ImagePicker.h"; sourceTree = "<group>"; };
+		A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEViewController+ImagePicker.m"; sourceTree = "<group>"; };
+		A29589E716F0287700BEDBC6 /* WEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEUtils.h; sourceTree = "<group>"; };
+		A29589E816F0287700BEDBC6 /* WEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEUtils.m; sourceTree = "<group>"; };
 		A29CF1AC16EBD37400AB6D38 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
 		A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
 		A29CF1AE16EBD37400AB6D38 /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
@@ -172,6 +178,8 @@
 				A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */,
 				A29CF1AE16EBD37400AB6D38 /* WEViewController.h */,
 				A29CF1AF16EBD37400AB6D38 /* WEViewController.m */,
+				A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */,
+				A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -180,6 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				A29CF1B116EBD37400AB6D38 /* WebViewJavascriptBridge */,
+				A29589E716F0287700BEDBC6 /* WEUtils.h */,
+				A29589E816F0287700BEDBC6 /* WEUtils.m */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -416,6 +426,8 @@
 				A29CF1E616EBD37C00AB6D38 /* bootstrap.min.js in Sources */,
 				A29CF1E716EBD37C00AB6D38 /* jquery-1.9.0.min.js in Sources */,
 				A29CF1E816EBD37C00AB6D38 /* rangy.js in Sources */,
+				A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */,
+				A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

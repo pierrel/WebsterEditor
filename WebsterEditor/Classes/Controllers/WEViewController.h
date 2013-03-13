@@ -11,7 +11,7 @@
 #import "WebViewJavascriptBridge.h"
 #import "WEColumnResizeView.h"
 
-@interface WEViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate>
+@interface WEViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) WEDialogViewController *dialogController;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
