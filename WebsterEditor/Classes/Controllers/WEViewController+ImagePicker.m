@@ -10,14 +10,34 @@
 #import "WEUtils.h"
 
 @implementation WEViewController (ImagePicker)
-- (void)openImagePickerWithData:(id)data {    
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    imagePicker.delegate = self;
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
-    [popover presentPopoverFromRect:[WEUtils frameFromData:data]
-                             inView:self.view
-           permittedArrowDirections:UIPopoverArrowDirectionAny
-                           animated:YES];
+
+-(void) setupControllers {
+    if (!self.imagePicker) {
+        self.imagePicker = [[UIImagePickerController alloc] init];
+        self.imagePicker.delegate = self;
+        [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }
+    if (!self.popoverController) {
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePicker];
+    }
+    
 }
+
+- (void)openImagePickerWithData:(id)data {
+    [self setupControllers];
+    [self.popoverController presentPopoverFromRect:[WEUtils frameFromData:data]
+                                       inView:self.view
+                     permittedArrowDirections:UIPopoverArrowDirectionAny
+                                     animated:YES];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    NSLog(@"%@", info);
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    NSLog(@"canceled!");
+}
+
+
 @end

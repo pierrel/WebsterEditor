@@ -9,5 +9,5 @@
 #import "WEViewController.h"
 
 @interface WEViewController (ImagePicker)
-
+- (void)openImagePickerWithData:(id)data;
 @end

@@ -16,12 +16,12 @@ static const int ICON_DIM = 13;
 
 @interface WEViewController ()
 - (void)openDialogWithData:(id)data;
-- (void)openImagePickerWithData:(id)data;
 - (void)closeDialog;
 - (WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index;
 @end
 
 @implementation WEViewController
+@synthesize  popoverController, imagePicker;
 
 - (void)viewDidLoad
 {
