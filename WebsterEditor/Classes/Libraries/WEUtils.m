@@ -70,4 +70,14 @@
                       width,
                       height);
 }
+
++ (NSString *)pathInDocumentDirectory:(NSString *)filename{
+	NSArray *documentDirectories =
+    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	
+	NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    
+	return [documentDirectory stringByAppendingPathComponent:filename];
+}
+
 @end

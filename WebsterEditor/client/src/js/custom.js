@@ -13519,6 +13519,9 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("addGalleryUnderSelectedElement", function(a, d) {
     return webster.main.add_gallery_handler.call(null, a, d, b)
   });
+  b.registerHandler("addImageToEmptyThumbnail", function(a) {
+    return alert(a["resource-path"])
+  });
   b.registerHandler("incrementColumn", webster.main.increment_column);
   b.registerHandler("decrementColumn", webster.main.decrement_column);
   b.registerHandler("incrementColumnOffset", webster.main.increment_column_offset);

@@ -11,4 +11,5 @@
 @interface WEUtils : NSObject
 + (NSString*)html;
 + (CGRect)frameFromData:(id)data;
++ (NSString *)pathInDocumentDirectory:(NSString *)filename;
 @end

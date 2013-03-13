@@ -21,6 +21,7 @@
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
     (.registerHandler bridge "addGalleryUnderSelectedElement" (fn [data callback] (add-gallery-handler data callback bridge)))
+    (.registerHandler bridge "addImageToEmptyThumbnail" (fn [data callback] (js/alert (aget data "resource-path"))))
     (.registerHandler bridge "incrementColumn" increment-column)
     (.registerHandler bridge "decrementColumn" decrement-column)
     (.registerHandler bridge "incrementColumnOffset" increment-column-offset)

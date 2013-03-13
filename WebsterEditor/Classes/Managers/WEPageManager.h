@@ -18,7 +18,7 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)editSelectedElement;
 -(void)addRowUnderSelectedElement;
 -(void)addGalleryUnderSelectedElement;
-
+-(void)addImageToEmptyThumbnail:(NSString*)resoursePath;
 -(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)decrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;

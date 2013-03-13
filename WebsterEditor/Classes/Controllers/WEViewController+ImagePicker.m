@@ -8,6 +8,7 @@
 
 #import "WEViewController+ImagePicker.h"
 #import "WEUtils.h"
+#import "WEPageManager.h"
 
 @implementation WEViewController (ImagePicker)
 
@@ -32,11 +33,18 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSLog(@"%@", info);
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
+    
+    UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData* data = UIImageJPEGRepresentation(image, 1);
+    [data writeToFile:mediaPath atomically:NO];
+    
+    [[WEPageManager sharedManager] addImageToEmptyThumbnail:mediaPath];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    NSLog(@"canceled!");
 }
 
 
