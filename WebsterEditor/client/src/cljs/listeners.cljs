@@ -22,12 +22,13 @@
         (.stopPropagation event)
         (.preventDefault event)))))
 
-(defn select-node [jnode bridge]
+(defn select-node [jnode bridge & [callback]]
   (let [row-info (node-info jnode)]
     (make-selected jnode)
     (.callHandler bridge
                   "containerSelectedHandler"
-                  row-info)))
+                  row-info
+                  (if callback callback))))
  
 (defn node-info
   [jnode]

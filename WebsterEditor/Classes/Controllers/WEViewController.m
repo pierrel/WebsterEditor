@@ -21,7 +21,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEViewController
-@synthesize  popoverController, imagePicker;
+@synthesize  popoverController, imagePicker, imagePickerCallback;
 
 - (void)viewDidLoad
 {
@@ -43,7 +43,7 @@ static const int ICON_DIM = 13;
         if ([classes indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return [((NSString*)obj) isEqualToString:@"image-thumb"];
         }] != NSNotFound) {
-            [self openImagePickerWithData:data];
+            [self openImagePickerWithData:data withCallback:responseCallback];
         } else {
             [self openDialogWithData:data];
         }
@@ -54,7 +54,8 @@ static const int ICON_DIM = 13;
     }];
 
     NSString *html = [WEUtils html];
-    NSURL *base = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"starter" ofType:@"html"]];
+    
+    NSURL *base = [WEUtils applicationDocumentsDirectory];
     [self.webView loadHTMLString:html baseURL:base];
     self.webView.keyboardDisplayRequiresUserAction = NO;
     

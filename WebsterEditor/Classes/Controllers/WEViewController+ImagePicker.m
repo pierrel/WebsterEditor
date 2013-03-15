@@ -24,7 +24,8 @@
     
 }
 
-- (void)openImagePickerWithData:(id)data {
+- (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback {
+    if (callback) self.imagePickerCallback = callback;
     [self setupControllers];
     [self.popoverController presentPopoverFromRect:[WEUtils frameFromData:data]
                                        inView:self.view
@@ -40,8 +41,10 @@
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];
-    
-    [[WEPageManager sharedManager] addImageToEmptyThumbnail:mediaPath];
+    NSLog(@"resource path: %@", mediaPath);
+    if (self.imagePickerCallback) self.imagePickerCallback([NSDictionary dictionaryWithObject:mediaPath
+                                                                                       forKey:@"resource-path"]);
+    self.imagePickerCallback = nil;    
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

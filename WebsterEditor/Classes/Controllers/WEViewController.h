@@ -15,6 +15,7 @@
 @property (strong, nonatomic) WEDialogViewController *dialogController;
 @property (strong, nonatomic) UIPopoverController *popoverController;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
+@property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @end

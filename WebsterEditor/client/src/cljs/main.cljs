@@ -21,7 +21,6 @@
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
     (.registerHandler bridge "addGalleryUnderSelectedElement" (fn [data callback] (add-gallery-handler data callback bridge)))
-    (.registerHandler bridge "addImageToEmptyThumbnail" (fn [data callback] (js/alert (aget data "resource-path"))))
     (.registerHandler bridge "incrementColumn" increment-column)
     (.registerHandler bridge "decrementColumn" decrement-column)
     (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
@@ -121,6 +120,9 @@
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
     (.addEventListener (.get first-image 0) "click" (fn [event] (listeners/thumbnail-listener event bridge)))
-    (listeners/select-node  first-image bridge)))
+    (listeners/select-node  first-image bridge (fn [data callback]
+                                                 (let [full-path (aget data "resource-path")
+                                                       rel-path (second (re-matches #".*Documents/(.*)" full-path))]
+                                                   (js/alert rel-path))))))
 
 (.addEventListener js/document "WebViewJavascriptBridgeReady" on-bridge-ready false)

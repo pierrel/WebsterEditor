@@ -80,4 +80,15 @@
 	return [documentDirectory stringByAppendingPathComponent:filename];
 }
 
+/**
+ Returns the URL to the application's Documents directory.
+ */
++ (NSURL *)applicationDocumentsDirectory
+{
+    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [searchPaths lastObject];
+    
+    return [NSURL fileURLWithPath:documentPath];
+}
+
 @end

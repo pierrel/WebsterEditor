@@ -66,17 +66,6 @@ static WEPageManager *gSharedManager;
        }];
 }
 
--(void)addImageToEmptyThumbnail:(NSString *)resoursePath {
-    [bridge callHandler:@"addImageToEmptyThumbnail"
-                   data:[NSDictionary dictionaryWithObject:resoursePath forKey:@"resource-path"]
-       responseCallback:^(id responseData) {
-         NSLog(@"something?");
-     }];
-}
-
-
-
-
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {
         gSharedManager = [[WEPageManager alloc] init];

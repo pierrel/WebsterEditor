@@ -12,4 +12,5 @@
 + (NSString*)html;
 + (CGRect)frameFromData:(id)data;
 + (NSString *)pathInDocumentDirectory:(NSString *)filename;
++ (NSURL *)applicationDocumentsDirectory;
 @end

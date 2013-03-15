@@ -13466,11 +13466,26 @@ webster.listeners.container_listener = function(a, b) {
     return a ? webster.listeners.nothing_selected.call(null) : a
   }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
 };
-webster.listeners.select_node = function(a, b) {
-  var c = webster.listeners.node_info.call(null, a);
-  webster.listeners.make_selected.call(null, a);
-  return b.callHandler("containerSelectedHandler", c)
-};
+webster.listeners.select_node = function() {
+  var a = function(a, b, e) {
+    e = cljs.core.nth.call(null, e, 0, null);
+    var f = webster.listeners.node_info.call(null, a);
+    webster.listeners.make_selected.call(null, a);
+    return b.callHandler("containerSelectedHandler", f, cljs.core.truth_(e) ? e : null)
+  }, b = function(b, d, e) {
+    var f = null;
+    2 < arguments.length && (f = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return a.call(this, b, d, f)
+  };
+  b.cljs$lang$maxFixedArity = 2;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), e = cljs.core.first(cljs.core.next(b));
+    b = cljs.core.rest(cljs.core.next(b));
+    return a(d, e, b)
+  };
+  b.cljs$core$IFn$_invoke$arity$variadic = a;
+  return b
+}();
 webster.listeners.node_info = function node_info(b) {
   var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:top", c.top, "\ufdd0:left", c.left, "\ufdd0:width", d, "\ufdd0:height", e, "\ufdd0:tag", b.prop("tagName"), "\ufdd0:classes", b.attr("class").split(" ")], !0);
   return cljs.core.clj__GT_js.call(null, cljs.core.truth_(webster.listeners.is_row_QMARK_.call(null, b)) ? cljs.core.conj.call(null, c, cljs.core.PersistentVector.fromArray(["\ufdd0:children", webster.dom.map_nodes.call(null, node_info, b.find("\x3e div"))], !0)) : c)
@@ -13518,9 +13533,6 @@ webster.main.on_bridge_ready = function(a) {
   });
   b.registerHandler("addGalleryUnderSelectedElement", function(a, d) {
     return webster.main.add_gallery_handler.call(null, a, d, b)
-  });
-  b.registerHandler("addImageToEmptyThumbnail", function(a) {
-    return alert(a["resource-path"])
   });
   b.registerHandler("incrementColumn", webster.main.increment_column);
   b.registerHandler("decrementColumn", webster.main.decrement_column);
@@ -13603,6 +13615,9 @@ webster.main.add_gallery_handler = function(a, b, c) {
   d.get(0).addEventListener("click", function(a) {
     return webster.listeners.thumbnail_listener.call(null, a, c)
   });
-  return webster.listeners.select_node.call(null, d, c)
+  return webster.listeners.select_node.call(null, d, c, function(a) {
+    a = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
+    return alert(a)
+  })
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
