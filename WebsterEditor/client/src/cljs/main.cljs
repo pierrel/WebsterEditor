@@ -1,6 +1,7 @@
 (ns webster.main
   (:require [webster.dom :as dom]
-            [webster.listeners :as listeners]))
+            [webster.listeners :as listeners]
+            [webster.html :as html]))
 
 (defn on-bridge-ready
   [event]
@@ -122,7 +123,15 @@
     (.addEventListener (.get first-image 0) "click" (fn [event] (listeners/thumbnail-listener event bridge)))
     (listeners/select-node  first-image bridge (fn [data callback]
                                                  (let [full-path (aget data "resource-path")
-                                                       rel-path (second (re-matches #".*Documents/(.*)" full-path))]
-                                                   (js/alert rel-path))))))
+                                                       rel-path (second (re-matches #".*Documents/(.*)" full-path))
+                                                       new-element (html/compile [:a {:href rel-path
+                                                                                      :class "thumbnail"
+                                                                                      :data-toggle "lightbox"}
+                                                                                  [:img {:src rel-path }]])
+                                                       old-element (.find first-image ".empty-decorations")]
+                                                   (.remove old-element)
+                                                   (.removeClass first-image "empty")
+                                                   (.append first-image new-element)
+                                                   (js/alert new-element))))))
 
 (.addEventListener js/document "WebViewJavascriptBridgeReady" on-bridge-ready false)

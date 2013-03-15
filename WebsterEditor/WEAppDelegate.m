@@ -8,6 +8,11 @@
 
 #import "WEAppDelegate.h"
 #import "WEViewController.h"
+#import "WEUtils.h"
+
+@interface WEAppDelegate ()
+-(void)createDirectories;
+@end
 
 @implementation WEAppDelegate
 
@@ -15,14 +20,26 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-      self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
-  } else {
-      self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
-  }
-  self.window.rootViewController = self.viewController;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
+    } else {
+        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
+    }
+    self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    [self createDirectories];
     return YES;
+}
+
+-(void)createDirectories {
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *media = [WEUtils pathInDocumentDirectory:@"/media"];
+    NSError *error;
+    
+    if (![manager fileExistsAtPath:media isDirectory:YES]) {
+        [manager createDirectoryAtPath:media withIntermediateDirectories:NO attributes:nil error:&error];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -13617,6 +13617,10 @@ webster.main.add_gallery_handler = function(a, b, c) {
   });
   return webster.listeners.select_node.call(null, d, c, function(a) {
     a = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
+    a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", a, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", a], !0)], !0)], !0));
+    d.find(".empty-decorations").remove();
+    d.removeClass("empty");
+    d.append(a);
     return alert(a)
   })
 };
