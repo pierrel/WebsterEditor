@@ -36,7 +36,8 @@
                                     old-element (.find $el ".empty-decorations")]
                                 (.remove old-element)
                                 (.removeClass $el "empty")
-                                (.append $el new-element))))))
+                                (.append $el new-element)
+                                (.click (add-empty-thumbnail (.closest $el ".thumbnails") bridge)))))))
 
 (defn add-empty-thumbnail [$gallery bridge]
   (let [$empty-thumb (js/$ (dom/empty-image-thumbnail))]

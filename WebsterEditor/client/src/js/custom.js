@@ -13473,7 +13473,8 @@ webster.listeners.thumbnail_listener = function(a, b) {
     a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", a, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", a], !0)], !0)], !0));
     c.find(".empty-decorations").remove();
     c.removeClass("empty");
-    return c.append(a)
+    c.append(a);
+    return webster.listeners.add_empty_thumbnail.call(null, c.closest(".thumbnails"), b).click()
   })
 };
 webster.listeners.add_empty_thumbnail = function(a, b) {
