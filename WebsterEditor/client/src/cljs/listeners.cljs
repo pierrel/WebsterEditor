@@ -1,5 +1,6 @@
 (ns webster.listeners
-  (:require [webster.dom :as dom]))
+  (:require [webster.dom :as dom]
+            [webster.html :as html]))
 
 ;; listeners
 (defn selected-listener
@@ -21,6 +22,21 @@
         (select-node el bridge)
         (.stopPropagation event)
         (.preventDefault event)))))
+
+(defn thumbnail-listener
+  [event bridge]
+  (let [$el (js/$ (.-currentTarget event))]
+    (select-node $el bridge (fn [data callback]
+                              (let [full-path (aget data "resource-path")
+                                    rel-path (second (re-matches #".*Documents/(.*)" full-path))
+                                    new-element (html/compile [:a {:href rel-path
+                                                                   :class "thumbnail"
+                                                                   :data-toggle "lightbox"}
+                                                               [:img {:src rel-path }]])
+                                    old-element (.find $el ".empty-decorations")]
+                                (.remove old-element)
+                                (.removeClass $el "empty")
+                                (.append $el new-element))))))
 
 (defn select-node [jnode bridge & [callback]]
   (let [row-info (node-info jnode)]

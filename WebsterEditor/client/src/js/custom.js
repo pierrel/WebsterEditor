@@ -13466,6 +13466,16 @@ webster.listeners.container_listener = function(a, b) {
     return a ? webster.listeners.nothing_selected.call(null) : a
   }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
 };
+webster.listeners.thumbnail_listener = function(a, b) {
+  var c = $(a.currentTarget);
+  return webster.listeners.select_node.call(null, c, b, function(a) {
+    a = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
+    a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", a, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", a], !0)], !0)], !0));
+    c.find(".empty-decorations").remove();
+    c.removeClass("empty");
+    return c.append(a)
+  })
+};
 webster.listeners.select_node = function() {
   var a = function(a, b, e) {
     e = cljs.core.nth.call(null, e, 0, null);
@@ -13606,6 +13616,7 @@ webster.main.add_row_handler = function(a, b, c) {
 webster.main.add_gallery_handler = function(a, b, c) {
   a = webster.listeners.get_selected.call(null);
   b = webster.dom.new_image_gallery.call(null);
+  b.find(".thumbnails");
   var d = b.find("li.empty");
   a.append(b);
   webster.listeners.default_listener.call(null, null, c);
@@ -13615,13 +13626,6 @@ webster.main.add_gallery_handler = function(a, b, c) {
   d.get(0).addEventListener("click", function(a) {
     return webster.listeners.thumbnail_listener.call(null, a, c)
   });
-  return webster.listeners.select_node.call(null, d, c, function(a) {
-    a = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
-    a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", a, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", a], !0)], !0)], !0));
-    d.find(".empty-decorations").remove();
-    d.removeClass("empty");
-    d.append(a);
-    return alert(a)
-  })
+  return d.click()
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);

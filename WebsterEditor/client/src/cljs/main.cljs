@@ -112,26 +112,17 @@
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
     (listeners/select-node new-row bridge)))
 
+;; IMAGE GALLERY STUFF
 (defn add-gallery-handler
   [data callback bridge]
   (let [jnode (listeners/get-selected)
         new-row (dom/new-image-gallery)
+        gallery (.find new-row ".thumbnails")
         first-image (.find new-row "li.empty")]
     (.append jnode new-row)
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
     (.addEventListener (.get first-image 0) "click" (fn [event] (listeners/thumbnail-listener event bridge)))
-    (listeners/select-node  first-image bridge (fn [data callback]
-                                                 (let [full-path (aget data "resource-path")
-                                                       rel-path (second (re-matches #".*Documents/(.*)" full-path))
-                                                       new-element (html/compile [:a {:href rel-path
-                                                                                      :class "thumbnail"
-                                                                                      :data-toggle "lightbox"}
-                                                                                  [:img {:src rel-path }]])
-                                                       old-element (.find first-image ".empty-decorations")]
-                                                   (.remove old-element)
-                                                   (.removeClass first-image "empty")
-                                                   (.append first-image new-element)
-                                                   (js/alert new-element))))))
+    (.click first-image)))
 
 (.addEventListener js/document "WebViewJavascriptBridgeReady" on-bridge-ready false)
