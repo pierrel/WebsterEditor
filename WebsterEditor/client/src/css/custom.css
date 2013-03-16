@@ -32,3 +32,9 @@
 .row-fluid ul.thumbnails li.selected .empty-decorations {
     color: lightgray;
 }
+
+
+/*THESE NEED TO GO IN A SEPARATE FILE AND BE PERMANENT*/
+.row-fluid .thumbnails li[class*="span"]:first-child {
+    margin-left: 20px;
+}

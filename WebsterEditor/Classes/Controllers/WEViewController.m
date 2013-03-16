@@ -53,10 +53,23 @@ static const int ICON_DIM = 13;
         [self closeDialog];
     }];
 
+    NSString *indexPath = [WEUtils pathInDocumentDirectory:@"/index.html"];
+    // TODO: need to assetize the css/js so we don't need to rewrite the html every time
     NSString *html = [WEUtils html];
+    NSString *customCSSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"css"];
+    NSString *customCSS = [NSString stringWithContentsOfFile:customCSSFile encoding:NSUTF8StringEncoding error:nil];
+    NSError *error;
     
-    NSURL *base = [WEUtils applicationDocumentsDirectory];
-    [self.webView loadHTMLString:html baseURL:base];
+    [html writeToFile:indexPath
+           atomically:NO
+             encoding:NSStringEncodingConversionAllowLossy
+                error:&error];
+    BOOL thing = [customCSS writeToFile:[WEUtils pathInDocumentDirectory:@"/css/custom.css"]
+                atomically:NO
+                  encoding:NSStringEncodingConversionAllowLossy
+                     error:&error];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
+    //[self.webView loadHTMLString:html baseURL:base];
     self.webView.keyboardDisplayRequiresUserAction = NO;
     
     // setup the page manager

@@ -18,6 +18,7 @@
 		A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */; };
 		A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */; };
 		A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */; };
+		A223B89916F4FFD000B15E26 /* override.css in Resources */ = {isa = PBXBuildFile; fileRef = A223B89816F4FFD000B15E26 /* override.css */; };
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
 		A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E816F0287700BEDBC6 /* WEUtils.m */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
@@ -59,6 +60,7 @@
 		A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPhone.xib; sourceTree = "<group>"; };
 		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPad.xib; sourceTree = "<group>"; };
+		A223B89816F4FFD000B15E26 /* override.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = override.css; path = ../../../Classes/Controllers/override.css; sourceTree = "<group>"; };
 		A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WEViewController+ImagePicker.h"; sourceTree = "<group>"; };
 		A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEViewController+ImagePicker.m"; sourceTree = "<group>"; };
 		A29589E716F0287700BEDBC6 /* WEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEUtils.h; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				A29CF1C816EBD37C00AB6D38 /* custom.css */,
+				A223B89816F4FFD000B15E26 /* override.css */,
 			);
 			path = css;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				A29CF1E216EBD37C00AB6D38 /* bootstrap.min.css in Resources */,
 				A29CF1E316EBD37C00AB6D38 /* glyphicons-halflings-white.png in Resources */,
 				A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */,
+				A223B89916F4FFD000B15E26 /* override.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

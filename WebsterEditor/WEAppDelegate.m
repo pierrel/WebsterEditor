@@ -35,10 +35,15 @@
 -(void)createDirectories {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *media = [WEUtils pathInDocumentDirectory:@"/media"];
+    NSString *css = [WEUtils pathInDocumentDirectory:@"/css"];
     NSError *error;
     
     if (![manager fileExistsAtPath:media]) {
         [manager createDirectoryAtPath:media withIntermediateDirectories:NO attributes:nil error:&error];
+    }
+    
+    if (![manager fileExistsAtPath:css]) {
+        [manager createDirectoryAtPath:css withIntermediateDirectories:NO attributes:nil error:&error];
     }
 }
 

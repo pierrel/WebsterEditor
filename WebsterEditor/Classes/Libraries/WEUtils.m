@@ -18,7 +18,6 @@
     NSString *bootstrapJSFile = [[NSBundle mainBundle] pathForResource:@"bootstrap.min" ofType:@"js"];
     NSString *customJSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"js"];
     NSString *rangyJSFile = [[NSBundle mainBundle] pathForResource:@"rangy" ofType:@"js"];
-    NSString *customCSSFile = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"css"];
     
     NSString *bootstrapJS = [NSString stringWithContentsOfFile:bootstrapJSFile
                                                       encoding:NSUTF8StringEncoding
@@ -34,7 +33,6 @@
                                                                  error:nil];
     NSString *customJS = [NSString stringWithContentsOfFile:customJSFile encoding:NSUTF8StringEncoding error:nil];
     NSString *rangyJS = [NSString stringWithContentsOfFile:rangyJSFile encoding:NSUTF8StringEncoding error:nil];
-    NSString *customCSS = [NSString stringWithContentsOfFile:customCSSFile encoding:NSUTF8StringEncoding error:nil];
     
     NSString *finalHTML = [NSString stringWithContentsOfFile:htmlFile
                                                     encoding:NSUTF8StringEncoding
@@ -45,7 +43,7 @@
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[bootstrapResponsiveCSS]]"
                                                      withString:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", bootstrapResponsive]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[customCSS]]"
-                                                     withString:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", customCSS]];
+                                                     withString:@"<link href=\"css/custom.css\" rel=\"stylesheet\">"];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[jqueryJS]]"
                                                      withString:[NSString stringWithFormat:@"<script type=\"text/javascript\">\n%@\n</script>", jQuery]];
     finalHTML = [finalHTML stringByReplacingOccurrencesOfString:@"[[bootstrapJS]]"
@@ -90,5 +88,4 @@
     
     return [NSURL fileURLWithPath:documentPath];
 }
-
 @end
