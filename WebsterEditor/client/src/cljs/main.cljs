@@ -117,12 +117,10 @@
   [data callback bridge]
   (let [jnode (listeners/get-selected)
         new-row (dom/new-image-gallery)
-        gallery (.find new-row ".thumbnails")
-        first-image (.find new-row "li.empty")]
+        gallery (.find new-row ".thumbnails")]
     (.append jnode new-row)
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
-    (.addEventListener (.get first-image 0) "click" (fn [event] (listeners/thumbnail-listener event bridge)))
-    (.click first-image)))
+    (.click (listeners/add-empty-thumbnail gallery bridge))))
 
 (.addEventListener js/document "WebViewJavascriptBridgeReady" on-bridge-ready false)

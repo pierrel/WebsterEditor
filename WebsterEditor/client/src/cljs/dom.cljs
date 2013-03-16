@@ -80,8 +80,7 @@
 
 (defn new-image-gallery []
   (js/$ (html/compile [:div {:class "row-fluid selectable"}
-                       [:ul {:class "thumbnails" :data-span "4"}
-                        (empty-image-thumbnail 4)]])))
+                       [:ul {:class "thumbnails" :data-span "4"}]])))
 
 (defn empty-image-thumbnail [span]
   (html/compile [:li {:class (format "span%s empty image-thumb" (or span 4))} [:div {:class "empty-decorations"} "Add Image"]]))

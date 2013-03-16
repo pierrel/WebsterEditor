@@ -38,6 +38,12 @@
                                 (.removeClass $el "empty")
                                 (.append $el new-element))))))
 
+(defn add-empty-thumbnail [$gallery bridge]
+  (let [$empty-thumb (js/$ (dom/empty-image-thumbnail))]
+    (.append $gallery $empty-thumb)
+    (.addEventListener (.get $empty-thumb 0) "click" (fn [event] (thumbnail-listener event bridge)))
+    $empty-thumb))
+
 (defn select-node [jnode bridge & [callback]]
   (let [row-info (node-info jnode)]
     (make-selected jnode)

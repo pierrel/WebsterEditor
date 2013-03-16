@@ -13445,7 +13445,7 @@ webster.dom.new_row = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span4 empty"], !0)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span8 empty"], !0)], !0)], !0)))
 };
 webster.dom.new_image_gallery = function() {
-  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0), webster.dom.empty_image_thumbnail.call(null, 4)], !0)], !0)))
+  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
 };
 webster.dom.empty_image_thumbnail = function(a) {
   return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb", cljs.core.truth_(a) ? a : 4)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
@@ -13475,6 +13475,14 @@ webster.listeners.thumbnail_listener = function(a, b) {
     c.removeClass("empty");
     return c.append(a)
   })
+};
+webster.listeners.add_empty_thumbnail = function(a, b) {
+  var c = $(webster.dom.empty_image_thumbnail.call(null));
+  a.append(c);
+  c.get(0).addEventListener("click", function(a) {
+    return webster.listeners.thumbnail_listener.call(null, a, b)
+  });
+  return c
 };
 webster.listeners.select_node = function() {
   var a = function(a, b, e) {
@@ -13616,16 +13624,12 @@ webster.main.add_row_handler = function(a, b, c) {
 webster.main.add_gallery_handler = function(a, b, c) {
   a = webster.listeners.get_selected.call(null);
   b = webster.dom.new_image_gallery.call(null);
-  b.find(".thumbnails");
-  var d = b.find("li.empty");
+  var d = b.find(".thumbnails");
   a.append(b);
   webster.listeners.default_listener.call(null, null, c);
   b.get(0).addEventListener("click", function(a) {
     return webster.listeners.container_listener.call(null, a, c)
   });
-  d.get(0).addEventListener("click", function(a) {
-    return webster.listeners.thumbnail_listener.call(null, a, c)
-  });
-  return d.click()
+  return webster.listeners.add_empty_thumbnail.call(null, d, c).click()
 };
 document.addEventListener("WebViewJavascriptBridgeReady", webster.main.on_bridge_ready, !1);
