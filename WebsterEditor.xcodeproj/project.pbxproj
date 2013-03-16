@@ -19,6 +19,9 @@
 		A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */; };
 		A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */; };
 		A223B89916F4FFD000B15E26 /* override.css in Resources */ = {isa = PBXBuildFile; fileRef = A223B89816F4FFD000B15E26 /* override.css */; };
+		A223B89C16F52F2400B15E26 /* development.html in Resources */ = {isa = PBXBuildFile; fileRef = A223B89B16F52F2400B15E26 /* development.html */; };
+		A223B89E16F5359B00B15E26 /* development.js in Sources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
+		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
 		A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E816F0287700BEDBC6 /* WEUtils.m */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
@@ -27,8 +30,7 @@
 		A29CF1BE16EBD37400AB6D38 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1B416EBD37400AB6D38 /* WebViewJavascriptBridge.m */; };
 		A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1B716EBD37400AB6D38 /* WEPageManager.m */; };
 		A29CF1C016EBD37400AB6D38 /* WEColumnResizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1BA16EBD37400AB6D38 /* WEColumnResizeView.m */; };
-		A29CF1DD16EBD37C00AB6D38 /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1C816EBD37C00AB6D38 /* custom.css */; };
-		A29CF1DE16EBD37C00AB6D38 /* custom.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1CA16EBD37C00AB6D38 /* custom.js */; };
+		A29CF1DD16EBD37C00AB6D38 /* development.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1C816EBD37C00AB6D38 /* development.css */; };
 		A29CF1DF16EBD37C00AB6D38 /* bootstrap-responsive.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1CE16EBD37C00AB6D38 /* bootstrap-responsive.css */; };
 		A29CF1E016EBD37C00AB6D38 /* bootstrap-responsive.min.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1CF16EBD37C00AB6D38 /* bootstrap-responsive.min.css */; };
 		A29CF1E116EBD37C00AB6D38 /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D016EBD37C00AB6D38 /* bootstrap.css */; };
@@ -39,7 +41,6 @@
 		A29CF1E616EBD37C00AB6D38 /* bootstrap.min.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D716EBD37C00AB6D38 /* bootstrap.min.js */; };
 		A29CF1E716EBD37C00AB6D38 /* jquery-1.9.0.min.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */; };
 		A29CF1E816EBD37C00AB6D38 /* rangy.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
-		A29CF1E916ED9AD500AB6D38 /* custom.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1CA16EBD37C00AB6D38 /* custom.js */; };
 		A29CF1EA16ED9AE900AB6D38 /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */; };
 		A29CF1EB16ED9AE900AB6D38 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,8 @@
 		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPhone.xib; sourceTree = "<group>"; };
 		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPad.xib; sourceTree = "<group>"; };
 		A223B89816F4FFD000B15E26 /* override.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = override.css; path = ../../../Classes/Controllers/override.css; sourceTree = "<group>"; };
+		A223B89B16F52F2400B15E26 /* development.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = development.html; sourceTree = "<group>"; };
+		A223B89D16F5359B00B15E26 /* development.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = development.js; sourceTree = "<group>"; };
 		A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WEViewController+ImagePicker.h"; sourceTree = "<group>"; };
 		A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEViewController+ImagePicker.m"; sourceTree = "<group>"; };
 		A29589E716F0287700BEDBC6 /* WEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEUtils.h; sourceTree = "<group>"; };
@@ -79,8 +82,7 @@
 		A29CF1C416EBD37C00AB6D38 /* dom.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dom.cljs; sourceTree = "<group>"; };
 		A29CF1C516EBD37C00AB6D38 /* listeners.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = listeners.cljs; sourceTree = "<group>"; };
 		A29CF1C616EBD37C00AB6D38 /* main.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.cljs; sourceTree = "<group>"; };
-		A29CF1C816EBD37C00AB6D38 /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
-		A29CF1CA16EBD37C00AB6D38 /* custom.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = custom.js; sourceTree = "<group>"; };
+		A29CF1C816EBD37C00AB6D38 /* development.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = development.css; sourceTree = "<group>"; };
 		A29CF1CE16EBD37C00AB6D38 /* bootstrap-responsive.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "bootstrap-responsive.css"; sourceTree = "<group>"; };
 		A29CF1CF16EBD37C00AB6D38 /* bootstrap-responsive.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "bootstrap-responsive.min.css"; sourceTree = "<group>"; };
 		A29CF1D016EBD37C00AB6D38 /* bootstrap.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.css; sourceTree = "<group>"; };
@@ -162,6 +164,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A223B89A16F52F2400B15E26 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				A223B89B16F52F2400B15E26 /* development.html */,
+			);
+			path = html;
+			sourceTree = "<group>";
+		};
 		A29CF1AA16EBD37400AB6D38 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +246,7 @@
 		A29CF1C216EBD37C00AB6D38 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A223B89A16F52F2400B15E26 /* html */,
 				A29CF1C316EBD37C00AB6D38 /* cljs */,
 				A29CF1C716EBD37C00AB6D38 /* css */,
 				A29CF1C916EBD37C00AB6D38 /* js */,
@@ -256,7 +267,7 @@
 		A29CF1C716EBD37C00AB6D38 /* css */ = {
 			isa = PBXGroup;
 			children = (
-				A29CF1C816EBD37C00AB6D38 /* custom.css */,
+				A29CF1C816EBD37C00AB6D38 /* development.css */,
 				A223B89816F4FFD000B15E26 /* override.css */,
 			);
 			path = css;
@@ -265,7 +276,7 @@
 		A29CF1C916EBD37C00AB6D38 /* js */ = {
 			isa = PBXGroup;
 			children = (
-				A29CF1CA16EBD37C00AB6D38 /* custom.js */,
+				A223B89D16F5359B00B15E26 /* development.js */,
 			);
 			path = js;
 			sourceTree = "<group>";
@@ -372,9 +383,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A223B89F16F536CD00B15E26 /* development.js in Resources */,
 				A29CF1EA16ED9AE900AB6D38 /* jquery-1.9.0.min.js in Resources */,
 				A29CF1EB16ED9AE900AB6D38 /* rangy.js in Resources */,
-				A29CF1E916ED9AD500AB6D38 /* custom.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
@@ -382,7 +393,7 @@
 				A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */,
 				A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */,
 				A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */,
-				A29CF1DD16EBD37C00AB6D38 /* custom.css in Resources */,
+				A29CF1DD16EBD37C00AB6D38 /* development.css in Resources */,
 				A29CF1DF16EBD37C00AB6D38 /* bootstrap-responsive.css in Resources */,
 				A29CF1E016EBD37C00AB6D38 /* bootstrap-responsive.min.css in Resources */,
 				A29CF1E116EBD37C00AB6D38 /* bootstrap.css in Resources */,
@@ -390,6 +401,7 @@
 				A29CF1E316EBD37C00AB6D38 /* glyphicons-halflings-white.png in Resources */,
 				A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */,
 				A223B89916F4FFD000B15E26 /* override.css in Resources */,
+				A223B89C16F52F2400B15E26 /* development.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,13 +437,13 @@
 				A29CF1BE16EBD37400AB6D38 /* WebViewJavascriptBridge.m in Sources */,
 				A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */,
 				A29CF1C016EBD37400AB6D38 /* WEColumnResizeView.m in Sources */,
-				A29CF1DE16EBD37C00AB6D38 /* custom.js in Sources */,
 				A29CF1E516EBD37C00AB6D38 /* bootstrap.js in Sources */,
 				A29CF1E616EBD37C00AB6D38 /* bootstrap.min.js in Sources */,
 				A29CF1E716EBD37C00AB6D38 /* jquery-1.9.0.min.js in Sources */,
 				A29CF1E816EBD37C00AB6D38 /* rangy.js in Sources */,
 				A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */,
 				A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */,
+				A223B89E16F5359B00B15E26 /* development.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
