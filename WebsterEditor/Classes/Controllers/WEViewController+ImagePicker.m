@@ -41,10 +41,11 @@
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];
-    NSLog(@"resource path: %@", mediaPath);
+
     if (self.imagePickerCallback) self.imagePickerCallback([NSDictionary dictionaryWithObject:mediaPath
                                                                                        forKey:@"resource-path"]);
-    self.imagePickerCallback = nil;    
+    self.imagePickerCallback = nil;
+    [self.popoverController dismissPopoverAnimated:YES];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

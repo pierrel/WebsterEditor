@@ -37,7 +37,7 @@
     NSString *media = [WEUtils pathInDocumentDirectory:@"/media"];
     NSError *error;
     
-    if (![manager fileExistsAtPath:media isDirectory:YES]) {
+    if (![manager fileExistsAtPath:media]) {
         [manager createDirectoryAtPath:media withIntermediateDirectories:NO attributes:nil error:&error];
     }
 }
