@@ -37,6 +37,10 @@
                                 (.remove old-element)
                                 (.removeClass $el "empty")
                                 (.append $el new-element)
+                                (let [$new-element-link (.find $el "a:last")]
+                                  (.addEventListener (aget $new-element-link 0) "click" (fn [event]
+                                                                                          (.preventDefault event)
+                                                                                          true)))
                                 (.click (add-empty-thumbnail (.closest $el ".thumbnails") bridge)))))))
 
 (defn add-empty-thumbnail [$gallery bridge]

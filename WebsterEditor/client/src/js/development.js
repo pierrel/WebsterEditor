@@ -13474,6 +13474,10 @@ webster.listeners.thumbnail_listener = function(a, b) {
     c.find(".empty-decorations").remove();
     c.removeClass("empty");
     c.append(a);
+    c.find("a:last")[0].addEventListener("click", function(a) {
+      a.preventDefault();
+      return!0
+    });
     return webster.listeners.add_empty_thumbnail.call(null, c.closest(".thumbnails"), b).click()
   })
 };

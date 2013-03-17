@@ -40,6 +40,11 @@ var old_element = $el.find(".empty-decorations");
 old_element.remove();
 $el.removeClass("empty");
 $el.append(new_element);
+var $new_element_link_5460 = $el.find("a:last");
+($new_element_link_5460[0]).addEventListener("click",(function (event__$1){
+event__$1.preventDefault();
+return true;
+}));
 return webster.listeners.add_empty_thumbnail.call(null,$el.closest(".thumbnails"),bridge).click();
 }));
 });
@@ -55,26 +60,26 @@ return $empty_thumb;
 * @param {...*} var_args
 */
 webster.listeners.select_node = (function() { 
-var select_node__delegate = function (jnode,bridge,p__8131){
-var vec__8133 = p__8131;
-var callback = cljs.core.nth.call(null,vec__8133,0,null);
+var select_node__delegate = function (jnode,bridge,p__5461){
+var vec__5463 = p__5461;
+var callback = cljs.core.nth.call(null,vec__5463,0,null);
 var row_info = webster.listeners.node_info.call(null,jnode);
 webster.listeners.make_selected.call(null,jnode);
 return bridge.callHandler("containerSelectedHandler",row_info,(cljs.core.truth_(callback)?callback:null));
 };
 var select_node = function (jnode,bridge,var_args){
-var p__8131 = null;
+var p__5461 = null;
 if (arguments.length > 2) {
-  p__8131 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
+  p__5461 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
 } 
-return select_node__delegate.call(this, jnode, bridge, p__8131);
+return select_node__delegate.call(this, jnode, bridge, p__5461);
 };
 select_node.cljs$lang$maxFixedArity = 2;
-select_node.cljs$lang$applyTo = (function (arglist__8134){
-var jnode = cljs.core.first(arglist__8134);
-var bridge = cljs.core.first(cljs.core.next(arglist__8134));
-var p__8131 = cljs.core.rest(cljs.core.next(arglist__8134));
-return select_node__delegate(jnode, bridge, p__8131);
+select_node.cljs$lang$applyTo = (function (arglist__5464){
+var jnode = cljs.core.first(arglist__5464);
+var bridge = cljs.core.first(cljs.core.next(arglist__5464));
+var p__5461 = cljs.core.rest(cljs.core.next(arglist__5464));
+return select_node__delegate(jnode, bridge, p__5461);
 });
 select_node.cljs$core$IFn$_invoke$arity$variadic = select_node__delegate;
 return select_node;
