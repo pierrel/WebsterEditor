@@ -13445,10 +13445,10 @@ webster.dom.new_row = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span4 empty"], !0)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span8 empty"], !0)], !0)], !0)))
 };
 webster.dom.new_image_gallery = function() {
-  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "3"], !0)], !0)], !0)))
+  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
 };
 webster.dom.empty_image_thumbnail = function(a) {
-  return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb", cljs.core.truth_(a) ? a : 3)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
+  return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb", cljs.core.truth_(a) ? a : 4)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
