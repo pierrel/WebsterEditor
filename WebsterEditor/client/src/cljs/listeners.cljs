@@ -28,20 +28,24 @@
   (let [$el (js/$ (.-currentTarget event))]
     (select-node $el bridge (fn [data callback]
                               (let [full-path (aget data "resource-path")
-                                    rel-path (second (re-matches #".*Documents/(.*)" full-path))
-                                    new-element (html/compile [:a {:href rel-path
-                                                                   :class "thumbnail"
-                                                                   :data-toggle "lightbox"}
-                                                               [:img {:src rel-path }]])
-                                    old-element (.find $el ".empty-decorations")]
-                                (.remove old-element)
-                                (.removeClass $el "empty")
-                                (.append $el new-element)
-                                (let [$new-element-link (.find $el "a:last")]
-                                  (.addEventListener (aget $new-element-link 0) "click" (fn [event]
-                                                                                          (.preventDefault event)
-                                                                                          true)))
-                                (.click (add-empty-thumbnail (.closest $el ".thumbnails") bridge)))))))
+                                    rel-path (second (re-matches #".*Documents/(.*)" full-path))]
+                                (if (.hasClass $el "empty")
+                                  (let [old-element (.find $el ".empty-decorations")
+                                        new-element (html/compile [:a {:href rel-path
+                                                                       :class "thumbnail"
+                                                                       :data-toggle "lightbox"}
+                                                                   [:img {:src rel-path }]])]
+                                    (.remove old-element)
+                                    (.removeClass $el "empty")
+                                    (.append $el new-element)
+                                    (.addEventListener (aget (.find $el "a:last") 0) "click" (fn [event]
+                                                                                            (.preventDefault event)
+                                                                                            true)))
+                                  (let [$thumb-image (.find $el "img")]
+                                    (.attr $thumb-image "src" rel-path)))
+                                (let [$thumbnails (.closest $el ".thumbnails")]
+                                  (if (not (.hasClass (.find $thumbnails ".image-thumb:last") "empty"))
+                                    (.click (add-empty-thumbnail $thumbnails  bridge)))))))))
 
 (defn add-empty-thumbnail [$gallery bridge]
   (let [$empty-thumb (js/$ (dom/empty-image-thumbnail))]

@@ -35,17 +35,26 @@ var $el = $(event.currentTarget);
 return webster.listeners.select_node.call(null,$el,bridge,(function (data,callback){
 var full_path = (data["resource-path"]);
 var rel_path = cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*Documents\/(.*)/,full_path));
-var new_element = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",rel_path,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",rel_path], true)], true)], true));
-var old_element = $el.find(".empty-decorations");
-old_element.remove();
+if(cljs.core.truth_($el.hasClass("empty")))
+{var old_element_7726 = $el.find(".empty-decorations");
+var new_element_7727 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",rel_path,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",rel_path], true)], true)], true));
+old_element_7726.remove();
 $el.removeClass("empty");
-$el.append(new_element);
-var $new_element_link_5460 = $el.find("a:last");
-($new_element_link_5460[0]).addEventListener("click",(function (event__$1){
+$el.append(new_element_7727);
+($el.find("a:last")[0]).addEventListener("click",(function (event__$1){
 event__$1.preventDefault();
 return true;
 }));
-return webster.listeners.add_empty_thumbnail.call(null,$el.closest(".thumbnails"),bridge).click();
+} else
+{var $thumb_image_7728 = $el.find("img");
+$thumb_image_7728.attr("src",rel_path);
+}
+var $thumbnails = $el.closest(".thumbnails");
+if(cljs.core.not.call(null,$thumbnails.find(".image-thumb:last").hasClass("empty")))
+{return webster.listeners.add_empty_thumbnail.call(null,$thumbnails,bridge).click();
+} else
+{return null;
+}
 }));
 });
 webster.listeners.add_empty_thumbnail = (function add_empty_thumbnail($gallery,bridge){
@@ -60,26 +69,26 @@ return $empty_thumb;
 * @param {...*} var_args
 */
 webster.listeners.select_node = (function() { 
-var select_node__delegate = function (jnode,bridge,p__5461){
-var vec__5463 = p__5461;
-var callback = cljs.core.nth.call(null,vec__5463,0,null);
+var select_node__delegate = function (jnode,bridge,p__7729){
+var vec__7731 = p__7729;
+var callback = cljs.core.nth.call(null,vec__7731,0,null);
 var row_info = webster.listeners.node_info.call(null,jnode);
 webster.listeners.make_selected.call(null,jnode);
 return bridge.callHandler("containerSelectedHandler",row_info,(cljs.core.truth_(callback)?callback:null));
 };
 var select_node = function (jnode,bridge,var_args){
-var p__5461 = null;
+var p__7729 = null;
 if (arguments.length > 2) {
-  p__5461 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
+  p__7729 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
 } 
-return select_node__delegate.call(this, jnode, bridge, p__5461);
+return select_node__delegate.call(this, jnode, bridge, p__7729);
 };
 select_node.cljs$lang$maxFixedArity = 2;
-select_node.cljs$lang$applyTo = (function (arglist__5464){
-var jnode = cljs.core.first(arglist__5464);
-var bridge = cljs.core.first(cljs.core.next(arglist__5464));
-var p__5461 = cljs.core.rest(cljs.core.next(arglist__5464));
-return select_node__delegate(jnode, bridge, p__5461);
+select_node.cljs$lang$applyTo = (function (arglist__7732){
+var jnode = cljs.core.first(arglist__7732);
+var bridge = cljs.core.first(cljs.core.next(arglist__7732));
+var p__7729 = cljs.core.rest(cljs.core.next(arglist__7732));
+return select_node__delegate(jnode, bridge, p__7729);
 });
 select_node.cljs$core$IFn$_invoke$arity$variadic = select_node__delegate;
 return select_node;
