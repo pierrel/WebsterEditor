@@ -7,6 +7,7 @@
 //
 
 #import "WEViewController.h"
+#import "WEImagePopoverViewController.h"
 
 @interface WEViewController (ImagePicker)
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback;

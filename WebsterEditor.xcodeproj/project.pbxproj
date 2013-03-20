@@ -43,6 +43,7 @@
 		A29CF1E816EBD37C00AB6D38 /* rangy.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
 		A29CF1EA16ED9AE900AB6D38 /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */; };
 		A29CF1EB16ED9AE900AB6D38 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
+		A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,8 @@
 		A29CF1D716EBD37C00AB6D38 /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.min.js; sourceTree = "<group>"; };
 		A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.0.min.js"; sourceTree = "<group>"; };
 		A29CF1D916EBD37C00AB6D38 /* rangy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rangy.js; sourceTree = "<group>"; };
+		A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEImagePopoverViewController.h; sourceTree = "<group>"; };
+		A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEImagePopoverViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,8 @@
 				A29CF1AF16EBD37400AB6D38 /* WEViewController.m */,
 				A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */,
 				A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */,
+				A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */,
+				A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 				A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */,
 				A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */,
 				A223B89E16F5359B00B15E26 /* development.js in Sources */,
+				A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

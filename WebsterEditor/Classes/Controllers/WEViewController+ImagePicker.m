@@ -27,10 +27,13 @@
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback {
     if (callback) self.imagePickerCallback = callback;
     [self setupControllers];
-    [self.popoverController presentPopoverFromRect:[WEUtils frameFromData:data]
-                                       inView:self.view
-                     permittedArrowDirections:UIPopoverArrowDirectionAny
-                                     animated:YES];
+//    [self.popoverController presentPopoverFromRect:[WEUtils frameFromData:data]
+//                                       inView:self.view
+//                     permittedArrowDirections:UIPopoverArrowDirectionAny
+//                                     animated:YES];
+    
+    WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] init];
+    [popover popOverView:self.view withFrame:[WEUtils frameFromData:data]];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
