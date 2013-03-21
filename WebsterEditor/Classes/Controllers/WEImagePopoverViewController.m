@@ -95,7 +95,7 @@
     [popover dismissPopoverAnimated:YES];
 }
 -(CGSize)popoverSize {
-    return CGSizeMake(300, 500);
+    return CGSizeMake(325, 500);
 }
 
 -(void)deleteButtonTapped:(UIButton *)delete {
