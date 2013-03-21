@@ -46,6 +46,11 @@
         self.imagePickerCallback([NSDictionary dictionaryWithObject:@"selected" forKey:@"delete"]);
 }
 
+-(void)imagePopoverControllerDidGetDismissed:(WEImagePopoverViewController*)picker {
+    self.imagePickerCallback = nil;
+}
+
+
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 }
 

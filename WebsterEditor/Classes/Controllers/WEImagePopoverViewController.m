@@ -108,4 +108,13 @@
     if (self.delegate) [self.delegate imagePopoverController:self didFinishPickingMediaWithInfo:info];
 }
 
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [popover dismissPopoverAnimated:YES];
+    if (self.delegate) [self.delegate imagePopoverControllerDidGetDismissed:self];
+}
+
+-(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    if (self.delegate) [self.delegate imagePopoverControllerDidGetDismissed:self];
+}
+
 @end

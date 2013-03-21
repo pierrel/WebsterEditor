@@ -14,6 +14,7 @@
 @protocol WEImagePopoverControllerDelegate <NSObject>
 -(void)imagePopoverController:(WEImagePopoverViewController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
 -(void)imagePopoverControllerDidDeleteImage:(WEImagePopoverViewController*)picker;
+-(void)imagePopoverControllerDidGetDismissed:(WEImagePopoverViewController*)picker;
 @end
 
 typedef enum imagePopoverTypes
