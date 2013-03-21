@@ -27,8 +27,6 @@
 
 - (void)imagePopoverController:(WEImagePopoverViewController *)picker
  didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [self.imagePicker dismiss];
-
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
     NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];

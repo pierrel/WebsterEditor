@@ -12,9 +12,8 @@
 #import "WEColumnResizeView.h"
 #import "WEImagePopoverViewController.h"
 
-@interface WEViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,WEImagePopoverControllerDelegate,UINavigationControllerDelegate>
+@interface WEViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate>
 @property (strong, nonatomic) WEDialogViewController *dialogController;
-@property (strong, nonatomic) WEImagePopoverViewController *imagePicker;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
