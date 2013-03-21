@@ -14,29 +14,23 @@
 
 -(void) setupControllers {
     if (!self.imagePicker) {
-        self.imagePicker = [[UIImagePickerController alloc] init];
+        self.imagePicker = [[WEImagePopoverViewController alloc] init];
         self.imagePicker.delegate = self;
-        [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
-    if (!self.popoverController) {
-        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePicker];
-    }
-    
 }
 
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback {
     if (callback) self.imagePickerCallback = callback;
-    [self setupControllers];
-//    [self.popoverController presentPopoverFromRect:[WEUtils frameFromData:data]
-//                                       inView:self.view
-//                     permittedArrowDirections:UIPopoverArrowDirectionAny
-//                                     animated:YES];
-    
+    [self setupControllers];    
     WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] init];
+    popover.delegate = self;
     [popover popOverView:self.view withFrame:[WEUtils frameFromData:data]];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePopoverController:(WEImagePopoverViewController *)picker
+ didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [self.imagePicker dismiss];
+
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
     NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
@@ -45,10 +39,10 @@
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];
 
-    if (self.imagePickerCallback) self.imagePickerCallback([NSDictionary dictionaryWithObject:mediaPath
-                                                                                       forKey:@"resource-path"]);
+    if (self.imagePickerCallback)
+        self.imagePickerCallback([NSDictionary dictionaryWithObject:mediaPath
+                                                             forKey:@"resource-path"]);
     self.imagePickerCallback = nil;
-    [self.popoverController dismissPopoverAnimated:YES];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

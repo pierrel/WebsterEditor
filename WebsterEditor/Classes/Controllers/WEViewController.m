@@ -21,7 +21,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEViewController
-@synthesize  popoverController, imagePicker, imagePickerCallback;
+@synthesize  imagePicker, imagePickerCallback;
 
 - (void)viewDidLoad
 {

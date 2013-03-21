@@ -10,11 +10,11 @@
 #import "WEDialogViewController.h"
 #import "WebViewJavascriptBridge.h"
 #import "WEColumnResizeView.h"
+#import "WEImagePopoverViewController.h"
 
-@interface WEViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface WEViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,WEImagePopoverControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) WEDialogViewController *dialogController;
-@property (strong, nonatomic) UIPopoverController *popoverController;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
+@property (strong, nonatomic) WEImagePopoverViewController *imagePicker;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;

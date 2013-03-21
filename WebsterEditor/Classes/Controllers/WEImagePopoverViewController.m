@@ -7,6 +7,9 @@
 //
 
 #import "WEImagePopoverViewController.h"
+#import "WEUtils.h"
+
+@class WEImagePopoverControllerDelegate;
 
 @interface WEImagePopoverViewController ()
 -(CGSize)popoverSize;
@@ -80,7 +83,8 @@
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UILayoutContainerView *view;
+    [popover dismissPopoverAnimated:YES];
+    if (self.delegate) [self.delegate imagePopoverController:self didFinishPickingMediaWithInfo:info];
 }
 
 @end

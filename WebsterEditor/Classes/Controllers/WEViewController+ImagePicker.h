@@ -11,4 +11,5 @@
 
 @interface WEViewController (ImagePicker)
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback;
+-(void)imagePopoverController:(WEImagePopoverViewController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
 @end
