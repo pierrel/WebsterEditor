@@ -22,6 +22,7 @@
 		A223B89C16F52F2400B15E26 /* development.html in Resources */ = {isa = PBXBuildFile; fileRef = A223B89B16F52F2400B15E26 /* development.html */; };
 		A223B89E16F5359B00B15E26 /* development.js in Sources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
+		A29459F116FACC19004AA401 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F016FACC19004AA401 /* GradientButton.m */; };
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
 		A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E816F0287700BEDBC6 /* WEUtils.m */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
@@ -65,6 +66,8 @@
 		A223B89816F4FFD000B15E26 /* override.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = override.css; path = ../../../Classes/Controllers/override.css; sourceTree = "<group>"; };
 		A223B89B16F52F2400B15E26 /* development.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = development.html; sourceTree = "<group>"; };
 		A223B89D16F5359B00B15E26 /* development.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = development.js; sourceTree = "<group>"; };
+		A29459EF16FACC19004AA401 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
+		A29459F016FACC19004AA401 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WEViewController+ImagePicker.h"; sourceTree = "<group>"; };
 		A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEViewController+ImagePicker.m"; sourceTree = "<group>"; };
 		A29589E716F0287700BEDBC6 /* WEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEUtils.h; sourceTree = "<group>"; };
@@ -233,6 +236,8 @@
 		A29CF1B816EBD37400AB6D38 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A29459EF16FACC19004AA401 /* GradientButton.h */,
+				A29459F016FACC19004AA401 /* GradientButton.m */,
 				A29CF1B916EBD37400AB6D38 /* WEColumnResizeView.h */,
 				A29CF1BA16EBD37400AB6D38 /* WEColumnResizeView.m */,
 			);
@@ -450,6 +455,7 @@
 				A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */,
 				A223B89E16F5359B00B15E26 /* development.js in Sources */,
 				A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */,
+				A29459F116FACC19004AA401 /* GradientButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

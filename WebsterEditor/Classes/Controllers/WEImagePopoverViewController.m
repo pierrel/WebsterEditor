@@ -28,8 +28,6 @@
         self.popover.delegate = self;
         [self.popover setPopoverContentSize:[self popoverSize]];
         
-        self.deleteButton = [[UIButton alloc] init];
-        
         self.type = OCCUPIED_IMAGE;
     }
     return self;
@@ -38,16 +36,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGFloat buffer = 5;
+    CGSize size = [self popoverSize];
     
-    [self.view addSubview:imagePicker.view];
+    CGFloat bHeight = 40;
+    CGRect bFrame = CGRectMake(0,
+                               buffer,
+                               size.width,
+                               bHeight);
     [imagePicker.view setFrame:CGRectMake(0,
-                                          40,
+                                          bHeight + (buffer*2),
                                           self.view.frame.size.width,
-                                          self.view.frame.size.height - 40)];
+                                          self.view.frame.size.height - bHeight - (buffer*2))];
+    [self.view addSubview:imagePicker.view];
     
-    [self.view addSubview:deleteButton];
-    [deleteButton setFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    if (!deleteButton)
+        self.deleteButton = [[GradientButton alloc] initWithFrame:bFrame];
+    [deleteButton useRedDeleteStyle];
     [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+    [deleteButton setHidden:NO];
+    [deleteButton setEnabled:YES];
+    [self.view addSubview:deleteButton];
 
 }
 
@@ -66,9 +75,12 @@
 -(void)dismiss {
     [popover dismissPopoverAnimated:YES];
 }
-
 -(CGSize)popoverSize {
     return CGSizeMake(300, 500);
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UILayoutContainerView *view;
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WEImagePopoverViewController.h"
+#import "GradientButton.h"
 
 typedef enum imagePopoverTypes
 {
@@ -18,7 +19,7 @@ typedef enum imagePopoverTypes
 @interface WEImagePopoverViewController : UIViewController<UIPopoverControllerDelegate, UIImagePickerControllerDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popover;
-@property (nonatomic, strong) UIButton *deleteButton;
+@property (nonatomic, strong) GradientButton *deleteButton;
 @property (nonatomic, assign) WEImagePopoverType type;
 
 -(void)popOverView:(UIView*)view withFrame:(CGRect)frame;
