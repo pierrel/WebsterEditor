@@ -9,21 +9,19 @@
 #import "WEViewController+ImagePicker.h"
 #import "WEUtils.h"
 #import "WEPageManager.h"
+#import "NSArray+WEExtras.h"
 
 @implementation WEViewController (ImagePicker)
 
--(void) setupControllers {
-    if (!self.imagePicker) {
-        self.imagePicker = [[WEImagePopoverViewController alloc] init];
-        self.imagePicker.delegate = self;
-    }
-}
-
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback {
     if (callback) self.imagePickerCallback = callback;
-    [self setupControllers];    
-    WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] init];
+    
+    WEImagePopoverType type = WEImagePopoverOccupied;
+    NSArray *classes = [data objectForKey:@"classes"];
+    if (classes && [classes hasString:@"empty"]) type = WEImagePopoverEmpty;
+    WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] initWithType:type];
     popover.delegate = self;
+
     [popover popOverView:self.view withFrame:[WEUtils frameFromData:data]];
 }
 

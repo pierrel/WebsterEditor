@@ -18,8 +18,8 @@
 
 typedef enum imagePopoverTypes
 {
-    EMPTY_IMAGE,
-    OCCUPIED_IMAGE
+    WEImagePopoverEmpty,
+    WEImagePopoverOccupied
 } WEImagePopoverType;
 
 @interface WEImagePopoverViewController : UIViewController<UIPopoverControllerDelegate, UIImagePickerControllerDelegate>
@@ -31,4 +31,6 @@ typedef enum imagePopoverTypes
 
 -(void)popOverView:(UIView*)view withFrame:(CGRect)frame;
 -(void)dismiss;
+
+-(id)initWithType:(WEImagePopoverType)type;
 @end

@@ -18,10 +18,11 @@
 @implementation WEImagePopoverViewController
 @synthesize imagePicker, popover, deleteButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+-(id)initWithType:(WEImagePopoverType)type {
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        self.type = type;
+        
         self.imagePicker = [[UIImagePickerController alloc] init];
         self.imagePicker.delegate = self;
         [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
@@ -29,9 +30,15 @@
         
         self.popover = [[UIPopoverController alloc] initWithContentViewController:self];
         self.popover.delegate = self;
-        [self.popover setPopoverContentSize:[self popoverSize]];
-        
-        self.type = OCCUPIED_IMAGE;
+        [self.popover setPopoverContentSize:[self popoverSize]];        
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
     }
     return self;
 }
@@ -39,29 +46,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CGFloat buffer = 5;
     CGSize size = [self popoverSize];
     
+    CGFloat buffer = 5;
     CGFloat bHeight = 40;
-    CGRect bFrame = CGRectMake(0,
-                               buffer,
-                               size.width,
-                               bHeight);
+    
+    if (self.type == WEImagePopoverEmpty) {
+        buffer = 0;
+        bHeight = 0;
+    }
     [imagePicker.view setFrame:CGRectMake(0,
                                           bHeight + (buffer*2),
                                           self.view.frame.size.width,
                                           self.view.frame.size.height - bHeight - (buffer*2))];
     [self.view addSubview:imagePicker.view];
     
-    if (!deleteButton) {
-        self.deleteButton = [[GradientButton alloc] initWithFrame:bFrame];
-        [deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    if (self.type == WEImagePopoverOccupied) {
+        CGRect bFrame = CGRectMake(0,
+                                   buffer,
+                                   size.width,
+                                   bHeight);
+        if (!deleteButton) {
+            self.deleteButton = [[GradientButton alloc] initWithFrame:bFrame];
+            [deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        [deleteButton useRedDeleteStyle];
+        [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [deleteButton setHidden:NO];
+        [deleteButton setEnabled:YES];
+        [self.view addSubview:deleteButton];
     }
-    [deleteButton useRedDeleteStyle];
-    [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
-    [deleteButton setHidden:NO];
-    [deleteButton setEnabled:YES];
-    [self.view addSubview:deleteButton];
 
 }
 
