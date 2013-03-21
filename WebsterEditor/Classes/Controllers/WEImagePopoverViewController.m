@@ -53,8 +53,10 @@
                                           self.view.frame.size.height - bHeight - (buffer*2))];
     [self.view addSubview:imagePicker.view];
     
-    if (!deleteButton)
+    if (!deleteButton) {
         self.deleteButton = [[GradientButton alloc] initWithFrame:bFrame];
+        [deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    }
     [deleteButton useRedDeleteStyle];
     [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
     [deleteButton setHidden:NO];
@@ -80,6 +82,11 @@
 }
 -(CGSize)popoverSize {
     return CGSizeMake(300, 500);
+}
+
+-(void)deleteButtonTapped:(UIButton *)delete {
+    [popover dismissPopoverAnimated:YES];
+    if (self.delegate) [self.delegate imagePopoverControllerDidDeleteImage:self];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {

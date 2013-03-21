@@ -2844,23 +2844,23 @@ cljs.core.with_meta = "undefined" != typeof cljs.core.with_meta ? cljs.core.with
 cljs.core.IWithMeta["function"] = !0;
 cljs.core._with_meta["function"] = function(a, b) {
   return cljs.core.with_meta.call(null, function() {
-    if(void 0 === cljs.core.t2621) {
-      cljs.core.t2621 = {};
-      cljs.core.t2621 = function(a, b, c) {
+    if(void 0 === cljs.core.t2629) {
+      cljs.core.t2629 = {};
+      cljs.core.t2629 = function(a, b, c) {
         this.meta = a;
         this.f = b;
-        this.meta2622 = c;
+        this.meta2630 = c;
         this.cljs$lang$protocol_mask$partition1$ = 0;
         this.cljs$lang$protocol_mask$partition0$ = 393217
       };
-      cljs.core.t2621.cljs$lang$type = !0;
-      cljs.core.t2621.cljs$lang$ctorPrSeq = function() {
-        return cljs.core.list.call(null, "cljs.core/t2621")
+      cljs.core.t2629.cljs$lang$type = !0;
+      cljs.core.t2629.cljs$lang$ctorPrSeq = function() {
+        return cljs.core.list.call(null, "cljs.core/t2629")
       };
-      cljs.core.t2621.cljs$lang$ctorPrWriter = function(a, b) {
-        return cljs.core._write.call(null, b, "cljs.core/t2621")
+      cljs.core.t2629.cljs$lang$ctorPrWriter = function(a, b) {
+        return cljs.core._write.call(null, b, "cljs.core/t2629")
       };
-      var c = cljs.core.t2621.prototype, d = function(a, b) {
+      var c = cljs.core.t2629.prototype, d = function(a, b) {
         return cljs.core.apply.call(null, a.f, b)
       }, e = function(a, b) {
         a = this;
@@ -2876,19 +2876,19 @@ cljs.core._with_meta["function"] = function(a, b) {
       };
       e.cljs$core$IFn$_invoke$arity$variadic = d;
       c.call = e;
-      cljs.core.t2621.prototype.apply = function(a, b) {
+      cljs.core.t2629.prototype.apply = function(a, b) {
         a = this;
         return a.call.apply(a, [a].concat(b.slice()))
       };
-      cljs.core.t2621.prototype.cljs$core$Fn$ = !0;
-      cljs.core.t2621.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-        return this.meta2622
+      cljs.core.t2629.prototype.cljs$core$Fn$ = !0;
+      cljs.core.t2629.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+        return this.meta2630
       };
-      cljs.core.t2621.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-        return new cljs.core.t2621(this.meta, this.f, b)
+      cljs.core.t2629.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+        return new cljs.core.t2629(this.meta, this.f, b)
       }
     }
-    return new cljs.core.t2621(b, a, null)
+    return new cljs.core.t2629(b, a, null)
   }(), b)
 };
 cljs.core.IMeta["function"] = !0;
@@ -13447,9 +13447,24 @@ webster.dom.new_row = function() {
 webster.dom.new_image_gallery = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
 };
-webster.dom.empty_image_thumbnail = function(a) {
-  return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb", cljs.core.truth_(a) ? a : 4)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
-};
+webster.dom.empty_image_thumbnail = function() {
+  var a = null, b = function() {
+    return a.call(null, 4)
+  }, c = function(a) {
+    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
+  }, a = function(a) {
+    switch(arguments.length) {
+      case 0:
+        return b.call(this);
+      case 1:
+        return c.call(this, a)
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$core$IFn$_invoke$arity$0 = b;
+  a.cljs$core$IFn$_invoke$arity$1 = c;
+  return a
+}();
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13469,6 +13484,9 @@ webster.listeners.container_listener = function(a, b) {
 webster.listeners.thumbnail_listener = function(a, b) {
   var c = $(a.currentTarget);
   return webster.listeners.select_node.call(null, c, b, function(a) {
+    if(cljs.core.truth_(a["delete"])) {
+      return c.remove()
+    }
     var e = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
     cljs.core.truth_(c.hasClass("empty")) ? (a = c.find(".empty-decorations"), e = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", e, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", e], !0)], !0)], !0)), a.remove(), c.removeClass("empty"), c.append(e), c.find("a:last")[0].addEventListener("click", 
     function(a) {
