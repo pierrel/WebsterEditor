@@ -24,6 +24,8 @@
 		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A27D62BD16FC17FB005C114A /* WEGlobalSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEGlobalSettingsViewController.m */; };
 		A27D62BE16FC17FB005C114A /* WEGlobalSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEGlobalSettingsViewController.xib */; };
+		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
+		A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C116FC2063005C114A /* dark_exa_@2X.png */; };
 		A29459F116FACC19004AA401 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F016FACC19004AA401 /* GradientButton.m */; };
 		A29459F516FB59B9004AA401 /* NSArray+WEExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F416FB59B9004AA401 /* NSArray+WEExtras.m */; };
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
@@ -72,6 +74,8 @@
 		A27D62BA16FC17FB005C114A /* WEGlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEGlobalSettingsViewController.h; sourceTree = "<group>"; };
 		A27D62BB16FC17FB005C114A /* WEGlobalSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEGlobalSettingsViewController.m; sourceTree = "<group>"; };
 		A27D62BC16FC17FB005C114A /* WEGlobalSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEGlobalSettingsViewController.xib; sourceTree = "<group>"; };
+		A27D62C016FC2063005C114A /* dark_exa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_exa.png; sourceTree = "<group>"; };
+		A27D62C116FC2063005C114A /* dark_exa_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_exa_@2X.png"; sourceTree = "<group>"; };
 		A29459EF16FACC19004AA401 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		A29459F016FACC19004AA401 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		A29459F316FB59B9004AA401 /* NSArray+WEExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+WEExtras.h"; path = "Categories/NSArray+WEExtras.h"; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 				A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */,
 				A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */,
 				A20CB1CA16B8F4CF00AF858B /* Supporting Files */,
+				A27D62BF16FC2063005C114A /* Resources */,
 			);
 			path = WebsterEditor;
 			sourceTree = "<group>";
@@ -184,6 +189,15 @@
 				A223B89B16F52F2400B15E26 /* development.html */,
 			);
 			path = html;
+			sourceTree = "<group>";
+		};
+		A27D62BF16FC2063005C114A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A27D62C016FC2063005C114A /* dark_exa.png */,
+				A27D62C116FC2063005C114A /* dark_exa_@2X.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A29459F216FB5998004AA401 /* Categories */ = {
@@ -434,6 +448,8 @@
 				A223B89916F4FFD000B15E26 /* override.css in Resources */,
 				A223B89C16F52F2400B15E26 /* development.html in Resources */,
 				A27D62BE16FC17FB005C114A /* WEGlobalSettingsViewController.xib in Resources */,
+				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
+				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
