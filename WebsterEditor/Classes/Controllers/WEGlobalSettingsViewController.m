@@ -30,6 +30,11 @@
     [super viewDidLoad];
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
+    contentView.layer.masksToBounds = NO;
+    contentView.layer.shadowOffset = CGSizeMake(-15, 0);
+    contentView.layer.shadowRadius = 5;
+    contentView.layer.shadowOpacity = 0.5;
+    
     WEViewController *contentController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
     [self.contentView addSubview:contentController.view];
     
