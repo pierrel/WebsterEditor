@@ -94,12 +94,13 @@
 
 -(void)removeBackgroundImage {
     [self.contentController removeBackground];
+    [self.bgRemove setHidden:YES];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     // get the thing
     [self.popover dismissPopoverAnimated:YES];
-    [self closeSettingsWithTiming:0.3];
+    [bgRemove setHidden:NO];
     [self.contentController setBackgroundWithInfo:info];
 }
 
