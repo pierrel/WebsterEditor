@@ -90,7 +90,10 @@
  */
 -(void)selectingBackgroundImage {    
     [self.popover presentPopoverFromRect:self.bgSelect.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    
+}
+
+-(void)removeBackgroundImage {
+    [self.contentController removeBackground];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {

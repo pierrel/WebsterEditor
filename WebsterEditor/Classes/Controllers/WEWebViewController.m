@@ -211,6 +211,10 @@ static const int ICON_DIM = 13;
     [[WEPageManager sharedManager] setBackgroundImageToPath:mediaPath];
 }
 
+-(void)removeBackground {
+    [[WEPageManager sharedManager] removeBackgroundImage];
+}
+
 
 
 - (void)didReceiveMemoryWarning

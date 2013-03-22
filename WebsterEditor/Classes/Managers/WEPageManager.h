@@ -31,6 +31,7 @@ typedef void (^WEResponseCallback)(id responseData);
  *  Background handling
  */
 -(void)setBackgroundImageToPath:(NSString*)path;
+-(void)removeBackgroundImage;
 -(void)hasBackgroundWithCallback:(WEResponseCallback)callback;
 
 +(WEPageManager *)sharedManager;

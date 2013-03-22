@@ -19,5 +19,6 @@
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info;
+-(void)removeBackground;
 @end
 
