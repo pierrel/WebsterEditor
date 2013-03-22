@@ -17,5 +17,7 @@
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
+
+-(void)setBackgroundWithInfo:(NSDictionary *)info;
 @end
 

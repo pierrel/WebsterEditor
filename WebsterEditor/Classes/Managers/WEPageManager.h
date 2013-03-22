@@ -22,6 +22,7 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)decrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)decrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
+-(void)setBackgroundImageToPath:(NSString*)path;
 
 +(WEPageManager *)sharedManager;
 @end

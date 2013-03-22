@@ -66,6 +66,11 @@ static WEPageManager *gSharedManager;
        }];
 }
 
+-(void)setBackgroundImageToPath:(NSString *)path {
+    [bridge callHandler:@"setBackgroundImage"
+                   data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
+}
+
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {
         gSharedManager = [[WEPageManager alloc] init];

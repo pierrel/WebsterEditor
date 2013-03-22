@@ -25,7 +25,12 @@
     (.registerHandler bridge "incrementColumn" increment-column)
     (.registerHandler bridge "decrementColumn" decrement-column)
     (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
-    (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)))
+    (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)
+    (.registerHandler bridge "setBackgroundImage" set-background-image)))
+
+(defn set-background-image
+  [data]
+  (.addClass (js/$ "body") "with-background"))
 
 (defn increment-column-offset
   [data callback]

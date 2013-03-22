@@ -9,3 +9,10 @@
 .row-fluid ul.thumbnails li.span4 img { height: 219px; }
 .row-fluid ul.thumbnails li.span3 img { height: 117px; }
 
+body {
+    height: 100%;
+}
+body.with-background {
+    background: url(/media/background.jpg) no-repeat center center fixed;
+    background-size: cover;
+}

@@ -201,6 +201,16 @@ static const int ICON_DIM = 13;
     }
 }
 
+-(void)setBackgroundWithInfo:(NSDictionary *)info {
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:@"/media/background.jpg"];
+    
+    UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData* data = UIImageJPEGRepresentation(image, 1);
+    [data writeToFile:mediaPath atomically:NO];
+    
+    [[WEPageManager sharedManager] setBackgroundImageToPath:mediaPath];
+}
+
 
 
 - (void)didReceiveMemoryWarning
