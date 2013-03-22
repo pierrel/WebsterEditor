@@ -7,7 +7,6 @@
 //
 
 #import "WEAppDelegate.h"
-#import "WEViewController.h"
 #import "WEUtils.h"
 
 @interface WEAppDelegate ()
@@ -21,9 +20,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
+//        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
     } else {
-        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
+        WEGlobalSettingsViewController *viewController = [[WEGlobalSettingsViewController alloc] initWithNibName:@"WEGlobalSettingsViewController" bundle:nil];        
+        self.viewController = viewController;
+//        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

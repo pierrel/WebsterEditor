@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WEGlobalSettingsViewController.h"
 
 @class WEViewController;
 
@@ -14,6 +15,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) WEViewController *viewController;
+@property (strong, nonatomic) WEGlobalSettingsViewController *viewController;
 
 @end
