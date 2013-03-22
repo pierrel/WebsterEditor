@@ -1,3 +1,11 @@
+body {
+    height: 100%;
+}
+body.with-background {
+    background: url(../media/background.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
 /* To fix the ridiculous responsive+thumb problem... */
 .row-fluid ul.thumbnails li.span12 + li { margin-left : 0px; }
 .row-fluid ul.thumbnails li.span6:nth-child(2n + 3) { margin-left : 0px; }
@@ -8,11 +16,3 @@
 
 .row-fluid ul.thumbnails li.span4 img { height: 219px; }
 .row-fluid ul.thumbnails li.span3 img { height: 117px; }
-
-body {
-    height: 100%;
-}
-body.with-background {
-    background: url(../media/background.jpg) no-repeat center center fixed;
-    background-size: cover;
-}

@@ -13577,10 +13577,14 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("decrementColumn", webster.main.decrement_column);
   b.registerHandler("incrementColumnOffset", webster.main.increment_column_offset);
   b.registerHandler("decrementColumnOffset", webster.main.decrement_column_offset);
-  return b.registerHandler("setBackgroundImage", webster.main.set_background_image)
+  b.registerHandler("setBackgroundImage", webster.main.set_background_image);
+  return b.registerHandler("hasBackgroundImage", webster.main.has_background_image)
 };
 webster.main.set_background_image = function() {
   return $("body").addClass("with-background")
+};
+webster.main.has_background_image = function(a, b) {
+  return b.call(null, {hasBackground:cljs.core.truth_($("body").hasClass("with-background")) ? "true" : "false"})
 };
 webster.main.increment_column_offset = function(a, b) {
   var c = webster.listeners.get_selected.call(null), d = parseInt(a.index), e = c.find("\x3e div"), d = webster.dom.get_jnode.call(null, e, d);

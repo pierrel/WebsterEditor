@@ -26,11 +26,17 @@
     (.registerHandler bridge "decrementColumn" decrement-column)
     (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
     (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)
-    (.registerHandler bridge "setBackgroundImage" set-background-image)))
+    (.registerHandler bridge "setBackgroundImage" set-background-image)
+    (.registerHandler bridge "hasBackgroundImage" has-background-image)))
 
 (defn set-background-image
   [data]
   (.addClass (js/$ "body") "with-background"))
+(defn has-background-image
+  [data callback]
+  (callback (js-obj "hasBackground" (if (.hasClass (js/$ "body") "with-background")
+                                      "true"
+                                      "false"))))
 
 (defn increment-column-offset
   [data callback]

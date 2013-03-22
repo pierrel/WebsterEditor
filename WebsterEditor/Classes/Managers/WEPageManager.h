@@ -16,13 +16,22 @@ typedef void (^WEResponseCallback)(id responseData);
 
 -(void)removeSelectedElement;
 -(void)editSelectedElement;
--(void)addRowUnderSelectedElement;
 -(void)addGalleryUnderSelectedElement;
+
+/*
+ *  Row edits
+ */
+-(void)addRowUnderSelectedElement;
 -(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)decrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)decrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
+
+/*
+ *  Background handling
+ */
 -(void)setBackgroundImageToPath:(NSString*)path;
+-(void)hasBackgroundWithCallback:(WEResponseCallback)callback;
 
 +(WEPageManager *)sharedManager;
 @end

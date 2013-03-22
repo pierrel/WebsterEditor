@@ -71,6 +71,14 @@ static WEPageManager *gSharedManager;
                    data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
 }
 
+-(void)hasBackgroundWithCallback:(WEResponseCallback)callback {
+    [bridge callHandler:@"hasBackgroundImage"
+                   data:[NSDictionary dictionary]
+       responseCallback:^(id responseData) {
+           return callback(responseData);
+    }];
+}
+
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {
         gSharedManager = [[WEPageManager alloc] init];
