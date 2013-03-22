@@ -16,14 +16,14 @@
 		A20CB1D616B8F4CF00AF858B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1D516B8F4CF00AF858B /* Default.png */; };
 		A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1D716B8F4CF00AF858B /* Default@2x.png */; };
 		A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */; };
-		A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */; };
-		A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */; };
+		A20CB1E016B8F4CF00AF858B /* WEWebViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEWebViewController_iPhone.xib */; };
+		A20CB1E316B8F4CF00AF858B /* WEWebViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEWebViewController_iPad.xib */; };
 		A223B89916F4FFD000B15E26 /* override.css in Resources */ = {isa = PBXBuildFile; fileRef = A223B89816F4FFD000B15E26 /* override.css */; };
 		A223B89C16F52F2400B15E26 /* development.html in Resources */ = {isa = PBXBuildFile; fileRef = A223B89B16F52F2400B15E26 /* development.html */; };
 		A223B89E16F5359B00B15E26 /* development.js in Sources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
-		A27D62BD16FC17FB005C114A /* WEGlobalSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEGlobalSettingsViewController.m */; };
-		A27D62BE16FC17FB005C114A /* WEGlobalSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEGlobalSettingsViewController.xib */; };
+		A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEViewController.m */; };
+		A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
 		A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C116FC2063005C114A /* dark_exa_@2X.png */; };
 		A29459F116FACC19004AA401 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F016FACC19004AA401 /* GradientButton.m */; };
@@ -31,7 +31,7 @@
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
 		A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E816F0287700BEDBC6 /* WEUtils.m */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
-		A29CF1BC16EBD37400AB6D38 /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AF16EBD37400AB6D38 /* WEViewController.m */; };
+		A29CF1BC16EBD37400AB6D38 /* WEWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AF16EBD37400AB6D38 /* WEWebViewController.m */; };
 		A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1B316EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt */; };
 		A29CF1BE16EBD37400AB6D38 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1B416EBD37400AB6D38 /* WebViewJavascriptBridge.m */; };
 		A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1B716EBD37400AB6D38 /* WEPageManager.m */; };
@@ -66,14 +66,14 @@
 		A20CB1D516B8F4CF00AF858B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		A20CB1D716B8F4CF00AF858B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPhone.xib; sourceTree = "<group>"; };
-		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEViewController_iPad.xib; sourceTree = "<group>"; };
+		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEWebViewController_iPhone.xib; sourceTree = "<group>"; };
+		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEWebViewController_iPad.xib; sourceTree = "<group>"; };
 		A223B89816F4FFD000B15E26 /* override.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = override.css; path = ../../../Classes/Controllers/override.css; sourceTree = "<group>"; };
 		A223B89B16F52F2400B15E26 /* development.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = development.html; sourceTree = "<group>"; };
 		A223B89D16F5359B00B15E26 /* development.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = development.js; sourceTree = "<group>"; };
-		A27D62BA16FC17FB005C114A /* WEGlobalSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEGlobalSettingsViewController.h; sourceTree = "<group>"; };
-		A27D62BB16FC17FB005C114A /* WEGlobalSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEGlobalSettingsViewController.m; sourceTree = "<group>"; };
-		A27D62BC16FC17FB005C114A /* WEGlobalSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEGlobalSettingsViewController.xib; sourceTree = "<group>"; };
+		A27D62BA16FC17FB005C114A /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
+		A27D62BB16FC17FB005C114A /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
+		A27D62BC16FC17FB005C114A /* WEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEViewController.xib; sourceTree = "<group>"; };
 		A27D62C016FC2063005C114A /* dark_exa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_exa.png; sourceTree = "<group>"; };
 		A27D62C116FC2063005C114A /* dark_exa_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_exa_@2X.png"; sourceTree = "<group>"; };
 		A29459EF16FACC19004AA401 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
@@ -86,8 +86,8 @@
 		A29589E816F0287700BEDBC6 /* WEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEUtils.m; sourceTree = "<group>"; };
 		A29CF1AC16EBD37400AB6D38 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
 		A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
-		A29CF1AE16EBD37400AB6D38 /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
-		A29CF1AF16EBD37400AB6D38 /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
+		A29CF1AE16EBD37400AB6D38 /* WEWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEWebViewController.h; sourceTree = "<group>"; };
+		A29CF1AF16EBD37400AB6D38 /* WEWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEWebViewController.m; sourceTree = "<group>"; };
 		A29CF1B216EBD37400AB6D38 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
 		A29CF1B316EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
 		A29CF1B416EBD37400AB6D38 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
@@ -161,8 +161,8 @@
 				A29CF1AA16EBD37400AB6D38 /* Classes */,
 				A20CB1D216B8F4CF00AF858B /* WEAppDelegate.h */,
 				A20CB1D316B8F4CF00AF858B /* WEAppDelegate.m */,
-				A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */,
-				A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */,
+				A20CB1DE16B8F4CF00AF858B /* WEWebViewController_iPhone.xib */,
+				A20CB1E116B8F4CF00AF858B /* WEWebViewController_iPad.xib */,
 				A20CB1CA16B8F4CF00AF858B /* Supporting Files */,
 				A27D62BF16FC2063005C114A /* Resources */,
 			);
@@ -226,15 +226,15 @@
 			children = (
 				A29CF1AC16EBD37400AB6D38 /* WEDialogViewController.h */,
 				A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */,
-				A29CF1AE16EBD37400AB6D38 /* WEViewController.h */,
-				A29CF1AF16EBD37400AB6D38 /* WEViewController.m */,
+				A29CF1AE16EBD37400AB6D38 /* WEWebViewController.h */,
+				A29CF1AF16EBD37400AB6D38 /* WEWebViewController.m */,
 				A29589E416F0280600BEDBC6 /* WEViewController+ImagePicker.h */,
 				A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */,
 				A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */,
 				A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */,
-				A27D62BA16FC17FB005C114A /* WEGlobalSettingsViewController.h */,
-				A27D62BB16FC17FB005C114A /* WEGlobalSettingsViewController.m */,
-				A27D62BC16FC17FB005C114A /* WEGlobalSettingsViewController.xib */,
+				A27D62BA16FC17FB005C114A /* WEViewController.h */,
+				A27D62BB16FC17FB005C114A /* WEViewController.m */,
+				A27D62BC16FC17FB005C114A /* WEViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -435,8 +435,8 @@
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
 				A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */,
-				A20CB1E016B8F4CF00AF858B /* WEViewController_iPhone.xib in Resources */,
-				A20CB1E316B8F4CF00AF858B /* WEViewController_iPad.xib in Resources */,
+				A20CB1E016B8F4CF00AF858B /* WEWebViewController_iPhone.xib in Resources */,
+				A20CB1E316B8F4CF00AF858B /* WEWebViewController_iPad.xib in Resources */,
 				A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */,
 				A29CF1DD16EBD37C00AB6D38 /* development.css in Resources */,
 				A29CF1DF16EBD37C00AB6D38 /* bootstrap-responsive.css in Resources */,
@@ -447,7 +447,7 @@
 				A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */,
 				A223B89916F4FFD000B15E26 /* override.css in Resources */,
 				A223B89C16F52F2400B15E26 /* development.html in Resources */,
-				A27D62BE16FC17FB005C114A /* WEGlobalSettingsViewController.xib in Resources */,
+				A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */,
 				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 			);
@@ -481,7 +481,7 @@
 				A20CB1D016B8F4CF00AF858B /* main.m in Sources */,
 				A20CB1D416B8F4CF00AF858B /* WEAppDelegate.m in Sources */,
 				A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */,
-				A29CF1BC16EBD37400AB6D38 /* WEViewController.m in Sources */,
+				A29CF1BC16EBD37400AB6D38 /* WEWebViewController.m in Sources */,
 				A29CF1BE16EBD37400AB6D38 /* WebViewJavascriptBridge.m in Sources */,
 				A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */,
 				A29CF1C016EBD37400AB6D38 /* WEColumnResizeView.m in Sources */,
@@ -495,7 +495,7 @@
 				A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */,
 				A29459F116FACC19004AA401 /* GradientButton.m in Sources */,
 				A29459F516FB59B9004AA401 /* NSArray+WEExtras.m in Sources */,
-				A27D62BD16FC17FB005C114A /* WEGlobalSettingsViewController.m in Sources */,
+				A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,20 +510,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		A20CB1DE16B8F4CF00AF858B /* WEViewController_iPhone.xib */ = {
+		A20CB1DE16B8F4CF00AF858B /* WEWebViewController_iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				A20CB1DF16B8F4CF00AF858B /* en */,
 			);
-			name = WEViewController_iPhone.xib;
+			name = WEWebViewController_iPhone.xib;
 			sourceTree = "<group>";
 		};
-		A20CB1E116B8F4CF00AF858B /* WEViewController_iPad.xib */ = {
+		A20CB1E116B8F4CF00AF858B /* WEWebViewController_iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				A20CB1E216B8F4CF00AF858B /* en */,
 			);
-			name = WEViewController_iPad.xib;
+			name = WEWebViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

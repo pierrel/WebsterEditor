@@ -22,7 +22,7 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 //        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
     } else {
-        WEGlobalSettingsViewController *viewController = [[WEGlobalSettingsViewController alloc] initWithNibName:@"WEGlobalSettingsViewController" bundle:nil];        
+        WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEGlobalSettingsViewController" bundle:nil];        
         self.viewController = viewController;
 //        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
     }

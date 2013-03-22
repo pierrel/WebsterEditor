@@ -11,7 +11,7 @@
 #import "WEPageManager.h"
 #import "NSArray+WEExtras.h"
 
-@implementation WEViewController (ImagePicker)
+@implementation WEWebViewController (ImagePicker)
 
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback {
     if (callback) self.imagePickerCallback = callback;

@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WEGlobalSettingsViewController.h"
+#import "WEViewController.h"
 
-@class WEViewController;
+@class WEWebViewController;
 
 @interface WEAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) WEGlobalSettingsViewController *viewController;
+@property (strong, nonatomic) WEViewController *viewController;
 
 @end
