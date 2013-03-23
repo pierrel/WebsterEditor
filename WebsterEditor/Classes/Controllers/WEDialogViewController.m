@@ -8,6 +8,7 @@
 
 #import "WEDialogViewController.h"
 #import "WEPageManager.h"
+#import "WEUtils.h"
 
 @interface WEDialogViewController ()
 @property (strong, nonatomic) NSArray *dataSource;
@@ -15,11 +16,15 @@
 @end
 
 @implementation WEDialogViewController
+@synthesize popover;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.popover = [[UIPopoverController alloc] initWithContentViewController:self];
+        [popover setPopoverContentSize:CGSizeMake(200, 300)];
+        popover.delegate = self;
     }
     return self;
 }
@@ -27,20 +32,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self.view setHidden:YES];
+        // positional
+    [self.view addSubview:self.tableView];
 }
 
-- (void)openWithData:(id)data andConstraints:(CGRect)constraints {
-    // positional
-    CGFloat dialogWidth = 200;
-    CGFloat dialogHeight = 300;
-    CGFloat x = [[data valueForKey:@"left"] floatValue] + ([[data valueForKey:@"width"] floatValue]/2) - (dialogWidth/2);
-    CGFloat y = [[data valueForKey:@"top"] floatValue] + [[data valueForKey:@"height"] floatValue] + 10;
-    CGRect viewR = CGRectMake(x,
-                              y,
-                              dialogWidth,
-                              dialogHeight);
-    
+- (void)openWithData:(id)data inView:(UIView*)inView {
     // content
     self.tag = [data valueForKey:@"tag"];
     if ([self.tag isEqualToString:@"H1"]) {
@@ -57,14 +53,10 @@
     [self.tableView reloadData];
     
     // render
-    [self.view setFrame:viewR];
-    self.wantsOpen = YES;
-    [self.view setHidden:NO];
-    [UIView animateWithDuration:0.2 animations:^{
-        [self.view setAlpha:1];
-    } completion:^(BOOL finished) {
-        if (finished) self.wantsOpen = NO;
-    }];
+    [popover presentPopoverFromRect:[WEUtils frameFromData:data]
+                             inView:inView
+           permittedArrowDirections:UIPopoverArrowDirectionAny
+                           animated:YES];
 }
 
 // Data source stuff
@@ -104,13 +96,7 @@
 }
 
 -(void)close {
-    [UIView animateWithDuration:0.2 animations:^{
-        [self.view setAlpha:0];
-    } completion:^(BOOL finished) {
-        if (finished && !self.wantsOpen) {
-            [self.view setHidden:YES];
-        }
-    }];
+    [popover dismissPopoverAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning

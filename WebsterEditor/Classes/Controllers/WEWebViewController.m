@@ -64,7 +64,6 @@ static const int ICON_DIM = 13;
     
     // Dialog view
     self.dialogController = [[WEDialogViewController alloc] init];
-    [self.view addSubview:self.dialogController.view];
 }
 
 - (NSString*)setupFiles {
@@ -123,7 +122,7 @@ static const int ICON_DIM = 13;
 }
 
 - (void)openDialogWithData:(id)data {
-    [self.dialogController openWithData:data andConstraints:self.view.frame];
+    [self.dialogController openWithData:data inView:self.view];
     
     // add resizers if any
     NSArray *children = [data objectForKey:@"children"];
