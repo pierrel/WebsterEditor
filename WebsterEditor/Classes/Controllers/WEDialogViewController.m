@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setHidden:YES];
+//    [self.view setHidden:YES];
 }
 
 - (void)openWithData:(id)data andConstraints:(CGRect)constraints {

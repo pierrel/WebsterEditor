@@ -115,7 +115,7 @@ static const int ICON_DIM = 13;
                    atomically:NO
                      encoding:NSStringEncodingConversionAllowLossy
                         error:&error];
-
+        
         if (i == 0) indexPath = fullPath;
     }
     

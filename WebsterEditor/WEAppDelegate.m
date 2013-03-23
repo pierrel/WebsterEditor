@@ -17,19 +17,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self createDirectories];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 //        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
     } else {
-        WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEGlobalSettingsViewController" bundle:nil];        
+        WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEViewController" bundle:nil];        
         self.viewController = viewController;
 //        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    [self createDirectories];
     return YES;
 }
 
@@ -44,16 +44,18 @@
                                               withIntermediateDirectories:NO
                                                                attributes:nil
                                                                     error:&error];
+    NSLog(@"%@", error);
     
     if (![manager fileExistsAtPath:css]) [manager createDirectoryAtPath:css
                                             withIntermediateDirectories:NO
                                                              attributes:nil
                                                                   error:&error];
-    
+    NSLog(@"%@", error);
     if (![manager fileExistsAtPath:js]) [manager createDirectoryAtPath:js
                                            withIntermediateDirectories:NO
                                                             attributes:nil
                                                                  error:&error];
+    NSLog(@"%@", error);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

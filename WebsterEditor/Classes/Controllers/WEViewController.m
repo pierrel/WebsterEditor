@@ -63,7 +63,7 @@
     contentView.layer.shadowRadius = 5;
     contentView.layer.shadowOpacity = 0.5;
     
-    self.contentController = [[WEWebViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
+    self.contentController = [[WEWebViewController alloc] initWithNibName:@"WEWebViewController_iPad" bundle:nil];
     [self.contentView addSubview:self.contentController.view];
     
     UISwipeGestureRecognizer *openGesture = [[UISwipeGestureRecognizer alloc] init];
