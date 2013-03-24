@@ -2,7 +2,9 @@ body {
     height: 100%;
 }
 body.with-background {
-    background: url(../media/background.jpg) no-repeat center center fixed;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     background-size: cover;
 }
 

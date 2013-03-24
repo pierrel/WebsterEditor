@@ -71,9 +71,12 @@ static WEPageManager *gSharedManager;
                    data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
 }
 
--(void)removeBackgroundImage {
+-(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback {
     [bridge callHandler:@"removeBackgroundImage"
-                   data:[NSDictionary dictionary]];
+                   data:[NSDictionary dictionary]
+       responseCallback:^(id responseData) {
+            if (callback) callback(responseData);
+        }];
 }
 
 -(void)hasBackgroundWithCallback:(WEResponseCallback)callback {

@@ -13581,11 +13581,18 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("removeBackgroundImage", webster.main.remove_background_image);
   return b.registerHandler("hasBackgroundImage", webster.main.has_background_image)
 };
-webster.main.set_background_image = function() {
-  return $("body").addClass("with-background")
+webster.main.set_background_image = function(a) {
+  var b = $("body");
+  a = a.path;
+  a = [cljs.core.str("url("), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a))), cljs.core.str(")")].join("");
+  b.addClass("with-background");
+  return b.css("background-image", a)
 };
-webster.main.remove_background_image = function() {
-  return $("body").removeClass("with-background")
+webster.main.remove_background_image = function(a, b) {
+  var c = $("body");
+  c.removeClass("with-background");
+  c.css("background-image", "none");
+  return cljs.core.truth_(b) ? b.call(null, {}) : null
 };
 webster.main.has_background_image = function(a, b) {
   return b.call(null, {hasBackground:cljs.core.truth_($("body").hasClass("with-background")) ? "true" : "false"})

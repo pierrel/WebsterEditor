@@ -32,10 +32,17 @@
 
 (defn set-background-image
   [data]
-  (.addClass (js/$ "body") "with-background"))
+  (let [$body (js/$ "body")
+        full-path (aget data "path")
+        url (str "url(" (second (re-matches #".*Documents/(.*)" full-path)) ")")]
+    (.addClass $body "with-background")
+    (.css $body "background-image" url)))
 (defn remove-background-image
-  [data]
-  (.removeClass (js/$ "body") "with-background"))
+  [data callback]
+  (let [$body (js/$ "body")]
+    (.removeClass $body "with-background")
+    (.css $body "background-image" "none")
+    (if callback (callback (js-obj)))))
 (defn has-background-image
   [data callback]
   (callback (js-obj "hasBackground" (if (.hasClass (js/$ "body") "with-background")

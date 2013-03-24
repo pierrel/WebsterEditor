@@ -201,17 +201,19 @@ static const int ICON_DIM = 13;
 }
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info {
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:@"/media/background.jpg"];
-    
+    WEPageManager *pageManager = [WEPageManager sharedManager];    
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/BG%@.jpg", uuidStr]];
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];
     
-    [[WEPageManager sharedManager] setBackgroundImageToPath:mediaPath];
+    [pageManager setBackgroundImageToPath:mediaPath];
 }
 
 -(void)removeBackground {
-    [[WEPageManager sharedManager] removeBackgroundImage];
+    [[WEPageManager sharedManager] removeBackgroundImageWithCallback:nil];
 }
 
 
