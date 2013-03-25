@@ -9,7 +9,7 @@
 #import "NSArray+WEExtras.h"
 
 @implementation NSArray (WEExtras)
--(BOOL)hasString:(NSString*)string {
+-(BOOL)containsString:(NSString*)string {
     for (NSObject *object in self) {
         if ([object isKindOfClass:[NSString class]] && [(NSString*)object isEqualToString:string])
             return YES;

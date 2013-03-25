@@ -18,7 +18,7 @@
     
     WEImagePopoverType type = WEImagePopoverOccupied;
     NSArray *classes = [data objectForKey:@"classes"];
-    if (classes && [classes hasString:@"empty"]) type = WEImagePopoverEmpty;
+    if (classes && [classes containsString:@"empty"]) type = WEImagePopoverEmpty;
     WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] initWithType:type];
     popover.delegate = self;
 

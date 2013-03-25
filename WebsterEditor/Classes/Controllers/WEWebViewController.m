@@ -11,6 +11,7 @@
 #import "WEColumnResizeView.h"
 #import "WEViewController+ImagePicker.h"
 #import "WEUtils.h"
+#import "WEActionSelectViewController.h"
 
 static const int ICON_DIM = 13;
 
@@ -122,7 +123,11 @@ static const int ICON_DIM = 13;
 }
 
 - (void)openDialogWithData:(id)data {
-    [self.dialogController openWithData:data inView:self.view];
+//    [self.dialogController openWithData:data inView:self.view];
+    WEActionSelectViewController *select = [[WEActionSelectViewController alloc] initWithStyle:UITableViewStylePlain];
+    [select setData:data];
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:select];
+    [popover presentPopoverFromRect:[WEUtils frameFromData:data] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
     // add resizers if any
     NSArray *children = [data objectForKey:@"children"];

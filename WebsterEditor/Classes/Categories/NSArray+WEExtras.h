@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface NSArray (WEExtras)
--(BOOL)hasString:(NSString*)string;
+-(BOOL)containsString:(NSString*)string;
 @end

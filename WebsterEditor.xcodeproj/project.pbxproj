@@ -49,6 +49,7 @@
 		A29CF1E816EBD37C00AB6D38 /* rangy.js in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
 		A29CF1EA16ED9AE900AB6D38 /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */; };
 		A29CF1EB16ED9AE900AB6D38 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D916EBD37C00AB6D38 /* rangy.js */; };
+		A29FB3C817009E2D00216969 /* WEActionSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */; };
 		A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,8 @@
 		A29CF1D716EBD37C00AB6D38 /* bootstrap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bootstrap.min.js; sourceTree = "<group>"; };
 		A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.0.min.js"; sourceTree = "<group>"; };
 		A29CF1D916EBD37C00AB6D38 /* rangy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rangy.js; sourceTree = "<group>"; };
+		A29FB3C617009E2D00216969 /* WEActionSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEActionSelectViewController.h; sourceTree = "<group>"; };
+		A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEActionSelectViewController.m; sourceTree = "<group>"; };
 		A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEImagePopoverViewController.h; sourceTree = "<group>"; };
 		A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEImagePopoverViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -235,6 +238,8 @@
 				A27D62BA16FC17FB005C114A /* WEViewController.h */,
 				A27D62BB16FC17FB005C114A /* WEViewController.m */,
 				A27D62BC16FC17FB005C114A /* WEViewController.xib */,
+				A29FB3C617009E2D00216969 /* WEActionSelectViewController.h */,
+				A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -496,6 +501,7 @@
 				A29459F116FACC19004AA401 /* GradientButton.m in Sources */,
 				A29459F516FB59B9004AA401 /* NSArray+WEExtras.m in Sources */,
 				A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */,
+				A29FB3C817009E2D00216969 /* WEActionSelectViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
