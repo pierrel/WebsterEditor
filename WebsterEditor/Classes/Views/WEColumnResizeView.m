@@ -28,10 +28,11 @@ static const int ICON_DIM = 13;
 {
     self = [super initWithFrame:frame];
     if (self) {
+        UIImage *image = [UIImage imageNamed:@"icon_blue.png"];
         rightResize = [[UIButton alloc] init];
-        [rightResize setBackgroundImage:[UIImage imageNamed:@"icon_blue.png"] forState:UIControlStateNormal];
+        [rightResize setBackgroundImage:image forState:UIControlStateNormal];
         leftResize = [[UIButton alloc] init];
-        [leftResize setBackgroundImage:[UIImage imageNamed:@"icon_blue.png"] forState:UIControlStateNormal];
+        [leftResize setBackgroundImage:image forState:UIControlStateNormal];
         
         [self addSubview:rightResize];
         [self addSubview:leftResize];

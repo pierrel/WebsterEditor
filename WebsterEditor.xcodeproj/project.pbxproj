@@ -22,6 +22,7 @@
 		A223B89C16F52F2400B15E26 /* development.html in Resources */ = {isa = PBXBuildFile; fileRef = A223B89B16F52F2400B15E26 /* development.html */; };
 		A223B89E16F5359B00B15E26 /* development.js in Sources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
+		A22BEB00170167860039625D /* icon_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A22BEAFF170167860039625D /* icon_blue.png */; };
 		A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEViewController.m */; };
 		A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
@@ -72,6 +73,7 @@
 		A223B89816F4FFD000B15E26 /* override.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = override.css; path = ../../../Classes/Controllers/override.css; sourceTree = "<group>"; };
 		A223B89B16F52F2400B15E26 /* development.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = development.html; sourceTree = "<group>"; };
 		A223B89D16F5359B00B15E26 /* development.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = development.js; sourceTree = "<group>"; };
+		A22BEAFF170167860039625D /* icon_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blue.png; sourceTree = "<group>"; };
 		A27D62BA16FC17FB005C114A /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
 		A27D62BB16FC17FB005C114A /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
 		A27D62BC16FC17FB005C114A /* WEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEViewController.xib; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 		A27D62BF16FC2063005C114A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A22BEAFF170167860039625D /* icon_blue.png */,
 				A27D62C016FC2063005C114A /* dark_exa.png */,
 				A27D62C116FC2063005C114A /* dark_exa_@2X.png */,
 			);
@@ -455,6 +458,7 @@
 				A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */,
 				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
+				A22BEB00170167860039625D /* icon_blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
