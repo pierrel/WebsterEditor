@@ -65,6 +65,7 @@ static const int ICON_DIM = 13;
     
     // Dialog view
     self.actionsController = [[WEActionSelectViewController alloc] init];
+    self.actionsController.delegate = self;
 }
 
 - (NSString*)setupFiles {
