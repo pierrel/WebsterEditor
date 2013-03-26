@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class WEActionSelectViewController;
+@protocol WEActionSelectDelegate <NSObject>
+-(void)actionSelect:(WEActionSelectViewController*)actionController didSelectAction:(NSString*)action;
+@end
+
+
 @interface WEActionSelectViewController : UITableViewController
-@property (strong, atomic) NSArray *classes;
-@property (strong, atomic) NSString *tag;
+@property (strong, nonatomic) NSArray *classes;
+@property (strong, nonatomic) NSString *tag;
+@property (assign, nonatomic) id delegate;
 
 -(void) setData:(id)data;
 @end

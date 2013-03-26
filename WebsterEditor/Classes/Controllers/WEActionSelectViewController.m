@@ -90,16 +90,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *item = (NSString*)[self.dataSource objectAtIndex:indexPath.row];
-    WEPageManager *pageManager = [WEPageManager sharedManager];
-    if ([item isEqualToString:@"Remove"])
-        [pageManager removeSelectedElement];
-    else if ([item isEqualToString:@"Edit"])
-        [pageManager editSelectedElement];
-    else if ([item isEqualToString:@"Add Row"])
-        [pageManager addRowUnderSelectedElement];
-    else if ([item isEqualToString:@"Add Image Gallery"])
-        [pageManager addGalleryUnderSelectedElement];
-    
+    if (self.delegate) [self.delegate actionSelect:self didSelectAction:item];    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

@@ -13,6 +13,10 @@ static WEPageManager *gSharedManager;
 @implementation WEPageManager
 @synthesize bridge;
 
+-(void)deselectSelectedElement {
+    [bridge callHandler:@"deselectSelectedElement" data:[NSDictionary dictionary]];
+}
+
 -(void)removeSelectedElement {
     [bridge callHandler:@"removeElementHandler" data:[NSDictionary dictionary]];
 }

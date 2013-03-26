@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WEDialogViewController.h"
+#import "WEActionSelectViewController.h"
 #import "WebViewJavascriptBridge.h"
 #import "WEColumnResizeView.h"
 #import "WEImagePopoverViewController.h"
 
-@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate>
-@property (strong, nonatomic) WEDialogViewController *dialogController;
+@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate>
+@property (strong, nonatomic) WEActionSelectViewController *actionsController;
+@property (strong, nonatomic) UIPopoverController *actionPopover;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;

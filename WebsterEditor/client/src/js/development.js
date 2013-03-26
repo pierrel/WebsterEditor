@@ -13567,6 +13567,7 @@ webster.main.on_bridge_ready = function(a) {
     return webster.main.remove_element_handler.call(null, a, d, b)
   });
   b.registerHandler("editElementHandler", webster.main.edit_element_handler);
+  b.registerHandler("deselectSelectedElement", webster.main.deselect_selected_element);
   b.registerHandler("addRowUnderSelectedElement", function(a, d) {
     return webster.main.add_row_handler.call(null, a, d, b)
   });
@@ -13650,6 +13651,10 @@ webster.main.remove_element_handler = function() {
 webster.main.edit_element_handler = function() {
   var a = $(".selected");
   return webster.dom.make_editable.call(null, a, !0)
+};
+webster.main.deselect_selected_element = function() {
+  var a = webster.listeners.get_selected.call(null);
+  return cljs.core.truth_(a) ? webster.listeners.make_unselected.call(null, a) : null
 };
 webster.main.add_row_handler = function(a, b, c) {
   a = webster.listeners.get_selected.call(null);

@@ -64,7 +64,7 @@ static const int ICON_DIM = 13;
     [manager setBridge:jsBridge];
     
     // Dialog view
-    self.dialogController = [[WEDialogViewController alloc] init];
+    self.actionsController = [[WEActionSelectViewController alloc] init];
 }
 
 - (NSString*)setupFiles {
@@ -124,10 +124,13 @@ static const int ICON_DIM = 13;
 
 - (void)openDialogWithData:(id)data {
 //    [self.dialogController openWithData:data inView:self.view];
-    WEActionSelectViewController *select = [[WEActionSelectViewController alloc] initWithStyle:UITableViewStylePlain];
-    [select setData:data];
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:select];
-    [popover presentPopoverFromRect:[WEUtils frameFromData:data] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    [self.actionsController setData:data];
+    if (!self.actionPopover) {
+        self.actionPopover = [[UIPopoverController alloc] initWithContentViewController:self.actionsController];
+        self.actionPopover.delegate = self;
+        [self.actionPopover setPopoverContentSize:CGSizeMake(300, 300)];
+    }
+    [self.actionPopover presentPopoverFromRect:[WEUtils frameFromData:data] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
     // add resizers if any
     NSArray *children = [data objectForKey:@"children"];
@@ -145,8 +148,30 @@ static const int ICON_DIM = 13;
 
 }
 
+#pragma mark - Action selection stuff
+
+-(void)actionSelect:(WEActionSelectViewController *)actionController didSelectAction:(NSString *)action {
+    WEPageManager *pageManager = [WEPageManager sharedManager];
+    if ([action isEqualToString:@"Remove"])
+        [pageManager removeSelectedElement];
+    else if ([action isEqualToString:@"Edit"])
+        [pageManager editSelectedElement];
+    else if ([action isEqualToString:@"Add Row"])
+        [pageManager addRowUnderSelectedElement];
+    else if ([action isEqualToString:@"Add Image Gallery"])
+        [pageManager addGalleryUnderSelectedElement];
+    [self.actionPopover dismissPopoverAnimated:YES];
+}
+
+-(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    WEPageManager *pageManager = [WEPageManager sharedManager];
+    [pageManager deselectSelectedElement];
+}
+
+
+
 - (void)closeDialog {
-    [self.dialogController close];
+    [self.actionPopover dismissPopoverAnimated:YES];
     
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {
