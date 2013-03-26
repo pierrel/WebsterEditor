@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 pierre larochelle. All rights reserved.
 //
 
+#import <AWSiOSSDK/S3/AmazonS3Client.h>
+#import <AWSiOSSDK/AmazonEndpoints.h>
 #import "WEViewController.h"
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
@@ -15,7 +17,7 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,13 +38,21 @@
     [super viewDidLoad];
     
     [self.bgSelect useSimpleOrangeStyle];
-    [self.bgSelect addTarget:self action:@selector(selectingBackgroundImage) forControlEvents:UIControlEventTouchUpInside];
+    [self.bgSelect addTarget:self
+                      action:@selector(selectingBackgroundImage)
+            forControlEvents:UIControlEventTouchUpInside];
     
     [bgRemove useRedDeleteStyle];
-    [bgRemove addTarget:self action:@selector(removeBackgroundImage) forControlEvents:UIControlEventTouchUpInside];
+    [bgRemove addTarget:self
+                 action:@selector(removeBackgroundImage)
+       forControlEvents:UIControlEventTouchUpInside];
     [bgRemove setHidden:YES];
     
-    
+    [exportButton useGreenConfirmStyle];
+    [exportButton addTarget:self
+                     action:@selector(exportProject)
+           forControlEvents:UIControlEventTouchUpInside];
+        
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
     contentView.layer.masksToBounds = NO;
@@ -71,6 +81,31 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
+Export
+ */
+-(void)exportProject {
+    NSError *error;
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"config"
+                                                         ofType:@"json"];
+    NSString *configString = [NSString stringWithContentsOfFile:filePath encoding:NSStringEncodingConversionAllowLossy error:&error];
+    NSData *configData = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
+                                                          options:kNilOptions
+                                                            error:&error];
+
+    // Initial the S3 Client.
+    AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
+    s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
+    
+    // Create the picture bucket.
+    S3CreateBucketRequest *createBucketRequest = [[S3CreateBucketRequest alloc] initWithName:[json objectForKey:@"bucket"] andRegion:[S3Region USWest2]];
+    S3CreateBucketResponse *createBucketResponse = [s3 createBucket:createBucketRequest];
+    if(createBucketResponse.error != nil)
+    {
+        NSLog(@"Error: %@", createBucketResponse.error);
+    }
+}
 
 /*
  Background Selection

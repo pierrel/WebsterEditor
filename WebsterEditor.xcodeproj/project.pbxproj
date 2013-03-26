@@ -23,6 +23,8 @@
 		A223B89E16F5359B00B15E26 /* development.js in Sources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A22BEB00170167860039625D /* icon_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A22BEAFF170167860039625D /* icon_blue.png */; };
+		A22BEB0217016D9F0039625D /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */; };
+		A22BEB0417016FE40039625D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A22BEB0317016FE40039625D /* config.json */; };
 		A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEViewController.m */; };
 		A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
@@ -74,6 +76,8 @@
 		A223B89B16F52F2400B15E26 /* development.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = development.html; sourceTree = "<group>"; };
 		A223B89D16F5359B00B15E26 /* development.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = development.js; sourceTree = "<group>"; };
 		A22BEAFF170167860039625D /* icon_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blue.png; sourceTree = "<group>"; };
+		A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
+		A22BEB0317016FE40039625D /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		A27D62BA16FC17FB005C114A /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
 		A27D62BB16FC17FB005C114A /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
 		A27D62BC16FC17FB005C114A /* WEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEViewController.xib; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 				A20CB1C416B8F4CF00AF858B /* UIKit.framework in Frameworks */,
 				A20CB1C616B8F4CF00AF858B /* Foundation.framework in Frameworks */,
 				A20CB1C816B8F4CF00AF858B /* CoreGraphics.framework in Frameworks */,
+				A22BEB0217016D9F0039625D /* AWSiOSSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +157,7 @@
 		A20CB1C216B8F4CF00AF858B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */,
 				A20CB1C316B8F4CF00AF858B /* UIKit.framework */,
 				A20CB1C516B8F4CF00AF858B /* Foundation.framework */,
 				A20CB1C716B8F4CF00AF858B /* CoreGraphics.framework */,
@@ -177,6 +183,7 @@
 		A20CB1CA16B8F4CF00AF858B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A22BEB0317016FE40039625D /* config.json */,
 				A20CB1CB16B8F4CF00AF858B /* WebsterEditor-Info.plist */,
 				A20CB1CC16B8F4CF00AF858B /* InfoPlist.strings */,
 				A20CB1CF16B8F4CF00AF858B /* main.m */,
@@ -459,6 +466,7 @@
 				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 				A22BEB00170167860039625D /* icon_blue.png in Resources */,
+				A22BEB0417016FE40039625D /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +608,10 @@
 		A20CB1E716B8F4CF00AF858B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WebsterEditor/WebsterEditor-Prefix.pch";
 				INFOPLIST_FILE = "WebsterEditor/WebsterEditor-Info.plist";
@@ -611,6 +623,10 @@
 		A20CB1E816B8F4CF00AF858B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WebsterEditor/WebsterEditor-Prefix.pch";
 				INFOPLIST_FILE = "WebsterEditor/WebsterEditor-Info.plist";
