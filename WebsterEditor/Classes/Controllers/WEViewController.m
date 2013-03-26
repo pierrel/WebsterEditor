@@ -34,25 +34,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CGFloat buffer = 10;
-    CGSize buttonSize = CGSizeMake(settingsView.frame.size.width - (buffer*2), 40);
     
-    self.bgSelect = [[GradientButton alloc] init];
     [self.bgSelect useSimpleOrangeStyle];
-    [self.bgSelect setTitle:@"Set Background" forState:UIControlStateNormal];
     [self.bgSelect addTarget:self action:@selector(selectingBackgroundImage) forControlEvents:UIControlEventTouchUpInside];
-    [self.settingsView addSubview:self.bgSelect];
-    self.bgSelect.frame = CGRectMake(buffer, 50, buttonSize.width, buttonSize.height);
     
-    self.bgRemove = [[GradientButton alloc] init];
     [bgRemove useRedDeleteStyle];
-    [bgRemove setTitle:@"Remove Background" forState:UIControlStateNormal];
     [bgRemove addTarget:self action:@selector(removeBackgroundImage) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView addSubview:self.bgRemove];
-    bgRemove.frame = CGRectMake(buffer,
-                                bgSelect.frame.origin.y + buttonSize.height + buffer,
-                                buttonSize.width,
-                                buttonSize.height);
     [bgRemove setHidden:YES];
     
     
