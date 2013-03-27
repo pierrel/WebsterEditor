@@ -91,11 +91,12 @@ Export
  */
 -(void)exportProject {
     [exportActivity startAnimating];
-    [NSThread performBlockInBackground:^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+                                             (unsigned long)NULL), ^(void) {
         [self doExportWorkWithCompletion:^(NSError *error) {
             [exportActivity stopAnimating];
         }];
-    }];
+    });
 }
 
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
