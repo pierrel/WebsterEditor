@@ -129,7 +129,13 @@ Export
                                                                                     andRegion:region];
             S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
             if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
+            
         }
+        BucketWebsiteConfiguration *bucketConfig = [[BucketWebsiteConfiguration alloc] initWithIndexDocumentSuffix:@"index.html"];
+        S3SetBucketWebsiteConfigurationRequest *configReq = [[S3SetBucketWebsiteConfigurationRequest alloc] initWithBucketName:bucket withConfiguration:bucketConfig];
+        S3SetBucketWebsiteConfigurationResponse *bucketWebResp = [s3 setBucketWebsiteConfiguration:configReq];
+        if (bucketWebResp.error != nil) NSLog(@"Error setting website config: %@", bucketWebResp.error);
+            
         S3CannedACL *acl = [S3CannedACL publicRead];
         
         //html
