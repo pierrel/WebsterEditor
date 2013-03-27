@@ -147,18 +147,27 @@ Export
         if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
     }
     
-    // then js
-    NSArray *jsFiles = [NSArray arrayWithObjects:@"js/jquery-1.9.0.min.js", @"js/bootstrap.min.js", nil];
-    for (NSString *filePath in jsFiles) {
+    // then js/css
+    NSArray *filePaths = [NSArray arrayWithObjects:
+                        @"js/jquery-1.9.0.min.js",
+                        @"js/bootstrap.min.js",
+                        @"css/override.css",
+                        @"css/bootstrap.min.css",
+                        @"css/bootstrap-responsive.min.css",
+                        nil];
+    for (NSString *filePath in filePaths) {
         NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath];
         NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+        NSLog(@"adding %@", filePath);
         S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
-        put.contentType = @"text/javascript";
+        if ([filePath hasSuffix:@".css"]) put.contentType = @"text/css";
+        else put.contentType = @"text/javascript";
         put.data = fileData;
         put.cannedACL = acl;
         S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"ERROR in JS: %@", resp.error);
+        if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
     }
+    
 }
 
 /*
