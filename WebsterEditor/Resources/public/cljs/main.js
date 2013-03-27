@@ -36,11 +36,23 @@ bridge.registerHandler("hasBackgroundImage",webster.main.has_background_image);
 return bridge.registerHandler("exportMarkup",webster.main.export_markup);
 });
 webster.main.export_markup = (function export_markup(data,callback){
-var $body = $("body").clone();
-$body.find("script").remove();
-$body.find(".empty").remove();
+var $body = $("html").clone();
+$body.find("head").remove();
+$body.find("iframe").remove();
+$body.find("script[src*=rangy]").remove();
+$body.find("script[src*=development]").remove();
+$body.find(".thumbnails .empty").remove();
 $body.find(".selectable").removeClass("selectable");
 $body.find(".selected").removeClass("selected");
+$body.find(".empty").removeClass("empty");
+var $body_el_10323 = $body.find("body");
+var bg_10324 = $body_el_10323.css("background-image");
+if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_10324)))
+{var main_path_10325 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_10324));
+$body.find("body").css("background-image",null);
+$body_el_10323.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_10325));
+} else
+{}
 return callback.call(null,{"markup":clojure.string.trim.call(null,$body.html())});
 });
 webster.main.set_background_image = (function set_background_image(data){
@@ -108,50 +120,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_4878 = cljs.core.map.call(null,(function (i){
+var all_jcols_10326 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_4879 = cljs.core.map.call(null,((function (all_jcols_4878){
+var jcols_after_jcolumn_10327 = cljs.core.map.call(null,((function (all_jcols_10326){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_4878))
+});})(all_jcols_10326))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_4880 = cljs.core.filter.call(null,((function (all_jcols_4878,jcols_after_jcolumn_4879){
+var jcols_to_decrement_10328 = cljs.core.filter.call(null,((function (all_jcols_10326,jcols_after_jcolumn_10327){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_4878,jcols_after_jcolumn_4879))
-,jcols_after_jcolumn_4879);
-var jcols_to_inset_4881 = cljs.core.filter.call(null,((function (all_jcols_4878,jcols_after_jcolumn_4879,jcols_to_decrement_4880){
+});})(all_jcols_10326,jcols_after_jcolumn_10327))
+,jcols_after_jcolumn_10327);
+var jcols_to_inset_10329 = cljs.core.filter.call(null,((function (all_jcols_10326,jcols_after_jcolumn_10327,jcols_to_decrement_10328){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_4878,jcols_after_jcolumn_4879,jcols_to_decrement_4880))
-,jcols_after_jcolumn_4879);
-var jcol_to_decrement_4882 = cljs.core.first.call(null,jcols_to_decrement_4880);
-var jcol_to_inset_4883 = cljs.core.first.call(null,jcols_to_inset_4881);
-var is_full_width_4884 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_4878)));
-if(cljs.core.truth_(jcol_to_inset_4883))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_4883,(webster.dom.get_column_offset.call(null,jcol_to_inset_4883) - 1));
+});})(all_jcols_10326,jcols_after_jcolumn_10327,jcols_to_decrement_10328))
+,jcols_after_jcolumn_10327);
+var jcol_to_decrement_10330 = cljs.core.first.call(null,jcols_to_decrement_10328);
+var jcol_to_inset_10331 = cljs.core.first.call(null,jcols_to_inset_10329);
+var is_full_width_10332 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_10326)));
+if(cljs.core.truth_(jcol_to_inset_10331))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_10331,(webster.dom.get_column_offset.call(null,jcol_to_inset_10331) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_4884;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_10332;
 if(and__3822__auto__)
-{return jcol_to_decrement_4882;
+{return jcol_to_decrement_10330;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_4882,(webster.dom.get_column_span.call(null,jcol_to_decrement_4882) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_10330,(webster.dom.get_column_span.call(null,jcol_to_decrement_10330) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_4883;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_10331;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_4882;
+{var or__3824__auto____$1 = jcol_to_decrement_10330;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_4884);
+{return !(is_full_width_10332);
 }
 }
 })()))

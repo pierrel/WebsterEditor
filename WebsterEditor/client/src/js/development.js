@@ -13584,11 +13584,17 @@ webster.main.on_bridge_ready = function(a) {
   return b.registerHandler("exportMarkup", webster.main.export_markup)
 };
 webster.main.export_markup = function(a, b) {
-  var c = $("body").clone();
-  c.find("script").remove();
-  c.find(".empty").remove();
+  var c = $("html").clone();
+  c.find("head").remove();
+  c.find("iframe").remove();
+  c.find("script[src*\x3drangy]").remove();
+  c.find("script[src*\x3ddevelopment]").remove();
+  c.find(".thumbnails .empty").remove();
   c.find(".selectable").removeClass("selectable");
   c.find(".selected").removeClass("selected");
+  c.find(".empty").removeClass("empty");
+  var d = c.find("body"), e = d.css("background-image");
+  cljs.core.not.call(null, clojure.string.blank_QMARK_.call(null, e)) && (e = cljs.core.second.call(null, cljs.core.re_matches.call(null, /url\(.*\/(media\/.*)\)/, e)), c.find("body").css("background-image", null), d.attr("style", cljs.core.format.call(null, "zoom: 1; background-image: url(%s);", e)));
   return b.call(null, {markup:clojure.string.trim.call(null, c.html())})
 };
 webster.main.set_background_image = function(a) {

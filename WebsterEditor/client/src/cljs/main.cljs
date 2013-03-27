@@ -35,11 +35,29 @@
 
 (defn export-markup
   [data callback]
-  (let [$body (.clone (js/$ "body"))]
-    (.remove (.find $body "script"))
-    (.remove (.find $body ".empty"))
+  (let [$body (.clone (js/$ "html"))]
+    ;; remove some elements
+    (.remove (.find $body "head"))
+    (.remove (.find $body "iframe"))
+    (.remove (.find $body "script[src*=rangy]"))
+    (.remove (.find $body "script[src*=development]"))
+    (.remove (.find $body ".thumbnails .empty"))
+
+    ;; remove development classes
     (.removeClass (.find $body ".selectable") "selectable")
     (.removeClass (.find $body ".selected") "selected")
+    (.removeClass (.find $body ".empty") "empty")
+
+    ;; make sure bg is correct
+    (let [$body-el (.find $body "body")
+          bg (.css $body-el "background-image")]
+      (if (not (string/blank? bg))
+        (let [main-path (second (re-matches #"url\(.*/(media/.*)\)" bg))]
+          (.css (.find $body "body") "background-image" nil)
+          ;; didn't want to use "attr" here but "css" doesn't seem to work...
+          (.attr $body-el "style" (format "zoom: 1; background-image: url(%s);" main-path)))))
+
+    ;; return the new markup
     (callback (js-obj "markup" (string/trim (.html $body))))))
 
 (defn set-background-image
