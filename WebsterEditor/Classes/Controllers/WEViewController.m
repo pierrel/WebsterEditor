@@ -11,6 +11,7 @@
 #import "WEViewController.h"
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
+#import "WEUtils.h"
 
 @interface WEViewController ()
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
@@ -93,17 +94,70 @@ Export
     NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
                                                           options:kNilOptions
                                                             error:&error];
+    NSString *bucket = [json objectForKey:@"bucket"];
 
     // Initial the S3 Client.
     AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
     s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
     
-    // Create the picture bucket.
-    S3CreateBucketRequest *createBucketRequest = [[S3CreateBucketRequest alloc] initWithName:[json objectForKey:@"bucket"] andRegion:[S3Region USWest2]];
-    S3CreateBucketResponse *createBucketResponse = [s3 createBucket:createBucketRequest];
-    if(createBucketResponse.error != nil)
-    {
-        NSLog(@"Error: %@", createBucketResponse.error);
+    // see if we have the bucket
+    S3ListBucketsRequest *listBucketReq = [[S3ListBucketsRequest alloc] init];
+    BOOL hasBucket = NO;
+    for (S3Bucket *liveBucket in [s3 listBuckets]) {
+        NSLog(@"bucket: %@", liveBucket.name);
+        if ([liveBucket.name isEqualToString:bucket]) {
+            hasBucket = YES;
+            break;
+        }
+    }
+
+    if (hasBucket) {
+        // delete all the old stuff
+        for (S3ObjectSummary *objectSummary in [s3 listObjectsInBucket:bucket]) {
+            S3DeleteObjectRequest *delReq = [[S3DeleteObjectRequest alloc] init];
+            [delReq setBucket:bucket];
+            [delReq setKey:objectSummary.key];
+            NSLog(@"deleting %@", objectSummary.key);
+            S3DeleteObjectResponse *resp = [s3 deleteObject:delReq];
+            if (resp.error != nil) NSLog(@"error: %@", resp.error);
+        }
+    } else {
+        S3Region *region = [S3Region USWest2];
+        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
+                                                                                andRegion:region];
+        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
+        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
+    }
+    S3CannedACL *acl = [S3CannedACL publicRead];
+    
+    // start with media
+    NSString *pathPrefix = @"media";
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    for (NSString *file in [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:pathPrefix]
+                                                       error:&error]) {
+        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
+        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey];
+        NSLog(@"file: %@", fullPath);
+        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+        S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
+        put.contentType = @"image/jpeg";
+        put.data = fileData;
+        put.cannedACL = acl;
+        S3PutObjectResponse *resp = [s3 putObject:put];
+        if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
+    }
+    
+    // then js
+    NSArray *jsFiles = [NSArray arrayWithObjects:@"js/jquery-1.9.0.min.js", @"js/bootstrap.min.js", nil];
+    for (NSString *filePath in jsFiles) {
+        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath];
+        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+        S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
+        put.contentType = @"text/javascript";
+        put.data = fileData;
+        put.cannedACL = acl;
+        S3PutObjectResponse *resp = [s3 putObject:put];
+        if (resp.error != nil) NSLog(@"ERROR in JS: %@", resp.error);
     }
 }
 
