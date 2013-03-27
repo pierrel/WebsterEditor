@@ -56,6 +56,7 @@
 		A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */; };
 		A2FF07471702A96700D128CA /* bootstrap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D716EBD37C00AB6D38 /* bootstrap.min.js */; };
 		A2FF07481702A96B00D128CA /* bootstrap.js in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D616EBD37C00AB6D38 /* bootstrap.js */; };
+		A2FF074A1702ACF300D128CA /* production.html in Resources */ = {isa = PBXBuildFile; fileRef = A2FF07491702ACF300D128CA /* production.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +123,7 @@
 		A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEActionSelectViewController.m; sourceTree = "<group>"; };
 		A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEImagePopoverViewController.h; sourceTree = "<group>"; };
 		A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEImagePopoverViewController.m; sourceTree = "<group>"; };
+		A2FF07491702ACF300D128CA /* production.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = production.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 		A223B89A16F52F2400B15E26 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				A2FF07491702ACF300D128CA /* production.html */,
 				A223B89B16F52F2400B15E26 /* development.html */,
 			);
 			path = html;
@@ -471,6 +474,7 @@
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 				A22BEB00170167860039625D /* icon_blue.png in Resources */,
 				A22BEB0417016FE40039625D /* config.json in Resources */,
+				A2FF074A1702ACF300D128CA /* production.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

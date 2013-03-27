@@ -13580,7 +13580,16 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("decrementColumnOffset", webster.main.decrement_column_offset);
   b.registerHandler("setBackgroundImage", webster.main.set_background_image);
   b.registerHandler("removeBackgroundImage", webster.main.remove_background_image);
-  return b.registerHandler("hasBackgroundImage", webster.main.has_background_image)
+  b.registerHandler("hasBackgroundImage", webster.main.has_background_image);
+  return b.registerHandler("exportMarkup", webster.main.export_markup)
+};
+webster.main.export_markup = function(a, b) {
+  var c = $("body").clone();
+  c.find("script").remove();
+  c.find(".empty").remove();
+  c.find(".selectable").removeClass("selectable");
+  c.find(".selected").removeClass("selected");
+  return b.call(null, {markup:clojure.string.trim.call(null, c.html())})
 };
 webster.main.set_background_image = function(a) {
   var b = $("body");

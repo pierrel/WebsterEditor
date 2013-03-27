@@ -1,5 +1,6 @@
 goog.provide('webster.main');
 goog.require('cljs.core');
+goog.require('clojure.string');
 goog.require('webster.html');
 goog.require('webster.listeners');
 goog.require('webster.dom');
@@ -31,7 +32,16 @@ bridge.registerHandler("incrementColumnOffset",webster.main.increment_column_off
 bridge.registerHandler("decrementColumnOffset",webster.main.decrement_column_offset);
 bridge.registerHandler("setBackgroundImage",webster.main.set_background_image);
 bridge.registerHandler("removeBackgroundImage",webster.main.remove_background_image);
-return bridge.registerHandler("hasBackgroundImage",webster.main.has_background_image);
+bridge.registerHandler("hasBackgroundImage",webster.main.has_background_image);
+return bridge.registerHandler("exportMarkup",webster.main.export_markup);
+});
+webster.main.export_markup = (function export_markup(data,callback){
+var $body = $("body").clone();
+$body.find("script").remove();
+$body.find(".empty").remove();
+$body.find(".selectable").removeClass("selectable");
+$body.find(".selected").removeClass("selected");
+return callback.call(null,{"markup":clojure.string.trim.call(null,$body.html())});
 });
 webster.main.set_background_image = (function set_background_image(data){
 var $body = $("body");
@@ -98,50 +108,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_2798 = cljs.core.map.call(null,(function (i){
+var all_jcols_4878 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_2799 = cljs.core.map.call(null,((function (all_jcols_2798){
+var jcols_after_jcolumn_4879 = cljs.core.map.call(null,((function (all_jcols_4878){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_2798))
+});})(all_jcols_4878))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_2800 = cljs.core.filter.call(null,((function (all_jcols_2798,jcols_after_jcolumn_2799){
+var jcols_to_decrement_4880 = cljs.core.filter.call(null,((function (all_jcols_4878,jcols_after_jcolumn_4879){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_2798,jcols_after_jcolumn_2799))
-,jcols_after_jcolumn_2799);
-var jcols_to_inset_2801 = cljs.core.filter.call(null,((function (all_jcols_2798,jcols_after_jcolumn_2799,jcols_to_decrement_2800){
+});})(all_jcols_4878,jcols_after_jcolumn_4879))
+,jcols_after_jcolumn_4879);
+var jcols_to_inset_4881 = cljs.core.filter.call(null,((function (all_jcols_4878,jcols_after_jcolumn_4879,jcols_to_decrement_4880){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_2798,jcols_after_jcolumn_2799,jcols_to_decrement_2800))
-,jcols_after_jcolumn_2799);
-var jcol_to_decrement_2802 = cljs.core.first.call(null,jcols_to_decrement_2800);
-var jcol_to_inset_2803 = cljs.core.first.call(null,jcols_to_inset_2801);
-var is_full_width_2804 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_2798)));
-if(cljs.core.truth_(jcol_to_inset_2803))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_2803,(webster.dom.get_column_offset.call(null,jcol_to_inset_2803) - 1));
+});})(all_jcols_4878,jcols_after_jcolumn_4879,jcols_to_decrement_4880))
+,jcols_after_jcolumn_4879);
+var jcol_to_decrement_4882 = cljs.core.first.call(null,jcols_to_decrement_4880);
+var jcol_to_inset_4883 = cljs.core.first.call(null,jcols_to_inset_4881);
+var is_full_width_4884 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_4878)));
+if(cljs.core.truth_(jcol_to_inset_4883))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_4883,(webster.dom.get_column_offset.call(null,jcol_to_inset_4883) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_2804;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_4884;
 if(and__3822__auto__)
-{return jcol_to_decrement_2802;
+{return jcol_to_decrement_4882;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_2802,(webster.dom.get_column_span.call(null,jcol_to_decrement_2802) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_4882,(webster.dom.get_column_span.call(null,jcol_to_decrement_4882) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_2803;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_4883;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_2802;
+{var or__3824__auto____$1 = jcol_to_decrement_4882;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_2804);
+{return !(is_full_width_4884);
 }
 }
 })()))

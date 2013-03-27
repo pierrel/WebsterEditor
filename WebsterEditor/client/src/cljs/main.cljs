@@ -1,7 +1,8 @@
 (ns webster.main
   (:require [webster.dom :as dom]
             [webster.listeners :as listeners]
-            [webster.html :as html]))
+            [webster.html :as html]
+            [clojure.string :as string]))
 
 (defn on-bridge-ready
   [event]
@@ -29,7 +30,17 @@
     (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)
     (.registerHandler bridge "setBackgroundImage" set-background-image)
     (.registerHandler bridge "removeBackgroundImage" remove-background-image)
-    (.registerHandler bridge "hasBackgroundImage" has-background-image)))
+    (.registerHandler bridge "hasBackgroundImage" has-background-image)
+    (.registerHandler bridge "exportMarkup" export-markup)))
+
+(defn export-markup
+  [data callback]
+  (let [$body (.clone (js/$ "body"))]
+    (.remove (.find $body "script"))
+    (.remove (.find $body ".empty"))
+    (.removeClass (.find $body ".selectable") "selectable")
+    (.removeClass (.find $body ".selected") "selected")
+    (callback (js-obj "markup" (string/trim (.html $body))))))
 
 (defn set-background-image
   [data]

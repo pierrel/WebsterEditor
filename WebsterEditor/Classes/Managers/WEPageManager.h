@@ -35,5 +35,7 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback;
 -(void)hasBackgroundWithCallback:(WEResponseCallback)callback;
 
+-(void)exportMarkup:(WEResponseCallback)callback;
+
 +(WEPageManager *)sharedManager;
 @end

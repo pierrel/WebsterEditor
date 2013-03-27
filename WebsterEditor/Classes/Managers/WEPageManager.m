@@ -91,6 +91,14 @@ static WEPageManager *gSharedManager;
     }];
 }
 
+-(void)exportMarkup:(WEResponseCallback)callback {
+    [bridge callHandler:@"exportMarkup"
+                   data:[NSDictionary dictionary]
+       responseCallback:^(id responseData) {
+         return callback(responseData);
+    }];
+}
+
 +(WEPageManager*)sharedManager {
     if (gSharedManager == nil) {
         gSharedManager = [[WEPageManager alloc] init];

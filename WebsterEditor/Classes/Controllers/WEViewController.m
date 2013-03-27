@@ -86,87 +86,107 @@
 Export
  */
 -(void)exportProject {
-    NSError *error;
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"config"
-                                                         ofType:@"json"];
-    NSString *configString = [NSString stringWithContentsOfFile:filePath encoding:NSStringEncodingConversionAllowLossy error:&error];
-    NSData *configData = [NSData dataWithContentsOfFile:filePath];
-    NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
-                                                          options:kNilOptions
-                                                            error:&error];
-    NSString *bucket = [json objectForKey:@"bucket"];
-
-    // Initial the S3 Client.
-    AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
-    s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
-    
-    // see if we have the bucket
-    S3ListBucketsRequest *listBucketReq = [[S3ListBucketsRequest alloc] init];
-    BOOL hasBucket = NO;
-    for (S3Bucket *liveBucket in [s3 listBuckets]) {
-        NSLog(@"bucket: %@", liveBucket.name);
-        if ([liveBucket.name isEqualToString:bucket]) {
-            hasBucket = YES;
-            break;
+    [[WEPageManager sharedManager] exportMarkup:^(id responseData) {
+        NSError *error;
+        NSBundle *mainBundle = [NSBundle mainBundle];
+        
+        // s3 config
+        NSString *filePath = [mainBundle pathForResource:@"config"
+                                                  ofType:@"json"];
+        NSData *configData = [NSData dataWithContentsOfFile:filePath];
+        NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
+                                                              options:kNilOptions
+                                                                error:&error];
+        NSString *bucket = [json objectForKey:@"bucket"];
+        
+        // Initialize the S3 Client
+        AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
+        s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
+        
+        // see if we have the bucket
+        S3ListBucketsRequest *listBucketReq = [[S3ListBucketsRequest alloc] init];
+        BOOL hasBucket = NO;
+        for (S3Bucket *liveBucket in [s3 listBuckets]) {
+            if ([liveBucket.name isEqualToString:bucket]) {
+                hasBucket = YES;
+                break;
+            }
         }
-    }
-
-    if (hasBucket) {
-        // delete all the old stuff
-        for (S3ObjectSummary *objectSummary in [s3 listObjectsInBucket:bucket]) {
-            S3DeleteObjectRequest *delReq = [[S3DeleteObjectRequest alloc] init];
-            [delReq setBucket:bucket];
-            [delReq setKey:objectSummary.key];
-            NSLog(@"deleting %@", objectSummary.key);
-            S3DeleteObjectResponse *resp = [s3 deleteObject:delReq];
-            if (resp.error != nil) NSLog(@"error: %@", resp.error);
+        
+        if (hasBucket) {
+            // delete all the old stuff
+            for (S3ObjectSummary *objectSummary in [s3 listObjectsInBucket:bucket]) {
+                S3DeleteObjectRequest *delReq = [[S3DeleteObjectRequest alloc] init];
+                [delReq setBucket:bucket];
+                [delReq setKey:objectSummary.key];
+                NSLog(@"deleting %@", objectSummary.key);
+                S3DeleteObjectResponse *resp = [s3 deleteObject:delReq];
+                if (resp.error != nil) NSLog(@"error: %@", resp.error);
+            }
+        } else {
+            S3Region *region = [S3Region USWest2];
+            S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
+                                                                                    andRegion:region];
+            S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
+            if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
         }
-    } else {
-        S3Region *region = [S3Region USWest2];
-        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
-                                                                                andRegion:region];
-        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
-        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
-    }
-    S3CannedACL *acl = [S3CannedACL publicRead];
-    
-    // start with media
-    NSString *pathPrefix = @"media";
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    for (NSString *file in [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:pathPrefix]
-                                                       error:&error]) {
-        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey];
-        NSLog(@"file: %@", fullPath);
-        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
-        S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
-        put.contentType = @"image/jpeg";
-        put.data = fileData;
+        S3CannedACL *acl = [S3CannedACL publicRead];
+        
+        //html
+        NSString *htmlTemplateFile = [mainBundle pathForResource:@"production" ofType:@"html"];
+        NSString *htmlTemplate = [NSString stringWithContentsOfFile:htmlTemplateFile
+                                                           encoding:NSStringEncodingConversionAllowLossy
+                                                              error:&error];
+        NSString *markup = [responseData objectForKey:@"markup"];
+        NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:@"title"];
+        html = [html stringByReplacingOccurrencesOfString:@"[[BODY]]" withString:markup];
+        
+        NSData *htmlData = [html dataUsingEncoding:NSStringEncodingConversionAllowLossy];
+        S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:@"index.html" inBucket:bucket];
+        put.contentType = @"text/html";
+        put.data = htmlData;
         put.cannedACL = acl;
         S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
-    }
-    
-    // then js/css
-    NSArray *filePaths = [NSArray arrayWithObjects:
-                        @"js/jquery-1.9.0.min.js",
-                        @"js/bootstrap.min.js",
-                        @"css/override.css",
-                        @"css/bootstrap.min.css",
-                        @"css/bootstrap-responsive.min.css",
-                        nil];
-    for (NSString *filePath in filePaths) {
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath];
-        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
-        NSLog(@"adding %@", filePath);
-        S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
-        if ([filePath hasSuffix:@".css"]) put.contentType = @"text/css";
-        else put.contentType = @"text/javascript";
-        put.data = fileData;
-        put.cannedACL = acl;
-        S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
-    }
+        if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
+                        
+        // media
+        NSString *pathPrefix = @"media";
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        for (NSString *file in [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:pathPrefix]
+                                                                error:&error]) {
+            NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
+            NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey];
+            NSLog(@"file: %@", fullPath);
+            NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+            put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
+            put.contentType = @"image/jpeg";
+            put.data = fileData;
+            put.cannedACL = acl;
+            S3PutObjectResponse *resp = [s3 putObject:put];
+            if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
+        }
+        
+        // js/css
+        NSArray *filePaths = [NSArray arrayWithObjects:
+                              @"js/jquery-1.9.0.min.js",
+                              @"js/bootstrap.min.js",
+                              @"css/override.css",
+                              @"css/bootstrap.min.css",
+                              @"css/bootstrap-responsive.min.css",
+                              nil];
+        for (NSString *filePath in filePaths) {
+            NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath];
+            NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+            NSLog(@"adding %@", filePath);
+            put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
+            if ([filePath hasSuffix:@".css"]) put.contentType = @"text/css";
+            else put.contentType = @"text/javascript";
+            put.data = fileData;
+            put.cannedACL = acl;
+            S3PutObjectResponse *resp = [s3 putObject:put];
+            if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
+        }
+    }];
     
 }
 
