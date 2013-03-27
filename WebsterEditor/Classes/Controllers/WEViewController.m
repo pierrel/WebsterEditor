@@ -12,13 +12,14 @@
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
 #import "WEUtils.h"
+#import "NSThread+BlockAdditions.h"
 
 @interface WEViewController ()
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,6 +38,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [exportActivity setHidesWhenStopped:YES];
+    [exportActivity stopAnimating];
     
     [self.bgSelect useSimpleOrangeStyle];
     [self.bgSelect addTarget:self
@@ -86,6 +90,15 @@
 Export
  */
 -(void)exportProject {
+    [exportActivity startAnimating];
+    [NSThread performBlockInBackground:^{
+        [self doExportWorkWithCompletion:^(NSError *error) {
+            [exportActivity stopAnimating];
+        }];
+    }];
+}
+
+-(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
     [[WEPageManager sharedManager] exportMarkup:^(id responseData) {
         NSError *error;
         NSBundle *mainBundle = [NSBundle mainBundle];
@@ -135,7 +148,7 @@ Export
         S3SetBucketWebsiteConfigurationRequest *configReq = [[S3SetBucketWebsiteConfigurationRequest alloc] initWithBucketName:bucket withConfiguration:bucketConfig];
         S3SetBucketWebsiteConfigurationResponse *bucketWebResp = [s3 setBucketWebsiteConfiguration:configReq];
         if (bucketWebResp.error != nil) NSLog(@"Error setting website config: %@", bucketWebResp.error);
-            
+        
         S3CannedACL *acl = [S3CannedACL publicRead];
         
         //html
@@ -154,7 +167,7 @@ Export
         put.cannedACL = acl;
         S3PutObjectResponse *resp = [s3 putObject:put];
         if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
-                        
+        
         // media
         NSString *pathPrefix = @"media";
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -192,8 +205,8 @@ Export
             S3PutObjectResponse *resp = [s3 putObject:put];
             if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
         }
+        block(nil);
     }];
-    
 }
 
 /*
@@ -256,5 +269,4 @@ Export
 -(BOOL)isOpen {
     return self.contentView.frame.origin.x > 0;
 }
-
 @end
