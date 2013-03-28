@@ -1,6 +1,7 @@
 (ns webster.listeners
   (:require [webster.dom :as dom]
-            [webster.html :as html]))
+            [webster.html :as html]
+            [clojure.string :as string]))
 
 ;; listeners
 (defn selected-listener
@@ -54,8 +55,15 @@
                                       (.addEventListener (aget (.find $el "a:last") 0) "click" (fn [event]
                                                                                                  (.preventDefault event)
                                                                                                  true)))
-                                    (let [$thumb-image (.find $el "img")]
-                                      (.attr $thumb-image "src" rel-path)))
+                                    (let [$thumb-image (.find $el "img")
+                                          $link (.closest $thumb-image "a")
+                                          old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (.attr $thumb-image "src"))))
+                                          old-href (str "#" old-id)
+                                          $lightbox (js/$ old-href)]
+                                      (.attr $thumb-image "src" rel-path)
+                                      (.attr $link "href" href)
+                                      (.attr $lightbox "id" id)
+                                      (.attr (.find $lightbox "img") "src" rel-path)))
                                   (let [$thumbnails (.closest $el ".thumbnails")]
                                     (if (not (.hasClass (.find $thumbnails ".image-thumb:last") "empty"))
                                       (.click (add-empty-thumbnail $thumbnails  bridge))))))))))
