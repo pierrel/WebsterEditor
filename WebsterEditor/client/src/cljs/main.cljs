@@ -57,6 +57,10 @@
           ;; didn't want to use "attr" here but "css" doesn't seem to work...
           (.attr $body-el "style" (format "zoom: 1; background-image: url(%s);" main-path)))))
 
+    ;; add lightbox js
+    (if (> (.-length (.find $body ".thumbnails")) 0)
+      (.append $body (html/compile [:script {:src "js/bootstrap-lightbox.js"}])))
+
     ;; return the new markup
     (callback (js-obj "markup" (string/trim (.html $body))))))
 
@@ -143,6 +147,7 @@
  
 (defn remove-element-handler
   ([data callback]
+     (js/alert "removing")
      (let [jnode (js/$ ".selected")]
        (listeners/make-unselected jnode)
        (.remove jnode)))

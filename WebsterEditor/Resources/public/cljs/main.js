@@ -45,12 +45,16 @@ $body.find(".thumbnails .empty").remove();
 $body.find(".selectable").removeClass("selectable");
 $body.find(".selected").removeClass("selected");
 $body.find(".empty").removeClass("empty");
-var $body_el_10323 = $body.find("body");
-var bg_10324 = $body_el_10323.css("background-image");
-if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_10324)))
-{var main_path_10325 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_10324));
+var $body_el_15368 = $body.find("body");
+var bg_15369 = $body_el_15368.css("background-image");
+if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_15369)))
+{var main_path_15370 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_15369));
 $body.find("body").css("background-image",null);
-$body_el_10323.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_10325));
+$body_el_15368.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_15370));
+} else
+{}
+if(($body.find(".thumbnails").length > 0))
+{$body.append(webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:script",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src","js/bootstrap-lightbox.js"], true)], true)));
 } else
 {}
 return callback.call(null,{"markup":clojure.string.trim.call(null,$body.html())});
@@ -120,50 +124,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_10326 = cljs.core.map.call(null,(function (i){
+var all_jcols_15371 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_10327 = cljs.core.map.call(null,((function (all_jcols_10326){
+var jcols_after_jcolumn_15372 = cljs.core.map.call(null,((function (all_jcols_15371){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_10326))
+});})(all_jcols_15371))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_10328 = cljs.core.filter.call(null,((function (all_jcols_10326,jcols_after_jcolumn_10327){
+var jcols_to_decrement_15373 = cljs.core.filter.call(null,((function (all_jcols_15371,jcols_after_jcolumn_15372){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_10326,jcols_after_jcolumn_10327))
-,jcols_after_jcolumn_10327);
-var jcols_to_inset_10329 = cljs.core.filter.call(null,((function (all_jcols_10326,jcols_after_jcolumn_10327,jcols_to_decrement_10328){
+});})(all_jcols_15371,jcols_after_jcolumn_15372))
+,jcols_after_jcolumn_15372);
+var jcols_to_inset_15374 = cljs.core.filter.call(null,((function (all_jcols_15371,jcols_after_jcolumn_15372,jcols_to_decrement_15373){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_10326,jcols_after_jcolumn_10327,jcols_to_decrement_10328))
-,jcols_after_jcolumn_10327);
-var jcol_to_decrement_10330 = cljs.core.first.call(null,jcols_to_decrement_10328);
-var jcol_to_inset_10331 = cljs.core.first.call(null,jcols_to_inset_10329);
-var is_full_width_10332 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_10326)));
-if(cljs.core.truth_(jcol_to_inset_10331))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_10331,(webster.dom.get_column_offset.call(null,jcol_to_inset_10331) - 1));
+});})(all_jcols_15371,jcols_after_jcolumn_15372,jcols_to_decrement_15373))
+,jcols_after_jcolumn_15372);
+var jcol_to_decrement_15375 = cljs.core.first.call(null,jcols_to_decrement_15373);
+var jcol_to_inset_15376 = cljs.core.first.call(null,jcols_to_inset_15374);
+var is_full_width_15377 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_15371)));
+if(cljs.core.truth_(jcol_to_inset_15376))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_15376,(webster.dom.get_column_offset.call(null,jcol_to_inset_15376) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_10332;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_15377;
 if(and__3822__auto__)
-{return jcol_to_decrement_10330;
+{return jcol_to_decrement_15375;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_10330,(webster.dom.get_column_span.call(null,jcol_to_decrement_10330) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_15375,(webster.dom.get_column_span.call(null,jcol_to_decrement_15375) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_10331;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_15376;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_10330;
+{var or__3824__auto____$1 = jcol_to_decrement_15375;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_10332);
+{return !(is_full_width_15377);
 }
 }
 })()))
@@ -175,6 +179,7 @@ return callback.call(null,webster.listeners.node_info.call(null,jselected));
 webster.main.remove_element_handler = (function() {
 var remove_element_handler = null;
 var remove_element_handler__2 = (function (data,callback){
+alert("removing");
 var jnode = $(".selected");
 webster.listeners.make_unselected.call(null,jnode);
 return jnode.remove();

@@ -13610,6 +13610,7 @@ webster.main.export_markup = function(a, b) {
   c.find(".empty").removeClass("empty");
   var d = c.find("body"), e = d.css("background-image");
   cljs.core.not.call(null, clojure.string.blank_QMARK_.call(null, e)) && (e = cljs.core.second.call(null, cljs.core.re_matches.call(null, /url\(.*\/(media\/.*)\)/, e)), c.find("body").css("background-image", null), d.attr("style", cljs.core.format.call(null, "zoom: 1; background-image: url(%s);", e)));
+  0 < c.find(".thumbnails").length && c.append(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:script", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", "js/bootstrap-lightbox.js"], !0)], !0)));
   return b.call(null, {markup:clojure.string.trim.call(null, c.html())})
 };
 webster.main.set_background_image = function(a) {
@@ -13659,6 +13660,7 @@ webster.main.increment_column = function(a, b) {
 };
 webster.main.remove_element_handler = function() {
   var a = null, b = function() {
+    alert("removing");
     var a = $(".selected");
     webster.listeners.make_unselected.call(null, a);
     return a.remove()

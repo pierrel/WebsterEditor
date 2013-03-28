@@ -42,27 +42,27 @@ var rel_path = cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*Docu
 var id = [cljs.core.str("thumb-"),cljs.core.str(cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*media\/(.*)\..*/,rel_path)))].join('');
 var href = [cljs.core.str("#"),cljs.core.str(id)].join('');
 if(cljs.core.truth_($el.hasClass("empty")))
-{var old_element_14309 = $el.find(".empty-decorations");
-var new_element_14310 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",href,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",rel_path], true)], true)], true));
-var lightbox_el_14311 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:id",id,"\uFDD0:class","lightbox hide fade","\uFDD0:tabindex","-1","\uFDD0:role","dialog","\uFDD0:aria-hidden",true,"\uFDD0:style","z-index: 10000;"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","lightbox-content"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","media-object","\uFDD0:src",rel_path], true)], true)], true)], true));
-old_element_14309.remove();
+{var old_element_14733 = $el.find(".empty-decorations");
+var new_element_14734 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",href,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",rel_path], true)], true)], true));
+var lightbox_el_14735 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:id",id,"\uFDD0:class","lightbox hide fade","\uFDD0:tabindex","-1","\uFDD0:role","dialog","\uFDD0:aria-hidden",true,"\uFDD0:style","z-index: 10000;"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","lightbox-content"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","media-object","\uFDD0:src",rel_path], true)], true)], true)], true));
+old_element_14733.remove();
 $el.removeClass("empty");
-$el.append(new_element_14310);
-$(" body").append(lightbox_el_14311);
+$el.append(new_element_14734);
+$(" body").append(lightbox_el_14735);
 ($el.find("a:last")[0]).addEventListener("click",(function (event__$1){
 event__$1.preventDefault();
 return true;
 }));
 } else
-{var $thumb_image_14312 = $el.find("img");
-var $link_14313 = $thumb_image_14312.closest("a");
-var old_id_14314 = [cljs.core.str("thumb-"),cljs.core.str(cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*media\/(.*)\..*/,$thumb_image_14312.attr("src"))))].join('');
-var old_href_14315 = [cljs.core.str("#"),cljs.core.str(old_id_14314)].join('');
-var $lightbox_14316 = $(old_href_14315);
-$thumb_image_14312.attr("src",rel_path);
-$link_14313.attr("href",href);
-$lightbox_14316.attr("id",id);
-$lightbox_14316.find("img").attr("src",rel_path);
+{var $thumb_image_14736 = $el.find("img");
+var $link_14737 = $thumb_image_14736.closest("a");
+var old_id_14738 = [cljs.core.str("thumb-"),cljs.core.str(cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*media\/(.*)\..*/,$thumb_image_14736.attr("src"))))].join('');
+var old_href_14739 = [cljs.core.str("#"),cljs.core.str(old_id_14738)].join('');
+var $lightbox_14740 = $(old_href_14739);
+$thumb_image_14736.attr("src",rel_path);
+$link_14737.attr("href",href);
+$lightbox_14740.attr("id",id);
+$lightbox_14740.find("img").attr("src",rel_path);
 }
 var $thumbnails = $el.closest(".thumbnails");
 if(cljs.core.not.call(null,$thumbnails.find(".image-thumb:last").hasClass("empty")))
@@ -85,26 +85,26 @@ return $empty_thumb;
 * @param {...*} var_args
 */
 webster.listeners.select_node = (function() { 
-var select_node__delegate = function (jnode,bridge,p__14317){
-var vec__14319 = p__14317;
-var callback = cljs.core.nth.call(null,vec__14319,0,null);
+var select_node__delegate = function (jnode,bridge,p__14741){
+var vec__14743 = p__14741;
+var callback = cljs.core.nth.call(null,vec__14743,0,null);
 var row_info = webster.listeners.node_info.call(null,jnode);
 webster.listeners.make_selected.call(null,jnode);
 return bridge.callHandler("containerSelectedHandler",row_info,(cljs.core.truth_(callback)?callback:null));
 };
 var select_node = function (jnode,bridge,var_args){
-var p__14317 = null;
+var p__14741 = null;
 if (arguments.length > 2) {
-  p__14317 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
+  p__14741 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
 } 
-return select_node__delegate.call(this, jnode, bridge, p__14317);
+return select_node__delegate.call(this, jnode, bridge, p__14741);
 };
 select_node.cljs$lang$maxFixedArity = 2;
-select_node.cljs$lang$applyTo = (function (arglist__14320){
-var jnode = cljs.core.first(arglist__14320);
-var bridge = cljs.core.first(cljs.core.next(arglist__14320));
-var p__14317 = cljs.core.rest(cljs.core.next(arglist__14320));
-return select_node__delegate(jnode, bridge, p__14317);
+select_node.cljs$lang$applyTo = (function (arglist__14744){
+var jnode = cljs.core.first(arglist__14744);
+var bridge = cljs.core.first(cljs.core.next(arglist__14744));
+var p__14741 = cljs.core.rest(cljs.core.next(arglist__14744));
+return select_node__delegate(jnode, bridge, p__14741);
 });
 select_node.cljs$core$IFn$_invoke$arity$variadic = select_node__delegate;
 return select_node;
