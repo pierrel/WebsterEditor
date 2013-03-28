@@ -23,6 +23,7 @@
 		A223B89E16F5359B00B15E26 /* development.js in Sources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A223B89F16F536CD00B15E26 /* development.js in Resources */ = {isa = PBXBuildFile; fileRef = A223B89D16F5359B00B15E26 /* development.js */; };
 		A2282F75170349250034214A /* NSThread+BlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2282F74170349250034214A /* NSThread+BlockAdditions.m */; };
+		A2282F781704929A0034214A /* bootstrap-lightbox.js in Resources */ = {isa = PBXBuildFile; fileRef = A2282F76170491C00034214A /* bootstrap-lightbox.js */; };
 		A22BEB00170167860039625D /* icon_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A22BEAFF170167860039625D /* icon_blue.png */; };
 		A22BEB0217016D9F0039625D /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */; };
 		A22BEB0417016FE40039625D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A22BEB0317016FE40039625D /* config.json */; };
@@ -81,6 +82,7 @@
 		A223B89D16F5359B00B15E26 /* development.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = development.js; sourceTree = "<group>"; };
 		A2282F73170349250034214A /* NSThread+BlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+BlockAdditions.h"; sourceTree = "<group>"; };
 		A2282F74170349250034214A /* NSThread+BlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+BlockAdditions.m"; sourceTree = "<group>"; };
+		A2282F76170491C00034214A /* bootstrap-lightbox.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "bootstrap-lightbox.js"; sourceTree = "<group>"; };
 		A22BEAFF170167860039625D /* icon_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blue.png; sourceTree = "<group>"; };
 		A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
 		A22BEB0317016FE40039625D /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				A29CF1CC16EBD37C00AB6D38 /* bootstrap */,
 				A29CF1D816EBD37C00AB6D38 /* jquery-1.9.0.min.js */,
 				A29CF1D916EBD37C00AB6D38 /* rangy.js */,
+				A2282F76170491C00034214A /* bootstrap-lightbox.js */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2282F781704929A0034214A /* bootstrap-lightbox.js in Resources */,
 				A2FF07481702A96B00D128CA /* bootstrap.js in Resources */,
 				A2FF07471702A96700D128CA /* bootstrap.min.js in Resources */,
 				A223B89F16F536CD00B15E26 /* development.js in Resources */,

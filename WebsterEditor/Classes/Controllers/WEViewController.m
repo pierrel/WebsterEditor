@@ -190,6 +190,7 @@ Export
         NSArray *filePaths = [NSArray arrayWithObjects:
                               @"js/jquery-1.9.0.min.js",
                               @"js/bootstrap.min.js",
+                              @"js/bootstrap-lightbox.js",
                               @"css/override.css",
                               @"css/bootstrap.min.css",
                               @"css/bootstrap-responsive.min.css",

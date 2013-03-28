@@ -13487,9 +13487,10 @@ webster.listeners.thumbnail_listener = function(a, b) {
     if(cljs.core.truth_(a["delete"])) {
       return c.remove()
     }
-    var e = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
-    cljs.core.truth_(c.hasClass("empty")) ? (a = c.find(".empty-decorations"), e = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", e, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", e], !0)], !0)], !0)), a.remove(), c.removeClass("empty"), c.append(e), c.find("a:last")[0].addEventListener("click", 
-    function(a) {
+    var e = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"])), f = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, e)))].join(""), g = [cljs.core.str("#"), cljs.core.str(f)].join("");
+    cljs.core.truth_(c.hasClass("empty")) ? (a = c.find(".empty-decorations"), g = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", g, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", e], !0)], !0)], !0)), e = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", 
+    cljs.core.PersistentArrayMap.fromArray(["\ufdd0:id", f, "\ufdd0:class", "lightbox hide fade", "\ufdd0:tabindex", "-1", "\ufdd0:role", "dialog", "\ufdd0:aria-hidden", !0, "\ufdd0:style", "z-index: 10000;"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "lightbox-content"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "media-object", "\ufdd0:src", e], !0)], !0)], 
+    !0)], !0)), a.remove(), c.removeClass("empty"), c.append(g), $(" body").append(e), c.find("a:last")[0].addEventListener("click", function(a) {
       a.preventDefault();
       return!0
     })) : c.find("img").attr("src", e);

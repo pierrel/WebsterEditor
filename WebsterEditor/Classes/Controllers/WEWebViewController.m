@@ -96,6 +96,9 @@ static const int ICON_DIM = 13;
                            @"js", @"ext", nil],
                           [NSDictionary dictionaryWithObjectsAndKeys:
                            @"development", @"name",
+                           @"js", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"bootstrap-lightbox", @"name",
                            @"js", @"ext", nil], nil];
     NSError *error;
     NSString *indexPath = nil;

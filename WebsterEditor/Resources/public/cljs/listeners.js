@@ -38,19 +38,23 @@ if(cljs.core.truth_((data["delete"])))
 } else
 {var full_path = (data["resource-path"]);
 var rel_path = cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*Documents\/(.*)/,full_path));
+var id = [cljs.core.str("thumb-"),cljs.core.str(cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*media\/(.*)\..*/,rel_path)))].join('');
+var href = [cljs.core.str("#"),cljs.core.str(id)].join('');
 if(cljs.core.truth_($el.hasClass("empty")))
-{var old_element_2594 = $el.find(".empty-decorations");
-var new_element_2595 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",rel_path,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",rel_path], true)], true)], true));
-old_element_2594.remove();
+{var old_element_11785 = $el.find(".empty-decorations");
+var new_element_11786 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",href,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",rel_path], true)], true)], true));
+var lightbox_el_11787 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:id",id,"\uFDD0:class","lightbox hide fade","\uFDD0:tabindex","-1","\uFDD0:role","dialog","\uFDD0:aria-hidden",true,"\uFDD0:style","z-index: 10000;"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","lightbox-content"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","media-object","\uFDD0:src",rel_path], true)], true)], true)], true));
+old_element_11785.remove();
 $el.removeClass("empty");
-$el.append(new_element_2595);
+$el.append(new_element_11786);
+$(" body").append(lightbox_el_11787);
 ($el.find("a:last")[0]).addEventListener("click",(function (event__$1){
 event__$1.preventDefault();
 return true;
 }));
 } else
-{var $thumb_image_2596 = $el.find("img");
-$thumb_image_2596.attr("src",rel_path);
+{var $thumb_image_11788 = $el.find("img");
+$thumb_image_11788.attr("src",rel_path);
 }
 var $thumbnails = $el.closest(".thumbnails");
 if(cljs.core.not.call(null,$thumbnails.find(".image-thumb:last").hasClass("empty")))
@@ -73,26 +77,26 @@ return $empty_thumb;
 * @param {...*} var_args
 */
 webster.listeners.select_node = (function() { 
-var select_node__delegate = function (jnode,bridge,p__2597){
-var vec__2599 = p__2597;
-var callback = cljs.core.nth.call(null,vec__2599,0,null);
+var select_node__delegate = function (jnode,bridge,p__11789){
+var vec__11791 = p__11789;
+var callback = cljs.core.nth.call(null,vec__11791,0,null);
 var row_info = webster.listeners.node_info.call(null,jnode);
 webster.listeners.make_selected.call(null,jnode);
 return bridge.callHandler("containerSelectedHandler",row_info,(cljs.core.truth_(callback)?callback:null));
 };
 var select_node = function (jnode,bridge,var_args){
-var p__2597 = null;
+var p__11789 = null;
 if (arguments.length > 2) {
-  p__2597 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
+  p__11789 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
 } 
-return select_node__delegate.call(this, jnode, bridge, p__2597);
+return select_node__delegate.call(this, jnode, bridge, p__11789);
 };
 select_node.cljs$lang$maxFixedArity = 2;
-select_node.cljs$lang$applyTo = (function (arglist__2600){
-var jnode = cljs.core.first(arglist__2600);
-var bridge = cljs.core.first(cljs.core.next(arglist__2600));
-var p__2597 = cljs.core.rest(cljs.core.next(arglist__2600));
-return select_node__delegate(jnode, bridge, p__2597);
+select_node.cljs$lang$applyTo = (function (arglist__11792){
+var jnode = cljs.core.first(arglist__11792);
+var bridge = cljs.core.first(cljs.core.next(arglist__11792));
+var p__11789 = cljs.core.rest(cljs.core.next(arglist__11792));
+return select_node__delegate(jnode, bridge, p__11789);
 });
 select_node.cljs$core$IFn$_invoke$arity$variadic = select_node__delegate;
 return select_node;

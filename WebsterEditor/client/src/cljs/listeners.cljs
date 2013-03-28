@@ -30,16 +30,27 @@
                               (if (aget data "delete")
                                 (.remove $el)
                                 (let [full-path (aget data "resource-path")
-                                      rel-path (second (re-matches #".*Documents/(.*)" full-path))]
+                                      rel-path (second (re-matches #".*Documents/(.*)" full-path))
+                                      id (str "thumb-" (second (re-matches #".*media/(.*)\..*" rel-path)))
+                                      href (str "#" id)]
                                   (if (.hasClass $el "empty")
                                     (let [old-element (.find $el ".empty-decorations")
-                                          new-element (html/compile [:a {:href rel-path
+                                          new-element (html/compile [:a {:href href
                                                                          :class "thumbnail"
                                                                          :data-toggle "lightbox"}
-                                                                     [:img {:src rel-path }]])]
+                                                                     [:img {:src rel-path }]])
+                                          lightbox-el (html/compile [:div {:id id
+                                                                           :class "lightbox hide fade"
+                                                                           :tabindex "-1"
+                                                                           :role "dialog"
+                                                                           :aria-hidden true
+                                                                           :style "z-index: 10000;"}
+                                                                     [:div {:class "lightbox-content"}
+                                                                      [:img {:class "media-object" :src rel-path}]]])]
                                       (.remove old-element)
                                       (.removeClass $el "empty")
                                       (.append $el new-element)
+                                      (.append (js/$ " body") lightbox-el)
                                       (.addEventListener (aget (.find $el "a:last") 0) "click" (fn [event]
                                                                                                  (.preventDefault event)
                                                                                                  true)))
