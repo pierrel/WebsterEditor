@@ -31,7 +31,7 @@
 - (void)imagePopoverController:(WEImagePopoverViewController *)picker
  didFinishPickingMediaWithInfo:(NSDictionary *)info {
     CGSize max = CGSizeMake(980, 1208);
-    CGFloat thumbMax = 300;
+    CGFloat thumbMax = 250;
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
     NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
@@ -48,7 +48,7 @@
     resizeRatio = MAX(resizeX, resizeY);
     if (resizeRatio != 1) image = [originalImage scaledBy:resizeRatio];
     else image = originalImage;
-    thumbImage = [image scaledBy:thumbMax / image.size.height];
+    thumbImage = [image scaledBy:thumbMax / MAX(image.size.height, image.size.width)];
     
     NSData *data = UIImageJPEGRepresentation(image, 1);
     NSData *thumbData = UIImageJPEGRepresentation(thumbImage, 1);
