@@ -13465,6 +13465,13 @@ webster.dom.empty_image_thumbnail = function() {
   a.cljs$core$IFn$_invoke$arity$1 = c;
   return a
 }();
+webster.dir = {};
+webster.dir.rel_path = function(a) {
+  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a))
+};
+webster.dir.file_name = function(a) {
+  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*\/([^\/]+)\..*/, a))
+};
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13487,24 +13494,25 @@ webster.listeners.thumbnail_listener = function(a, b) {
     if(cljs.core.truth_(a["delete"])) {
       return c.remove()
     }
-    a = cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a["resource-path"]));
-    var e = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, a)))].join(""), f = [cljs.core.str("#"), cljs.core.str(e)].join("");
+    var e = a["resource-path"], f = webster.dir.rel_path.call(null, a["thumb-path"]);
+    a = webster.dir.rel_path.call(null, e);
+    var e = [cljs.core.str("thumb-"), cljs.core.str(webster.dir.file_name.call(null, e))].join(""), g = [cljs.core.str("#"), cljs.core.str(e)].join("");
     if(cljs.core.truth_(c.hasClass("empty"))) {
-      var g = c.find(".empty-decorations"), f = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", f, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", a], !0)], !0)], !0));
+      var h = c.find(".empty-decorations"), g = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", g, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", f], !0)], !0)], !0));
       a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:id", e, "\ufdd0:class", "lightbox hide fade", "\ufdd0:tabindex", "-1", "\ufdd0:role", "dialog", "\ufdd0:aria-hidden", !0, "\ufdd0:style", "z-index: 10000;"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "lightbox-content"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", 
       "media-object", "\ufdd0:src", a], !0)], !0)], !0)], !0));
-      g.remove();
+      h.remove();
       c.removeClass("empty");
-      c.append(f);
+      c.append(g);
       $(" body").append(a);
       c.find("a:last")[0].addEventListener("click", function(a) {
         a.preventDefault();
         return!0
       })
     }else {
-      var g = c.find("img"), h = g.closest("a"), j = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, g.attr("src"))))].join(""), j = [cljs.core.str("#"), cljs.core.str(j)].join(""), j = $(j);
-      g.attr("src", a);
-      h.attr("href", f);
+      var h = c.find("img"), f = h.closest("a"), j = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, h.attr("src"))))].join(""), j = [cljs.core.str("#"), cljs.core.str(j)].join(""), j = $(j);
+      h.attr("src", a);
+      f.attr("href", g);
       j.attr("id", e);
       j.find("img").attr("src", a)
     }

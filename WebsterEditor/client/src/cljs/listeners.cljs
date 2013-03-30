@@ -1,6 +1,7 @@
 (ns webster.listeners
   (:require [webster.dom :as dom]
             [webster.html :as html]
+            [webster.dir :as dir]
             [clojure.string :as string]))
 
 ;; listeners
@@ -31,15 +32,17 @@
                               (if (aget data "delete")
                                 (.remove $el)
                                 (let [full-path (aget data "resource-path")
-                                      rel-path (second (re-matches #".*Documents/(.*)" full-path))
-                                      id (str "thumb-" (second (re-matches #".*media/(.*)\..*" rel-path)))
+                                      thumb-full-path (aget data "thumb-path")
+                                      thumb-rel-path (dir/rel-path thumb-full-path)
+                                      rel-path (dir/rel-path full-path)
+                                      id (str "thumb-" (dir/file-name full-path))
                                       href (str "#" id)]
                                   (if (.hasClass $el "empty")
                                     (let [old-element (.find $el ".empty-decorations")
                                           new-element (html/compile [:a {:href href
                                                                          :class "thumbnail"
                                                                          :data-toggle "lightbox"}
-                                                                     [:img {:src rel-path }]])
+                                                                     [:img {:src thumb-rel-path}]])
                                           lightbox-el (html/compile [:div {:id id
                                                                            :class "lightbox hide fade"
                                                                            :tabindex "-1"
