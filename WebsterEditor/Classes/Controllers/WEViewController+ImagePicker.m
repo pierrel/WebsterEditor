@@ -10,6 +10,9 @@
 #import "WEUtils.h"
 #import "WEPageManager.h"
 #import "NSArray+WEExtras.h"
+#import "UIImage+WEExtras.h"
+
+
 
 @implementation WEWebViewController (ImagePicker)
 
@@ -27,17 +30,35 @@
 
 - (void)imagePopoverController:(WEImagePopoverViewController *)picker
  didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    CGSize max = CGSizeMake(980, 1208);
+    CGFloat thumbMax = 300;
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
     NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
+    NSString *thumbPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@_THUMB.jpg", uuidStr]];
+
+    // resize the image
+    UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    CGSize imageSize = originalImage.size;
+    UIImage *thumbImage;
+    UIImage *image;
+    CGFloat resizeRatio = 1, resizeX = 1, resizeY = 1;
+    if (imageSize.height > max.height) resizeY = max.height / imageSize.height;
+    if (imageSize.width > max.width) resizeX = max.width / imageSize.width;
+    resizeRatio = MAX(resizeX, resizeY);
+    if (resizeRatio != 1) image = [originalImage scaledBy:resizeRatio];
+    else image = originalImage;
+    thumbImage = [image scaledBy:thumbMax / image.size.height];
     
-    UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData* data = UIImageJPEGRepresentation(image, 1);
+    NSData *data = UIImageJPEGRepresentation(image, 1);
+    NSData *thumbData = UIImageJPEGRepresentation(thumbImage, 1);
     [data writeToFile:mediaPath atomically:NO];
+    [thumbData writeToFile:thumbPath atomically:NO];
 
     if (self.imagePickerCallback)
-        self.imagePickerCallback([NSDictionary dictionaryWithObject:mediaPath
-                                                             forKey:@"resource-path"]);
+        self.imagePickerCallback([NSDictionary dictionaryWithObjectsAndKeys:
+                                  mediaPath, @"resource-path",
+                                  thumbPath, @"thumb-path", nil]);
     self.imagePickerCallback = nil;
 }
 
