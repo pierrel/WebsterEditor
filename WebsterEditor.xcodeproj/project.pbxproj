@@ -27,6 +27,9 @@
 		A22BEB00170167860039625D /* icon_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A22BEAFF170167860039625D /* icon_blue.png */; };
 		A22BEB0217016D9F0039625D /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */; };
 		A22BEB0417016FE40039625D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A22BEB0317016FE40039625D /* config.json */; };
+		A239B6201708D2EA00109734 /* WEProjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B61E1708D2EA00109734 /* WEProjectsViewController.m */; };
+		A239B6241708E05700109734 /* WEProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6231708E05700109734 /* WEProjectCell.m */; };
+		A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */; };
 		A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEViewController.m */; };
 		A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
@@ -87,6 +90,12 @@
 		A22BEAFF170167860039625D /* icon_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_blue.png; sourceTree = "<group>"; };
 		A22BEB0117016D9F0039625D /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
 		A22BEB0317016FE40039625D /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		A239B61D1708D2EA00109734 /* WEProjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEProjectsViewController.h; sourceTree = "<group>"; };
+		A239B61E1708D2EA00109734 /* WEProjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEProjectsViewController.m; sourceTree = "<group>"; };
+		A239B6221708E05700109734 /* WEProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEProjectCell.h; sourceTree = "<group>"; };
+		A239B6231708E05700109734 /* WEProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEProjectCell.m; sourceTree = "<group>"; };
+		A239B6251708E0E800109734 /* WEProjectCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEProjectCollectionViewLayout.h; sourceTree = "<group>"; };
+		A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEProjectCollectionViewLayout.m; sourceTree = "<group>"; };
 		A27D62BA16FC17FB005C114A /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
 		A27D62BB16FC17FB005C114A /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
 		A27D62BC16FC17FB005C114A /* WEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEViewController.xib; sourceTree = "<group>"; };
@@ -267,6 +276,8 @@
 				A27D62BC16FC17FB005C114A /* WEViewController.xib */,
 				A29FB3C617009E2D00216969 /* WEActionSelectViewController.h */,
 				A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */,
+				A239B61D1708D2EA00109734 /* WEProjectsViewController.h */,
+				A239B61E1708D2EA00109734 /* WEProjectsViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -307,6 +318,10 @@
 				A29459F016FACC19004AA401 /* GradientButton.m */,
 				A29CF1B916EBD37400AB6D38 /* WEColumnResizeView.h */,
 				A29CF1BA16EBD37400AB6D38 /* WEColumnResizeView.m */,
+				A239B6221708E05700109734 /* WEProjectCell.h */,
+				A239B6231708E05700109734 /* WEProjectCell.m */,
+				A239B6251708E0E800109734 /* WEProjectCollectionViewLayout.h */,
+				A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -538,6 +553,9 @@
 				A29FB3C817009E2D00216969 /* WEActionSelectViewController.m in Sources */,
 				A2282F75170349250034214A /* NSThread+BlockAdditions.m in Sources */,
 				A2F12495170792C80012D1AF /* UIImage+WEExtras.m in Sources */,
+				A239B6201708D2EA00109734 /* WEProjectsViewController.m in Sources */,
+				A239B6241708E05700109734 /* WEProjectCell.m in Sources */,
+				A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

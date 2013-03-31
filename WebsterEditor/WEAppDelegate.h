@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WEViewController.h"
+#import "WEProjectsViewController.h"
 
 @class WEWebViewController;
 
@@ -15,6 +16,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) WEViewController *viewController;
+@property (strong, nonatomic) WEProjectsViewController *viewController;
 
 @end
