@@ -69,6 +69,11 @@
                       height);
 }
 
++ (NSString*) pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString *)projectId {
+    NSString *projectPath = [WEUtils pathInDocumentDirectory:projectId];
+    return [projectPath stringByAppendingPathComponent:filename];
+}
+
 + (NSString *)pathInDocumentDirectory:(NSString *)filename{
 	NSArray *documentDirectories =
     NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -87,5 +92,13 @@
     NSString *documentPath = [searchPaths lastObject];
     
     return [NSURL fileURLWithPath:documentPath];
+}
+
+/**
+ Returns a new uuid
+ */
++ (NSString*)newId {
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    return (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
 }
 @end

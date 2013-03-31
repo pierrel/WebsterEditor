@@ -30,6 +30,7 @@
 		A239B6201708D2EA00109734 /* WEProjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B61E1708D2EA00109734 /* WEProjectsViewController.m */; };
 		A239B6241708E05700109734 /* WEProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6231708E05700109734 /* WEProjectCell.m */; };
 		A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */; };
+		A239B62A1708E85E00109734 /* WEAddProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6291708E85E00109734 /* WEAddProjectCell.m */; };
 		A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEViewController.m */; };
 		A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
@@ -96,6 +97,8 @@
 		A239B6231708E05700109734 /* WEProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEProjectCell.m; sourceTree = "<group>"; };
 		A239B6251708E0E800109734 /* WEProjectCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEProjectCollectionViewLayout.h; sourceTree = "<group>"; };
 		A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEProjectCollectionViewLayout.m; sourceTree = "<group>"; };
+		A239B6281708E85E00109734 /* WEAddProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEAddProjectCell.h; sourceTree = "<group>"; };
+		A239B6291708E85E00109734 /* WEAddProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEAddProjectCell.m; sourceTree = "<group>"; };
 		A27D62BA16FC17FB005C114A /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
 		A27D62BB16FC17FB005C114A /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
 		A27D62BC16FC17FB005C114A /* WEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEViewController.xib; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 				A29CF1BA16EBD37400AB6D38 /* WEColumnResizeView.m */,
 				A239B6221708E05700109734 /* WEProjectCell.h */,
 				A239B6231708E05700109734 /* WEProjectCell.m */,
+				A239B6281708E85E00109734 /* WEAddProjectCell.h */,
+				A239B6291708E85E00109734 /* WEAddProjectCell.m */,
 				A239B6251708E0E800109734 /* WEProjectCollectionViewLayout.h */,
 				A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */,
 			);
@@ -556,6 +561,7 @@
 				A239B6201708D2EA00109734 /* WEProjectsViewController.m in Sources */,
 				A239B6241708E05700109734 /* WEProjectCell.m in Sources */,
 				A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */,
+				A239B62A1708E85E00109734 /* WEAddProjectCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

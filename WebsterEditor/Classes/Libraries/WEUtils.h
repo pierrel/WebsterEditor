@@ -13,4 +13,6 @@
 + (CGRect)frameFromData:(id)data;
 + (NSString *)pathInDocumentDirectory:(NSString *)filename;
 + (NSURL *)applicationDocumentsDirectory;
++ (NSString*)newId;
++ (NSString*)pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString*)projectId;
 @end

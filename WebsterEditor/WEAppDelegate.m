@@ -43,33 +43,13 @@
 -(void)createDirectories {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *projects = [WEUtils pathInDocumentDirectory:@"/projects"];
-    NSString *media = [WEUtils pathInDocumentDirectory:@"/media"];
-    NSString *css = [WEUtils pathInDocumentDirectory:@"/css"];
-    NSString *js = [WEUtils pathInDocumentDirectory:@"/js"];
     NSError *error;
     
     if (![manager fileExistsAtPath:projects])
         [manager createDirectoryAtPath:projects
            withIntermediateDirectories:NO
                             attributes:nil
-                                 error:&error];
-    
-    if (![manager fileExistsAtPath:media]) [manager createDirectoryAtPath:media
-                                              withIntermediateDirectories:NO
-                                                               attributes:nil
-                                                                    error:&error];
-    NSLog(@"%@", error);
-    
-    if (![manager fileExistsAtPath:css]) [manager createDirectoryAtPath:css
-                                            withIntermediateDirectories:NO
-                                                             attributes:nil
-                                                                  error:&error];
-    NSLog(@"%@", error);
-    if (![manager fileExistsAtPath:js]) [manager createDirectoryAtPath:js
-                                           withIntermediateDirectories:NO
-                                                            attributes:nil
-                                                                 error:&error];
-    NSLog(@"%@", error);
+                                 error:&error];    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
