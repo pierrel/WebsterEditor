@@ -12,9 +12,9 @@
 -(id)init {
     self = [super init];
     if (self) {
-        self.itemSize = CGSizeMake(250, 250);
+        self.itemSize = CGSizeMake(150, 150);
         self.scrollDirection = UICollectionViewScrollDirectionVertical;
-        self.sectionInset = UIEdgeInsetsMake(100, 0.0, 100, 0.0);
+        self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
         self.minimumLineSpacing = 50.0;
     }
     return self;

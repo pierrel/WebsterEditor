@@ -30,7 +30,7 @@
 //    }
 //    WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEViewController" bundle:nil];
 //    self.viewController = viewController;
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    WEProjectCollectionViewLayout *layout = [[WEProjectCollectionViewLayout alloc] init];
     WEProjectsViewController *viewController = [[WEProjectsViewController alloc] initWithCollectionViewLayout:layout];
     self.viewController = viewController;
     
