@@ -158,7 +158,7 @@ Export
                                                            encoding:NSStringEncodingConversionAllowLossy
                                                               error:&error];
         NSString *markup = [responseData objectForKey:@"markup"];
-        NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:@"title"];
+        NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:@"Gaualofa"];
         html = [html stringByReplacingOccurrencesOfString:@"[[BODY]]" withString:markup];
         
         NSData *htmlData = [html dataUsingEncoding:NSStringEncodingConversionAllowLossy];
