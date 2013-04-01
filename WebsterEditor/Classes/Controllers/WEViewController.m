@@ -21,9 +21,18 @@
 @implementation WEViewController
 @synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithProjectId:(NSString*)projectId {
+    self = [self init];
+    if (self) {
+        self.projectId = projectId;
+    }
+    
+    return self;
+}
+
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
@@ -66,6 +75,7 @@
     contentView.layer.shadowOpacity = 0.5;
     
     self.contentController = [[WEWebViewController alloc] initWithNibName:@"WEWebViewController_iPad" bundle:nil];
+    self.contentController.projectId = self.projectId;
     [self.contentView addSubview:self.contentController.view];
     
     UISwipeGestureRecognizer *openGesture = [[UISwipeGestureRecognizer alloc] init];

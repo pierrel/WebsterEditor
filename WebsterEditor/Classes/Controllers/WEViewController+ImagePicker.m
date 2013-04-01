@@ -32,8 +32,7 @@
  didFinishPickingMediaWithInfo:(NSDictionary *)info {
     CGSize max = CGSizeMake(980, 1208);
     CGFloat thumbMax = 250;
-    CFUUIDRef uuid = CFUUIDCreate(NULL);
-    NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+    NSString *uuidStr = [WEUtils newId];
     NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
     NSString *thumbPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@_THUMB.jpg", uuidStr]];
 

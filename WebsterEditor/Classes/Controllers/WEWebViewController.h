@@ -16,6 +16,7 @@
 @property (strong, nonatomic) WEActionSelectViewController *actionsController;
 @property (strong, nonatomic) UIPopoverController *actionPopover;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
+@property (strong, nonatomic) NSString *projectId;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 

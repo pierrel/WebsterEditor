@@ -53,8 +53,8 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self closeDialog];
     }];
-
-    NSString *indexPath = [self setupFiles];
+    
+    NSString *indexPath = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
     //[self.webView loadHTMLString:html baseURL:base];
     self.webView.keyboardDisplayRequiresUserAction = NO;
@@ -66,64 +66,6 @@ static const int ICON_DIM = 13;
     // Dialog view
     self.actionsController = [[WEActionSelectViewController alloc] init];
     self.actionsController.delegate = self;
-}
-
-- (NSString*)setupFiles {
-    NSArray *resources = [NSArray arrayWithObjects:
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
-                           @"html", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"override", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap.min", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap-responsive.min", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"jquery-1.9.0.min", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap.min", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"rangy", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap-lightbox", @"name",
-                           @"js", @"ext", nil], nil];
-    NSError *error;
-    NSString *indexPath = nil;
-    
-    for (int i = 0, len = [resources count]; i < len; i++) {
-        NSDictionary *fileInfo = [resources objectAtIndex:i];
-        NSString *ext = [fileInfo objectForKey:@"ext"];
-        NSString *name = [fileInfo objectForKey:@"name"];
-        NSString *topLevelPath = ([ext isEqualToString:@"html"] ? @"" : [NSString stringWithFormat:@"%@/", ext]);
-        NSString *path = [NSString stringWithFormat:@"/%@%@.%@", topLevelPath, name, ext];
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:path];
-        
-        NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name
-                                                                                                ofType:ext]
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-        [contents writeToFile:fullPath
-                   atomically:NO
-                     encoding:NSStringEncodingConversionAllowLossy
-                        error:&error];
-        
-        if (i == 0) indexPath = fullPath;
-    }
-    
-    return indexPath;
 }
 
 - (void)openDialogWithData:(id)data {
@@ -238,7 +180,7 @@ static const int ICON_DIM = 13;
     WEPageManager *pageManager = [WEPageManager sharedManager];    
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/BG%@.jpg", uuidStr]];
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"projects/%@/media/BG%@.jpg", self.projectId, uuidStr]];
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];

@@ -10,6 +10,7 @@
 #import "WEUtils.h"
 #import "WEProjectCell.h"
 #import "WEAddProjectCell.h"
+#import "WEViewController.h"
 
 @interface WEProjectsViewController ()
 
@@ -151,8 +152,14 @@
         if (i == 0) indexPath = fullPath;
     }
     
-    // setup the web view controller
-    
+    // setup the view controller
+    WEViewController *parent = self.parentViewController;
+    WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
+    [self presentViewController:mainController
+                       animated:YES
+                     completion:^{
+                         NSLog(@"done");
+                     }];
     
     NSLog(@"%@", indexPath);
 }
