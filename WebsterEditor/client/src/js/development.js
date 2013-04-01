@@ -13467,7 +13467,7 @@ webster.dom.empty_image_thumbnail = function() {
 }();
 webster.dir = {};
 webster.dir.rel_path = function(a) {
-  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a))
+  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/projects\/[^\/]*\/(.*)/, a))
 };
 webster.dir.file_name = function(a) {
   return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*\/([^\/]+)\..*/, a))

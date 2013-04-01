@@ -60,8 +60,8 @@ if (arguments.length > 0) {
 return compile__delegate.call(this, forms);
 };
 compile.cljs$lang$maxFixedArity = 0;
-compile.cljs$lang$applyTo = (function (arglist__2594){
-var forms = cljs.core.seq(arglist__2594);;
+compile.cljs$lang$applyTo = (function (arglist__3414){
+var forms = cljs.core.seq(arglist__3414);;
 return compile__delegate(forms);
 });
 compile.cljs$core$IFn$_invoke$arity$variadic = compile__delegate;

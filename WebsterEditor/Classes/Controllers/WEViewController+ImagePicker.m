@@ -33,8 +33,8 @@
     CGSize max = CGSizeMake(980, 1208);
     CGFloat thumbMax = 250;
     NSString *uuidStr = [WEUtils newId];
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
-    NSString *thumbPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@_THUMB.jpg", uuidStr]];
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@", uuidStr] withProjectId:self.projectId];
+    NSString *thumbPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@_THUMB", uuidStr] withProjectId:self.projectId];
 
     // resize the image
     UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
