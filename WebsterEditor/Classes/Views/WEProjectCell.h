@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface WEProjectCell : UICollectionViewCell
-@property (retain, nonatomic) UILabel* label;
+-(void)setImage:(UIImage*)image;
 @end

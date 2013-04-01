@@ -8,22 +8,34 @@
 
 #import "WEProjectCell.h"
 
+@interface WEProjectCell()
+@property (nonatomic, strong) UIImageView *imageView;
+@end
+
 @implementation WEProjectCell
+
+
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, frame.size.height)];
-        self.label.textAlignment = NSTextAlignmentCenter;
-        self.label.textColor = [UIColor blackColor];
-        self.label.font = [UIFont boldSystemFontOfSize:35.0];
-        self.label.backgroundColor = [UIColor whiteColor];
-        
-        [self.contentView addSubview:self.label];;
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [self.contentView addSubview:self.imageView];
+        self.contentView.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
+
+-(void)setImage:(UIImage *)image {
+    CGSize size = image.size;
+    CGRect frame = self.frame;
+    CGFloat width = (frame.size.height/size.height) * size.width;
+    [self.imageView setFrame:CGRectMake((frame.size.width - width)/2, 0, width, frame.size.height)];
+    [self.imageView setImage:image];
+}
+
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -59,7 +59,10 @@
         
     } else {
         WEProjectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectCell" forIndexPath:indexPath];
-        cell.label.text = [NSString stringWithFormat:@"(%d, %d)", indexPath.section, indexPath.row];
+        NSString *projectId = [[self projects] objectAtIndex:indexPath.row];
+        NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg" withProjectId:projectId];
+        UIImage *thumb = [UIImage imageWithContentsOfFile:thumbPath];
+        [cell setImage:thumb];
         return cell;
     }
 }

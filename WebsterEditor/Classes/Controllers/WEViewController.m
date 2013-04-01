@@ -233,7 +233,17 @@ Export
     NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
     NSData *docData = [document dataUsingEncoding:NSStringEncodingConversionAllowLossy];
     [docData writeToFile:devFile atomically:NO];
-    NSLog(@"%@", devFile);
+    
+    // save the thumbnail
+    NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg"
+                                             withProjectId:self.projectId];
+    UIView *webView = self.contentController.view;
+    UIGraphicsBeginImageContext(webView.frame.size);
+    [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
+    [thumbData writeToFile:thumbPath atomically:NO];
 }
 
 /*
