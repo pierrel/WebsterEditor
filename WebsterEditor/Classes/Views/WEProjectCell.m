@@ -21,6 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.imageView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:self.imageView];
         self.contentView.backgroundColor = [UIColor clearColor];
     }
@@ -31,6 +32,7 @@
     CGSize size = image.size;
     CGRect frame = self.frame;
     CGFloat width = (frame.size.height/size.height) * size.width;
+    self.imageView.backgroundColor = [UIColor clearColor];
     [self.imageView setFrame:CGRectMake((frame.size.width - width)/2, 0, width, frame.size.height)];
     [self.imageView setImage:image];
 }

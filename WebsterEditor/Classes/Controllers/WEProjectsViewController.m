@@ -62,7 +62,7 @@
         NSString *projectId = [[self projects] objectAtIndex:indexPath.row];
         NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg" withProjectId:projectId];
         UIImage *thumb = [UIImage imageWithContentsOfFile:thumbPath];
-        [cell setImage:thumb];
+        if (thumb) [cell setImage:thumb];
         return cell;
     }
 }
