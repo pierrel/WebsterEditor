@@ -187,10 +187,11 @@ Export
         // media
         NSString *pathPrefix = @"media";
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        for (NSString *file in [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:pathPrefix]
-                                                                error:&error]) {
+        NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
+                                                 withProjectId:self.projectId];
+        for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
             NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
-            NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey];
+            NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
             NSLog(@"file: %@", fullPath);
             NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
             put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
@@ -211,7 +212,7 @@ Export
                               @"css/bootstrap-responsive.min.css",
                               nil];
         for (NSString *filePath in filePaths) {
-            NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath];
+            NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
             NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
             NSLog(@"adding %@", filePath);
             put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
