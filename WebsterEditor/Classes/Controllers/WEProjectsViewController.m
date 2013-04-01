@@ -189,10 +189,25 @@
 
 -(NSArray*)projects {
     NSError *error;
-    NSArray *projectDirectories = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:@"projects"] error:&error];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *projectDirectories = [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:@"projects"] error:&error];
     NSMutableArray *filenames = [[NSMutableArray alloc] init];
+    NSArray *sortedPaths = [projectDirectories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSError *attrError;
+        NSString *path1 = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"projects/%@", obj1]];
+        NSDictionary *attrs1 = [fileManager attributesOfItemAtPath:path1
+                                                            error:&attrError];
+        NSDate *date1 = [attrs1 objectForKey:NSFileCreationDate];
+
+        NSString *path2 = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"projects/%@", obj2]];
+        NSDictionary *attrs2 = [fileManager attributesOfItemAtPath:path2
+                                                             error:&attrError];
+        NSDate *date2 = [attrs2 objectForKey:NSFileCreationDate];
+        
+        return date2.timeIntervalSince1970 - date1.timeIntervalSince1970;
+    }];
     
-    for (NSString *fullPath in projectDirectories) {
+    for (NSString *fullPath in sortedPaths) {
         [filenames addObject:[fullPath lastPathComponent]];
     }
 
