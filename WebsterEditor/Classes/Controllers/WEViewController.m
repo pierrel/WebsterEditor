@@ -19,7 +19,7 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton, backButton;
 
 -(id)initWithProjectId:(NSString*)projectId {
     self = [self init];
@@ -70,6 +70,11 @@
     [saveButton useRedDeleteStyle];
     [saveButton addTarget:self
                    action:@selector(saveProject)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    [backButton useBlackStyle];
+    [backButton addTarget:self
+                   action:@selector(backToProjects)
          forControlEvents:UIControlEventTouchUpInside];
     
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
@@ -244,6 +249,13 @@ Export
     UIGraphicsEndImageContext();
     NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
     [thumbData writeToFile:thumbPath atomically:NO];
+}
+
+-(void)backToProjects {
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 NSLog(@"dismissed");
+                             }];
 }
 
 /*

@@ -23,6 +23,7 @@
 @property (nonatomic, strong) IBOutlet GradientButton *bgRemove;
 @property (nonatomic, strong) IBOutlet GradientButton *exportButton;
 @property (nonatomic, strong) IBOutlet GradientButton *saveButton;
+@property (nonatomic, strong) IBOutlet GradientButton *backButton;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *exportActivity;
 
 -(id)initWithProjectId:(NSString*)projectId;

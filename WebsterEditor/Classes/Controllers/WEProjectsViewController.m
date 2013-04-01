@@ -80,16 +80,16 @@
 
 -(void)transitionToProject:(NSString*)projectId {
     // setup the view controller
+    CGRect current = self.view.frame;
     [UIView animateWithDuration:0.2 animations:^{
         CGFloat diff = 20;
-        CGRect current = self.view.frame;
         [self.view setFrame:CGRectMake(current.origin.x+diff, current.origin.y+diff, current.size.width-(diff*2), current.size.height-(diff*2))];
     }];
     WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
     [self presentViewController:mainController
                        animated:YES
                      completion:^{
-                         NSLog(@"done");
+                         [self.view setFrame:current];
                      }];
 }
 
