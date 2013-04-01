@@ -13451,7 +13451,7 @@ webster.dom.empty_image_thumbnail = function() {
   var a = null, b = function() {
     return a.call(null, 4)
   }, c = function(a) {
-    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
+    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb selectable-thumb", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
   }, a = function(a) {
     switch(arguments.length) {
       case 0:
@@ -13583,6 +13583,17 @@ webster.main.on_bridge_ready = function(a) {
       return webster.listeners.container_listener.call(null, a, b)
     }, !1)
   });
+  webster.dom.each_node.call(null, document.getElementsByClassName("selectable-thumb"), function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.listeners.thumbnail_listener.call(null, a, b)
+    }, !1)
+  });
+  webster.dom.each_node.call(null, document.getElementsByTagName("a"), function(a) {
+    return a.addEventListener("click", function(a) {
+      a.preventDefault();
+      return!0
+    })
+  });
   document.addEventListener("click", function(a) {
     return webster.listeners.default_listener.call(null, a, b)
   }, !1);
@@ -13614,6 +13625,7 @@ webster.main.export_markup = function(a, b) {
   c.find("script[src*\x3ddevelopment]").remove();
   c.find(".thumbnails .empty").remove();
   c.find(".selectable").removeClass("selectable");
+  c.find(".selectable-thumb").removeClass("selectable-thumb");
   c.find(".selected").removeClass("selected");
   c.find(".empty").removeClass("empty");
   var d = c.find("body"), e = d.css("background-image");
@@ -13668,7 +13680,6 @@ webster.main.increment_column = function(a, b) {
 };
 webster.main.remove_element_handler = function() {
   var a = null, b = function() {
-    alert("removing");
     var a = $(".selected");
     webster.listeners.make_unselected.call(null, a);
     return a.remove()

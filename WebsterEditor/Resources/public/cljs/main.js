@@ -13,6 +13,17 @@ return node.addEventListener("click",(function (event__$1){
 return webster.listeners.container_listener.call(null,event__$1,bridge);
 }),false);
 }));
+webster.dom.each_node.call(null,document.getElementsByClassName("selectable-thumb"),(function (node){
+return node.addEventListener("click",(function (event__$1){
+return webster.listeners.thumbnail_listener.call(null,event__$1,bridge);
+}),false);
+}));
+webster.dom.each_node.call(null,document.getElementsByTagName("a"),(function (node){
+return node.addEventListener("click",(function (event__$1){
+event__$1.preventDefault();
+return true;
+}));
+}));
 document.addEventListener("click",(function (event__$1){
 return webster.listeners.default_listener.call(null,event__$1,bridge);
 }),false);
@@ -44,14 +55,15 @@ $body.find("script[src*=rangy]").remove();
 $body.find("script[src*=development]").remove();
 $body.find(".thumbnails .empty").remove();
 $body.find(".selectable").removeClass("selectable");
+$body.find(".selectable-thumb").removeClass("selectable-thumb");
 $body.find(".selected").removeClass("selected");
 $body.find(".empty").removeClass("empty");
-var $body_el_4671 = $body.find("body");
-var bg_4672 = $body_el_4671.css("background-image");
-if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_4672)))
-{var main_path_4673 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_4672));
+var $body_el_6599 = $body.find("body");
+var bg_6600 = $body_el_6599.css("background-image");
+if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_6600)))
+{var main_path_6601 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_6600));
 $body.find("body").css("background-image",null);
-$body_el_4671.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_4673));
+$body_el_6599.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_6601));
 } else
 {}
 if(($body.find(".thumbnails").length > 0))
@@ -125,50 +137,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_4674 = cljs.core.map.call(null,(function (i){
+var all_jcols_6602 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_4675 = cljs.core.map.call(null,((function (all_jcols_4674){
+var jcols_after_jcolumn_6603 = cljs.core.map.call(null,((function (all_jcols_6602){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_4674))
+});})(all_jcols_6602))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_4676 = cljs.core.filter.call(null,((function (all_jcols_4674,jcols_after_jcolumn_4675){
+var jcols_to_decrement_6604 = cljs.core.filter.call(null,((function (all_jcols_6602,jcols_after_jcolumn_6603){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_4674,jcols_after_jcolumn_4675))
-,jcols_after_jcolumn_4675);
-var jcols_to_inset_4677 = cljs.core.filter.call(null,((function (all_jcols_4674,jcols_after_jcolumn_4675,jcols_to_decrement_4676){
+});})(all_jcols_6602,jcols_after_jcolumn_6603))
+,jcols_after_jcolumn_6603);
+var jcols_to_inset_6605 = cljs.core.filter.call(null,((function (all_jcols_6602,jcols_after_jcolumn_6603,jcols_to_decrement_6604){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_4674,jcols_after_jcolumn_4675,jcols_to_decrement_4676))
-,jcols_after_jcolumn_4675);
-var jcol_to_decrement_4678 = cljs.core.first.call(null,jcols_to_decrement_4676);
-var jcol_to_inset_4679 = cljs.core.first.call(null,jcols_to_inset_4677);
-var is_full_width_4680 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_4674)));
-if(cljs.core.truth_(jcol_to_inset_4679))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_4679,(webster.dom.get_column_offset.call(null,jcol_to_inset_4679) - 1));
+});})(all_jcols_6602,jcols_after_jcolumn_6603,jcols_to_decrement_6604))
+,jcols_after_jcolumn_6603);
+var jcol_to_decrement_6606 = cljs.core.first.call(null,jcols_to_decrement_6604);
+var jcol_to_inset_6607 = cljs.core.first.call(null,jcols_to_inset_6605);
+var is_full_width_6608 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_6602)));
+if(cljs.core.truth_(jcol_to_inset_6607))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_6607,(webster.dom.get_column_offset.call(null,jcol_to_inset_6607) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_4680;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_6608;
 if(and__3822__auto__)
-{return jcol_to_decrement_4678;
+{return jcol_to_decrement_6606;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_4678,(webster.dom.get_column_span.call(null,jcol_to_decrement_4678) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_6606,(webster.dom.get_column_span.call(null,jcol_to_decrement_6606) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_4679;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_6607;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_4678;
+{var or__3824__auto____$1 = jcol_to_decrement_6606;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_4680);
+{return !(is_full_width_6608);
 }
 }
 })()))
@@ -180,7 +192,6 @@ return callback.call(null,webster.listeners.node_info.call(null,jselected));
 webster.main.remove_element_handler = (function() {
 var remove_element_handler = null;
 var remove_element_handler__2 = (function (data,callback){
-alert("removing");
 var jnode = $(".selected");
 webster.listeners.make_unselected.call(null,jnode);
 return jnode.remove();
