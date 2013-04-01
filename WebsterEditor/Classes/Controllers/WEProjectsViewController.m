@@ -48,7 +48,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 14;
+    return [self projects].count + 1;
 }
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -68,9 +68,26 @@
     if ([self isIndexPathAddProject:indexPath]) {
         [self transitionToNewProject];
     } else {
-        NSLog(@"touched a project");
+        NSArray *projects = [self projects];
+        NSString *projectId = [projects objectAtIndex:indexPath.row];
+        [self transitionToProject:projectId];
     }
     [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+}
+
+-(void)transitionToProject:(NSString*)projectId {
+    // setup the view controller
+    [UIView animateWithDuration:0.2 animations:^{
+        CGFloat diff = 20;
+        CGRect current = self.view.frame;
+        [self.view setFrame:CGRectMake(current.origin.x+diff, current.origin.y+diff, current.size.width-(diff*2), current.size.height-(diff*2))];
+    }];
+    WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
+    [self presentViewController:mainController
+                       animated:YES
+                     completion:^{
+                         NSLog(@"done");
+                     }];
 }
 
 -(void)transitionToNewProject {
@@ -82,7 +99,7 @@
     NSString *media = [WEUtils pathInDocumentDirectory:@"media" withProjectId:projectId];
     NSString *css = [WEUtils pathInDocumentDirectory:@"css" withProjectId:projectId];
     NSString *js = [WEUtils pathInDocumentDirectory:@"js" withProjectId:projectId];
-    NSString *projectDir = [WEUtils pathInDocumentDirectory:projectId];
+    NSString *projectDir = [WEUtils pathInDocumentDirectory:@"" withProjectId:projectId];
     
     [fileManager createDirectoryAtPath:projectDir
            withIntermediateDirectories:NO
@@ -154,23 +171,24 @@
         if (i == 0) indexPath = fullPath;
     }
     
-    // setup the view controller
-    [UIView animateWithDuration:0.2 animations:^{
-        CGFloat diff = 20;
-        CGRect current = self.view.frame;
-        [self.view setFrame:CGRectMake(current.origin.x-diff, current.origin.y-diff, current.size.width-(diff*2), current.size.height-(diff*2))];
-    }];
-    WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
-    [self presentViewController:mainController
-                       animated:YES
-                     completion:^{
-                         NSLog(@"done");
-                     }];
+    [self transitionToProject:projectId];
 }
 
 -(BOOL)isIndexPathAddProject:(NSIndexPath*)indexPath {
     return indexPath.row == [self collectionView:self.collectionView
                           numberOfItemsInSection:indexPath.section] - 1;
+}
+
+-(NSArray*)projects {
+    NSError *error;
+    NSArray *projectDirectories = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:@"projects"] error:&error];
+    NSMutableArray *filenames = [[NSMutableArray alloc] init];
+    
+    for (NSString *fullPath in projectDirectories) {
+        [filenames addObject:[fullPath lastPathComponent]];
+    }
+
+    return [NSArray arrayWithArray:filenames];
 }
 
 @end
