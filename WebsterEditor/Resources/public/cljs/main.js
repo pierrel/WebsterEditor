@@ -13,11 +13,6 @@ return node.addEventListener("click",(function (event__$1){
 return webster.listeners.container_listener.call(null,event__$1,bridge);
 }),false);
 }));
-webster.dom.each_node.call(null,document.getElementsByClassName("selectable-thumb"),(function (node){
-return node.addEventListener("click",(function (event__$1){
-return webster.listeners.thumbnail_listener.call(null,event__$1,bridge);
-}),false);
-}));
 webster.dom.each_node.call(null,document.getElementsByTagName("a"),(function (node){
 return node.addEventListener("click",(function (event__$1){
 event__$1.preventDefault();
@@ -58,12 +53,12 @@ $body.find(".selectable").removeClass("selectable");
 $body.find(".selectable-thumb").removeClass("selectable-thumb");
 $body.find(".selected").removeClass("selected");
 $body.find(".empty").removeClass("empty");
-var $body_el_6599 = $body.find("body");
-var bg_6600 = $body_el_6599.css("background-image");
-if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_6600)))
-{var main_path_6601 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_6600));
+var $body_el_7228 = $body.find("body");
+var bg_7229 = $body_el_7228.css("background-image");
+if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_7229)))
+{var main_path_7230 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_7229));
 $body.find("body").css("background-image",null);
-$body_el_6599.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_6601));
+$body_el_7228.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_7230));
 } else
 {}
 if(($body.find(".thumbnails").length > 0))
@@ -137,50 +132,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_6602 = cljs.core.map.call(null,(function (i){
+var all_jcols_7231 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_6603 = cljs.core.map.call(null,((function (all_jcols_6602){
+var jcols_after_jcolumn_7232 = cljs.core.map.call(null,((function (all_jcols_7231){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_6602))
+});})(all_jcols_7231))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_6604 = cljs.core.filter.call(null,((function (all_jcols_6602,jcols_after_jcolumn_6603){
+var jcols_to_decrement_7233 = cljs.core.filter.call(null,((function (all_jcols_7231,jcols_after_jcolumn_7232){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_6602,jcols_after_jcolumn_6603))
-,jcols_after_jcolumn_6603);
-var jcols_to_inset_6605 = cljs.core.filter.call(null,((function (all_jcols_6602,jcols_after_jcolumn_6603,jcols_to_decrement_6604){
+});})(all_jcols_7231,jcols_after_jcolumn_7232))
+,jcols_after_jcolumn_7232);
+var jcols_to_inset_7234 = cljs.core.filter.call(null,((function (all_jcols_7231,jcols_after_jcolumn_7232,jcols_to_decrement_7233){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_6602,jcols_after_jcolumn_6603,jcols_to_decrement_6604))
-,jcols_after_jcolumn_6603);
-var jcol_to_decrement_6606 = cljs.core.first.call(null,jcols_to_decrement_6604);
-var jcol_to_inset_6607 = cljs.core.first.call(null,jcols_to_inset_6605);
-var is_full_width_6608 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_6602)));
-if(cljs.core.truth_(jcol_to_inset_6607))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_6607,(webster.dom.get_column_offset.call(null,jcol_to_inset_6607) - 1));
+});})(all_jcols_7231,jcols_after_jcolumn_7232,jcols_to_decrement_7233))
+,jcols_after_jcolumn_7232);
+var jcol_to_decrement_7235 = cljs.core.first.call(null,jcols_to_decrement_7233);
+var jcol_to_inset_7236 = cljs.core.first.call(null,jcols_to_inset_7234);
+var is_full_width_7237 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_7231)));
+if(cljs.core.truth_(jcol_to_inset_7236))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_7236,(webster.dom.get_column_offset.call(null,jcol_to_inset_7236) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_6608;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_7237;
 if(and__3822__auto__)
-{return jcol_to_decrement_6606;
+{return jcol_to_decrement_7235;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_6606,(webster.dom.get_column_span.call(null,jcol_to_decrement_6606) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_7235,(webster.dom.get_column_span.call(null,jcol_to_decrement_7235) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_6607;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_7236;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_6606;
+{var or__3824__auto____$1 = jcol_to_decrement_7235;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_6608);
+{return !(is_full_width_7237);
 }
 }
 })()))

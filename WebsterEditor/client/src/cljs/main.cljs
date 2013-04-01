@@ -17,12 +17,6 @@
                                         "click"
                                         (fn [event] (listeners/container-listener event bridge))
                                         false)))
-    (dom/each-node (.getElementsByClassName js/document "selectable-thumb")
-                   (fn [node]
-                     (.addEventListener node
-                                        "click"
-                                        (fn [event] (listeners/thumbnail-listener event bridge))
-                                        false)))
     ;; Don't allow link clicks in dev mode
     (dom/each-node (.getElementsByTagName js/document "a")
                    (fn [node]

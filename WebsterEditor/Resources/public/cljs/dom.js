@@ -5,14 +5,14 @@ goog.require('webster.html');
 * Calls callback for each DOM node in node-list
 */
 webster.dom.each_node = (function each_node(node_list,callback){
-var G__4707 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
+var G__6811 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
 while(true){
-if(G__4707)
-{var index = cljs.core.first.call(null,G__4707);
+if(G__6811)
+{var index = cljs.core.first.call(null,G__6811);
 callback.call(null,node_list.item(index));
 {
-var G__4708 = cljs.core.next.call(null,G__4707);
-G__4707 = G__4708;
+var G__6812 = cljs.core.next.call(null,G__6811);
+G__6811 = G__6812;
 continue;
 }
 } else
@@ -97,9 +97,9 @@ if (arguments.length > 1) {
 return make_editable__delegate.call(this, node, focus);
 };
 make_editable.cljs$lang$maxFixedArity = 1;
-make_editable.cljs$lang$applyTo = (function (arglist__4709){
-var node = cljs.core.first(arglist__4709);
-var focus = cljs.core.rest(arglist__4709);
+make_editable.cljs$lang$applyTo = (function (arglist__6813){
+var node = cljs.core.first(arglist__6813);
+var focus = cljs.core.rest(arglist__6813);
 return make_editable__delegate(node, focus);
 });
 make_editable.cljs$core$IFn$_invoke$arity$variadic = make_editable__delegate;
@@ -118,7 +118,7 @@ var empty_image_thumbnail__0 = (function (){
 return empty_image_thumbnail.call(null,4);
 });
 var empty_image_thumbnail__1 = (function (span){
-return webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:li",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class",cljs.core.format.call(null,"span%s empty image-thumb selectable-thumb",span)], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","empty-decorations"], true),"Add Image"], true)], true));
+return webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:li",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class",cljs.core.format.call(null,"span%s empty image-thumb selectable",span)], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","empty-decorations"], true),"Add Image"], true)], true));
 });
 empty_image_thumbnail = function(span){
 switch(arguments.length){

@@ -13451,7 +13451,7 @@ webster.dom.empty_image_thumbnail = function() {
   var a = null, b = function() {
     return a.call(null, 4)
   }, c = function(a) {
-    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb selectable-thumb", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
+    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb selectable", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
   }, a = function(a) {
     switch(arguments.length) {
       case 0:
@@ -13486,7 +13486,7 @@ webster.listeners.container_listener = function(a, b) {
   return cljs.core.truth_(function() {
     var a = cljs.core.not.call(null, c.hasClass("selected"));
     return a ? webster.listeners.nothing_selected.call(null) : a
-  }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
+  }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : cljs.core.truth_(c.hasClass("image-thumb")) ? webster.listeners.thumbnail_listener.call(null, a, b) : null
 };
 webster.listeners.thumbnail_listener = function(a, b) {
   var c = $(a.currentTarget);
@@ -13581,11 +13581,6 @@ webster.main.on_bridge_ready = function(a) {
   webster.dom.each_node.call(null, document.getElementsByClassName("selectable"), function(a) {
     return a.addEventListener("click", function(a) {
       return webster.listeners.container_listener.call(null, a, b)
-    }, !1)
-  });
-  webster.dom.each_node.call(null, document.getElementsByClassName("selectable-thumb"), function(a) {
-    return a.addEventListener("click", function(a) {
-      return webster.listeners.thumbnail_listener.call(null, a, b)
     }, !1)
   });
   webster.dom.each_node.call(null, document.getElementsByTagName("a"), function(a) {
