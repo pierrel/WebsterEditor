@@ -153,15 +153,17 @@
     }
     
     // setup the view controller
-    WEViewController *parent = self.parentViewController;
+    [UIView animateWithDuration:0.2 animations:^{
+        CGFloat diff = 20;
+        CGRect current = self.view.frame;
+        [self.view setFrame:CGRectMake(current.origin.x-diff, current.origin.y-diff, current.size.width-(diff*2), current.size.height-(diff*2))];
+    }];
     WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
     [self presentViewController:mainController
                        animated:YES
                      completion:^{
                          NSLog(@"done");
                      }];
-    
-    NSLog(@"%@", indexPath);
 }
 
 -(BOOL)isIndexPathAddProject:(NSIndexPath*)indexPath {
