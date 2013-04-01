@@ -19,7 +19,7 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton;
 
 -(id)initWithProjectId:(NSString*)projectId {
     self = [self init];
@@ -66,7 +66,12 @@
     [exportButton addTarget:self
                      action:@selector(exportProject)
            forControlEvents:UIControlEventTouchUpInside];
-        
+    
+    [saveButton useRedDeleteStyle];
+    [saveButton addTarget:self
+                   action:@selector(saveProject)
+         forControlEvents:UIControlEventTouchUpInside];
+    
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
     contentView.layer.masksToBounds = NO;
@@ -219,6 +224,15 @@ Export
         }
         block(nil);
     }];
+}
+
+-(void)saveProject {
+    NSString *devFile = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
+    NSString *html = [self.contentController.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+    NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
+    NSData *docData = [document dataUsingEncoding:NSStringEncodingConversionAllowLossy];
+    [docData writeToFile:devFile atomically:NO];
+    NSLog(@"%@", devFile);
 }
 
 /*
