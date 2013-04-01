@@ -59,16 +59,18 @@
         
     } else {
         WEProjectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectCell" forIndexPath:indexPath];
+        cell.label.text = [NSString stringWithFormat:@"(%d, %d)", indexPath.section, indexPath.row];
         return cell;
     }
 }
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self isIndexPathAddProject:indexPath]) {
         [self transitionToNewProject];
     } else {
         NSLog(@"touched a project");
     }
+    [self.collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
 
 -(void)transitionToNewProject {
