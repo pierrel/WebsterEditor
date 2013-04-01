@@ -180,7 +180,7 @@ static const int ICON_DIM = 13;
     WEPageManager *pageManager = [WEPageManager sharedManager];    
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"projects/%@/media/BG%@.jpg", self.projectId, uuidStr]];
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"media/BG%@.jpg", uuidStr] withProjectId:self.projectId];
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];

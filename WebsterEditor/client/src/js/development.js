@@ -13624,7 +13624,7 @@ webster.main.export_markup = function(a, b) {
 webster.main.set_background_image = function(a) {
   var b = $("body");
   a = a.path;
-  a = [cljs.core.str("url("), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/(.*)/, a))), cljs.core.str(")")].join("");
+  a = [cljs.core.str("url("), cljs.core.str(webster.dir.rel_path.call(null, a)), cljs.core.str(")")].join("");
   b.addClass("with-background");
   return b.css("background-image", a)
 };

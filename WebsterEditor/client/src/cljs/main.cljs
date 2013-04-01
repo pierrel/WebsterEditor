@@ -2,6 +2,7 @@
   (:require [webster.dom :as dom]
             [webster.listeners :as listeners]
             [webster.html :as html]
+            [webster.dir :as dir]
             [clojure.string :as string]))
 
 (defn on-bridge-ready
@@ -68,7 +69,7 @@
   [data]
   (let [$body (js/$ "body")
         full-path (aget data "path")
-        url (str "url(" (second (re-matches #".*Documents/(.*)" full-path)) ")")]
+        url (str "url(" (dir/rel-path full-path) ")")]
     (.addClass $body "with-background")
     (.css $body "background-image" url)))
 (defn remove-background-image
