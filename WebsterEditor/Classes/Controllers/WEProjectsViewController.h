@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WEViewController.h"
 
-@interface WEProjectsViewController : UICollectionViewController<UICollectionViewDelegate>
+@interface WEProjectsViewController : UICollectionViewController<UICollectionViewDelegate,WEViewControllerDelegate>
 -(NSArray*)projects;
+-(void)didSaveViewController:(WEViewController *)controller;
 @end

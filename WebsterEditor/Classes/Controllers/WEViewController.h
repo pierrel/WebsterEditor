@@ -10,7 +10,13 @@
 #import "GradientButton.h"
 #import "WEWebViewController.h"
 
+@class WEViewController;
+@protocol WEViewControllerDelegate <NSObject>
+-(void)didSaveViewController:(WEViewController*)controller;
+@end
+
 @interface WEViewController : UIViewController<UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
+@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;
 

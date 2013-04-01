@@ -86,11 +86,16 @@
         [self.view setFrame:CGRectMake(current.origin.x+diff, current.origin.y+diff, current.size.width-(diff*2), current.size.height-(diff*2))];
     }];
     WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
+    mainController.delegate = self;
     [self presentViewController:mainController
                        animated:YES
                      completion:^{
                          [self.view setFrame:current];
                      }];
+}
+
+-(void)didSaveViewController:(WEViewController *)controller {
+    [self.collectionView reloadData];
 }
 
 -(void)transitionToNewProject {

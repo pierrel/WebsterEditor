@@ -249,9 +249,12 @@ Export
     UIGraphicsEndImageContext();
     NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
     [thumbData writeToFile:thumbPath atomically:NO];
+    
+    if (self.delegate) [self.delegate didSaveViewController:self];
 }
 
 -(void)backToProjects {
+    [self saveProject];
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  NSLog(@"dismissed");
