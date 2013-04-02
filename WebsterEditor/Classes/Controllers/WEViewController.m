@@ -116,6 +116,7 @@ Export
 -(void)exportProject {
     if ([self validateSettings]) {
         [exportActivity startAnimating];
+        [self saveProject];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
                                                  (unsigned long)NULL), ^(void) {
             [self doExportWorkWithCompletion:^(NSError *error) {
@@ -137,7 +138,7 @@ Export
         NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
                                                               options:kNilOptions
                                                                 error:&error];
-        NSString *bucket = [json objectForKey:@"bucket"];
+        NSString *bucket = self.settings.bucket;
         
         // Initialize the S3 Client
         AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
