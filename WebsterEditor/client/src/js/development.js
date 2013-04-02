@@ -13498,29 +13498,32 @@ webster.listeners.thumbnail_listener = function(a, b) {
   var c = $(a.currentTarget);
   return webster.listeners.select_node.call(null, c, b, function(a) {
     if(cljs.core.truth_(a["delete"])) {
+      var e = c.find("img");
+      a = e.attr("src");
+      var f = webster.dir.thumb_to_lightbox_src.call(null, e.attr("src")), e = [cljs.core.str("thumb-"), cljs.core.str(clojure.string.replace.call(null, webster.dir.file_name.call(null, e.attr("src")), "_THUMB", ""))].join(""), e = [cljs.core.str("#"), cljs.core.str(e)].join(""), g = $(e);
+      b.callHandler("removingMedia", {"thumb-src":a, "lightbox-src":f});
+      alert(e);
+      alert(g);
+      g.remove();
       return c.remove()
     }
-    var e = a["resource-path"], f = webster.dir.rel_path.call(null, a["thumb-path"]);
-    a = webster.dir.rel_path.call(null, e);
-    var e = [cljs.core.str("thumb-"), cljs.core.str(webster.dir.file_name.call(null, e))].join(""), g = [cljs.core.str("#"), cljs.core.str(e)].join("");
+    var f = a["resource-path"], h = webster.dir.rel_path.call(null, a["thumb-path"]);
+    a = webster.dir.rel_path.call(null, f);
+    f = [cljs.core.str("thumb-"), cljs.core.str(webster.dir.file_name.call(null, f))].join("");
+    e = [cljs.core.str("#"), cljs.core.str(f)].join("");
     if(cljs.core.truth_(c.hasClass("empty"))) {
-      var h = c.find(".empty-decorations"), g = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", g, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", f], !0)], !0)], !0));
-      a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:id", e, "\ufdd0:class", "lightbox hide fade", "\ufdd0:tabindex", "-1", "\ufdd0:role", "dialog", "\ufdd0:aria-hidden", !0, "\ufdd0:style", "z-index: 10000;"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "lightbox-content"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", 
-      "media-object", "\ufdd0:src", a], !0)], !0)], !0)], !0));
-      h.remove();
-      c.removeClass("empty");
-      c.append(g);
-      $(" body").append(a);
-      c.find("a:last")[0].addEventListener("click", function(a) {
+      g = c.find(".empty-decorations"), e = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:a", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:href", e, "\ufdd0:class", "thumbnail", "\ufdd0:data-toggle", "lightbox"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", h], !0)], !0)], !0)), a = webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:id", 
+      f, "\ufdd0:class", "lightbox hide fade", "\ufdd0:tabindex", "-1", "\ufdd0:role", "dialog", "\ufdd0:aria-hidden", !0, "\ufdd0:style", "z-index: 10000;"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "lightbox-content"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:img", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "media-object", "\ufdd0:src", a], !0)], !0)], !0)], !0)), g.remove(), c.removeClass("empty"), c.append(e), 
+      $(" body").append(a), c.find("a:last")[0].addEventListener("click", function(a) {
         a.preventDefault();
         return!0
       })
     }else {
-      var h = c.find("img"), f = h.closest("a"), j = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, h.attr("src"))))].join(""), j = [cljs.core.str("#"), cljs.core.str(j)].join(""), j = $(j);
-      b.callHandler("removingMedia", {"thumb-src":h.attr("src"), "lightbox-src":webster.dir.thumb_to_lightbox_src.call(null, h.attr("src"))});
-      h.attr("src", a);
-      f.attr("href", g);
-      j.attr("id", e);
+      var g = c.find("img"), h = g.closest("a"), j = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, g.attr("src"))))].join(""), j = [cljs.core.str("#"), cljs.core.str(j)].join(""), j = $(j);
+      b.callHandler("removingMedia", {"thumb-src":g.attr("src"), "lightbox-src":webster.dir.thumb_to_lightbox_src.call(null, g.attr("src"))});
+      g.attr("src", a);
+      h.attr("href", e);
+      j.attr("id", f);
       j.find("img").attr("src", a)
     }
     a = c.closest(".thumbnails");

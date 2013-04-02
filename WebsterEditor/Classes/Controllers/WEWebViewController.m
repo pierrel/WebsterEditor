@@ -58,7 +58,6 @@ static const int ICON_DIM = 13;
         NSError *error;
         [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:thumbPath withProjectId:self.projectId] error:&error];
         [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:lightboxPath withProjectId:self.projectId] error:&error];
-        NSLog(@"%@", thumbPath);
     }];
     
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
