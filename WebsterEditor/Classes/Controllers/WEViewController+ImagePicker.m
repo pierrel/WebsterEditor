@@ -32,10 +32,9 @@
  didFinishPickingMediaWithInfo:(NSDictionary *)info {
     CGSize max = CGSizeMake(980, 1208);
     CGFloat thumbMax = 250;
-    CFUUIDRef uuid = CFUUIDCreate(NULL);
-    NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr]];
-    NSString *thumbPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@_THUMB.jpg", uuidStr]];
+    NSString *uuidStr = [WEUtils newId];
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@.jpg", uuidStr] withProjectId:self.projectId];
+    NSString *thumbPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"/media/%@_THUMB.jpg", uuidStr] withProjectId:self.projectId];
 
     // resize the image
     UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];

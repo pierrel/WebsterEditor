@@ -19,11 +19,21 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton, backButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
+    self = [self init];
+    if (self) {
+        self.projectId = projectId;
+        self.settings = settings;        
+    }
+    
+    return self;
+}
+
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
@@ -57,7 +67,20 @@
     [exportButton addTarget:self
                      action:@selector(exportProject)
            forControlEvents:UIControlEventTouchUpInside];
-        
+    
+    [saveButton useRedDeleteStyle];
+    [saveButton addTarget:self
+                   action:@selector(saveProject)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    [backButton useBlackStyle];
+    [backButton addTarget:self
+                   action:@selector(backToProjects)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    self.titleText.text = self.settings.title;
+    self.bucketText.text = self.settings.bucket;
+    
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
     contentView.layer.masksToBounds = NO;
@@ -66,6 +89,7 @@
     contentView.layer.shadowOpacity = 0.5;
     
     self.contentController = [[WEWebViewController alloc] initWithNibName:@"WEWebViewController_iPad" bundle:nil];
+    self.contentController.projectId = self.projectId;
     [self.contentView addSubview:self.contentController.view];
     
     UISwipeGestureRecognizer *openGesture = [[UISwipeGestureRecognizer alloc] init];
@@ -90,13 +114,16 @@
 Export
  */
 -(void)exportProject {
-    [exportActivity startAnimating];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
-                                             (unsigned long)NULL), ^(void) {
-        [self doExportWorkWithCompletion:^(NSError *error) {
-            [exportActivity stopAnimating];
-        }];
-    });
+    if ([self validateSettings]) {
+        [exportActivity startAnimating];
+        [self saveProject];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+                                                 (unsigned long)NULL), ^(void) {
+            [self doExportWorkWithCompletion:^(NSError *error) {
+                [exportActivity stopAnimating];
+            }];
+        });
+    }
 }
 
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
@@ -111,14 +138,13 @@ Export
         NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
                                                               options:kNilOptions
                                                                 error:&error];
-        NSString *bucket = [json objectForKey:@"bucket"];
+        NSString *bucket = self.settings.bucket;
         
         // Initialize the S3 Client
         AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
         s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
         
         // see if we have the bucket
-        S3ListBucketsRequest *listBucketReq = [[S3ListBucketsRequest alloc] init];
         BOOL hasBucket = NO;
         for (S3Bucket *liveBucket in [s3 listBuckets]) {
             if ([liveBucket.name isEqualToString:bucket]) {
@@ -158,7 +184,7 @@ Export
                                                            encoding:NSStringEncodingConversionAllowLossy
                                                               error:&error];
         NSString *markup = [responseData objectForKey:@"markup"];
-        NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:@"Gaualofa"];
+        NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:self.settings.title];
         html = [html stringByReplacingOccurrencesOfString:@"[[BODY]]" withString:markup];
         
         NSData *htmlData = [html dataUsingEncoding:NSStringEncodingConversionAllowLossy];
@@ -172,10 +198,11 @@ Export
         // media
         NSString *pathPrefix = @"media";
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        for (NSString *file in [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:pathPrefix]
-                                                                error:&error]) {
+        NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
+                                                 withProjectId:self.projectId];
+        for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
             NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
-            NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey];
+            NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
             NSLog(@"file: %@", fullPath);
             NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
             put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
@@ -196,7 +223,7 @@ Export
                               @"css/bootstrap-responsive.min.css",
                               nil];
         for (NSString *filePath in filePaths) {
-            NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath];
+            NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
             NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
             NSLog(@"adding %@", filePath);
             put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
@@ -209,6 +236,66 @@ Export
         }
         block(nil);
     }];
+}
+
+-(void)saveProject {
+    NSString *devFile = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
+    NSString *html = [self.contentController.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+    NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
+    NSData *docData = [document dataUsingEncoding:NSStringEncodingConversionAllowLossy];
+    [docData writeToFile:devFile atomically:NO];
+    
+    // save the settings
+    self.settings.title = self.titleText.text;
+    self.settings.bucket = self.bucketText.text;
+    [NSKeyedArchiver archiveRootObject:self.settings
+                                toFile:[WEUtils pathInDocumentDirectory:@"settings"
+                                                          withProjectId:self.projectId]];
+    
+    // save the thumbnail
+    NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg"
+                                             withProjectId:self.projectId];
+    UIView *webView = self.contentController.view;
+    UIGraphicsBeginImageContext(webView.frame.size);
+    [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
+    [thumbData writeToFile:thumbPath atomically:NO];
+    
+    if (self.delegate) [self.delegate didSaveViewController:self];
+}
+    
+-(BOOL)validateSettings {
+    NSString *bucket = self.bucketText.text;
+    NSRange range = [bucket rangeOfString:@" "];
+    if (range.location != NSNotFound) {        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad bucket name"
+                                                        message:@"No spaces are allowed in the bucket name"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    } else if ([bucket isEqualToString:@""]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad bucket name"
+                                                        message:@"Bucket must have a name"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+-(void)backToProjects {
+    [self saveProject];
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 NSLog(@"dismissed");
+                             }];
 }
 
 /*

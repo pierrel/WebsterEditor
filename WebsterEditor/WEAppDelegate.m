@@ -8,6 +8,7 @@
 
 #import "WEAppDelegate.h"
 #import "WEUtils.h"
+#import "WEProjectCollectionViewLayout.h"
 
 @interface WEAppDelegate ()
 -(void)createDirectories;
@@ -19,14 +20,20 @@
 {
     [self createDirectories];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 //        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPhone" bundle:nil];
-    } else {
-        WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEViewController" bundle:nil];        
-        self.viewController = viewController;
-//        self.viewController = [[WEViewController alloc] initWithNibName:@"WEViewController_iPad" bundle:nil];
-    }
+//    } else {
+//        WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEViewController" bundle:nil];        
+//        self.viewController = viewController;
+//    }
+//    WEViewController *viewController = [[WEViewController alloc] initWithNibName:@"WEViewController" bundle:nil];
+//    self.viewController = viewController;
+    WEProjectCollectionViewLayout *layout = [[WEProjectCollectionViewLayout alloc] init];
+    WEProjectsViewController *viewController = [[WEProjectsViewController alloc] initWithCollectionViewLayout:layout];
+    self.viewController = viewController;
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
@@ -35,27 +42,14 @@
 
 -(void)createDirectories {
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *media = [WEUtils pathInDocumentDirectory:@"/media"];
-    NSString *css = [WEUtils pathInDocumentDirectory:@"/css"];
-    NSString *js = [WEUtils pathInDocumentDirectory:@"/js"];
+    NSString *projects = [WEUtils pathInDocumentDirectory:@"/projects"];
     NSError *error;
     
-    if (![manager fileExistsAtPath:media]) [manager createDirectoryAtPath:media
-                                              withIntermediateDirectories:NO
-                                                               attributes:nil
-                                                                    error:&error];
-    NSLog(@"%@", error);
-    
-    if (![manager fileExistsAtPath:css]) [manager createDirectoryAtPath:css
-                                            withIntermediateDirectories:NO
-                                                             attributes:nil
-                                                                  error:&error];
-    NSLog(@"%@", error);
-    if (![manager fileExistsAtPath:js]) [manager createDirectoryAtPath:js
-                                           withIntermediateDirectories:NO
-                                                            attributes:nil
-                                                                 error:&error];
-    NSLog(@"%@", error);
+    if (![manager fileExistsAtPath:projects])
+        [manager createDirectoryAtPath:projects
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:&error];    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

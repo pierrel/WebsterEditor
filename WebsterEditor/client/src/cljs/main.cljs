@@ -2,6 +2,7 @@
   (:require [webster.dom :as dom]
             [webster.listeners :as listeners]
             [webster.html :as html]
+            [webster.dir :as dir]
             [clojure.string :as string]))
 
 (defn on-bridge-ready
@@ -9,7 +10,6 @@
   (let [bridge (.-bridge event)]
     ;; initialize the bridge
     (.init bridge "handler?")
-
     ;; Setup selectable containers
     (dom/each-node (.getElementsByClassName js/document "selectable")
                    (fn [node]
@@ -17,6 +17,12 @@
                                         "click"
                                         (fn [event] (listeners/container-listener event bridge))
                                         false)))
+    ;; Don't allow link clicks in dev mode
+    (dom/each-node (.getElementsByTagName js/document "a")
+                   (fn [node]
+                     (.addEventListener node "click" (fn [event]
+                                                       (.preventDefault event)
+                                                       true))))
     ;; Setup default listener
     (.addEventListener js/document "click" (fn [event] (listeners/default-listener event bridge)) false)
     (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
@@ -43,8 +49,9 @@
     (.remove (.find $body "script[src*=development]"))
     (.remove (.find $body ".thumbnails .empty"))
 
-    ;; remove development classes
+    ;; remove development classe
     (.removeClass (.find $body ".selectable") "selectable")
+    (.removeClass (.find $body ".selectable-thumb") "selectable-thumb")
     (.removeClass (.find $body ".selected") "selected")
     (.removeClass (.find $body ".empty") "empty")
 
@@ -68,7 +75,7 @@
   [data]
   (let [$body (js/$ "body")
         full-path (aget data "path")
-        url (str "url(" (second (re-matches #".*Documents/(.*)" full-path)) ")")]
+        url (str "url(" (dir/rel-path full-path) ")")]
     (.addClass $body "with-background")
     (.css $body "background-image" url)))
 (defn remove-background-image
@@ -147,7 +154,6 @@
  
 (defn remove-element-handler
   ([data callback]
-     (js/alert "removing")
      (let [jnode (js/$ ".selected")]
        (listeners/make-unselected jnode)
        (.remove jnode)))
