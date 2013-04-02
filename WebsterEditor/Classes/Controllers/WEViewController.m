@@ -21,10 +21,11 @@
 @implementation WEViewController
 @synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton, backButton;
 
--(id)initWithProjectId:(NSString*)projectId {
+-(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
     if (self) {
         self.projectId = projectId;
+        self.settings = settings;
     }
     
     return self;
@@ -138,7 +139,6 @@ Export
         s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
         
         // see if we have the bucket
-        S3ListBucketsRequest *listBucketReq = [[S3ListBucketsRequest alloc] init];
         BOOL hasBucket = NO;
         for (S3Bucket *liveBucket in [s3 listBuckets]) {
             if ([liveBucket.name isEqualToString:bucket]) {

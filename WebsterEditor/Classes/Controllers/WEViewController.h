@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GradientButton.h"
 #import "WEWebViewController.h"
+#import "WEProjectSettings.h"
 
 @class WEViewController;
 @protocol WEViewControllerDelegate <NSObject>
@@ -19,6 +20,7 @@
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;
+@property (nonatomic, strong) WEProjectSettings *settings;
 
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) WEWebViewController *contentController;
@@ -32,5 +34,5 @@
 @property (nonatomic, strong) IBOutlet GradientButton *backButton;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *exportActivity;
 
--(id)initWithProjectId:(NSString*)projectId;
+-(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings;
 @end

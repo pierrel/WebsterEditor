@@ -85,7 +85,9 @@
         CGFloat diff = 20;
         [self.view setFrame:CGRectMake(current.origin.x+diff, current.origin.y+diff, current.size.width-(diff*2), current.size.height-(diff*2))];
     }];
-    WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId];
+    WEProjectSettings *settings = [NSKeyedUnarchiver unarchiveObjectWithFile:[WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]];
+    NSLog(@"%@", [WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]);
+    WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId withSettings:settings];
     mainController.delegate = self;
     [self presentViewController:mainController
                        animated:YES
@@ -102,7 +104,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSString *projectId = [WEUtils newId];
-    
+        
     // Setup project dir
     NSString *media = [WEUtils pathInDocumentDirectory:@"media" withProjectId:projectId];
     NSString *css = [WEUtils pathInDocumentDirectory:@"css" withProjectId:projectId];
@@ -125,6 +127,13 @@
            withIntermediateDirectories:NO
                             attributes:nil
                                  error:&error];
+    
+    // Setup settings
+    WEProjectSettings *settings = [[WEProjectSettings alloc] init];
+    BOOL ret = [NSKeyedArchiver archiveRootObject:settings
+                                           toFile:[WEUtils pathInDocumentDirectory:@"settings"
+                                                                     withProjectId:projectId]];
+
     
     // setup project files
     NSArray *resources = [NSArray arrayWithObjects:

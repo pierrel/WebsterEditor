@@ -18,8 +18,10 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont boldSystemFontOfSize:20.0];
-        label.backgroundColor = [UIColor grayColor];
+        label.backgroundColor = [UIColor clearColor];
         label.text = @"Add Project";
+        
+        self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_wash_wall.png"]];
         
         [self.contentView addSubview:label];;
     }
