@@ -130,7 +130,7 @@
     
     // Setup settings
     WEProjectSettings *settings = [[WEProjectSettings alloc] init];
-    BOOL ret = [NSKeyedArchiver archiveRootObject:settings
+    [NSKeyedArchiver archiveRootObject:settings
                                            toFile:[WEUtils pathInDocumentDirectory:@"settings"
                                                                      withProjectId:projectId]];
 
