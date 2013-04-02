@@ -25,7 +25,7 @@
     self = [self init];
     if (self) {
         self.projectId = projectId;
-        self.settings = settings;
+        self.settings = settings;        
     }
     
     return self;
@@ -77,6 +77,9 @@
     [backButton addTarget:self
                    action:@selector(backToProjects)
          forControlEvents:UIControlEventTouchUpInside];
+    
+    self.titleText.text = self.settings.title;
+    self.bucketText.text = self.settings.bucket;
     
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
@@ -238,6 +241,13 @@ Export
     NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
     NSData *docData = [document dataUsingEncoding:NSStringEncodingConversionAllowLossy];
     [docData writeToFile:devFile atomically:NO];
+    
+    // save the settings
+    self.settings.title = self.titleText.text;
+    self.settings.bucket = self.bucketText.text;
+    [NSKeyedArchiver archiveRootObject:self.settings
+                                toFile:[WEUtils pathInDocumentDirectory:@"settings"
+                                                          withProjectId:self.projectId]];
     
     // save the thumbnail
     NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg"
