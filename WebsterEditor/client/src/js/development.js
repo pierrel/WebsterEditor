@@ -13472,6 +13472,12 @@ webster.dir.rel_path = function(a) {
 webster.dir.file_name = function(a) {
   return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*\/([^\/]+)\..*/, a))
 };
+webster.dir.thumb_to_lightbox_src = function(a) {
+  var b = cljs.core.re_matches.call(null, /(.*)_THUMB(\..*)/, a);
+  a = cljs.core.nth.call(null, b, 1);
+  b = cljs.core.nth.call(null, b, 2);
+  return[cljs.core.str(a), cljs.core.str(b)].join("")
+};
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13511,6 +13517,7 @@ webster.listeners.thumbnail_listener = function(a, b) {
       })
     }else {
       var h = c.find("img"), f = h.closest("a"), j = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, h.attr("src"))))].join(""), j = [cljs.core.str("#"), cljs.core.str(j)].join(""), j = $(j);
+      b.callHandler("removingMedia", {"thumb-src":h.attr("src"), "lightbox-src":webster.dir.thumb_to_lightbox_src.call(null, h.attr("src"))});
       h.attr("src", a);
       f.attr("href", g);
       j.attr("id", e);

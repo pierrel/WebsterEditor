@@ -65,6 +65,8 @@
                                           old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (.attr $thumb-image "src"))))
                                           old-href (str "#" old-id)
                                           $lightbox (js/$ old-href)]
+                                      (.callHandler bridge "removingMedia" (js-obj "thumb-src" (.attr $thumb-image "src")
+                                                                                   "lightbox-src" (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))))
                                       (.attr $thumb-image "src" rel-path)
                                       (.attr $link "href" href)
                                       (.attr $lightbox "id" id)
