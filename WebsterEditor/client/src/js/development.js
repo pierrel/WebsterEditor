@@ -13501,7 +13501,8 @@ webster.listeners.thumbnail_listener = function(a, b) {
       var e = c.find("img");
       a = e.attr("src");
       var f = webster.dir.thumb_to_lightbox_src.call(null, e.attr("src")), e = [cljs.core.str("thumb-"), cljs.core.str(clojure.string.replace.call(null, webster.dir.file_name.call(null, e.attr("src")), "_THUMB", ""))].join(""), e = [cljs.core.str("#"), cljs.core.str(e)].join(""), g = $(e);
-      b.callHandler("removingMedia", {"thumb-src":a, "lightbox-src":f});
+      b.callHandler("removingMedia", {"media-src":a});
+      b.callHandler("removingMedia", {"media-src":f});
       alert(e);
       alert(g);
       g.remove();
@@ -13520,7 +13521,8 @@ webster.listeners.thumbnail_listener = function(a, b) {
       })
     }else {
       var g = c.find("img"), h = g.closest("a"), j = [cljs.core.str("thumb-"), cljs.core.str(cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*media\/(.*)\..*/, g.attr("src"))))].join(""), j = [cljs.core.str("#"), cljs.core.str(j)].join(""), j = $(j);
-      b.callHandler("removingMedia", {"thumb-src":g.attr("src"), "lightbox-src":webster.dir.thumb_to_lightbox_src.call(null, g.attr("src"))});
+      b.callHandler("removingMedia", {"media-src":g.attr("src")});
+      b.callHandler("removingMedia", {"media-src":webster.dir.thumb_to_lightbox_src.call(null, g.attr("src"))});
       g.attr("src", a);
       h.attr("href", e);
       j.attr("id", f);
@@ -13617,8 +13619,12 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("decrementColumn", webster.main.decrement_column);
   b.registerHandler("incrementColumnOffset", webster.main.increment_column_offset);
   b.registerHandler("decrementColumnOffset", webster.main.decrement_column_offset);
-  b.registerHandler("setBackgroundImage", webster.main.set_background_image);
-  b.registerHandler("removeBackgroundImage", webster.main.remove_background_image);
+  b.registerHandler("setBackgroundImage", function(a, d) {
+    return webster.main.set_background_image.call(null, a, d, b)
+  });
+  b.registerHandler("removeBackgroundImage", function(a, d) {
+    return webster.main.remove_background_image.call(null, a, d, b)
+  });
   b.registerHandler("hasBackgroundImage", webster.main.has_background_image);
   return b.registerHandler("exportMarkup", webster.main.export_markup)
 };
@@ -13638,17 +13644,20 @@ webster.main.export_markup = function(a, b) {
   0 < c.find(".thumbnails").length && c.append(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:script", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:src", "js/bootstrap-lightbox.js"], !0)], !0)));
   return b.call(null, {markup:clojure.string.trim.call(null, c.html())})
 };
-webster.main.set_background_image = function(a) {
-  var b = $("body");
+webster.main.set_background_image = function(a, b, c) {
+  webster.main.remove_background_image.call(null, {}, null, c);
+  b = $("body");
   a = a.path;
   a = [cljs.core.str("url("), cljs.core.str(webster.dir.rel_path.call(null, a)), cljs.core.str(")")].join("");
   b.addClass("with-background");
   return b.css("background-image", a)
 };
-webster.main.remove_background_image = function(a, b) {
-  var c = $("body");
-  c.removeClass("with-background");
-  c.css("background-image", "none");
+webster.main.remove_background_image = function(a, b, c) {
+  a = $("body");
+  var d = cljs.core.second.call(null, cljs.core.re_matches.call(null, /url\((.*)\)/, a.css("background-image")));
+  cljs.core.truth_(d) && c.callHandler("removingMedia", {"media-src":webster.dir.rel_path.call(null, d)});
+  a.removeClass("with-background");
+  a.css("background-image", "none");
   return cljs.core.truth_(b) ? b.call(null, {}) : null
 };
 webster.main.has_background_image = function(a, b) {

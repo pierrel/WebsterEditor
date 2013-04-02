@@ -35,11 +35,11 @@
                                 (let [$thumb-image (.find $el "img")
                                       thumb-src (.attr $thumb-image "src")
                                       lightbox-src (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))
-                                      old-id (str "thumb-" (string/replace (dir/file-name (.attr $thumb-image "src")) "_THUMB" "")) 
+                                      old-id (str "thumb-" (string/replace (dir/file-name (.attr $thumb-image "src")) "_THUMB" ""))
                                       old-href (str "#" old-id)
                                       $lightbox (js/$ old-href)]
-                                  (.callHandler bridge "removingMedia" (js-obj "thumb-src" thumb-src
-                                                                               "lightbox-src" lightbox-src))
+                                  (.callHandler bridge "removingMedia" (js-obj "media-src" thumb-src))
+                                  (.callHandler bridge "removingMedia" (js-obj "media-src" lightbox-src))
                                   (js/alert old-href)
                                   (js/alert $lightbox)
                                   (.remove $lightbox)
@@ -76,8 +76,8 @@
                                           old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (.attr $thumb-image "src"))))
                                           old-href (str "#" old-id)
                                           $lightbox (js/$ old-href)]
-                                      (.callHandler bridge "removingMedia" (js-obj "thumb-src" (.attr $thumb-image "src")
-                                                                                   "lightbox-src" (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))))
+                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (.attr $thumb-image "src")))
+                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))))
                                       (.attr $thumb-image "src" rel-path)
                                       (.attr $link "href" href)
                                       (.attr $lightbox "id" id)

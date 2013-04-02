@@ -52,12 +52,10 @@ static const int ICON_DIM = 13;
     
     [jsBridge registerHandler:@"removingMedia" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"%@", data);
-        NSString *thumbPath = [data objectForKey:@"thumb-src"];
-        NSString *lightboxPath = [data objectForKey:@"lightbox-src"];
+        NSString *path = [data objectForKey:@"media-src"];
         NSFileManager *fs = [NSFileManager defaultManager];
         NSError *error;
-        [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:thumbPath withProjectId:self.projectId] error:&error];
-        [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:lightboxPath withProjectId:self.projectId] error:&error];
+        [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:path withProjectId:self.projectId] error:&error];
     }];
     
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {

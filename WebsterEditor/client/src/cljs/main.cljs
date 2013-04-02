@@ -34,8 +34,8 @@
     (.registerHandler bridge "decrementColumn" decrement-column)
     (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
     (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)
-    (.registerHandler bridge "setBackgroundImage" set-background-image)
-    (.registerHandler bridge "removeBackgroundImage" remove-background-image)
+    (.registerHandler bridge "setBackgroundImage" (fn [data callback] (set-background-image data callback bridge)))
+    (.registerHandler bridge "removeBackgroundImage" (fn [data callback] (remove-background-image data callback bridge)))
     (.registerHandler bridge "hasBackgroundImage" has-background-image)
     (.registerHandler bridge "exportMarkup" export-markup)))
 
@@ -72,15 +72,18 @@
     (callback (js-obj "markup" (string/trim (.html $body))))))
 
 (defn set-background-image
-  [data]
+  [data callback bridge]
+  (remove-background-image (js-obj) nil bridge)
   (let [$body (js/$ "body")
         full-path (aget data "path")
         url (str "url(" (dir/rel-path full-path) ")")]
     (.addClass $body "with-background")
     (.css $body "background-image" url)))
 (defn remove-background-image
-  [data callback]
-  (let [$body (js/$ "body")]
+  [data callback bridge]
+  (let [$body (js/$ "body")
+        url (second (re-matches #"url\((.*)\)" (.css $body "background-image")))]
+    (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
     (.removeClass $body "with-background")
     (.css $body "background-image" "none")
     (if callback (callback (js-obj)))))
