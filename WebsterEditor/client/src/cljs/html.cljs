@@ -25,6 +25,14 @@
                    (if (or (empty? attrs-str) (nil? attrs-str)) "" (str " " attrs-str))
                    contents-str
                    tag-str))))
+
+(defn mult [args]
+  (let [[tag attrs & contents] args]
+    (if (not (map? attrs))
+      (mult (reduce conj [tag {}] (conj contents attrs)))
+      (vector tag attrs contents))))
+
 (defn compile
   [& forms]
   (reduce str (map compile-form forms)))
+
