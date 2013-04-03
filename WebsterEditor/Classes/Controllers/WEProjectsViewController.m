@@ -35,6 +35,8 @@
             forCellWithReuseIdentifier:@"ProjectCell"];
     [self.collectionView registerClass:[WEAddProjectCell class]
             forCellWithReuseIdentifier:@"AddProjectCell"];
+    
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_wash_wall.png"]];
 }
 
 - (void)didReceiveMemoryWarning
