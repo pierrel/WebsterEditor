@@ -1,16 +1,9 @@
  (ns webster.html
   (:require [clojure.string :as string]))
 
-(defn sym-to-str [sym]
-  (string/replace (str sym) ":" ""))
-
-(defn attrs-to-str
-  [attrs]
+(defn attrs-to-str [attrs]
   (string/join " "
-          (map (fn [key]
-                 (let [skey (sym-to-str key)]
-                   (format "%s=\"%s\"" skey (attrs key))))
-               (keys attrs))))
+               (map #(format "%s=\"%s\"" (name (first %)) (second %)) attrs)))
 
 (defn compile-form
   [args]
