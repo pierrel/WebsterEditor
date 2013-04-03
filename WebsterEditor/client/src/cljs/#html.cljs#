@@ -22,7 +22,7 @@
    :else (let [tag (first args)
                attrs (second args)
                contents (drop 2 args)
-               tag-str (sym-to-str tag)
+               tag-str (name tag)
                attrs-str (attrs-to-str attrs)
                contents-str (cond
                              (= 1 (count contents)) (if (string? (first contents)) (first contents) (compile-form (first contents)))
