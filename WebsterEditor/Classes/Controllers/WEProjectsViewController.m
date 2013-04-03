@@ -79,6 +79,58 @@
 }
 
 -(void)transitionToProject:(NSString*)projectId {
+    NSError *error;
+    
+    // copy latest css/js/html
+    NSArray *resources = [NSArray arrayWithObjects:
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"development", @"name",
+                           @"html", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"development", @"name",
+                           @"css", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"override", @"name",
+                           @"css", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"bootstrap.min", @"name",
+                           @"css", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"bootstrap-responsive.min", @"name",
+                           @"css", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"jquery-1.9.0.min", @"name",
+                           @"js", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"bootstrap.min", @"name",
+                           @"js", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"rangy", @"name",
+                           @"js", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"development", @"name",
+                           @"js", @"ext", nil],
+                          [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"bootstrap-lightbox", @"name",
+                           @"js", @"ext", nil], nil];
+    
+    for (int i = 0, len = [resources count]; i < len; i++) {
+        NSDictionary *fileInfo = [resources objectAtIndex:i];
+        NSString *ext = [fileInfo objectForKey:@"ext"];
+        NSString *name = [fileInfo objectForKey:@"name"];
+        NSString *topLevelPath = ([ext isEqualToString:@"html"] ? @"" : [NSString stringWithFormat:@"%@/", ext]);
+        NSString *fullPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@%@.%@", topLevelPath, name, ext] withProjectId:projectId];
+        
+        NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name
+                                                                                                ofType:ext]
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
+        [contents writeToFile:fullPath
+                   atomically:NO
+                     encoding:NSStringEncodingConversionAllowLossy
+                        error:&error];
+    }
+    
     // setup the view controller
     CGRect current = self.view.frame;
     [UIView animateWithDuration:0.2 animations:^{
@@ -134,60 +186,6 @@
                                            toFile:[WEUtils pathInDocumentDirectory:@"settings"
                                                                      withProjectId:projectId]];
 
-    
-    // setup project files
-    NSArray *resources = [NSArray arrayWithObjects:
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
-                           @"html", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"override", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap.min", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap-responsive.min", @"name",
-                           @"css", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"jquery-1.9.0.min", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap.min", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"rangy", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
-                           @"js", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"bootstrap-lightbox", @"name",
-                           @"js", @"ext", nil], nil];
-    NSString *indexPath = nil;
-    
-    for (int i = 0, len = [resources count]; i < len; i++) {
-        NSDictionary *fileInfo = [resources objectAtIndex:i];
-        NSString *ext = [fileInfo objectForKey:@"ext"];
-        NSString *name = [fileInfo objectForKey:@"name"];
-        NSString *topLevelPath = ([ext isEqualToString:@"html"] ? @"" : [NSString stringWithFormat:@"%@/", ext]);
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@%@.%@", topLevelPath, name, ext] withProjectId:projectId];
-        
-        NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name
-                                                                                                ofType:ext]
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-        [contents writeToFile:fullPath
-                   atomically:NO
-                     encoding:NSStringEncodingConversionAllowLossy
-                        error:&error];
-        
-        if (i == 0) indexPath = fullPath;
-    }
-    
     [self transitionToProject:projectId];
 }
 
