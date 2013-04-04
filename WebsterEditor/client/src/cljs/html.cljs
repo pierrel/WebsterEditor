@@ -5,42 +5,32 @@
   (string/join " "
                (map #(format "%s=\"%s\"" (name (first %)) (second %)) attrs)))
 
-(defn compile-form
-  [args]
-  (cond
-   (= (count args) 1) (compile-form [(first args) {} ""])
-   (= (count args) 2) (cond
-                       (map? (second args)) (compile-form [(first args) (second args) ""])
-                       :else (compile-form [(first args) {} (last args)]))
-   :else (let [tag (first args)
-               attrs (second args)
-               contents (drop 2 args)
-               tag-str (name tag)
-               attrs-str (attrs-to-str attrs)
-               contents-str (cond
-                             (= 1 (count contents)) (if (string? (first contents)) (first contents) (compile-form (first contents)))
-                             :else (reduce str (map compile-form contents)))]
-           (format "<%s%s>%s</%s>"
-                   tag-str
-                   (if (or (empty? attrs-str) (nil? attrs-str)) "" (str " " attrs-str))
-                   contents-str
-                   tag-str))))
+(defn normalize
+  ([tag]
+     [tag {} nil])
+  ([tag something]
+     (if (map? something)
+       [tag something nil]
+       [tag {} (list something)]))
+  ([tag attrs & contents]
+     (if (map? attrs)
+       [tag attrs contents]
+       [tag {} (reduce conj [attrs] contents)])))
 
-(defn normalize [tag attrs & contents]
-  (if (not (map? attrs))
-    (reduce conj [tag {}] (conj contents attrs))
-    [tag attrs contents]))
-
-(defn mult [args]
-  (format "<%s%s>%s</%s>"
-          (name tag)
-          (attrs-to-str attrs)
-          
-          (name tag))
-  (let [[tag attrs & contents] args]
-))
+(defn compile-form [form]
+  (if (string? form)
+    form
+    (let [[tag attrs other-forms] (apply normalize form)]
+      (format "<%s%s%s>%s</%s>"
+              (name tag)
+              (if (empty? attrs) "" " ")
+              (attrs-to-str attrs)
+              (if other-forms
+                (apply str (map hah-form other-forms))
+                "")
+              (name tag)))))
 
 (defn compile
   [& forms]
-  (reduce str (map compile-form forms)))
+  (apply str (map compile-form forms)))
 
