@@ -18,17 +18,15 @@
        [tag {} (reduce conj [attrs] contents)])))
 
 (defn compile-form [form]
-  (if (string? form)
-    form
-    (let [[tag attrs other-forms] (apply normalize form)]
-      (format "<%s%s%s>%s</%s>"
-              (name tag)
-              (if (empty? attrs) "" " ")
-              (attrs-to-str attrs)
-              (if other-forms
-                (apply str (map compile-form other-forms))
-                "")
-              (name tag)))))
+  (cond (string? form) form
+        (empty? form) ""
+        :else (let [[tag attrs other-forms] (apply normalize form)]
+                (format "<%s%s%s>%s</%s>"
+                        (name tag)
+                        (if (empty? attrs) "" " ")
+                        (attrs-to-str attrs)
+                        (apply str (map compile-form other-forms))
+                        (name tag)))))
 
 (defn compile
   [& forms]
