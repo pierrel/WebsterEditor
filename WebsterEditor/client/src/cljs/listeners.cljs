@@ -13,7 +13,7 @@
 (defn default-listener
   [event bridge]
   (make-unselected (js/$ ".selected"))
-  (.removeAttr (js/$ "[contenteditable=true]") "contenteditable")
+  (dom/stop-editing)
   (.callHandler bridge "defaultSelectedHandler" (js-obj)))
 
 (defn container-listener

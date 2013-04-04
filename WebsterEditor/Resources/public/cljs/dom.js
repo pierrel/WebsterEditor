@@ -5,14 +5,14 @@ goog.require('webster.html');
 * Calls callback for each DOM node in node-list
 */
 webster.dom.each_node = (function each_node(node_list,callback){
-var G__6811 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
+var G__2591 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
 while(true){
-if(G__6811)
-{var index = cljs.core.first.call(null,G__6811);
+if(G__2591)
+{var index = cljs.core.first.call(null,G__2591);
 callback.call(null,node_list.item(index));
 {
-var G__6812 = cljs.core.next.call(null,G__6811);
-G__6811 = G__6812;
+var G__2592 = cljs.core.next.call(null,G__2591);
+G__2591 = G__2592;
 continue;
 }
 } else
@@ -80,6 +80,7 @@ webster.dom.column_max = 12;
 webster.dom.make_editable = (function() { 
 var make_editable__delegate = function (node,focus){
 node.attr("contenteditable","true");
+node.addClass("editing");
 if(cljs.core.truth_(focus))
 {var r = rangy.createRange();
 r.setStart(node.get(0),0);
@@ -97,13 +98,36 @@ if (arguments.length > 1) {
 return make_editable__delegate.call(this, node, focus);
 };
 make_editable.cljs$lang$maxFixedArity = 1;
-make_editable.cljs$lang$applyTo = (function (arglist__6813){
-var node = cljs.core.first(arglist__6813);
-var focus = cljs.core.rest(arglist__6813);
+make_editable.cljs$lang$applyTo = (function (arglist__2593){
+var node = cljs.core.first(arglist__2593);
+var focus = cljs.core.rest(arglist__2593);
 return make_editable__delegate(node, focus);
 });
 make_editable.cljs$core$IFn$_invoke$arity$variadic = make_editable__delegate;
 return make_editable;
+})()
+;
+webster.dom.stop_editing = (function() {
+var stop_editing = null;
+var stop_editing__0 = (function (){
+return stop_editing.call(null,$(".editing"));
+});
+var stop_editing__1 = (function ($el){
+$el.removeAttr("contenteditable");
+return $el.removeClass("editing");
+});
+stop_editing = function($el){
+switch(arguments.length){
+case 0:
+return stop_editing__0.call(this);
+case 1:
+return stop_editing__1.call(this,$el);
+}
+throw(new Error('Invalid arity: ' + arguments.length));
+};
+stop_editing.cljs$core$IFn$_invoke$arity$0 = stop_editing__0;
+stop_editing.cljs$core$IFn$_invoke$arity$1 = stop_editing__1;
+return stop_editing;
 })()
 ;
 webster.dom.new_row = (function new_row(){

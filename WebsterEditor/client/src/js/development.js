@@ -13323,33 +13323,63 @@ clojure.string.escape = function(a, b) {
   }
 };
 var webster = {html:{}};
-webster.html.sym_to_str = function(a) {
-  return clojure.string.replace.call(null, "" + cljs.core.str(a), ":", "")
-};
 webster.html.attrs_to_str = function(a) {
-  return clojure.string.join.call(null, " ", cljs.core.map.call(null, function(b) {
-    var c = webster.html.sym_to_str.call(null, b);
-    return cljs.core.format.call(null, '%s\x3d"%s"', c, a.call(null, b))
-  }, cljs.core.keys.call(null, a)))
+  return clojure.string.join.call(null, " ", cljs.core.map.call(null, function(a) {
+    return cljs.core.format.call(null, '%s\x3d"%s"', cljs.core.name.call(null, cljs.core.first.call(null, a)), cljs.core.second.call(null, a))
+  }, a))
 };
-webster.html.compile_form = function compile_form(b) {
-  if(cljs.core._EQ_.call(null, cljs.core.count.call(null, b), 1)) {
-    return compile_form.call(null, cljs.core.PersistentVector.fromArray([cljs.core.first.call(null, b), cljs.core.ObjMap.EMPTY, ""], !0))
+webster.html.normalize = function() {
+  var a = null, b = function(a) {
+    return cljs.core.PersistentVector.fromArray([a, cljs.core.ObjMap.EMPTY, null], !0)
+  }, c = function(a, b) {
+    return cljs.core.map_QMARK_.call(null, b) ? cljs.core.PersistentVector.fromArray([a, b, null], !0) : cljs.core.PersistentVector.fromArray([a, cljs.core.ObjMap.EMPTY, cljs.core.list.call(null, b)], !0)
+  }, d = function(a, b, c) {
+    return cljs.core.map_QMARK_.call(null, b) ? cljs.core.PersistentVector.fromArray([a, b, c], !0) : cljs.core.PersistentVector.fromArray([a, cljs.core.ObjMap.EMPTY, cljs.core.reduce.call(null, cljs.core.conj, cljs.core.PersistentVector.fromArray([b], !0), c)], !0)
+  }, e = function(a, b, c) {
+    var e = null;
+    2 < arguments.length && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return d.call(this, a, b, e)
+  };
+  e.cljs$lang$maxFixedArity = 2;
+  e.cljs$lang$applyTo = function(a) {
+    var b = cljs.core.first(a), c = cljs.core.first(cljs.core.next(a));
+    a = cljs.core.rest(cljs.core.next(a));
+    return d(b, c, a)
+  };
+  e.cljs$core$IFn$_invoke$arity$variadic = d;
+  a = function(a, d, h) {
+    switch(arguments.length) {
+      case 1:
+        return b.call(this, a);
+      case 2:
+        return c.call(this, a, d);
+      default:
+        return e.cljs$core$IFn$_invoke$arity$variadic(a, d, cljs.core.array_seq(arguments, 2))
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$lang$maxFixedArity = 2;
+  a.cljs$lang$applyTo = e.cljs$lang$applyTo;
+  a.cljs$core$IFn$_invoke$arity$1 = b;
+  a.cljs$core$IFn$_invoke$arity$2 = c;
+  a.cljs$core$IFn$_invoke$arity$variadic = e.cljs$core$IFn$_invoke$arity$variadic;
+  return a
+}();
+webster.html.compile_form = function(a) {
+  if(cljs.core.string_QMARK_.call(null, a)) {
+    return a
   }
-  if(cljs.core._EQ_.call(null, cljs.core.count.call(null, b), 2)) {
-    return cljs.core.map_QMARK_.call(null, cljs.core.second.call(null, b)) ? compile_form.call(null, cljs.core.PersistentVector.fromArray([cljs.core.first.call(null, b), cljs.core.second.call(null, b), ""], !0)) : compile_form.call(null, cljs.core.PersistentVector.fromArray([cljs.core.first.call(null, b), cljs.core.ObjMap.EMPTY, cljs.core.last.call(null, b)], !0))
+  if(cljs.core.empty_QMARK_.call(null, a)) {
+    return""
   }
-  var c = cljs.core.first.call(null, b), d = cljs.core.second.call(null, b);
-  b = cljs.core.drop.call(null, 2, b);
-  var c = webster.html.sym_to_str.call(null, c), e = webster.html.attrs_to_str.call(null, d), d = cljs.core._EQ_.call(null, 1, cljs.core.count.call(null, b)) ? cljs.core.string_QMARK_.call(null, cljs.core.first.call(null, b)) ? cljs.core.first.call(null, b) : compile_form.call(null, cljs.core.first.call(null, b)) : cljs.core.reduce.call(null, cljs.core.str, cljs.core.map.call(null, compile_form, b));
-  return cljs.core.format.call(null, "\x3c%s%s\x3e%s\x3c/%s\x3e", c, function() {
-    var b = cljs.core.empty_QMARK_.call(null, e);
-    return b ? b : null == e
-  }() ? "" : [cljs.core.str(" "), cljs.core.str(e)].join(""), d, c)
+  var b = cljs.core.apply.call(null, webster.html.normalize, a);
+  a = cljs.core.nth.call(null, b, 0, null);
+  var c = cljs.core.nth.call(null, b, 1, null), b = cljs.core.nth.call(null, b, 2, null);
+  return cljs.core.format.call(null, "\x3c%s%s%s\x3e%s\x3c/%s\x3e", cljs.core.name.call(null, a), cljs.core.empty_QMARK_.call(null, c) ? "" : " ", webster.html.attrs_to_str.call(null, c), cljs.core.apply.call(null, webster.html.compile, b), cljs.core.name.call(null, a))
 };
 webster.html.compile = function() {
   var a = function(a) {
-    return cljs.core.reduce.call(null, cljs.core.str, cljs.core.map.call(null, webster.html.compile_form, a))
+    return cljs.core.apply.call(null, cljs.core.str, cljs.core.map.call(null, webster.html.compile_form, a))
   }, b = function(b) {
     var d = null;
     0 < arguments.length && (d = cljs.core.array_seq(Array.prototype.slice.call(arguments, 0), 0));
@@ -13420,6 +13450,7 @@ webster.dom.column_max = 12;
 webster.dom.make_editable = function() {
   var a = function(a, b) {
     a.attr("contenteditable", "true");
+    a.addClass("editing");
     if(cljs.core.truth_(b)) {
       var e = rangy.createRange();
       e.setStart(a.get(0), 0);
@@ -13440,6 +13471,25 @@ webster.dom.make_editable = function() {
   };
   b.cljs$core$IFn$_invoke$arity$variadic = a;
   return b
+}();
+webster.dom.stop_editing = function() {
+  var a = null, b = function() {
+    return a.call(null, $(".editing"))
+  }, c = function(a) {
+    a.removeAttr("contenteditable");
+    return a.removeClass("editing")
+  }, a = function(a) {
+    switch(arguments.length) {
+      case 0:
+        return b.call(this);
+      case 1:
+        return c.call(this, a)
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$core$IFn$_invoke$arity$0 = b;
+  a.cljs$core$IFn$_invoke$arity$1 = c;
+  return a
 }();
 webster.dom.new_row = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span4 empty"], !0)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span8 empty"], !0)], !0)], !0)))
@@ -13484,7 +13534,7 @@ webster.listeners.selected_listener = function(a) {
 };
 webster.listeners.default_listener = function(a, b) {
   webster.listeners.make_unselected.call(null, $(".selected"));
-  $("[contenteditable\x3dtrue]").removeAttr("contenteditable");
+  webster.dom.stop_editing.call(null);
   return b.callHandler("defaultSelectedHandler", {})
 };
 webster.listeners.container_listener = function(a, b) {

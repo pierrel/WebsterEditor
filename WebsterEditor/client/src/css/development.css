@@ -1,3 +1,12 @@
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
+}
+
+.editing {
+    -webkit-user-select: text;
+}
+
 .container-fluid {
     min-height: 500px;
 }

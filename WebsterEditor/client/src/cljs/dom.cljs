@@ -67,11 +67,19 @@
 (defn make-editable
   [node & focus]
   (.attr node "contenteditable" "true")
+  (.addClass node "editing")
   (if focus
     (let [r (.createRange js/rangy)]
       (.setStart r (.get node 0) 0)
       (.collapse r true)
       (.setSingleRange (.getSelection js/rangy) r))))
+
+(defn stop-editing
+  ([]
+     (stop-editing (js/$ ".editing")))
+  ([$el]
+     (.removeAttr $el "contenteditable")
+     (.removeClass $el "editing")))
 
 (defn new-row []
   (js/$ (html/compile [:div {:class "row-fluid selectable"}
