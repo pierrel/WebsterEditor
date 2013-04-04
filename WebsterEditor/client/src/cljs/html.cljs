@@ -26,7 +26,7 @@
               (if (empty? attrs) "" " ")
               (attrs-to-str attrs)
               (if other-forms
-                (apply str (map hah-form other-forms))
+                (apply str (map compile-form other-forms))
                 "")
               (name tag)))))
 
