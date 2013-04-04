@@ -19,7 +19,7 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton, backButton;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton, backButton, goButton;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
@@ -81,6 +81,14 @@
     self.titleText.text = self.settings.title;
     self.bucketText.text = self.settings.bucket;
     
+    [goButton useGreenConfirmStyle];
+    [goButton addTarget:self
+                 action:@selector(gotoExportURL)
+       forControlEvents:UIControlEventTouchUpInside];
+    if ([self.settings.lastExportURL isEqualToString:@""]) {
+        [goButton setHidden:YES];
+    }
+    
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
     contentView.layer.masksToBounds = NO;
@@ -116,20 +124,34 @@ Export
 -(void)exportProject {
     if ([self validateSettings]) {
         [exportActivity startAnimating];
+        [goButton setHidden:YES];
         [self saveProject];
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
                                                  (unsigned long)NULL), ^(void) {
             [self doExportWorkWithCompletion:^(NSError *error) {
+                [goButton setHidden:NO];
                 [exportActivity stopAnimating];
             }];
         });
     }
 }
 
+-(void)gotoExportURL {
+    NSURL *url = [NSURL URLWithString:self.settings.lastExportURL];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
     [[WEPageManager sharedManager] exportMarkup:^(id responseData) {
         NSError *error;
         NSBundle *mainBundle = [NSBundle mainBundle];
+        
+        // region info
+        S3Region *region = [S3Region USWest];
+        AmazonRegion endpoint = US_WEST_1;
+        NSString *webSuffix = @"s3-website-us-west-1.amazonaws.com";
+        
         
         // s3 config
         NSString *filePath = [mainBundle pathForResource:@"config"
@@ -142,7 +164,7 @@ Export
         
         // Initialize the S3 Client
         AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
-        s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_1];
+        s3.endpoint = [AmazonEndpoints s3Endpoint:endpoint];
         
         // see if we have the bucket
         BOOL hasBucket = NO;
@@ -164,7 +186,6 @@ Export
                 if (resp.error != nil) NSLog(@"error: %@", resp.error);
             }
         } else {
-            S3Region *region = [S3Region USWest2];
             S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
                                                                                     andRegion:region];
             S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
@@ -234,6 +255,10 @@ Export
             S3PutObjectResponse *resp = [s3 putObject:put];
             if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
         }
+        
+        // save the bucket url
+        self.settings.lastExportURL = [NSString stringWithFormat:@"http://%@.%@", bucket, webSuffix];
+        
         block(nil);
     }];
 }

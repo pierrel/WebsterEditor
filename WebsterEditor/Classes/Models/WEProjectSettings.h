@@ -11,4 +11,5 @@
 @interface WEProjectSettings : NSObject<NSCoding>
 @property (nonatomic, strong) NSString *bucket;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *lastExportURL;
 @end

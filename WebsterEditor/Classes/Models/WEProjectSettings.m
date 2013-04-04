@@ -9,12 +9,13 @@
 #import "WEProjectSettings.h"
 
 @implementation WEProjectSettings
-@synthesize bucket, title;
+@synthesize bucket, title, lastExportURL;
 
 -(id)init {
     if (self = [super init]) {
         self.bucket = @"";
         self.title = @"";
+        self.lastExportURL = @"";
     }
     
     return self;
@@ -24,6 +25,7 @@
     if (self = [super init]) {
         self.bucket = [decoder decodeObjectForKey:@"bucket"];
         self.title = [decoder decodeObjectForKey:@"title"];
+        self.lastExportURL = [decoder decodeObjectForKey:@"lastExportURL"];
     }
     
     return self;
@@ -32,5 +34,6 @@
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:bucket forKey:@"bucket"];
     [encoder encodeObject:title forKey:@"title"];
+    [encoder encodeObject:lastExportURL forKey:@"lastExportURL"];
 }
 @end
