@@ -142,7 +142,7 @@ Export
         
         // Initialize the S3 Client
         AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
-        s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_2];
+        s3.endpoint = [AmazonEndpoints s3Endpoint:US_WEST_1];
         
         // see if we have the bucket
         BOOL hasBucket = NO;
