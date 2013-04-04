@@ -26,11 +26,19 @@
                    contents-str
                    tag-str))))
 
+(defn normalize [tag attrs & contents]
+  (if (not (map? attrs))
+    (reduce conj [tag {}] (conj contents attrs))
+    [tag attrs contents]))
+
 (defn mult [args]
+  (format "<%s%s>%s</%s>"
+          (name tag)
+          (attrs-to-str attrs)
+          
+          (name tag))
   (let [[tag attrs & contents] args]
-    (if (not (map? attrs))
-      (mult (reduce conj [tag {}] (conj contents attrs)))
-      (vector tag attrs contents))))
+))
 
 (defn compile
   [& forms]
