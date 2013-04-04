@@ -25,7 +25,7 @@
                         (name tag)
                         (if (empty? attrs) "" " ")
                         (attrs-to-str attrs)
-                        (apply str (map compile-form other-forms))
+                        (apply compile other-forms)
                         (name tag)))))
 
 (defn compile
