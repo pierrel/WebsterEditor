@@ -19,7 +19,7 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, saveButton, backButton, goButton;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
@@ -67,12 +67,7 @@
     [exportButton addTarget:self
                      action:@selector(exportProject)
            forControlEvents:UIControlEventTouchUpInside];
-    
-    [saveButton useRedDeleteStyle];
-    [saveButton addTarget:self
-                   action:@selector(saveProject)
-         forControlEvents:UIControlEventTouchUpInside];
-    
+        
     [backButton useBlackStyle];
     [backButton addTarget:self
                    action:@selector(backToProjects)
