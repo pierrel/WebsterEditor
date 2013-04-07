@@ -87,9 +87,6 @@
     NSArray *resources = [NSArray arrayWithObjects:
                           [NSDictionary dictionaryWithObjectsAndKeys:
                            @"development", @"name",
-                           @"html", @"ext", nil],
-                          [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"development", @"name",
                            @"css", @"ext", nil],
                           [NSDictionary dictionaryWithObjectsAndKeys:
                            @"override", @"name",
@@ -187,6 +184,23 @@
     [NSKeyedArchiver archiveRootObject:settings
                                            toFile:[WEUtils pathInDocumentDirectory:@"settings"
                                                                      withProjectId:projectId]];
+    
+    // write the html template
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     @"development", @"name",
+     @"html", @"ext", nil];
+    NSString *name = @"development";
+    NSString *ext = @"html";
+    NSString *fullPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.%@", name, ext]
+                                            withProjectId:projectId];
+    NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name
+                                                                                            ofType:ext]
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:&error];
+    [contents writeToFile:fullPath
+               atomically:NO
+                 encoding:NSStringEncodingConversionAllowLossy
+                    error:&error];
 
     [self transitionToProject:projectId];
 }
