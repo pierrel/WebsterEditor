@@ -28,7 +28,7 @@ static const int ICON_DIM = 13;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImage *image = [UIImage imageNamed:@"icon_blue.png"];
+        UIImage *image = [UIImage imageNamed:@"blue.png"];
         rightResize = [[UIButton alloc] init];
         [rightResize setBackgroundImage:image forState:UIControlStateNormal];
         leftResize = [[UIButton alloc] init];
