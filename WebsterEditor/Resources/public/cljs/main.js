@@ -44,7 +44,20 @@ bridge.registerHandler("removeBackgroundImage",(function (data,callback){
 return webster.main.remove_background_image.call(null,data,callback,bridge);
 }));
 bridge.registerHandler("hasBackgroundImage",webster.main.has_background_image);
-return bridge.registerHandler("exportMarkup",webster.main.export_markup);
+bridge.registerHandler("exportMarkup",webster.main.export_markup);
+return bridge.registerHandler("selectParentElement",(function (data,callback){
+return webster.main.select_parent_element.call(null,data,callback,bridge);
+}));
+});
+webster.main.select_parent_element = (function select_parent_element(data,callback,bridge){
+var selected_node = webster.listeners.get_selected.call(null);
+var parent_node = selected_node.parent();
+if((parent_node.length > 0))
+{webster.listeners.make_unselected.call(null,selected_node);
+return webster.listeners.select_node.call(null,parent_node,bridge);
+} else
+{return null;
+}
 });
 webster.main.export_markup = (function export_markup(data,callback){
 var $body = $("html").clone();
@@ -57,12 +70,12 @@ $body.find(".selectable").removeClass("selectable");
 $body.find(".selectable-thumb").removeClass("selectable-thumb");
 $body.find(".selected").removeClass("selected");
 $body.find(".empty").removeClass("empty");
-var $body_el_11464 = $body.find("body");
-var bg_11465 = $body_el_11464.css("background-image");
-if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_11465)))
-{var main_path_11466 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_11465));
+var $body_el_3853 = $body.find("body");
+var bg_3854 = $body_el_3853.css("background-image");
+if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_3854)))
+{var main_path_3855 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_3854));
 $body.find("body").css("background-image",null);
-$body_el_11464.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_11466));
+$body_el_3853.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_3855));
 } else
 {}
 if(($body.find(".thumbnails").length > 0))
@@ -142,50 +155,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_11467 = cljs.core.map.call(null,(function (i){
+var all_jcols_3856 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_11468 = cljs.core.map.call(null,((function (all_jcols_11467){
+var jcols_after_jcolumn_3857 = cljs.core.map.call(null,((function (all_jcols_3856){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_11467))
+});})(all_jcols_3856))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_11469 = cljs.core.filter.call(null,((function (all_jcols_11467,jcols_after_jcolumn_11468){
+var jcols_to_decrement_3858 = cljs.core.filter.call(null,((function (all_jcols_3856,jcols_after_jcolumn_3857){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_11467,jcols_after_jcolumn_11468))
-,jcols_after_jcolumn_11468);
-var jcols_to_inset_11470 = cljs.core.filter.call(null,((function (all_jcols_11467,jcols_after_jcolumn_11468,jcols_to_decrement_11469){
+});})(all_jcols_3856,jcols_after_jcolumn_3857))
+,jcols_after_jcolumn_3857);
+var jcols_to_inset_3859 = cljs.core.filter.call(null,((function (all_jcols_3856,jcols_after_jcolumn_3857,jcols_to_decrement_3858){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_11467,jcols_after_jcolumn_11468,jcols_to_decrement_11469))
-,jcols_after_jcolumn_11468);
-var jcol_to_decrement_11471 = cljs.core.first.call(null,jcols_to_decrement_11469);
-var jcol_to_inset_11472 = cljs.core.first.call(null,jcols_to_inset_11470);
-var is_full_width_11473 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_11467)));
-if(cljs.core.truth_(jcol_to_inset_11472))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_11472,(webster.dom.get_column_offset.call(null,jcol_to_inset_11472) - 1));
+});})(all_jcols_3856,jcols_after_jcolumn_3857,jcols_to_decrement_3858))
+,jcols_after_jcolumn_3857);
+var jcol_to_decrement_3860 = cljs.core.first.call(null,jcols_to_decrement_3858);
+var jcol_to_inset_3861 = cljs.core.first.call(null,jcols_to_inset_3859);
+var is_full_width_3862 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_3856)));
+if(cljs.core.truth_(jcol_to_inset_3861))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_3861,(webster.dom.get_column_offset.call(null,jcol_to_inset_3861) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_11473;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_3862;
 if(and__3822__auto__)
-{return jcol_to_decrement_11471;
+{return jcol_to_decrement_3860;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_11471,(webster.dom.get_column_span.call(null,jcol_to_decrement_11471) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_3860,(webster.dom.get_column_span.call(null,jcol_to_decrement_3860) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_11472;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_3861;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_11471;
+{var or__3824__auto____$1 = jcol_to_decrement_3860;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_11473);
+{return !(is_full_width_3862);
 }
 }
 })()))

@@ -21,6 +21,10 @@ static WEPageManager *gSharedManager;
     [bridge callHandler:@"removeElementHandler" data:[NSDictionary dictionary]];
 }
 
+-(void)selectParentElement {
+    [bridge callHandler:@"selectParentElement" data:[NSDictionary dictionary]];
+}
+
 -(void)editSelectedElement {
     [bridge callHandler:@"editElementHandler" data:[NSDictionary dictionary]];
 }

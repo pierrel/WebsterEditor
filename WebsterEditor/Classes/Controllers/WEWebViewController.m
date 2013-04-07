@@ -200,6 +200,7 @@ static const int ICON_DIM = 13;
 }
 
 -(void)parentButtonTapped:(UIButton*)button{
+    [[WEPageManager sharedManager] selectParentElement];
 }
 
 

@@ -15,6 +15,7 @@ typedef void (^WEResponseCallback)(id responseData);
 @property (strong, nonatomic) WebViewJavascriptBridge *bridge;
 
 -(void)removeSelectedElement;
+-(void)selectParentElement;
 -(void)deselectSelectedElement;
 -(void)editSelectedElement;
 -(void)addGalleryUnderSelectedElement;

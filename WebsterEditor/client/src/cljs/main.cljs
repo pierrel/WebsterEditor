@@ -37,7 +37,15 @@
     (.registerHandler bridge "setBackgroundImage" (fn [data callback] (set-background-image data callback bridge)))
     (.registerHandler bridge "removeBackgroundImage" (fn [data callback] (remove-background-image data callback bridge)))
     (.registerHandler bridge "hasBackgroundImage" has-background-image)
-    (.registerHandler bridge "exportMarkup" export-markup)))
+    (.registerHandler bridge "exportMarkup" export-markup)
+    (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))))
+
+(defn select-parent-element [data callback bridge]
+  (let [selected-node (listeners/get-selected)
+        parent-node (.parent selected-node)]
+    (when (> (.-length parent-node) 0)
+      (listeners/make-unselected selected-node)
+      (listeners/select-node parent-node bridge))))
 
 (defn export-markup
   [data callback]

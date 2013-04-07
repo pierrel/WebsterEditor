@@ -13676,7 +13676,15 @@ webster.main.on_bridge_ready = function(a) {
     return webster.main.remove_background_image.call(null, a, d, b)
   });
   b.registerHandler("hasBackgroundImage", webster.main.has_background_image);
-  return b.registerHandler("exportMarkup", webster.main.export_markup)
+  b.registerHandler("exportMarkup", webster.main.export_markup);
+  return b.registerHandler("selectParentElement", function(a, d) {
+    return webster.main.select_parent_element.call(null, a, d, b)
+  })
+};
+webster.main.select_parent_element = function(a, b, c) {
+  a = webster.listeners.get_selected.call(null);
+  b = a.parent();
+  return 0 < b.length ? (webster.listeners.make_unselected.call(null, a), webster.listeners.select_node.call(null, b, c)) : null
 };
 webster.main.export_markup = function(a, b) {
   var c = $("html").clone();
