@@ -190,7 +190,7 @@ static const int ICON_DIM = 13;
     NSString* uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
     NSString *mediaPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"media/BG%@.jpg", uuidStr] withProjectId:self.projectId];
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData* data = UIImageJPEGRepresentation(image, 1);
+    NSData* data = UIImageJPEGRepresentation(image, 0.7);
     [data writeToFile:mediaPath atomically:NO];
     
     [pageManager setBackgroundImageToPath:mediaPath];
