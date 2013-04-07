@@ -22,7 +22,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton;
 
 - (void)viewDidLoad
 {
@@ -71,20 +71,47 @@ static const int ICON_DIM = 13;
     WEPageManager *manager = [WEPageManager sharedManager];
     [manager setBridge:jsBridge];
     
-    // Dialog view
-    self.actionsController = [[WEActionSelectViewController alloc] init];
-    self.actionsController.delegate = self;
+    // Buttons
+    self.removeButton = [[UIButton alloc] init];
+    [removeButton setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    [removeButton addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [removeButton setHidden:YES];
+    [self.view addSubview:removeButton];
+    
+    self.addButton = [[UIButton alloc] init];
+    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [addButton setHidden:YES];
+    [self.view addSubview:addButton];
+    
+    self.parentButton = [[UIButton alloc] init];
+    [parentButton setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
+    [parentButton addTarget:self action:@selector(parentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [parentButton setHidden:YES];
+    [self.view addSubview:parentButton];
+    
 }
 
 - (void)openDialogWithData:(id)data {
-//    [self.dialogController openWithData:data inView:self.view];
-    [self.actionsController setData:data];
-    if (!self.actionPopover) {
-        self.actionPopover = [[UIPopoverController alloc] initWithContentViewController:self.actionsController];
-        self.actionPopover.delegate = self;
-        [self.actionPopover setPopoverContentSize:CGSizeMake(300, 300)];
-    }
-    [self.actionPopover presentPopoverFromRect:[WEUtils frameFromData:data] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    // position buttons
+    CGSize buttonSize = CGSizeMake(25, 25);
+    CGRect frame = [WEUtils frameFromData:data];
+    
+    removeButton.frame = CGRectMake(frame.origin.x - (buttonSize.width/2),
+                                    MAX(frame.origin.y - (buttonSize.height/2), 0),
+                                    buttonSize.width,
+                                    buttonSize.height);
+    addButton.frame = CGRectMake(frame.origin.x + frame.size.width - (buttonSize.width/2),
+                                 MAX(frame.origin.y - (buttonSize.height/2), 0),
+                                 buttonSize.width,
+                                 buttonSize.height);
+    parentButton.frame = CGRectMake(frame.origin.x + (frame.size.width/2) - (buttonSize.width/2),
+                                    MAX(frame.origin.y - buttonSize.height, 0),
+                                    buttonSize.width,
+                                    buttonSize.height);
+    [removeButton setHidden:NO];
+    [addButton setHidden:NO];
+    [parentButton setHidden:NO];
     
     // add resizers if any
     NSArray *children = [data objectForKey:@"children"];
@@ -102,30 +129,10 @@ static const int ICON_DIM = 13;
 
 }
 
-#pragma mark - Action selection stuff
-
--(void)actionSelect:(WEActionSelectViewController *)actionController didSelectAction:(NSString *)action {
-    WEPageManager *pageManager = [WEPageManager sharedManager];
-    if ([action isEqualToString:@"Remove"])
-        [pageManager removeSelectedElement];
-    else if ([action isEqualToString:@"Edit"])
-        [pageManager editSelectedElement];
-    else if ([action isEqualToString:@"Add Row"])
-        [pageManager addRowUnderSelectedElement];
-    else if ([action isEqualToString:@"Add Image Gallery"])
-        [pageManager addGalleryUnderSelectedElement];
-    [self.actionPopover dismissPopoverAnimated:YES];
-}
-
--(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-    WEPageManager *pageManager = [WEPageManager sharedManager];
-    [pageManager deselectSelectedElement];
-}
-
-
-
 - (void)closeDialog {
-    [self.actionPopover dismissPopoverAnimated:YES];
+    [removeButton setHidden:YES];
+    [addButton setHidden:YES];
+    [parentButton setHidden:YES];
     
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {

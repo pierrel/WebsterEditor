@@ -13,9 +13,10 @@
 #import "WEImagePopoverViewController.h"
 
 @interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate>
-@property (strong, nonatomic) WEActionSelectViewController *actionsController;
-@property (strong, nonatomic) UIPopoverController *actionPopover;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
+@property (strong, nonatomic) UIButton *removeButton;
+@property (strong, nonatomic) UIButton *addButton;
+@property (strong, nonatomic) UIButton *parentButton;
 @property (strong, nonatomic) NSString *projectId;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
