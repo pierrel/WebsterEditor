@@ -109,7 +109,17 @@
     closeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
     [closeGesture addTarget:self action:@selector(closeSettings:)];
     [contentView addGestureRecognizer:closeGesture];
+    
 
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    // subscribe to the closing notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appClosingNotification:) name:@"appClosing" object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"appClosing" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -382,5 +392,9 @@ Export
 
 -(BOOL)isOpen {
     return self.contentView.frame.origin.x > 0;
+}
+
+-(void)appClosingNotification:(NSNotification*)notification {
+    [self saveProject];
 }
 @end
