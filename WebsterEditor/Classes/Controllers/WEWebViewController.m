@@ -191,6 +191,18 @@ static const int ICON_DIM = 13;
     }
 }
 
+-(void)removeButtonTapped:(UIButton*)button {
+    [[WEPageManager sharedManager] removeSelectedElement];
+}
+
+-(void)addButtonTapped:(UIButton*)button {
+    
+}
+
+-(void)parentButtonTapped:(UIButton*)button{
+}
+
+
 -(void)setBackgroundWithInfo:(NSDictionary *)info {
     WEPageManager *pageManager = [WEPageManager sharedManager];    
     CFUUIDRef uuid = CFUUIDCreate(NULL);
