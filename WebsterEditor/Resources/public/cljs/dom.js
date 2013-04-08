@@ -6,14 +6,14 @@ goog.require('webster.html');
 * Calls callback for each DOM node in node-list
 */
 webster.dom.each_node = (function each_node(node_list,callback){
-var G__4676 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
+var G__10549 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
 while(true){
-if(G__4676)
-{var index = cljs.core.first.call(null,G__4676);
+if(G__10549)
+{var index = cljs.core.first.call(null,G__10549);
 callback.call(null,node_list.item(index));
 {
-var G__4677 = cljs.core.next.call(null,G__4676);
-G__4676 = G__4677;
+var G__10550 = cljs.core.next.call(null,G__10549);
+G__10549 = G__10550;
 continue;
 }
 } else
@@ -99,9 +99,9 @@ if (arguments.length > 1) {
 return make_editable__delegate.call(this, node, focus);
 };
 make_editable.cljs$lang$maxFixedArity = 1;
-make_editable.cljs$lang$applyTo = (function (arglist__4678){
-var node = cljs.core.first(arglist__4678);
-var focus = cljs.core.rest(arglist__4678);
+make_editable.cljs$lang$applyTo = (function (arglist__10551){
+var node = cljs.core.first(arglist__10551);
+var focus = cljs.core.rest(arglist__10551);
 return make_editable__delegate(node, focus);
 });
 make_editable.cljs$core$IFn$_invoke$arity$variadic = make_editable__delegate;
@@ -145,25 +145,6 @@ return cljs.core.merge.call(null,class$,type);
 webster.dom.new_image_gallery = (function new_image_gallery(){
 return $(webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","row-fluid selectable"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:ul",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","thumbnails","\uFDD0:data-span","4"], true)], true)], true)));
 });
-webster.dom.empty_image_thumbnail = (function() {
-var empty_image_thumbnail = null;
-var empty_image_thumbnail__0 = (function (){
-return empty_image_thumbnail.call(null,4);
+webster.dom.empty_image_thumbnail = (function empty_image_thumbnail(){
+return webster.html.compile.call(null,webster.dom.new_element_structure.call(null,webster.elements.get_by_name.call(null,"gallery image")));
 });
-var empty_image_thumbnail__1 = (function (span){
-return webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:li",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class",cljs.core.format.call(null,"span%s empty image-thumb selectable",span)], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","empty-decorations"], true),"Add Image"], true)], true));
-});
-empty_image_thumbnail = function(span){
-switch(arguments.length){
-case 0:
-return empty_image_thumbnail__0.call(this);
-case 1:
-return empty_image_thumbnail__1.call(this,span);
-}
-throw(new Error('Invalid arity: ' + arguments.length));
-};
-empty_image_thumbnail.cljs$core$IFn$_invoke$arity$0 = empty_image_thumbnail__0;
-empty_image_thumbnail.cljs$core$IFn$_invoke$arity$1 = empty_image_thumbnail__1;
-return empty_image_thumbnail;
-})()
-;

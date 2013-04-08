@@ -13771,23 +13771,8 @@ webster.dom.new_image_gallery = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
 };
 webster.dom.empty_image_thumbnail = function() {
-  var a = null, b = function() {
-    return a.call(null, 4)
-  }, c = function(a) {
-    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb selectable", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
-  }, a = function(a) {
-    switch(arguments.length) {
-      case 0:
-        return b.call(this);
-      case 1:
-        return c.call(this, a)
-    }
-    throw Error("Invalid arity: " + arguments.length);
-  };
-  a.cljs$core$IFn$_invoke$arity$0 = b;
-  a.cljs$core$IFn$_invoke$arity$1 = c;
-  return a
-}();
+  return webster.html.compile.call(null, webster.dom.new_element_structure.call(null, webster.elements.get_by_name.call(null, "gallery image")))
+};
 webster.dir = {};
 webster.dir.rel_path = function(a) {
   return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/projects\/[^\/]*\/(.*)/, a))
