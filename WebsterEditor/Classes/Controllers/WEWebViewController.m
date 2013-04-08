@@ -77,6 +77,7 @@ static const int ICON_DIM = 13;
     // popover
     self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
     self.addPopover.delegate = self;
+    [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
     
     // Buttons
     self.removeButton = [[UIButton alloc] init];
