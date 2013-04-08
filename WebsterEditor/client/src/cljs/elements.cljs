@@ -4,11 +4,14 @@
    [clojure.set :as set]))
 
 (def all
-     {:text      [{:name "paragraph", :tag :p, :class "text-editable"}
-                  {:name "heading", :tag :h1, :class "text-editable"}]
-      :structure [{:name "container", :tag :div, :class "container-fluid"}
-                  {:name "row", :tag :div, :class "row-fluid"}
-                  {:name "column", :tag :div, :class "span1", :only-under #{"row"}}]})
+     {:text       [{:name "paragraph", :tag :p, :class "text-editable"}
+                   {:name "heading", :tag :h1, :class "text-editable"}]
+      :structure  [{:name "container", :tag :div, :class "container-fluid"}
+                   {:name "row", :tag :div, :class "row-fluid", :only-under #{"container"}}
+                   {:name "column", :tag :div, :class "span1", :only-under #{"row"}}]
+      :components [{:name "gallery", :tag :ul, :class "thumbnails", :only-under #{"row"}}
+                   {:name "gallery image", :tag :li, :class "span4 empty image-thumb", :contains "empty gallery image", :only-under #{"gallery"}}
+                   {:name "empty gallery image", :tag :div, :class "empty-decorations", :contains-text "Add Image", :only-under #{"gallery image"}}]})
 
 (def all-flat
      (apply concat (map #(second %) all)))

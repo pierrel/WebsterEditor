@@ -1,5 +1,6 @@
 (ns webster.dom
-  (:require [webster.html :as html]))
+  (:require [webster.html :as html]
+            [webster.elements :as elements]))
 
 (defn each-node
   "Calls callback for each DOM node in node-list"
@@ -82,10 +83,17 @@
      (.removeClass $el "editing")))
 
 (defn new-element-with-info [el-info]
-  (js/$ (html/compile [(:tag el-info) (assoc (if (seq (:class el-info))
-                                               {:class (str (:class el-info) " selectable")}
-                                               {:class "selectable"})
-                                        :data-type (:name el-info))])))
+  (js/$ (html/compile (new-element-structure el-info))))
+
+(defn new-element-structure [el-info]
+  [(:tag el-info)
+   (assoc (if (seq (:class el-info))
+            {:class (str (:class el-info) " selectable")}
+            {:class "selectable"})
+     :data-type (:name el-info))
+   (cond
+    (:contains-text el-info) (:contains-text el-info)
+    (:contains el-info) (new-element-structure (elements/get-by-name (:contains el-info))))])
 
 (defn new-image-gallery []
   (js/$ (html/compile [:div {:class "row-fluid selectable"}

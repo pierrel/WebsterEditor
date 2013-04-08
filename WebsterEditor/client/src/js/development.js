@@ -13393,142 +13393,6 @@ webster.html.compile = function() {
   b.cljs$core$IFn$_invoke$arity$variadic = a;
   return b
 }();
-webster.dom = {};
-webster.dom.each_node = function(a, b) {
-  for(var c = cljs.core.seq.call(null, cljs.core.range.call(null, a.length));;) {
-    if(c) {
-      var d = cljs.core.first.call(null, c);
-      b.call(null, a.item(d));
-      c = cljs.core.next.call(null, c)
-    }else {
-      return null
-    }
-  }
-};
-webster.dom.map_nodes = function(a, b) {
-  return cljs.core.map.call(null, function(c) {
-    return a.call(null, $(b.get(c)))
-  }, cljs.core.range.call(null, b.length))
-};
-webster.dom.get_jnode = function(a, b) {
-  return $(a.get(b))
-};
-webster.dom.get_column_span = function(a) {
-  a = cljs.core.re_find.call(null, /span(\d+)/, a.attr("class"));
-  return 1 < cljs.core.count.call(null, a) ? parseInt(cljs.core.second.call(null, a), 10) : 0
-};
-webster.dom.set_column_span = function(a, b) {
-  var c = webster.dom.get_column_span.call(null, a);
-  a.removeClass([cljs.core.str("span"), cljs.core.str(c)].join(""));
-  return a.addClass([cljs.core.str("span"), cljs.core.str(b)].join(""))
-};
-webster.dom.increment_column_span = function(a) {
-  return webster.dom.set_column_span.call(null, a, webster.dom.get_column_span.call(null, a) + 1)
-};
-webster.dom.decrement_column_span = function(a) {
-  return webster.dom.set_column_span.call(null, a, webster.dom.get_column_span.call(null, a) - 1)
-};
-webster.dom.get_column_offset = function(a) {
-  a = cljs.core.re_find.call(null, /offset(\d+)/, a.attr("class"));
-  return 1 < cljs.core.count.call(null, a) ? parseInt(cljs.core.second.call(null, a), 10) : 0
-};
-webster.dom.set_column_offset = function(a, b) {
-  var c = webster.dom.get_column_offset.call(null, a);
-  a.removeClass([cljs.core.str("offset"), cljs.core.str(c)].join(""));
-  return a.addClass([cljs.core.str("offset"), cljs.core.str(b)].join(""))
-};
-webster.dom.increment_column_offset = function(a) {
-  return webster.dom.set_column_offset.call(null, a, webster.dom.get_column_offset.call(null, a) + 1)
-};
-webster.dom.decrement_column_offset = function(a) {
-  return webster.dom.set_column_offset.call(null, a, webster.dom.get_column_offset.call(null, a) - 1)
-};
-webster.dom.get_column_width = function(a) {
-  return webster.dom.get_column_span.call(null, a) + webster.dom.get_column_offset.call(null, a)
-};
-webster.dom.column_max = 12;
-webster.dom.make_editable = function() {
-  var a = function(a, b) {
-    a.attr("contenteditable", "true");
-    a.addClass("editing");
-    if(cljs.core.truth_(b)) {
-      var e = rangy.createRange();
-      e.setStart(a.get(0), 0);
-      e.collapse(!0);
-      return rangy.getSelection().setSingleRange(e)
-    }
-    return null
-  }, b = function(b, d) {
-    var e = null;
-    1 < arguments.length && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b);
-    b = cljs.core.rest(b);
-    return a(d, b)
-  };
-  b.cljs$core$IFn$_invoke$arity$variadic = a;
-  return b
-}();
-webster.dom.stop_editing = function() {
-  var a = null, b = function() {
-    return a.call(null, $(".editing"))
-  }, c = function(a) {
-    a.removeAttr("contenteditable");
-    return a.removeClass("editing")
-  }, a = function(a) {
-    switch(arguments.length) {
-      case 0:
-        return b.call(this);
-      case 1:
-        return c.call(this, a)
-    }
-    throw Error("Invalid arity: " + arguments.length);
-  };
-  a.cljs$core$IFn$_invoke$arity$0 = b;
-  a.cljs$core$IFn$_invoke$arity$1 = c;
-  return a
-}();
-webster.dom.new_element_with_info = function(a) {
-  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0:tag")).call(null, a), cljs.core.assoc.call(null, cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:class")).call(null, a)) ? cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", [cljs.core.str((new cljs.core.Keyword("\ufdd0:class")).call(null, a)), cljs.core.str(" selectable")].join("")], !0) : cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "selectable"], !0), "\ufdd0:data-type", 
-  (new cljs.core.Keyword("\ufdd0:name")).call(null, a))], !0)))
-};
-webster.dom.new_image_gallery = function() {
-  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
-};
-webster.dom.empty_image_thumbnail = function() {
-  var a = null, b = function() {
-    return a.call(null, 4)
-  }, c = function(a) {
-    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb selectable", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
-  }, a = function(a) {
-    switch(arguments.length) {
-      case 0:
-        return b.call(this);
-      case 1:
-        return c.call(this, a)
-    }
-    throw Error("Invalid arity: " + arguments.length);
-  };
-  a.cljs$core$IFn$_invoke$arity$0 = b;
-  a.cljs$core$IFn$_invoke$arity$1 = c;
-  return a
-}();
-webster.dir = {};
-webster.dir.rel_path = function(a) {
-  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/projects\/[^\/]*\/(.*)/, a))
-};
-webster.dir.file_name = function(a) {
-  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*\/([^\/]+)\..*/, a))
-};
-webster.dir.thumb_to_lightbox_src = function(a) {
-  var b = cljs.core.re_matches.call(null, /(.*)_THUMB(\..*)/, a);
-  a = cljs.core.nth.call(null, b, 1);
-  b = cljs.core.nth.call(null, b, 2);
-  return[cljs.core.str(a), cljs.core.str(b)].join("")
-};
 clojure.set = {};
 clojure.set.bubble_max_key = function(a, b) {
   var c = cljs.core.apply.call(null, cljs.core.max_key, a, b);
@@ -13758,7 +13622,9 @@ clojure.set.superset_QMARK_ = function(a, b) {
 };
 webster.elements = {};
 webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:text", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name paragraph \ufdd0:tag \ufdd0:p \ufdd0:class text-editable".split(" "), !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name heading \ufdd0:tag \ufdd0:h1 \ufdd0:class text-editable".split(" "), !0)], !0), "\ufdd0:structure", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
-!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "column", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "span1", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["row", null], !0)], !0)], !0)], !0);
+!0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "row", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "row-fluid", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["container", null], !0)], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "column", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "span1", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["row", null], !0)], !0)], !0), "\ufdd0:components", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", 
+"gallery", "\ufdd0:tag", "\ufdd0:ul", "\ufdd0:class", "thumbnails", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["row", null], !0)], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "gallery image", "\ufdd0:tag", "\ufdd0:li", "\ufdd0:class", "span4 empty image-thumb", "\ufdd0:contains", "empty gallery image", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["gallery", null], !0)], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "empty gallery image", 
+"\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "empty-decorations", "\ufdd0:contains-text", "Add Image", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["gallery image", null], !0)], !0)], !0)], !0);
 webster.elements.all_flat = cljs.core.apply.call(null, cljs.core.concat, cljs.core.map.call(null, function(a) {
   return cljs.core.second.call(null, a)
 }, webster.elements.all));
@@ -13790,6 +13656,145 @@ webster.elements.get_by_name = function(a) {
 webster.elements.node_to_element = function(a) {
   a = a.attr("data-type");
   return cljs.core.seq.call(null, a) ? webster.elements.get_by_name.call(null, a) : null
+};
+webster.dom = {};
+webster.dom.each_node = function(a, b) {
+  for(var c = cljs.core.seq.call(null, cljs.core.range.call(null, a.length));;) {
+    if(c) {
+      var d = cljs.core.first.call(null, c);
+      b.call(null, a.item(d));
+      c = cljs.core.next.call(null, c)
+    }else {
+      return null
+    }
+  }
+};
+webster.dom.map_nodes = function(a, b) {
+  return cljs.core.map.call(null, function(c) {
+    return a.call(null, $(b.get(c)))
+  }, cljs.core.range.call(null, b.length))
+};
+webster.dom.get_jnode = function(a, b) {
+  return $(a.get(b))
+};
+webster.dom.get_column_span = function(a) {
+  a = cljs.core.re_find.call(null, /span(\d+)/, a.attr("class"));
+  return 1 < cljs.core.count.call(null, a) ? parseInt(cljs.core.second.call(null, a), 10) : 0
+};
+webster.dom.set_column_span = function(a, b) {
+  var c = webster.dom.get_column_span.call(null, a);
+  a.removeClass([cljs.core.str("span"), cljs.core.str(c)].join(""));
+  return a.addClass([cljs.core.str("span"), cljs.core.str(b)].join(""))
+};
+webster.dom.increment_column_span = function(a) {
+  return webster.dom.set_column_span.call(null, a, webster.dom.get_column_span.call(null, a) + 1)
+};
+webster.dom.decrement_column_span = function(a) {
+  return webster.dom.set_column_span.call(null, a, webster.dom.get_column_span.call(null, a) - 1)
+};
+webster.dom.get_column_offset = function(a) {
+  a = cljs.core.re_find.call(null, /offset(\d+)/, a.attr("class"));
+  return 1 < cljs.core.count.call(null, a) ? parseInt(cljs.core.second.call(null, a), 10) : 0
+};
+webster.dom.set_column_offset = function(a, b) {
+  var c = webster.dom.get_column_offset.call(null, a);
+  a.removeClass([cljs.core.str("offset"), cljs.core.str(c)].join(""));
+  return a.addClass([cljs.core.str("offset"), cljs.core.str(b)].join(""))
+};
+webster.dom.increment_column_offset = function(a) {
+  return webster.dom.set_column_offset.call(null, a, webster.dom.get_column_offset.call(null, a) + 1)
+};
+webster.dom.decrement_column_offset = function(a) {
+  return webster.dom.set_column_offset.call(null, a, webster.dom.get_column_offset.call(null, a) - 1)
+};
+webster.dom.get_column_width = function(a) {
+  return webster.dom.get_column_span.call(null, a) + webster.dom.get_column_offset.call(null, a)
+};
+webster.dom.column_max = 12;
+webster.dom.make_editable = function() {
+  var a = function(a, b) {
+    a.attr("contenteditable", "true");
+    a.addClass("editing");
+    if(cljs.core.truth_(b)) {
+      var e = rangy.createRange();
+      e.setStart(a.get(0), 0);
+      e.collapse(!0);
+      return rangy.getSelection().setSingleRange(e)
+    }
+    return null
+  }, b = function(b, d) {
+    var e = null;
+    1 < arguments.length && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b);
+    b = cljs.core.rest(b);
+    return a(d, b)
+  };
+  b.cljs$core$IFn$_invoke$arity$variadic = a;
+  return b
+}();
+webster.dom.stop_editing = function() {
+  var a = null, b = function() {
+    return a.call(null, $(".editing"))
+  }, c = function(a) {
+    a.removeAttr("contenteditable");
+    return a.removeClass("editing")
+  }, a = function(a) {
+    switch(arguments.length) {
+      case 0:
+        return b.call(this);
+      case 1:
+        return c.call(this, a)
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$core$IFn$_invoke$arity$0 = b;
+  a.cljs$core$IFn$_invoke$arity$1 = c;
+  return a
+}();
+webster.dom.new_element_with_info = function(a) {
+  return $(webster.html.compile.call(null, webster.dom.new_element_structure.call(null, a)))
+};
+webster.dom.new_element_structure = function new_element_structure(b) {
+  return cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0:tag")).call(null, b), cljs.core.assoc.call(null, cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:class")).call(null, b)) ? cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", [cljs.core.str((new cljs.core.Keyword("\ufdd0:class")).call(null, b)), cljs.core.str(" selectable")].join("")], !0) : cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "selectable"], !0), "\ufdd0:data-type", (new cljs.core.Keyword("\ufdd0:name")).call(null, 
+  b)), cljs.core.truth_((new cljs.core.Keyword("\ufdd0:contains-text")).call(null, b)) ? (new cljs.core.Keyword("\ufdd0:contains-text")).call(null, b) : cljs.core.truth_((new cljs.core.Keyword("\ufdd0:contains")).call(null, b)) ? new_element_structure.call(null, webster.elements.get_by_name.call(null, (new cljs.core.Keyword("\ufdd0:contains")).call(null, b))) : null], !0)
+};
+webster.dom.new_image_gallery = function() {
+  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
+};
+webster.dom.empty_image_thumbnail = function() {
+  var a = null, b = function() {
+    return a.call(null, 4)
+  }, c = function(a) {
+    return webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:li", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", cljs.core.format.call(null, "span%s empty image-thumb selectable", a)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "empty-decorations"], !0), "Add Image"], !0)], !0))
+  }, a = function(a) {
+    switch(arguments.length) {
+      case 0:
+        return b.call(this);
+      case 1:
+        return c.call(this, a)
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$core$IFn$_invoke$arity$0 = b;
+  a.cljs$core$IFn$_invoke$arity$1 = c;
+  return a
+}();
+webster.dir = {};
+webster.dir.rel_path = function(a) {
+  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*Documents\/projects\/[^\/]*\/(.*)/, a))
+};
+webster.dir.file_name = function(a) {
+  return cljs.core.second.call(null, cljs.core.re_matches.call(null, /.*\/([^\/]+)\..*/, a))
+};
+webster.dir.thumb_to_lightbox_src = function(a) {
+  var b = cljs.core.re_matches.call(null, /(.*)_THUMB(\..*)/, a);
+  a = cljs.core.nth.call(null, b, 1);
+  b = cljs.core.nth.call(null, b, 2);
+  return[cljs.core.str(a), cljs.core.str(b)].join("")
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
