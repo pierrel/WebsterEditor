@@ -64,6 +64,10 @@
     return [entries count];
 }
 
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [(NSString*)[[self.dataSource allKeys] objectAtIndex:section] capitalizedString];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
