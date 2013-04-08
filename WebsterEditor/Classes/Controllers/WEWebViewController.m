@@ -102,6 +102,8 @@ static const int ICON_DIM = 13;
 }
 
 - (void)openDialogWithData:(id)data {
+    NSDictionary *addables = [data objectForKey:@"addable"];
+    
     // position buttons
     CGSize buttonSize = CGSizeMake(25, 25);
     CGRect frame = [WEUtils frameFromData:data];
@@ -119,8 +121,8 @@ static const int ICON_DIM = 13;
                                     buttonSize.width,
                                     buttonSize.height);
     [removeButton setHidden:NO];
-    [addButton setHidden:NO];
     [parentButton setHidden:NO];
+    if ([addables count] > 0) [addButton setHidden:NO];
     
     // let the add popover know
     [self.addSelectionController setData:data];

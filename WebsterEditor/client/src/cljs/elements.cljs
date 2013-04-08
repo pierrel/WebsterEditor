@@ -14,18 +14,22 @@
      (apply concat (map #(second %) all)))
 
 (defn allowed? [element parent-element]
-  (if (seq (:only-under element))
-    (contains? (:only-under element) (:name parent-element))
-    true))
+  (cond
+   (contains? (set (:editing all)) parent-element) false
+   (seq (:only-under element))                     (contains? (:only-under element) (:name parent-element))
+   :else true))
 
 (defn possible-under [element]
   (loop [category-els all acc {}]
     (if (seq category-els)
       (let [category (first (first category-els))
-            elements (second (first category-els))]
-        (recur (next category-els) (assoc acc
-                                     category
-                                     (map #(:name %) (filter #(allowed? % element) elements)))))
+            elements (second (first category-els))
+            allowed-elements (map #(:name %) (filter #(allowed? % element) elements))]
+        (recur (next category-els) (if (seq allowed-elements)
+                                     (assoc acc
+                                       category
+                                       allowed-elements)
+                                     acc)))
       acc)))
 
 (defn get-by-name [name]

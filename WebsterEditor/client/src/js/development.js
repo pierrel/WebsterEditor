@@ -13763,12 +13763,12 @@ webster.elements.all_flat = cljs.core.apply.call(null, cljs.core.concat, cljs.co
   return cljs.core.second.call(null, a)
 }, webster.elements.all));
 webster.elements.allowed_QMARK_ = function(a, b) {
-  return cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:only-under")).call(null, a)) ? cljs.core.contains_QMARK_.call(null, (new cljs.core.Keyword("\ufdd0:only-under")).call(null, a), (new cljs.core.Keyword("\ufdd0:name")).call(null, b)) : !0
+  return cljs.core.contains_QMARK_.call(null, cljs.core.set.call(null, (new cljs.core.Keyword("\ufdd0:editing")).call(null, webster.elements.all)), b) ? !1 : cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:only-under")).call(null, a)) ? cljs.core.contains_QMARK_.call(null, (new cljs.core.Keyword("\ufdd0:only-under")).call(null, a), (new cljs.core.Keyword("\ufdd0:name")).call(null, b)) : !0
 };
 webster.elements.possible_under = function(a) {
   for(var b = webster.elements.all, c = cljs.core.ObjMap.EMPTY;;) {
     if(cljs.core.seq.call(null, b)) {
-      var d = cljs.core.first.call(null, cljs.core.first.call(null, b)), e = cljs.core.second.call(null, cljs.core.first.call(null, b)), f = cljs.core.next.call(null, b), c = cljs.core.assoc.call(null, c, d, cljs.core.map.call(null, function() {
+      var d = cljs.core.first.call(null, cljs.core.first.call(null, b)), e = cljs.core.second.call(null, cljs.core.first.call(null, b)), e = cljs.core.map.call(null, function() {
         return function(a) {
           return(new cljs.core.Keyword("\ufdd0:name")).call(null, a)
         }
@@ -13776,7 +13776,7 @@ webster.elements.possible_under = function(a) {
         return function(b) {
           return webster.elements.allowed_QMARK_.call(null, b, a)
         }
-      }(b, c, d, e), e))), b = f
+      }(b, c, d, e), e)), b = cljs.core.next.call(null, b), c = cljs.core.seq.call(null, e) ? cljs.core.assoc.call(null, c, d, e) : c
     }else {
       return c
     }
