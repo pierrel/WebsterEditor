@@ -36,7 +36,6 @@
     (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "deselectSelectedElement" deselect-selected-element)
-    (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
     (.registerHandler bridge "addElementUnderSelectedElement" (fn [data callback] (add-element-handler data callback bridge)))
     (.registerHandler bridge "addGalleryUnderSelectedElement" (fn [data callback] (add-gallery-handler data callback bridge)))
     (.registerHandler bridge "incrementColumn" increment-column)
@@ -190,15 +189,6 @@
   [data]
   (let [$selected (listeners/get-selected)]
     (if $selected (listeners/make-unselected $selected))))
-
-(defn add-row-handler
-  [data callback bridge]
-  (let [jnode (listeners/get-selected)
-        new-row (dom/new-row)]
-    (.append jnode new-row)
-    (listeners/default-listener nil bridge)
-    (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
-    (listeners/select-node new-row bridge)))
 
 (defn add-element-handler
   [data callback bridge]
