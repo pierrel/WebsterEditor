@@ -87,13 +87,17 @@
 
 (defn new-element-structure [el-info]
   [(:tag el-info)
-   (assoc (if (seq (:class el-info))
-            {:class (str (:class el-info) " selectable")}
-            {:class "selectable"})
-     :data-type (:name el-info))
+   (new-element-attrs el-info)
    (cond
     (:contains-text el-info) (:contains-text el-info)
     (:contains el-info) (new-element-structure (elements/get-by-name (:contains el-info))))])
+
+(defn new-element-attrs [el-info]
+  (let [class {:class (str (if (not (:unselectable el-info)) "selectable" "")
+                           " "
+                           (if (:class el-info) (:class el-info) "")) } 
+        type {:data-type (:name el-info)}]
+    (merge class type)))
 
 (defn new-image-gallery []
   (js/$ (html/compile [:div {:class "row-fluid selectable"}
