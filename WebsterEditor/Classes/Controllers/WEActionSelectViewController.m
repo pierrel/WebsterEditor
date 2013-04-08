@@ -11,7 +11,7 @@
 #import "WEPageManager.h"
 
 @interface WEActionSelectViewController ()
-@property (strong, nonatomic) NSArray *dataSource;
+@property (strong, nonatomic) NSDictionary *dataSource;
 @end
 
 @implementation WEActionSelectViewController
@@ -42,8 +42,8 @@
 }
 
 #pragma mark - Setup data source
--(void) setData:(id)data {
-    self.dataSource = [NSArray arrayWithObjects:@"Row", @"Image Gallery", nil];
+-(void) setData:(id)data {    
+    self.dataSource = [data objectForKey:@"addable"];
     [self.tableView reloadData];
 }
 
@@ -52,13 +52,16 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return [self.dataSource count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.dataSource.count;
+    NSString *key = [[self.dataSource allKeys] objectAtIndex:section];
+    NSArray *entries = [self.dataSource objectForKey:key];
+    
+    return [entries count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,8 +71,11 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] init];
     }
+    NSString *key = [[self.dataSource allKeys] objectAtIndex:indexPath.section];
+    NSArray *entries = [self.dataSource objectForKey:key];
+    NSString *entry = [entries objectAtIndex:indexPath.row];
     
-    [cell.textLabel setText:[self.dataSource objectAtIndex:indexPath.row]];
+    [cell.textLabel setText:[entry capitalizedString]];
     
     return cell;
 }
@@ -78,8 +84,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *item = (NSString*)[self.dataSource objectAtIndex:indexPath.row];
-    if (self.delegate) [self.delegate actionSelect:self didSelectAction:item];    
+    NSString *key = [[self.dataSource allKeys] objectAtIndex:indexPath.section];
+    NSArray *entries = [self.dataSource objectForKey:key];
+    NSString *item = [entries objectAtIndex:indexPath.row];
+    
+    if (self.delegate) [self.delegate actionSelect:self didSelectAction:item];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
