@@ -21,11 +21,11 @@
   [event bridge]
   (let [el (js/$ (.-currentTarget event))]
     (cond
+     (and (.hasClass el "image-thumb") (not (.hasClass el "selected"))) (thumbnail-listener event bridge)
      (and (not (.hasClass el "selected")) (nothing-selected)) (do
                                                                 (select-node el bridge)
                                                                 (.stopPropagation event)
-                                                                (.preventDefault event))
-     (.hasClass el "image-thumb") (thumbnail-listener event bridge))))
+                                                                (.preventDefault event)))))
 
 (defn thumbnail-listener
   [event bridge]
@@ -40,8 +40,6 @@
                                       $lightbox (js/$ old-href)]
                                   (.callHandler bridge "removingMedia" (js-obj "media-src" thumb-src))
                                   (.callHandler bridge "removingMedia" (js-obj "media-src" lightbox-src))
-                                  (js/alert old-href)
-                                  (js/alert $lightbox)
                                   (.remove $lightbox)
                                   (.remove $el))
                                 (let [full-path (aget data "resource-path")
