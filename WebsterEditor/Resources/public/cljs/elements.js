@@ -2,9 +2,9 @@ goog.provide('webster.elements');
 goog.require('cljs.core');
 goog.require('clojure.set');
 goog.require('clojure.string');
-webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\uFDD0:editing",cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","paragraph","\uFDD0:tag","\uFDD0:p"], true),cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","heading","\uFDD0:tag","\uFDD0:h1"], true)], true),"\uFDD0:structural",cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","container","\uFDD0:tag","\uFDD0:div","\uFDD0:class","container-fluid"], true),cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","row","\uFDD0:tag","\uFDD0:div","\uFDD0:class","row-fluid"], true),cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","column","\uFDD0:tag","\uFDD0:div","\uFDD0:class","span1","\uFDD0:only-under",cljs.core.PersistentHashSet.fromArray(["row",null], true)], true)], true)], true);
-webster.elements.all_flat = cljs.core.apply.call(null,cljs.core.concat,cljs.core.map.call(null,(function (p1__3761_SHARP_){
-return cljs.core.second.call(null,p1__3761_SHARP_);
+webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\uFDD0:text",cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","paragraph","\uFDD0:tag","\uFDD0:p","\uFDD0:class","text-editable"], true),cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","heading","\uFDD0:tag","\uFDD0:h1","\uFDD0:class","text-editable"], true)], true),"\uFDD0:structure",cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","container","\uFDD0:tag","\uFDD0:div","\uFDD0:class","container-fluid"], true),cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","row","\uFDD0:tag","\uFDD0:div","\uFDD0:class","row-fluid"], true),cljs.core.PersistentArrayMap.fromArray(["\uFDD0:name","column","\uFDD0:tag","\uFDD0:div","\uFDD0:class","span1","\uFDD0:only-under",cljs.core.PersistentHashSet.fromArray(["row",null], true)], true)], true)], true);
+webster.elements.all_flat = cljs.core.apply.call(null,cljs.core.concat,cljs.core.map.call(null,(function (p1__4916_SHARP_){
+return cljs.core.second.call(null,p1__4916_SHARP_);
 }),webster.elements.all));
 webster.elements.allowed_QMARK_ = (function allowed_QMARK_(element,parent_element){
 if(cljs.core.contains_QMARK_.call(null,cljs.core.set.call(null,(new cljs.core.Keyword("\uFDD0:editing")).call(null,webster.elements.all)),parent_element))
@@ -29,19 +29,19 @@ if(cljs.core.seq.call(null,category_els))
 {var category = cljs.core.first.call(null,cljs.core.first.call(null,category_els));
 var elements = cljs.core.second.call(null,cljs.core.first.call(null,category_els));
 var allowed_elements = cljs.core.map.call(null,((function (category_els,acc,category,elements){
-return (function (p1__3762_SHARP_){
-return (new cljs.core.Keyword("\uFDD0:name")).call(null,p1__3762_SHARP_);
+return (function (p1__4917_SHARP_){
+return (new cljs.core.Keyword("\uFDD0:name")).call(null,p1__4917_SHARP_);
 });})(category_els,acc,category,elements))
 ,cljs.core.filter.call(null,((function (category_els,acc,category,elements){
-return (function (p1__3763_SHARP_){
-return webster.elements.allowed_QMARK_.call(null,p1__3763_SHARP_,element);
+return (function (p1__4918_SHARP_){
+return webster.elements.allowed_QMARK_.call(null,p1__4918_SHARP_,element);
 });})(category_els,acc,category,elements))
 ,elements));
 {
-var G__3765 = cljs.core.next.call(null,category_els);
-var G__3766 = ((cljs.core.seq.call(null,allowed_elements))?cljs.core.assoc.call(null,acc,category,allowed_elements):acc);
-category_els = G__3765;
-acc = G__3766;
+var G__4920 = cljs.core.next.call(null,category_els);
+var G__4921 = ((cljs.core.seq.call(null,allowed_elements))?cljs.core.assoc.call(null,acc,category,allowed_elements):acc);
+category_els = G__4920;
+acc = G__4921;
 continue;
 }
 } else
@@ -51,8 +51,8 @@ break;
 }
 });
 webster.elements.get_by_name = (function get_by_name(name){
-return cljs.core.first.call(null,cljs.core.filter.call(null,(function (p1__3764_SHARP_){
-return cljs.core._EQ_.call(null,(new cljs.core.Keyword("\uFDD0:name")).call(null,p1__3764_SHARP_),name);
+return cljs.core.first.call(null,cljs.core.filter.call(null,(function (p1__4919_SHARP_){
+return cljs.core._EQ_.call(null,(new cljs.core.Keyword("\uFDD0:name")).call(null,p1__4919_SHARP_),name);
 }),webster.elements.all_flat));
 });
 webster.elements.node_to_element = (function node_to_element(node){

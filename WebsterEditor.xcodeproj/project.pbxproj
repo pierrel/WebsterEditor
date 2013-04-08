@@ -30,6 +30,7 @@
 		A239B6241708E05700109734 /* WEProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6231708E05700109734 /* WEProjectCell.m */; };
 		A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */; };
 		A239B62A1708E85E00109734 /* WEAddProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6291708E85E00109734 /* WEAddProjectCell.m */; };
+		A25DA9A81712890000963A4D /* edit_text.png in Resources */ = {isa = PBXBuildFile; fileRef = A25DA9A71712890000963A4D /* edit_text.png */; };
 		A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A27C9FEE170A6C490095D273 /* WEProjectSettings.m */; };
 		A27C9FFA170A7D3A0095D273 /* grey_wash_wall_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */; };
 		A27C9FFB170A7D3A0095D273 /* grey_wash_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF9170A7D3A0095D273 /* grey_wash_wall.png */; };
@@ -108,6 +109,7 @@
 		A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEProjectCollectionViewLayout.m; sourceTree = "<group>"; };
 		A239B6281708E85E00109734 /* WEAddProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEAddProjectCell.h; sourceTree = "<group>"; };
 		A239B6291708E85E00109734 /* WEAddProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEAddProjectCell.m; sourceTree = "<group>"; };
+		A25DA9A71712890000963A4D /* edit_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_text.png; sourceTree = "<group>"; };
 		A27C9FED170A6C490095D273 /* WEProjectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEProjectSettings.h; path = Models/WEProjectSettings.h; sourceTree = "<group>"; };
 		A27C9FEE170A6C490095D273 /* WEProjectSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEProjectSettings.m; path = Models/WEProjectSettings.m; sourceTree = "<group>"; };
 		A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_wash_wall_@2X.png"; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 		A2D15F0A171227AD009FF2D8 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				A25DA9A71712890000963A4D /* edit_text.png */,
 				A2D15F0B171227AD009FF2D8 /* add.png */,
 				A2D15F0C171227AD009FF2D8 /* blue.png */,
 				A2D15F0D171227AD009FF2D8 /* delete.png */,
@@ -566,6 +569,7 @@
 				A2D15F13171227AD009FF2D8 /* information.png in Resources */,
 				A2D15F14171227AD009FF2D8 /* up.png in Resources */,
 				A2D15F16171243C4009FF2D8 /* elements.cljs in Resources */,
+				A25DA9A81712890000963A4D /* edit_text.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

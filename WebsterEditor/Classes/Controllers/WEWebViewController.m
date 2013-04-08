@@ -13,6 +13,8 @@
 #import "WEUtils.h"
 #import "WEActionSelectViewController.h"
 
+#import "NSArray+WEExtras.h"
+
 static const int ICON_DIM = 13;
 
 @interface WEWebViewController ()
@@ -22,7 +24,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback, removeButton, addButton, parentButton;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton;
 
 - (void)viewDidLoad
 {
@@ -99,10 +101,19 @@ static const int ICON_DIM = 13;
     [parentButton setHidden:YES];
     [self.view addSubview:parentButton];
     
+    self.editTextButton = [[UIButton alloc] init];
+    [editTextButton setImage:[UIImage imageNamed:@"edit_text.png"] forState:UIControlStateNormal];
+    [editTextButton addTarget:self action:@selector(editTextButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [editTextButton setHidden:YES];
+    [self.view addSubview:editTextButton];
+    
 }
 
 - (void)openDialogWithData:(id)data {
+    [self closeActionButtons];
+    
     NSDictionary *addables = [data objectForKey:@"addable"];
+    NSArray *classes = [data objectForKey:@"classes"];
     
     // position buttons
     CGSize buttonSize = CGSizeMake(25, 25);
@@ -120,9 +131,14 @@ static const int ICON_DIM = 13;
                                     MAX(frame.origin.y - buttonSize.height, 0),
                                     buttonSize.width,
                                     buttonSize.height);
+    editTextButton.frame = CGRectMake(frame.origin.x - (buttonSize.width/2),
+                                      frame.origin.y  + frame.size.height - (buttonSize.height/2),
+                                      buttonSize.width,
+                                      buttonSize.height);
     [removeButton setHidden:NO];
     [parentButton setHidden:NO];
     if ([addables count] > 0) [addButton setHidden:NO];
+    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
     
     // let the add popover know
     [self.addSelectionController setData:data];
@@ -144,9 +160,7 @@ static const int ICON_DIM = 13;
 }
 
 - (void)closeDialog {
-    [removeButton setHidden:YES];
-    [addButton setHidden:YES];
-    [parentButton setHidden:YES];
+    [self closeActionButtons];
     
     [self.addPopover dismissPopoverAnimated:YES]; // just in case
     
@@ -155,6 +169,13 @@ static const int ICON_DIM = 13;
             [subview removeFromSuperview];
         }
     }
+}
+
+-(void)closeActionButtons {
+    [removeButton setHidden:YES];
+    [addButton setHidden:YES];
+    [parentButton setHidden:YES];
+    [editTextButton setHidden:YES];
 }
 
 -(WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index {

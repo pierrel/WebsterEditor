@@ -4,11 +4,11 @@
    [clojure.set :as set]))
 
 (def all
-     {:editing    [{:name "paragraph", :tag :p}
-                   {:name "heading", :tag :h1}]
-      :structural [{:name "container", :tag :div, :class "container-fluid"}
-                   {:name "row", :tag :div, :class "row-fluid"}
-                   {:name "column", :tag :div, :class "span1", :only-under #{"row"}}]})
+     {:text      [{:name "paragraph", :tag :p, :class "text-editable"}
+                  {:name "heading", :tag :h1, :class "text-editable"}]
+      :structure [{:name "container", :tag :div, :class "container-fluid"}
+                  {:name "row", :tag :div, :class "row-fluid"}
+                  {:name "column", :tag :div, :class "span1", :only-under #{"row"}}]})
 
 (def all-flat
      (apply concat (map #(second %) all)))

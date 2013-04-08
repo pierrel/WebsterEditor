@@ -13757,7 +13757,7 @@ clojure.set.superset_QMARK_ = function(a, b) {
   }, b) : c
 };
 webster.elements = {};
-webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:editing", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "paragraph", "\ufdd0:tag", "\ufdd0:p"], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "heading", "\ufdd0:tag", "\ufdd0:h1"], !0)], !0), "\ufdd0:structural", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
+webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:text", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name paragraph \ufdd0:tag \ufdd0:p \ufdd0:class text-editable".split(" "), !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name heading \ufdd0:tag \ufdd0:h1 \ufdd0:class text-editable".split(" "), !0)], !0), "\ufdd0:structure", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
 !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "column", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "span1", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["row", null], !0)], !0)], !0)], !0);
 webster.elements.all_flat = cljs.core.apply.call(null, cljs.core.concat, cljs.core.map.call(null, function(a) {
   return cljs.core.second.call(null, a)
