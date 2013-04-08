@@ -7,8 +7,12 @@ body {
     -webkit-user-select: text;
 }
 
-.container-fluid {
+.container-fluid:empty {
     min-height: 500px;
+}
+
+.row-fluid:empty {
+    min-height: 30px;
 }
 
 .selected {
