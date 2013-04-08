@@ -11,7 +11,7 @@ body {
     min-height: 500px;
 }
 
-.row-fluid:empty {
+.selectable:empty {
     min-height: 30px;
 }
 
@@ -23,7 +23,7 @@ body {
     -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
-.row-fluid > div.empty {
+.row-fluid > div:empty {
     outline: 1px solid gray;
     background-color: lightblue;
 }
