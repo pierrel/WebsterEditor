@@ -195,13 +195,17 @@
   (let [el-name (aget data "element-name")
         element (elements/get-by-name el-name)
         jnode (listeners/get-selected)
-        new-el (dom/new-element-with-info element)]
+        new-el (dom/new-element-with-info element)
+        add-listener (fn [jel]
+                       (.addEventListener jel
+                                          "click"
+                                          (fn [event]
+                                            (listeners/container-listener event bridge))))]
     (.append jnode new-el)
     (listeners/default-listener nil bridge)
-    (.addEventListener (.get new-el 0)
-                       "click"
-                       (fn [event]
-                         (listeners/container-listener event bridge)))
+    (.each (.find new-el ".selectable")
+           (fn [i el] (add-listener el)))
+    (add-listener (.get new-el 0))
     (listeners/select-node new-el bridge)))
 
 ;; IMAGE GALLERY STUFF

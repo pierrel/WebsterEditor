@@ -79,12 +79,12 @@ $body.find(".selectable").removeClass("selectable");
 $body.find(".selectable-thumb").removeClass("selectable-thumb");
 $body.find(".selected").removeClass("selected");
 $body.find(".empty").removeClass("empty");
-var $body_el_3543 = $body.find("body");
-var bg_3544 = $body_el_3543.css("background-image");
-if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_3544)))
-{var main_path_3545 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_3544));
+var $body_el_7279 = $body.find("body");
+var bg_7280 = $body_el_7279.css("background-image");
+if(cljs.core.not.call(null,clojure.string.blank_QMARK_.call(null,bg_7280)))
+{var main_path_7281 = cljs.core.second.call(null,cljs.core.re_matches.call(null,/url\(.*\/(media\/.*)\)/,bg_7280));
 $body.find("body").css("background-image",null);
-$body_el_3543.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_3545));
+$body_el_7279.attr("style",cljs.core.format.call(null,"zoom: 1; background-image: url(%s);",main_path_7281));
 } else
 {}
 if(($body.find(".thumbnails").length > 0))
@@ -164,50 +164,50 @@ var all_columns = jselected.find("> div");
 var column_count = all_columns.length;
 var jcolumn = webster.dom.get_jnode.call(null,all_columns,index);
 var span_num = webster.dom.get_column_span.call(null,jcolumn);
-var all_jcols_3546 = cljs.core.map.call(null,(function (i){
+var all_jcols_7282 = cljs.core.map.call(null,(function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
 }),cljs.core.range.call(null,column_count));
-var jcols_after_jcolumn_3547 = cljs.core.map.call(null,((function (all_jcols_3546){
+var jcols_after_jcolumn_7283 = cljs.core.map.call(null,((function (all_jcols_7282){
 return (function (i){
 return webster.dom.get_jnode.call(null,all_columns,i);
-});})(all_jcols_3546))
+});})(all_jcols_7282))
 ,cljs.core.range.call(null,(index + 1),column_count));
-var jcols_to_decrement_3548 = cljs.core.filter.call(null,((function (all_jcols_3546,jcols_after_jcolumn_3547){
+var jcols_to_decrement_7284 = cljs.core.filter.call(null,((function (all_jcols_7282,jcols_after_jcolumn_7283){
 return (function (jcol){
 return (webster.dom.get_column_span.call(null,jcol) > 1);
-});})(all_jcols_3546,jcols_after_jcolumn_3547))
-,jcols_after_jcolumn_3547);
-var jcols_to_inset_3549 = cljs.core.filter.call(null,((function (all_jcols_3546,jcols_after_jcolumn_3547,jcols_to_decrement_3548){
+});})(all_jcols_7282,jcols_after_jcolumn_7283))
+,jcols_after_jcolumn_7283);
+var jcols_to_inset_7285 = cljs.core.filter.call(null,((function (all_jcols_7282,jcols_after_jcolumn_7283,jcols_to_decrement_7284){
 return (function (jcol){
 return (webster.dom.get_column_offset.call(null,jcol) > 0);
-});})(all_jcols_3546,jcols_after_jcolumn_3547,jcols_to_decrement_3548))
-,jcols_after_jcolumn_3547);
-var jcol_to_decrement_3550 = cljs.core.first.call(null,jcols_to_decrement_3548);
-var jcol_to_inset_3551 = cljs.core.first.call(null,jcols_to_inset_3549);
-var is_full_width_3552 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_3546)));
-if(cljs.core.truth_(jcol_to_inset_3551))
-{webster.dom.set_column_offset.call(null,jcol_to_inset_3551,(webster.dom.get_column_offset.call(null,jcol_to_inset_3551) - 1));
+});})(all_jcols_7282,jcols_after_jcolumn_7283,jcols_to_decrement_7284))
+,jcols_after_jcolumn_7283);
+var jcol_to_decrement_7286 = cljs.core.first.call(null,jcols_to_decrement_7284);
+var jcol_to_inset_7287 = cljs.core.first.call(null,jcols_to_inset_7285);
+var is_full_width_7288 = cljs.core._EQ_.call(null,12,cljs.core.reduce.call(null,cljs.core._PLUS_,cljs.core.map.call(null,webster.dom.get_column_width,all_jcols_7282)));
+if(cljs.core.truth_(jcol_to_inset_7287))
+{webster.dom.set_column_offset.call(null,jcol_to_inset_7287,(webster.dom.get_column_offset.call(null,jcol_to_inset_7287) - 1));
 } else
-{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_3552;
+{if(cljs.core.truth_((function (){var and__3822__auto__ = is_full_width_7288;
 if(and__3822__auto__)
-{return jcol_to_decrement_3550;
+{return jcol_to_decrement_7286;
 } else
 {return and__3822__auto__;
 }
 })()))
-{webster.dom.set_column_span.call(null,jcol_to_decrement_3550,(webster.dom.get_column_span.call(null,jcol_to_decrement_3550) - 1));
+{webster.dom.set_column_span.call(null,jcol_to_decrement_7286,(webster.dom.get_column_span.call(null,jcol_to_decrement_7286) - 1));
 } else
 {}
 }
-if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_3551;
+if(cljs.core.truth_((function (){var or__3824__auto__ = jcol_to_inset_7287;
 if(cljs.core.truth_(or__3824__auto__))
 {return or__3824__auto__;
 } else
-{var or__3824__auto____$1 = jcol_to_decrement_3550;
+{var or__3824__auto____$1 = jcol_to_decrement_7286;
 if(cljs.core.truth_(or__3824__auto____$1))
 {return or__3824__auto____$1;
 } else
-{return !(is_full_width_3552);
+{return !(is_full_width_7288);
 }
 }
 })()))
@@ -258,11 +258,21 @@ var el_name = (data["element-name"]);
 var element = webster.elements.get_by_name.call(null,el_name);
 var jnode = webster.listeners.get_selected.call(null);
 var new_el = webster.dom.new_element_with_info.call(null,element);
+var add_listener = ((function (el_name,element,jnode,new_el){
+return (function (jel){
+return jel.addEventListener("click",((function (el_name,element,jnode,new_el){
+return (function (event){
+return webster.listeners.container_listener.call(null,event,bridge);
+});})(el_name,element,jnode,new_el))
+);
+});})(el_name,element,jnode,new_el))
+;
 jnode.append(new_el);
 webster.listeners.default_listener.call(null,null,bridge);
-new_el.get(0).addEventListener("click",(function (event){
-return webster.listeners.container_listener.call(null,event,bridge);
+new_el.find(".selectable").each((function (i,el){
+return add_listener.call(null,el);
 }));
+add_listener.call(null,new_el.get(0));
 return webster.listeners.select_node.call(null,new_el,bridge);
 });
 webster.main.add_gallery_handler = (function add_gallery_handler(data,callback,bridge){

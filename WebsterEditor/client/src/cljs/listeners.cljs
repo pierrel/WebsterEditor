@@ -21,11 +21,10 @@
   [event bridge]
   (let [el (js/$ (.-currentTarget event))]
     (cond
-     (and (not (.hasClass el "selected")) (nothing-selected))
-     (do
-       (select-node el bridge)
-       (.stopPropagation event)
-       (.preventDefault event))
+     (and (not (.hasClass el "selected")) (nothing-selected)) (do
+                                                                (select-node el bridge)
+                                                                (.stopPropagation event)
+                                                                (.preventDefault event))
      (.hasClass el "image-thumb") (thumbnail-listener event bridge))))
 
 (defn thumbnail-listener

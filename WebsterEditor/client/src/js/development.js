@@ -14059,11 +14059,18 @@ webster.main.add_element_handler = function(a, b, c) {
   b = webster.elements.get_by_name.call(null, a["element-name"]);
   a = webster.listeners.get_selected.call(null);
   b = webster.dom.new_element_with_info.call(null, b);
+  var d;
+  d = function(a) {
+    return a.addEventListener("click", function(a) {
+      return webster.listeners.container_listener.call(null, a, c)
+    })
+  };
   a.append(b);
   webster.listeners.default_listener.call(null, null, c);
-  b.get(0).addEventListener("click", function(a) {
-    return webster.listeners.container_listener.call(null, a, c)
+  b.find(".selectable").each(function(a, b) {
+    return d.call(null, b)
   });
+  d.call(null, b.get(0));
   return webster.listeners.select_node.call(null, b, c)
 };
 webster.main.add_gallery_handler = function(a, b, c) {
