@@ -1,5 +1,6 @@
 (ns webster.listeners
   (:require [webster.dom :as dom]
+            [webster.elements :as elements]
             [webster.html :as html]
             [webster.dir :as dir]
             [clojure.string :as string]))
@@ -110,7 +111,8 @@
                   :width width
                   :height height
                   :tag (.prop jnode "tagName")
-                  :classes (.split (.attr jnode "class") " ")}]
+                  :classes (.split (.attr jnode "class") " ")
+                  :addable (elements/possible-under jnode)}]
     (clj->js (if (is-row? jnode)
                (conj the-info [:children (dom/map-nodes  node-info (.find jnode "> div"))])
                the-info))))

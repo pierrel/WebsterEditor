@@ -13528,6 +13528,22 @@ webster.dir.thumb_to_lightbox_src = function(a) {
   b = cljs.core.nth.call(null, b, 2);
   return[cljs.core.str(a), cljs.core.str(b)].join("")
 };
+webster.elements = {};
+webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:editing", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "paragraph", "\ufdd0:tag", "\ufdd0:p"], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "heading", "\ufdd0:tag", "\ufdd0:h1"], !0)], !0), "\ufdd0:structural", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
+!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name column \ufdd0:tag \ufdd0:div \ufdd0:class-prefix span".split(" "), !0)], !0)], !0);
+webster.elements.possible_under = function() {
+  for(var a = webster.elements.all, b = cljs.core.ObjMap.EMPTY;;) {
+    if(cljs.core.seq.call(null, a)) {
+      var c = cljs.core.next.call(null, a), b = cljs.core.assoc.call(null, b, cljs.core.first.call(null, cljs.core.first.call(null, a)), cljs.core.map.call(null, function() {
+        return function(a) {
+          return(new cljs.core.Keyword("\ufdd0:name")).call(null, a)
+        }
+      }(a, b), cljs.core.second.call(null, cljs.core.first.call(null, a)))), a = c
+    }else {
+      return b
+    }
+  }
+};
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
   return cljs.core._EQ_.call(null, a.target, a.currentTarget) ? a.stopPropagation() : null
@@ -13611,7 +13627,7 @@ webster.listeners.select_node = function() {
   return b
 }();
 webster.listeners.node_info = function node_info(b) {
-  var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:top", c.top, "\ufdd0:left", c.left, "\ufdd0:width", d, "\ufdd0:height", e, "\ufdd0:tag", b.prop("tagName"), "\ufdd0:classes", b.attr("class").split(" ")], !0);
+  var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:top", c.top, "\ufdd0:left", c.left, "\ufdd0:width", d, "\ufdd0:height", e, "\ufdd0:tag", b.prop("tagName"), "\ufdd0:classes", b.attr("class").split(" "), "\ufdd0:addable", webster.elements.possible_under.call(null, b)], !0);
   return cljs.core.clj__GT_js.call(null, cljs.core.truth_(webster.listeners.is_row_QMARK_.call(null, b)) ? cljs.core.conj.call(null, c, cljs.core.PersistentVector.fromArray(["\ufdd0:children", webster.dom.map_nodes.call(null, node_info, b.find("\x3e div"))], !0)) : c)
 };
 webster.listeners.get_selected = function() {

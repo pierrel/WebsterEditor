@@ -66,6 +66,7 @@
 		A2D15F12171227AD009FF2D8 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0D171227AD009FF2D8 /* delete.png */; };
 		A2D15F13171227AD009FF2D8 /* information.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0E171227AD009FF2D8 /* information.png */; };
 		A2D15F14171227AD009FF2D8 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0F171227AD009FF2D8 /* up.png */; };
+		A2D15F16171243C4009FF2D8 /* elements.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F15171243C4009FF2D8 /* elements.cljs */; };
 		A2E00C58170945510024EA42 /* dir.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A2E00C56170945510024EA42 /* dir.cljs */; };
 		A2E00C59170945510024EA42 /* html.cljs in Resources */ = {isa = PBXBuildFile; fileRef = A2E00C57170945510024EA42 /* html.cljs */; };
 		A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */; };
@@ -156,6 +157,7 @@
 		A2D15F0D171227AD009FF2D8 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		A2D15F0E171227AD009FF2D8 /* information.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = information.png; sourceTree = "<group>"; };
 		A2D15F0F171227AD009FF2D8 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
+		A2D15F15171243C4009FF2D8 /* elements.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = elements.cljs; sourceTree = "<group>"; };
 		A2E00C56170945510024EA42 /* dir.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dir.cljs; sourceTree = "<group>"; };
 		A2E00C57170945510024EA42 /* html.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = html.cljs; sourceTree = "<group>"; };
 		A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEImagePopoverViewController.h; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 		A29CF1C316EBD37C00AB6D38 /* cljs */ = {
 			isa = PBXGroup;
 			children = (
+				A2D15F15171243C4009FF2D8 /* elements.cljs */,
 				A2E00C56170945510024EA42 /* dir.cljs */,
 				A2E00C57170945510024EA42 /* html.cljs */,
 				A29CF1C416EBD37C00AB6D38 /* dom.cljs */,
@@ -562,6 +565,7 @@
 				A2D15F12171227AD009FF2D8 /* delete.png in Resources */,
 				A2D15F13171227AD009FF2D8 /* information.png in Resources */,
 				A2D15F14171227AD009FF2D8 /* up.png in Resources */,
+				A2D15F16171243C4009FF2D8 /* elements.cljs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
