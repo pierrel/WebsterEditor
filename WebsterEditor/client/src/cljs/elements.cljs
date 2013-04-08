@@ -4,21 +4,22 @@
    [clojure.set :as set]))
 
 (def all
-     {:text       [{:name "paragraph", :tag :p, :class "text-editable"}
-                   {:name "heading", :tag :h1, :class "text-editable"}]
+     (sorted-map
       :structure  [{:name "container", :tag :div, :class "container-fluid"}
                    {:name "row", :tag :div, :class "row-fluid", :only-under #{"container"}}
                    {:name "column", :tag :div, :class "span1", :only-under #{"row"}}]
+      :text       [{:name "paragraph", :tag :p, :class "text-editable"}
+                   {:name "heading", :tag :h1, :class "text-editable"}]
       :components [{:name "gallery", :tag :ul, :class "thumbnails", :only-under #{"row"}}
                    {:name "gallery image", :tag :li, :class "span4 empty image-thumb", :contains "empty gallery image", :only-under #{"gallery"}}
-                   {:name "empty gallery image", :tag :div, :class "empty-decorations", :contains-text "Add Image", :only-under #{"gallery image"}}]})
+                   {:name "empty gallery image", :tag :div, :class "empty-decorations", :contains-text "Add Image", :only-under #{"gallery image"}}]))
 
 (def all-flat
      (apply concat (map #(second %) all)))
 
 (defn allowed? [element parent-element]
   (cond
-   (contains? (set (:editing all)) parent-element) false
+   (contains? (set (:text all)) parent-element) false
    (seq (:only-under element))                     (contains? (:only-under element) (:name parent-element))
    :else true))
 
