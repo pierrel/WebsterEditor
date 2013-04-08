@@ -71,6 +71,13 @@ static const int ICON_DIM = 13;
     WEPageManager *manager = [WEPageManager sharedManager];
     [manager setBridge:jsBridge];
     
+    // add selection
+    self.addSelectionController = [[WEActionSelectViewController alloc] init];
+    
+    // popover
+    self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
+    self.addPopover.delegate = self;
+    
     // Buttons
     self.removeButton = [[UIButton alloc] init];
     [removeButton setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
@@ -113,6 +120,9 @@ static const int ICON_DIM = 13;
     [addButton setHidden:NO];
     [parentButton setHidden:NO];
     
+    // let the add popover know
+    [self.addSelectionController setData:data];
+    
     // add resizers if any
     NSArray *children = [data objectForKey:@"children"];
     if (children) {
@@ -133,6 +143,8 @@ static const int ICON_DIM = 13;
     [removeButton setHidden:YES];
     [addButton setHidden:YES];
     [parentButton setHidden:YES];
+    
+    [self.addPopover dismissPopoverAnimated:YES]; // just in case
     
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {
@@ -196,7 +208,10 @@ static const int ICON_DIM = 13;
 }
 
 -(void)addButtonTapped:(UIButton*)button {
-    
+    [self.addPopover presentPopoverFromRect:button.frame
+                                     inView:self.view
+                   permittedArrowDirections:UIPopoverArrowDirectionAny
+                                   animated:YES];
 }
 
 -(void)parentButtonTapped:(UIButton*)button{

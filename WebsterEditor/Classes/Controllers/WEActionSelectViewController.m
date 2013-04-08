@@ -43,18 +43,7 @@
 
 #pragma mark - Setup data source
 -(void) setData:(id)data {
-    // content
-    self.tag = [data valueForKey:@"tag"];
-    if ([self.tag isEqualToString:@"H1"]) {
-        self.dataSource = [NSArray arrayWithObjects:@"Up", @"Edit", @"Remove", nil];
-    }
-    self.classes = [data valueForKey:@"classes"];
-    if ([self.classes containsString:@"container-fluid"]) {
-        self.dataSource = [NSArray arrayWithObjects:@"Remove", @"Add Row", @"Add Image Gallery",nil];
-    } else if ([self.classes containsString:@"row-fluid"]) {
-        self.dataSource = [NSArray arrayWithObjects:@"Remove", nil];
-    }
-    
+    self.dataSource = [NSArray arrayWithObjects:@"Row", @"Image Gallery", nil];
     [self.tableView reloadData];
 }
 

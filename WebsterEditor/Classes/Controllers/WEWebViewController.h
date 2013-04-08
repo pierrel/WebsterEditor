@@ -18,6 +18,8 @@
 @property (strong, nonatomic) UIButton *addButton;
 @property (strong, nonatomic) UIButton *parentButton;
 @property (strong, nonatomic) NSString *projectId;
+@property (strong, nonatomic) UIPopoverController *addPopover;
+@property (strong, nonatomic) WEActionSelectViewController *addSelectionController;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
