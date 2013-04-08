@@ -239,10 +239,13 @@ static const int ICON_DIM = 13;
                                    animated:YES];
 }
 
--(void)parentButtonTapped:(UIButton*)button{
+-(void)parentButtonTapped:(UIButton*)button {
     [[WEPageManager sharedManager] selectParentElement];
 }
 
+-(void)editTextButtonTapped:(UIButton*)button {
+    [[WEPageManager sharedManager] editSelectedElement];
+}
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info {
     WEPageManager *pageManager = [WEPageManager sharedManager];    
