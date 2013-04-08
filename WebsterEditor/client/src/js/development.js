@@ -13528,22 +13528,259 @@ webster.dir.thumb_to_lightbox_src = function(a) {
   b = cljs.core.nth.call(null, b, 2);
   return[cljs.core.str(a), cljs.core.str(b)].join("")
 };
+clojure.set = {};
+clojure.set.bubble_max_key = function(a, b) {
+  var c = cljs.core.apply.call(null, cljs.core.max_key, a, b);
+  return cljs.core.cons.call(null, c, cljs.core.remove.call(null, function(a) {
+    return c === a
+  }, b))
+};
+clojure.set.union = function() {
+  var a = null, b = function() {
+    return cljs.core.PersistentHashSet.EMPTY
+  }, c = function(a, b) {
+    return cljs.core.count.call(null, a) < cljs.core.count.call(null, b) ? cljs.core.reduce.call(null, cljs.core.conj, b, a) : cljs.core.reduce.call(null, cljs.core.conj, a, b)
+  }, d = function(a, b, c) {
+    a = clojure.set.bubble_max_key.call(null, cljs.core.count, cljs.core.conj.call(null, c, b, a));
+    return cljs.core.reduce.call(null, cljs.core.into, cljs.core.first.call(null, a), cljs.core.rest.call(null, a))
+  }, e = function(a, b, c) {
+    var e = null;
+    2 < arguments.length && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return d.call(this, a, b, e)
+  };
+  e.cljs$lang$maxFixedArity = 2;
+  e.cljs$lang$applyTo = function(a) {
+    var b = cljs.core.first(a), c = cljs.core.first(cljs.core.next(a));
+    a = cljs.core.rest(cljs.core.next(a));
+    return d(b, c, a)
+  };
+  e.cljs$core$IFn$_invoke$arity$variadic = d;
+  a = function(a, d, h) {
+    switch(arguments.length) {
+      case 0:
+        return b.call(this);
+      case 1:
+        return a;
+      case 2:
+        return c.call(this, a, d);
+      default:
+        return e.cljs$core$IFn$_invoke$arity$variadic(a, d, cljs.core.array_seq(arguments, 2))
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$lang$maxFixedArity = 2;
+  a.cljs$lang$applyTo = e.cljs$lang$applyTo;
+  a.cljs$core$IFn$_invoke$arity$0 = b;
+  a.cljs$core$IFn$_invoke$arity$1 = function(a) {
+    return a
+  };
+  a.cljs$core$IFn$_invoke$arity$2 = c;
+  a.cljs$core$IFn$_invoke$arity$variadic = e.cljs$core$IFn$_invoke$arity$variadic;
+  return a
+}();
+clojure.set.intersection = function() {
+  var a = null, b = function(a, b) {
+    for(;;) {
+      if(cljs.core.count.call(null, b) < cljs.core.count.call(null, a)) {
+        var c = a;
+        a = b;
+        b = c
+      }else {
+        return cljs.core.reduce.call(null, function(a, b) {
+          return function(a, c) {
+            return cljs.core.contains_QMARK_.call(null, b, c) ? a : cljs.core.disj.call(null, a, c)
+          }
+        }(a, b), a, a)
+      }
+    }
+  }, c = function(b, c, d) {
+    b = clojure.set.bubble_max_key.call(null, function(a) {
+      return-cljs.core.count.call(null, a)
+    }, cljs.core.conj.call(null, d, c, b));
+    return cljs.core.reduce.call(null, a, cljs.core.first.call(null, b), cljs.core.rest.call(null, b))
+  }, d = function(a, b, d) {
+    var h = null;
+    2 < arguments.length && (h = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return c.call(this, a, b, h)
+  };
+  d.cljs$lang$maxFixedArity = 2;
+  d.cljs$lang$applyTo = function(a) {
+    var b = cljs.core.first(a), d = cljs.core.first(cljs.core.next(a));
+    a = cljs.core.rest(cljs.core.next(a));
+    return c(b, d, a)
+  };
+  d.cljs$core$IFn$_invoke$arity$variadic = c;
+  a = function(a, c, g) {
+    switch(arguments.length) {
+      case 1:
+        return a;
+      case 2:
+        return b.call(this, a, c);
+      default:
+        return d.cljs$core$IFn$_invoke$arity$variadic(a, c, cljs.core.array_seq(arguments, 2))
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$lang$maxFixedArity = 2;
+  a.cljs$lang$applyTo = d.cljs$lang$applyTo;
+  a.cljs$core$IFn$_invoke$arity$1 = function(a) {
+    return a
+  };
+  a.cljs$core$IFn$_invoke$arity$2 = b;
+  a.cljs$core$IFn$_invoke$arity$variadic = d.cljs$core$IFn$_invoke$arity$variadic;
+  return a
+}();
+clojure.set.difference = function() {
+  var a = null, b = function(a, b) {
+    return cljs.core.count.call(null, a) < cljs.core.count.call(null, b) ? cljs.core.reduce.call(null, function(a, c) {
+      return cljs.core.contains_QMARK_.call(null, b, c) ? cljs.core.disj.call(null, a, c) : a
+    }, a, a) : cljs.core.reduce.call(null, cljs.core.disj, a, b)
+  }, c = function(b, c, d) {
+    return cljs.core.reduce.call(null, a, b, cljs.core.conj.call(null, d, c))
+  }, d = function(a, b, d) {
+    var h = null;
+    2 < arguments.length && (h = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return c.call(this, a, b, h)
+  };
+  d.cljs$lang$maxFixedArity = 2;
+  d.cljs$lang$applyTo = function(a) {
+    var b = cljs.core.first(a), d = cljs.core.first(cljs.core.next(a));
+    a = cljs.core.rest(cljs.core.next(a));
+    return c(b, d, a)
+  };
+  d.cljs$core$IFn$_invoke$arity$variadic = c;
+  a = function(a, c, g) {
+    switch(arguments.length) {
+      case 1:
+        return a;
+      case 2:
+        return b.call(this, a, c);
+      default:
+        return d.cljs$core$IFn$_invoke$arity$variadic(a, c, cljs.core.array_seq(arguments, 2))
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$lang$maxFixedArity = 2;
+  a.cljs$lang$applyTo = d.cljs$lang$applyTo;
+  a.cljs$core$IFn$_invoke$arity$1 = function(a) {
+    return a
+  };
+  a.cljs$core$IFn$_invoke$arity$2 = b;
+  a.cljs$core$IFn$_invoke$arity$variadic = d.cljs$core$IFn$_invoke$arity$variadic;
+  return a
+}();
+clojure.set.select = function(a, b) {
+  return cljs.core.reduce.call(null, function(b, d) {
+    return cljs.core.truth_(a.call(null, d)) ? b : cljs.core.disj.call(null, b, d)
+  }, b, b)
+};
+clojure.set.project = function(a, b) {
+  return cljs.core.set.call(null, cljs.core.map.call(null, function(a) {
+    return cljs.core.select_keys.call(null, a, b)
+  }, a))
+};
+clojure.set.rename_keys = function(a, b) {
+  return cljs.core.reduce.call(null, function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null), g;
+    g = (g = cljs.core.not_EQ_.call(null, e, f)) ? cljs.core.contains_QMARK_.call(null, a, e) : g;
+    return g ? cljs.core.dissoc.call(null, cljs.core.assoc.call(null, a, f, cljs.core._lookup.call(null, a, e, null)), e) : a
+  }, a, b)
+};
+clojure.set.rename = function(a, b) {
+  return cljs.core.set.call(null, cljs.core.map.call(null, function(a) {
+    return clojure.set.rename_keys.call(null, a, b)
+  }, a))
+};
+clojure.set.index = function(a, b) {
+  return cljs.core.reduce.call(null, function(a, d) {
+    var e = cljs.core.select_keys.call(null, d, b);
+    return cljs.core.assoc.call(null, a, e, cljs.core.conj.call(null, cljs.core._lookup.call(null, a, e, cljs.core.PersistentHashSet.EMPTY), d))
+  }, cljs.core.ObjMap.EMPTY, a)
+};
+clojure.set.map_invert = function(a) {
+  return cljs.core.reduce.call(null, function(a, c) {
+    var d = cljs.core.nth.call(null, c, 0, null), e = cljs.core.nth.call(null, c, 1, null);
+    return cljs.core.assoc.call(null, a, e, d)
+  }, cljs.core.ObjMap.EMPTY, a)
+};
+clojure.set.join = function() {
+  var a = null, b = function(a, b) {
+    var c;
+    c = (c = cljs.core.seq.call(null, a)) ? cljs.core.seq.call(null, b) : c;
+    if(c) {
+      var g = clojure.set.intersection.call(null, cljs.core.set.call(null, cljs.core.keys.call(null, cljs.core.first.call(null, a))), cljs.core.set.call(null, cljs.core.keys.call(null, cljs.core.first.call(null, b)))), h = cljs.core.count.call(null, a) <= cljs.core.count.call(null, b) ? cljs.core.PersistentVector.fromArray([a, b], !0) : cljs.core.PersistentVector.fromArray([b, a], !0);
+      c = cljs.core.nth.call(null, h, 0, null);
+      var h = cljs.core.nth.call(null, h, 1, null), j = clojure.set.index.call(null, c, g);
+      return cljs.core.reduce.call(null, function(a, b) {
+        var c = j.call(null, cljs.core.select_keys.call(null, b, g));
+        return cljs.core.truth_(c) ? cljs.core.reduce.call(null, function(a, c) {
+          return cljs.core.conj.call(null, a, cljs.core.merge.call(null, c, b))
+        }, a, c) : a
+      }, cljs.core.PersistentHashSet.EMPTY, h)
+    }
+    return cljs.core.PersistentHashSet.EMPTY
+  }, c = function(a, b, c) {
+    a = cljs.core.count.call(null, a) <= cljs.core.count.call(null, b) ? cljs.core.PersistentVector.fromArray([a, b, clojure.set.map_invert.call(null, c)], !0) : cljs.core.PersistentVector.fromArray([b, a, c], !0);
+    b = cljs.core.nth.call(null, a, 0, null);
+    c = cljs.core.nth.call(null, a, 1, null);
+    var g = cljs.core.nth.call(null, a, 2, null), h = clojure.set.index.call(null, b, cljs.core.vals.call(null, g));
+    return cljs.core.reduce.call(null, function(a, b) {
+      var c = h.call(null, clojure.set.rename_keys.call(null, cljs.core.select_keys.call(null, b, cljs.core.keys.call(null, g)), g));
+      return cljs.core.truth_(c) ? cljs.core.reduce.call(null, function(a, c) {
+        return cljs.core.conj.call(null, a, cljs.core.merge.call(null, c, b))
+      }, a, c) : a
+    }, cljs.core.PersistentHashSet.EMPTY, c)
+  }, a = function(a, e, f) {
+    switch(arguments.length) {
+      case 2:
+        return b.call(this, a, e);
+      case 3:
+        return c.call(this, a, e, f)
+    }
+    throw Error("Invalid arity: " + arguments.length);
+  };
+  a.cljs$core$IFn$_invoke$arity$2 = b;
+  a.cljs$core$IFn$_invoke$arity$3 = c;
+  return a
+}();
+clojure.set.subset_QMARK_ = function(a, b) {
+  var c = cljs.core.count.call(null, a) <= cljs.core.count.call(null, b);
+  return c ? cljs.core.every_QMARK_.call(null, function(a) {
+    return cljs.core.contains_QMARK_.call(null, b, a)
+  }, a) : c
+};
+clojure.set.superset_QMARK_ = function(a, b) {
+  var c = cljs.core.count.call(null, a) >= cljs.core.count.call(null, b);
+  return c ? cljs.core.every_QMARK_.call(null, function(b) {
+    return cljs.core.contains_QMARK_.call(null, a, b)
+  }, b) : c
+};
 webster.elements = {};
 webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:editing", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "paragraph", "\ufdd0:tag", "\ufdd0:p"], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "heading", "\ufdd0:tag", "\ufdd0:h1"], !0)], !0), "\ufdd0:structural", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
-!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name column \ufdd0:tag \ufdd0:div \ufdd0:class span1".split(" "), !0)], !0)], !0);
+!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "column", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "span1", "\ufdd0:only-under-classes", cljs.core.PersistentHashSet.fromArray(["row-fluid", null], !0)], !0)], !0)], !0);
 webster.elements.all_flat = cljs.core.apply.call(null, cljs.core.concat, cljs.core.map.call(null, function(a) {
   return cljs.core.second.call(null, a)
 }, webster.elements.all));
-webster.elements.possible_under = function() {
-  for(var a = webster.elements.all, b = cljs.core.ObjMap.EMPTY;;) {
-    if(cljs.core.seq.call(null, a)) {
-      var c = cljs.core.next.call(null, a), b = cljs.core.assoc.call(null, b, cljs.core.first.call(null, cljs.core.first.call(null, a)), cljs.core.map.call(null, function() {
+webster.elements.node_classes = function(a) {
+  return clojure.string.split.call(null, a.attr("class"), /\s/)
+};
+webster.elements.allowed = function(a, b) {
+  return cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:only-under-classes")).call(null, a)) ? cljs.core.seq.call(null, clojure.set.intersection.call(null, (new cljs.core.Keyword("\ufdd0:only-under-classes")).call(null, a), cljs.core.set.call(null, clojure.string.split.call(null, b.attr("class"), /\s/)))) : !0
+};
+webster.elements.possible_under = function(a) {
+  for(var b = webster.elements.all, c = cljs.core.ObjMap.EMPTY;;) {
+    if(cljs.core.seq.call(null, b)) {
+      var d = cljs.core.first.call(null, cljs.core.first.call(null, b)), e = cljs.core.second.call(null, cljs.core.first.call(null, b)), f = cljs.core.next.call(null, b), c = cljs.core.assoc.call(null, c, d, cljs.core.map.call(null, function() {
         return function(a) {
           return(new cljs.core.Keyword("\ufdd0:name")).call(null, a)
         }
-      }(a, b), cljs.core.second.call(null, cljs.core.first.call(null, a)))), a = c
+      }(b, c, d, e), cljs.core.filter.call(null, function() {
+        return function(b) {
+          return webster.elements.allowed.call(null, b, a)
+        }
+      }(b, c, d, e), e))), b = f
     }else {
-      return b
+      return c
     }
   }
 };
