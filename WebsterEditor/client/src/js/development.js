@@ -13919,6 +13919,9 @@ webster.main.on_bridge_ready = function(a) {
       return!0
     })
   });
+  window.onscroll = function() {
+    return cljs.core.not.call(null, webster.listeners.nothing_selected.call(null)) ? (webster.listeners.make_unselected.call(null, webster.listeners.get_selected.call(null)), b.callHandler("defaultSelectedHandler", {})) : null
+  };
   document.addEventListener("click", function(a) {
     return webster.listeners.default_listener.call(null, a, b)
   }, !1);
@@ -13927,9 +13930,6 @@ webster.main.on_bridge_ready = function(a) {
   });
   b.registerHandler("editElementHandler", webster.main.edit_element_handler);
   b.registerHandler("deselectSelectedElement", webster.main.deselect_selected_element);
-  b.registerHandler("addRowUnderSelectedElement", function(a, d) {
-    return webster.main.add_row_handler.call(null, a, d, b)
-  });
   b.registerHandler("addElementUnderSelectedElement", function(a, d) {
     return webster.main.add_element_handler.call(null, a, d, b)
   });
@@ -14049,16 +14049,6 @@ webster.main.edit_element_handler = function() {
 webster.main.deselect_selected_element = function() {
   var a = webster.listeners.get_selected.call(null);
   return cljs.core.truth_(a) ? webster.listeners.make_unselected.call(null, a) : null
-};
-webster.main.add_row_handler = function(a, b, c) {
-  a = webster.listeners.get_selected.call(null);
-  b = webster.dom.new_row.call(null);
-  a.append(b);
-  webster.listeners.default_listener.call(null, null, c);
-  b.get(0).addEventListener("click", function(a) {
-    return webster.listeners.container_listener.call(null, a, c)
-  });
-  return webster.listeners.select_node.call(null, b, c)
 };
 webster.main.add_element_handler = function(a, b, c) {
   b = webster.elements.get_by_name.call(null, a["element-name"]);

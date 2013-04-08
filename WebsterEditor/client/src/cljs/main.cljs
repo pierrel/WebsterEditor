@@ -24,6 +24,13 @@
                      (.addEventListener node "click" (fn [event]
                                                        (.preventDefault event)
                                                        true))))
+
+    ;; deselect on scroll
+    (set! (.-onscroll js/window) (fn [event]
+                                   (when (not (listeners/nothing-selected))
+                                     (listeners/make-unselected (listeners/get-selected))
+                                     (.callHandler bridge "defaultSelectedHandler" (js-obj)))))
+    
     ;; Setup default listener
     (.addEventListener js/document "click" (fn [event] (listeners/default-listener event bridge)) false)
     (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
