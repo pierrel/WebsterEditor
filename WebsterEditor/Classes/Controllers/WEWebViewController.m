@@ -73,6 +73,7 @@ static const int ICON_DIM = 13;
     
     // add selection
     self.addSelectionController = [[WEActionSelectViewController alloc] init];
+    self.addSelectionController.delegate = self;
     
     // popover
     self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
@@ -234,6 +235,10 @@ static const int ICON_DIM = 13;
 
 -(void)removeBackground {
     [[WEPageManager sharedManager] removeBackgroundImageWithCallback:nil];
+}
+
+-(void)actionSelect:(WEActionSelectViewController*)actionController didSelectAction:(NSString*)element {
+    [[WEPageManager sharedManager] addElementUnderSelectedElement:element];
 }
 
 

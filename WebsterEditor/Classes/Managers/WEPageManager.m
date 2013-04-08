@@ -29,8 +29,9 @@ static WEPageManager *gSharedManager;
     [bridge callHandler:@"editElementHandler" data:[NSDictionary dictionary]];
 }
 
--(void)addRowUnderSelectedElement {
-    [bridge callHandler:@"addRowUnderSelectedElement" data:[NSDictionary dictionary]];
+-(void)addElementUnderSelectedElement:(NSString*)elementName {
+    [bridge callHandler:@"addElementUnderSelectedElement" data:[NSDictionary dictionaryWithObject:elementName
+                                                                                           forKey:@"element-name"]];
 }
 
 -(void)addGalleryUnderSelectedElement {

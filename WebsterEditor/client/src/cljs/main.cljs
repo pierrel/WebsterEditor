@@ -3,6 +3,7 @@
             [webster.listeners :as listeners]
             [webster.html :as html]
             [webster.dir :as dir]
+            [webster.elements :as elements]
             [clojure.string :as string]))
 
 (defn on-bridge-ready
@@ -29,6 +30,7 @@
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "deselectSelectedElement" deselect-selected-element)
     (.registerHandler bridge "addRowUnderSelectedElement" (fn [data callback] (add-row-handler data callback bridge)))
+    (.registerHandler bridge "addElementUnderSelectedElement" (fn [data callback] (add-element-handler data callback bridge)))
     (.registerHandler bridge "addGalleryUnderSelectedElement" (fn [data callback] (add-gallery-handler data callback bridge)))
     (.registerHandler bridge "incrementColumn" increment-column)
     (.registerHandler bridge "decrementColumn" decrement-column)
@@ -190,6 +192,20 @@
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
     (listeners/select-node new-row bridge)))
+
+(defn add-element-handler
+  [data callback bridge]
+  (let [el-name (aget data "element-name")
+        element (elements/get-by-name el-name)
+        jnode (listeners/get-selected)
+        new-el (dom/new-element-with-info element)]
+    (.append jnode new-el)
+    (listeners/default-listener nil bridge)
+    (.addEventListener (.get new-el 0)
+                       "click"
+                       (fn [event]
+                         (listeners/container-listener event bridge)))
+    (listeners/select-node new-el bridge)))
 
 ;; IMAGE GALLERY STUFF
 (defn add-gallery-handler

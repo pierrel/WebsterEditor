@@ -13491,8 +13491,8 @@ webster.dom.stop_editing = function() {
   a.cljs$core$IFn$_invoke$arity$1 = c;
   return a
 }();
-webster.dom.new_row = function() {
-  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span4 empty"], !0)], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "span8 empty"], !0)], !0)], !0)))
+webster.dom.new_element_with_info = function(a) {
+  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0:tag")).call(null, a), cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:class")).call(null, a)) ? cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", [cljs.core.str((new cljs.core.Keyword("\ufdd0:class")).call(null, a)), cljs.core.str(" selectable")].join("")], !0) : null], !0)))
 };
 webster.dom.new_image_gallery = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
@@ -13530,7 +13530,10 @@ webster.dir.thumb_to_lightbox_src = function(a) {
 };
 webster.elements = {};
 webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:editing", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "paragraph", "\ufdd0:tag", "\ufdd0:p"], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "heading", "\ufdd0:tag", "\ufdd0:h1"], !0)], !0), "\ufdd0:structural", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
-!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name column \ufdd0:tag \ufdd0:div \ufdd0:class-prefix span".split(" "), !0)], !0)], !0);
+!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name column \ufdd0:tag \ufdd0:div \ufdd0:class span1".split(" "), !0)], !0)], !0);
+webster.elements.all_flat = cljs.core.apply.call(null, cljs.core.concat, cljs.core.map.call(null, function(a) {
+  return cljs.core.second.call(null, a)
+}, webster.elements.all));
 webster.elements.possible_under = function() {
   for(var a = webster.elements.all, b = cljs.core.ObjMap.EMPTY;;) {
     if(cljs.core.seq.call(null, a)) {
@@ -13543,6 +13546,11 @@ webster.elements.possible_under = function() {
       return b
     }
   }
+};
+webster.elements.get_by_name = function(a) {
+  return cljs.core.first.call(null, cljs.core.filter.call(null, function(b) {
+    return cljs.core._EQ_.call(null, (new cljs.core.Keyword("\ufdd0:name")).call(null, b), a)
+  }, webster.elements.all_flat))
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
@@ -13678,6 +13686,9 @@ webster.main.on_bridge_ready = function(a) {
   b.registerHandler("addRowUnderSelectedElement", function(a, d) {
     return webster.main.add_row_handler.call(null, a, d, b)
   });
+  b.registerHandler("addElementUnderSelectedElement", function(a, d) {
+    return webster.main.add_element_handler.call(null, a, d, b)
+  });
   b.registerHandler("addGalleryUnderSelectedElement", function(a, d) {
     return webster.main.add_gallery_handler.call(null, a, d, b)
   });
@@ -13798,6 +13809,17 @@ webster.main.deselect_selected_element = function() {
 webster.main.add_row_handler = function(a, b, c) {
   a = webster.listeners.get_selected.call(null);
   b = webster.dom.new_row.call(null);
+  a.append(b);
+  webster.listeners.default_listener.call(null, null, c);
+  b.get(0).addEventListener("click", function(a) {
+    return webster.listeners.container_listener.call(null, a, c)
+  });
+  return webster.listeners.select_node.call(null, b, c)
+};
+webster.main.add_element_handler = function(a, b, c) {
+  b = webster.elements.get_by_name.call(null, a["element-name"]);
+  a = webster.listeners.get_selected.call(null);
+  b = webster.dom.new_element_with_info.call(null, b);
   a.append(b);
   webster.listeners.default_listener.call(null, null, c);
   b.get(0).addEventListener("click", function(a) {

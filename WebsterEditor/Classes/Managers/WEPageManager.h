@@ -19,11 +19,11 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)deselectSelectedElement;
 -(void)editSelectedElement;
 -(void)addGalleryUnderSelectedElement;
+-(void)addElementUnderSelectedElement:(NSString*)elementName;
 
 /*
  *  Row edits
  */
--(void)addRowUnderSelectedElement;
 -(void)incrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)decrementSpanAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;
 -(void)incrementOffsetAtColumnIndex:(NSInteger)columnIndex withCallback:(WEResponseCallback)responseCallback;

@@ -81,10 +81,9 @@
      (.removeAttr $el "contenteditable")
      (.removeClass $el "editing")))
 
-(defn new-row []
-  (js/$ (html/compile [:div {:class "row-fluid selectable"}
-                       [:div {:class "span4 empty"}]
-                       [:div {:class "span8 empty"}]])))
+(defn new-element-with-info [el-info]
+  (js/$ (html/compile [(:tag el-info) (if (seq (:class el-info))
+                                        {:class (str (:class el-info) " selectable")})])))
 
 (defn new-image-gallery []
   (js/$ (html/compile [:div {:class "row-fluid selectable"}
