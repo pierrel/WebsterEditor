@@ -82,8 +82,10 @@
      (.removeClass $el "editing")))
 
 (defn new-element-with-info [el-info]
-  (js/$ (html/compile [(:tag el-info) (if (seq (:class el-info))
-                                        {:class (str (:class el-info) " selectable")})])))
+  (js/$ (html/compile [(:tag el-info) (assoc (if (seq (:class el-info))
+                                               {:class (str (:class el-info) " selectable")}
+                                               {:class "selectable"})
+                                        :data-type (:name el-info))])))
 
 (defn new-image-gallery []
   (js/$ (html/compile [:div {:class "row-fluid selectable"}

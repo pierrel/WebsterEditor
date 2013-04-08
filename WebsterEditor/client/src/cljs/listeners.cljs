@@ -112,7 +112,7 @@
                   :height height
                   :tag (.prop jnode "tagName")
                   :classes (.split (.attr jnode "class") " ")
-                  :addable (elements/possible-under jnode)}]
+                  :addable (elements/possible-under (elements/node-to-element jnode))}]
     (clj->js (if (is-row? jnode)
                (conj the-info [:children (dom/map-nodes  node-info (.find jnode "> div"))])
                the-info))))

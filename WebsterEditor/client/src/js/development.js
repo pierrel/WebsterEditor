@@ -13492,7 +13492,8 @@ webster.dom.stop_editing = function() {
   return a
 }();
 webster.dom.new_element_with_info = function(a) {
-  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0:tag")).call(null, a), cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:class")).call(null, a)) ? cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", [cljs.core.str((new cljs.core.Keyword("\ufdd0:class")).call(null, a)), cljs.core.str(" selectable")].join("")], !0) : null], !0)))
+  return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0:tag")).call(null, a), cljs.core.assoc.call(null, cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:class")).call(null, a)) ? cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", [cljs.core.str((new cljs.core.Keyword("\ufdd0:class")).call(null, a)), cljs.core.str(" selectable")].join("")], !0) : cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "selectable"], !0), "\ufdd0:data-type", 
+  (new cljs.core.Keyword("\ufdd0:name")).call(null, a))], !0)))
 };
 webster.dom.new_image_gallery = function() {
   return $(webster.html.compile.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "row-fluid selectable"], !0), cljs.core.PersistentVector.fromArray(["\ufdd0:ul", cljs.core.PersistentArrayMap.fromArray(["\ufdd0:class", "thumbnails", "\ufdd0:data-span", "4"], !0)], !0)], !0)))
@@ -13757,15 +13758,12 @@ clojure.set.superset_QMARK_ = function(a, b) {
 };
 webster.elements = {};
 webster.elements.all = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:editing", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "paragraph", "\ufdd0:tag", "\ufdd0:p"], !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "heading", "\ufdd0:tag", "\ufdd0:h1"], !0)], !0), "\ufdd0:structural", cljs.core.PersistentVector.fromArray([cljs.core.PersistentArrayMap.fromArray("\ufdd0:name container \ufdd0:tag \ufdd0:div \ufdd0:class container-fluid".split(" "), 
-!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "column", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "span1", "\ufdd0:only-under-classes", cljs.core.PersistentHashSet.fromArray(["row-fluid", null], !0)], !0)], !0)], !0);
+!0), cljs.core.PersistentArrayMap.fromArray("\ufdd0:name row \ufdd0:tag \ufdd0:div \ufdd0:class row-fluid".split(" "), !0), cljs.core.PersistentArrayMap.fromArray(["\ufdd0:name", "column", "\ufdd0:tag", "\ufdd0:div", "\ufdd0:class", "span1", "\ufdd0:only-under", cljs.core.PersistentHashSet.fromArray(["row", null], !0)], !0)], !0)], !0);
 webster.elements.all_flat = cljs.core.apply.call(null, cljs.core.concat, cljs.core.map.call(null, function(a) {
   return cljs.core.second.call(null, a)
 }, webster.elements.all));
-webster.elements.node_classes = function(a) {
-  return clojure.string.split.call(null, a.attr("class"), /\s/)
-};
-webster.elements.allowed = function(a, b) {
-  return cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:only-under-classes")).call(null, a)) ? cljs.core.seq.call(null, clojure.set.intersection.call(null, (new cljs.core.Keyword("\ufdd0:only-under-classes")).call(null, a), cljs.core.set.call(null, clojure.string.split.call(null, b.attr("class"), /\s/)))) : !0
+webster.elements.allowed_QMARK_ = function(a, b) {
+  return cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:only-under")).call(null, a)) ? cljs.core.contains_QMARK_.call(null, (new cljs.core.Keyword("\ufdd0:only-under")).call(null, a), (new cljs.core.Keyword("\ufdd0:name")).call(null, b)) : !0
 };
 webster.elements.possible_under = function(a) {
   for(var b = webster.elements.all, c = cljs.core.ObjMap.EMPTY;;) {
@@ -13776,7 +13774,7 @@ webster.elements.possible_under = function(a) {
         }
       }(b, c, d, e), cljs.core.filter.call(null, function() {
         return function(b) {
-          return webster.elements.allowed.call(null, b, a)
+          return webster.elements.allowed_QMARK_.call(null, b, a)
         }
       }(b, c, d, e), e))), b = f
     }else {
@@ -13788,6 +13786,10 @@ webster.elements.get_by_name = function(a) {
   return cljs.core.first.call(null, cljs.core.filter.call(null, function(b) {
     return cljs.core._EQ_.call(null, (new cljs.core.Keyword("\ufdd0:name")).call(null, b), a)
   }, webster.elements.all_flat))
+};
+webster.elements.node_to_element = function(a) {
+  a = a.attr("data-type");
+  return cljs.core.seq.call(null, a) ? webster.elements.get_by_name.call(null, a) : null
 };
 webster.listeners = {};
 webster.listeners.selected_listener = function(a) {
@@ -13872,7 +13874,7 @@ webster.listeners.select_node = function() {
   return b
 }();
 webster.listeners.node_info = function node_info(b) {
-  var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:top", c.top, "\ufdd0:left", c.left, "\ufdd0:width", d, "\ufdd0:height", e, "\ufdd0:tag", b.prop("tagName"), "\ufdd0:classes", b.attr("class").split(" "), "\ufdd0:addable", webster.elements.possible_under.call(null, b)], !0);
+  var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:top", c.top, "\ufdd0:left", c.left, "\ufdd0:width", d, "\ufdd0:height", e, "\ufdd0:tag", b.prop("tagName"), "\ufdd0:classes", b.attr("class").split(" "), "\ufdd0:addable", webster.elements.possible_under.call(null, webster.elements.node_to_element.call(null, b))], !0);
   return cljs.core.clj__GT_js.call(null, cljs.core.truth_(webster.listeners.is_row_QMARK_.call(null, b)) ? cljs.core.conj.call(null, c, cljs.core.PersistentVector.fromArray(["\ufdd0:children", webster.dom.map_nodes.call(null, node_info, b.find("\x3e div"))], !0)) : c)
 };
 webster.listeners.get_selected = function() {

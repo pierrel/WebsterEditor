@@ -5,14 +5,14 @@ goog.require('webster.html');
 * Calls callback for each DOM node in node-list
 */
 webster.dom.each_node = (function each_node(node_list,callback){
-var G__8221 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
+var G__11649 = cljs.core.seq.call(null,cljs.core.range.call(null,node_list.length));
 while(true){
-if(G__8221)
-{var index = cljs.core.first.call(null,G__8221);
+if(G__11649)
+{var index = cljs.core.first.call(null,G__11649);
 callback.call(null,node_list.item(index));
 {
-var G__8222 = cljs.core.next.call(null,G__8221);
-G__8221 = G__8222;
+var G__11650 = cljs.core.next.call(null,G__11649);
+G__11649 = G__11650;
 continue;
 }
 } else
@@ -98,9 +98,9 @@ if (arguments.length > 1) {
 return make_editable__delegate.call(this, node, focus);
 };
 make_editable.cljs$lang$maxFixedArity = 1;
-make_editable.cljs$lang$applyTo = (function (arglist__8223){
-var node = cljs.core.first(arglist__8223);
-var focus = cljs.core.rest(arglist__8223);
+make_editable.cljs$lang$applyTo = (function (arglist__11651){
+var node = cljs.core.first(arglist__11651);
+var focus = cljs.core.rest(arglist__11651);
 return make_editable__delegate(node, focus);
 });
 make_editable.cljs$core$IFn$_invoke$arity$variadic = make_editable__delegate;
@@ -131,7 +131,7 @@ return stop_editing;
 })()
 ;
 webster.dom.new_element_with_info = (function new_element_with_info(el_info){
-return $(webster.html.compile.call(null,cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\uFDD0:tag")).call(null,el_info),((cljs.core.seq.call(null,(new cljs.core.Keyword("\uFDD0:class")).call(null,el_info)))?cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class",[cljs.core.str((new cljs.core.Keyword("\uFDD0:class")).call(null,el_info)),cljs.core.str(" selectable")].join('')], true):null)], true)));
+return $(webster.html.compile.call(null,cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\uFDD0:tag")).call(null,el_info),cljs.core.assoc.call(null,((cljs.core.seq.call(null,(new cljs.core.Keyword("\uFDD0:class")).call(null,el_info)))?cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class",[cljs.core.str((new cljs.core.Keyword("\uFDD0:class")).call(null,el_info)),cljs.core.str(" selectable")].join('')], true):cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","selectable"], true)),"\uFDD0:data-type",(new cljs.core.Keyword("\uFDD0:name")).call(null,el_info))], true)));
 });
 webster.dom.new_image_gallery = (function new_image_gallery(){
 return $(webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","row-fluid selectable"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:ul",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","thumbnails","\uFDD0:data-span","4"], true)], true)], true)));
