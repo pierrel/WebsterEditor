@@ -13800,7 +13800,7 @@ webster.listeners.container_listener = function(a, b) {
   return cljs.core.truth_(function() {
     var a = c.hasClass("image-thumb");
     return cljs.core.truth_(a) ? cljs.core.not.call(null, c.hasClass("selected")) : a
-  }()) ? webster.listeners.thumbnail_listener.call(null, a, b) : cljs.core.truth_(function() {
+  }()) ? (webster.listeners.thumbnail_listener.call(null, a, b), a.stopPropagation(), a.preventDefault()) : cljs.core.truth_(function() {
     var a = cljs.core.not.call(null, c.hasClass("selected"));
     return a ? webster.listeners.nothing_selected.call(null) : a
   }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
@@ -13850,7 +13850,7 @@ webster.listeners.add_empty_thumbnail = function(a, b) {
   var c = $(webster.dom.empty_image_thumbnail.call(null));
   a.append(c);
   c.get(0).addEventListener("click", function(a) {
-    return webster.listeners.thumbnail_listener.call(null, a, b)
+    return webster.listeners.container_listener.call(null, a, b)
   });
   return c
 };

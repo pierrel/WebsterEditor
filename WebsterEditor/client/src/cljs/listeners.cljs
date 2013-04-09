@@ -21,7 +21,10 @@
   [event bridge]
   (let [el (js/$ (.-currentTarget event))]
     (cond
-     (and (.hasClass el "image-thumb") (not (.hasClass el "selected"))) (thumbnail-listener event bridge)
+     (and (.hasClass el "image-thumb") (not (.hasClass el "selected"))) (do
+                                                                          (thumbnail-listener event bridge)
+                                                                          (.stopPropagation event)
+                                                                          (.preventDefault event))
      (and (not (.hasClass el "selected")) (nothing-selected)) (do
                                                                 (select-node el bridge)
                                                                 (.stopPropagation event)
@@ -87,7 +90,7 @@
 (defn add-empty-thumbnail [$gallery bridge]
   (let [$empty-thumb (js/$ (dom/empty-image-thumbnail))]
     (.append $gallery $empty-thumb)
-    (.addEventListener (.get $empty-thumb 0) "click" (fn [event] (thumbnail-listener event bridge)))
+    (.addEventListener (.get $empty-thumb 0) "click" (fn [event] (container-listener event bridge)))
     $empty-thumb))
 
 (defn select-node [jnode bridge & [callback]]
