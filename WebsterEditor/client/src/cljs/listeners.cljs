@@ -32,6 +32,7 @@
 
 (defn thumbnail-listener
   [event bridge]
+  (clear-selection)
   (let [$el (js/$ (.-currentTarget event))]
     (select-node $el bridge (fn [data callback]
                               (if (aget data "delete")
@@ -100,6 +101,9 @@
                   "containerSelectedHandler"
                   row-info
                   (if callback callback))))
+(defn clear-selection []
+  (if (not (nothing-selected))
+    (make-unselected (get-selected))))
  
 (defn node-info
   [jnode]

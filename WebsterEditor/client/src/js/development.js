@@ -13806,6 +13806,7 @@ webster.listeners.container_listener = function(a, b) {
   }()) ? (webster.listeners.select_node.call(null, c, b), a.stopPropagation(), a.preventDefault()) : null
 };
 webster.listeners.thumbnail_listener = function(a, b) {
+  webster.listeners.clear_selection.call(null);
   var c = $(a.currentTarget);
   return webster.listeners.select_node.call(null, c, b, function(a) {
     if(cljs.core.truth_(a["delete"])) {
@@ -13874,6 +13875,9 @@ webster.listeners.select_node = function() {
   b.cljs$core$IFn$_invoke$arity$variadic = a;
   return b
 }();
+webster.listeners.clear_selection = function() {
+  return cljs.core.not.call(null, webster.listeners.nothing_selected.call(null)) ? webster.listeners.make_unselected.call(null, webster.listeners.get_selected.call(null)) : null
+};
 webster.listeners.node_info = function node_info(b) {
   var c = b.offset(), d = b.width(), e = b.height(), c = cljs.core.PersistentArrayMap.fromArray(["\ufdd0:top", c.top, "\ufdd0:left", c.left, "\ufdd0:width", d, "\ufdd0:height", e, "\ufdd0:tag", b.prop("tagName"), "\ufdd0:classes", b.attr("class").split(" "), "\ufdd0:addable", webster.elements.possible_under.call(null, webster.elements.node_to_element.call(null, b))], !0);
   return cljs.core.clj__GT_js.call(null, cljs.core.truth_(webster.listeners.is_row_QMARK_.call(null, b)) ? cljs.core.conj.call(null, c, cljs.core.PersistentVector.fromArray(["\ufdd0:children", webster.dom.map_nodes.call(null, node_info, b.find("\x3e div"))], !0)) : c)
