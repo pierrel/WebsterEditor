@@ -117,12 +117,14 @@ static const int ICON_DIM = 13;
     // position buttons
     CGSize buttonSize = CGSizeMake(25, 25);
     CGRect frame = [WEUtils frameFromData:data];
+    CGFloat maxX = self.view.frame.size.width;
+    CGFloat maxY = self.view.frame.size.height;
     
-    removeButton.frame = CGRectMake(frame.origin.x - (buttonSize.width/2),
+    removeButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
                                     MAX(frame.origin.y - (buttonSize.height/2), 0),
                                     buttonSize.width,
                                     buttonSize.height);
-    addButton.frame = CGRectMake(frame.origin.x + frame.size.width - (buttonSize.width/2),
+    addButton.frame = CGRectMake(MIN(frame.origin.x + frame.size.width - (buttonSize.width/2), maxX),
                                  MAX(frame.origin.y - (buttonSize.height/2), 0),
                                  buttonSize.width,
                                  buttonSize.height);
@@ -130,8 +132,8 @@ static const int ICON_DIM = 13;
                                     MAX(frame.origin.y - buttonSize.height, 0),
                                     buttonSize.width,
                                     buttonSize.height);
-    editTextButton.frame = CGRectMake(frame.origin.x - (buttonSize.width/2),
-                                      frame.origin.y  + frame.size.height - (buttonSize.height/2),
+    editTextButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
+                                      MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                       buttonSize.width,
                                       buttonSize.height);
     [removeButton setHidden:NO];
