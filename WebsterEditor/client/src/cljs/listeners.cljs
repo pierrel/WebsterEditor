@@ -85,7 +85,7 @@
                                       (.attr $lightbox "id" id)
                                       (.attr (.find $lightbox "img") "src" rel-path)))
                                   (let [$thumbnails (.closest $el ".thumbnails")]
-                                    (if (not (.hasClass (.find $thumbnails ".image-thumb:last") "empty"))
+                                    (if (= (.-length (.find $thumbnails ".image-thumb.empty")) 0)
                                       (.click (add-empty-thumbnail $thumbnails  bridge))
                                       (clear-selection)))))))))
 

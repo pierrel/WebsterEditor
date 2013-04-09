@@ -13844,7 +13844,7 @@ webster.listeners.thumbnail_listener = function(a, b) {
       j.find("img").attr("src", a)
     }
     a = c.closest(".thumbnails");
-    return cljs.core.not.call(null, a.find(".image-thumb:last").hasClass("empty")) ? webster.listeners.add_empty_thumbnail.call(null, a, b).click() : webster.listeners.clear_selection.call(null)
+    return cljs.core._EQ_.call(null, a.find(".image-thumb.empty").length, 0) ? webster.listeners.add_empty_thumbnail.call(null, a, b).click() : webster.listeners.clear_selection.call(null)
   })
 };
 webster.listeners.add_empty_thumbnail = function(a, b) {
