@@ -59,7 +59,6 @@
                                   mediaPath, @"resource-path",
                                   thumbPath, @"thumb-path", nil]);
     self.imagePickerCallback = nil;
-    [[WEPageManager sharedManager] deselectSelectedElement];
 }
 
 -(void)imagePopoverControllerDidDeleteImage:(WEImagePopoverViewController*)picker {

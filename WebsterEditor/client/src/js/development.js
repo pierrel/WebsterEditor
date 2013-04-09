@@ -13841,7 +13841,8 @@ webster.listeners.thumbnail_listener = function(a, b) {
       h.attr("src", a);
       g.attr("href", e);
       j.attr("id", f);
-      j.find("img").attr("src", a)
+      j.find("img").attr("src", a);
+      webster.listeners.clear_selection.call(null)
     }
     a = c.closest(".thumbnails");
     return cljs.core.not.call(null, a.find(".image-thumb:last").hasClass("empty")) ? webster.listeners.add_empty_thumbnail.call(null, a, b).click() : null
