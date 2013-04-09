@@ -43,9 +43,7 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"containerSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"got %@", data);
         NSArray *classes = (NSArray*)[data objectForKey:@"classes"];
-        if ([classes indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            return [((NSString*)obj) isEqualToString:@"image-thumb"];
-        }] != NSNotFound) {
+        if ([classes containsString:@"image-thumb"]) {
             [self closeDialog];
             [self openImagePickerWithData:data withCallback:responseCallback];
         } else {
