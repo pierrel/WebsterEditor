@@ -29,7 +29,7 @@
 }
 
 - (void)imagePopoverController:(WEImagePopoverViewController *)picker
- didFinishPickingMediaWithInfo:(NSDictionary *)info {
+ didFinishPickingMediaWithInfo:(NSDictionary *)info {    
     CGSize max = CGSizeMake(980, 1208);
     CGFloat thumbMax = 250;
     NSString *uuidStr = [WEUtils newId];
@@ -59,6 +59,7 @@
                                   mediaPath, @"resource-path",
                                   thumbPath, @"thumb-path", nil]);
     self.imagePickerCallback = nil;
+    [[WEPageManager sharedManager] deselectSelectedElement];
 }
 
 -(void)imagePopoverControllerDidDeleteImage:(WEImagePopoverViewController*)picker {
