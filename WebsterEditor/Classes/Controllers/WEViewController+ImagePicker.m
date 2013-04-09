@@ -68,10 +68,12 @@
 
 -(void)imagePopoverControllerDidGetDismissed:(WEImagePopoverViewController*)picker {
     self.imagePickerCallback = nil;
+    [[WEPageManager sharedManager] deselectSelectedElement];
 }
 
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[WEPageManager sharedManager] deselectSelectedElement];
 }
 
 
