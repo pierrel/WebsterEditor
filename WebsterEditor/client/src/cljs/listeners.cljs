@@ -83,11 +83,11 @@
                                       (.attr $thumb-image "src" rel-path)
                                       (.attr $link "href" href)
                                       (.attr $lightbox "id" id)
-                                      (.attr (.find $lightbox "img") "src" rel-path)
-                                      (clear-selection)))
+                                      (.attr (.find $lightbox "img") "src" rel-path)))
                                   (let [$thumbnails (.closest $el ".thumbnails")]
                                     (if (not (.hasClass (.find $thumbnails ".image-thumb:last") "empty"))
-                                      (.click (add-empty-thumbnail $thumbnails  bridge))))))))))
+                                      (.click (add-empty-thumbnail $thumbnails  bridge))
+                                      (clear-selection)))))))))
 
 (defn add-empty-thumbnail [$gallery bridge]
   (let [$empty-thumb (js/$ (dom/empty-image-thumbnail))]

@@ -68,36 +68,35 @@ var rel_path = webster.dir.rel_path.call(null,full_path);
 var id = [cljs.core.str("thumb-"),cljs.core.str(webster.dir.file_name.call(null,full_path))].join('');
 var href = [cljs.core.str("#"),cljs.core.str(id)].join('');
 if(cljs.core.truth_($el.hasClass("empty")))
-{var old_element_5208 = $el.find(".empty-decorations");
-var new_element_5209 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",href,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",thumb_rel_path], true)], true)], true));
-var lightbox_el_5210 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:id",id,"\uFDD0:class","lightbox hide fade","\uFDD0:tabindex","-1","\uFDD0:role","dialog","\uFDD0:aria-hidden",true,"\uFDD0:style","z-index: 10000;"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","lightbox-content"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","media-object","\uFDD0:src",rel_path], true)], true)], true)], true));
-old_element_5208.remove();
+{var old_element_2613 = $el.find(".empty-decorations");
+var new_element_2614 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:a",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:href",href,"\uFDD0:class","thumbnail","\uFDD0:data-toggle","lightbox"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:src",thumb_rel_path], true)], true)], true));
+var lightbox_el_2615 = webster.html.compile.call(null,cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:id",id,"\uFDD0:class","lightbox hide fade","\uFDD0:tabindex","-1","\uFDD0:role","dialog","\uFDD0:aria-hidden",true,"\uFDD0:style","z-index: 10000;"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:div",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","lightbox-content"], true),cljs.core.PersistentVector.fromArray(["\uFDD0:img",cljs.core.PersistentArrayMap.fromArray(["\uFDD0:class","media-object","\uFDD0:src",rel_path], true)], true)], true)], true));
+old_element_2613.remove();
 $el.removeClass("empty");
-$el.append(new_element_5209);
-$(" body").append(lightbox_el_5210);
+$el.append(new_element_2614);
+$(" body").append(lightbox_el_2615);
 ($el.find("a:last")[0]).addEventListener("click",(function (event__$1){
 event__$1.preventDefault();
 return true;
 }));
 } else
-{var $thumb_image_5211 = $el.find("img");
-var $link_5212 = $thumb_image_5211.closest("a");
-var old_id_5213 = [cljs.core.str("thumb-"),cljs.core.str(cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*media\/(.*)\..*/,$thumb_image_5211.attr("src"))))].join('');
-var old_href_5214 = [cljs.core.str("#"),cljs.core.str(old_id_5213)].join('');
-var $lightbox_5215 = $(old_href_5214);
-bridge.callHandler("removingMedia",{"media-src":$thumb_image_5211.attr("src")});
-bridge.callHandler("removingMedia",{"media-src":webster.dir.thumb_to_lightbox_src.call(null,$thumb_image_5211.attr("src"))});
-$thumb_image_5211.attr("src",rel_path);
-$link_5212.attr("href",href);
-$lightbox_5215.attr("id",id);
-$lightbox_5215.find("img").attr("src",rel_path);
-webster.listeners.clear_selection.call(null);
+{var $thumb_image_2616 = $el.find("img");
+var $link_2617 = $thumb_image_2616.closest("a");
+var old_id_2618 = [cljs.core.str("thumb-"),cljs.core.str(cljs.core.second.call(null,cljs.core.re_matches.call(null,/.*media\/(.*)\..*/,$thumb_image_2616.attr("src"))))].join('');
+var old_href_2619 = [cljs.core.str("#"),cljs.core.str(old_id_2618)].join('');
+var $lightbox_2620 = $(old_href_2619);
+bridge.callHandler("removingMedia",{"media-src":$thumb_image_2616.attr("src")});
+bridge.callHandler("removingMedia",{"media-src":webster.dir.thumb_to_lightbox_src.call(null,$thumb_image_2616.attr("src"))});
+$thumb_image_2616.attr("src",rel_path);
+$link_2617.attr("href",href);
+$lightbox_2620.attr("id",id);
+$lightbox_2620.find("img").attr("src",rel_path);
 }
 var $thumbnails = $el.closest(".thumbnails");
 if(cljs.core.not.call(null,$thumbnails.find(".image-thumb:last").hasClass("empty")))
 {return webster.listeners.add_empty_thumbnail.call(null,$thumbnails,bridge).click();
 } else
-{return null;
+{return webster.listeners.clear_selection.call(null);
 }
 }
 }));
@@ -114,26 +113,26 @@ return $empty_thumb;
 * @param {...*} var_args
 */
 webster.listeners.select_node = (function() { 
-var select_node__delegate = function (jnode,bridge,p__5216){
-var vec__5218 = p__5216;
-var callback = cljs.core.nth.call(null,vec__5218,0,null);
+var select_node__delegate = function (jnode,bridge,p__2621){
+var vec__2623 = p__2621;
+var callback = cljs.core.nth.call(null,vec__2623,0,null);
 var row_info = webster.listeners.node_info.call(null,jnode);
 webster.listeners.make_selected.call(null,jnode);
 return bridge.callHandler("containerSelectedHandler",row_info,(cljs.core.truth_(callback)?callback:null));
 };
 var select_node = function (jnode,bridge,var_args){
-var p__5216 = null;
+var p__2621 = null;
 if (arguments.length > 2) {
-  p__5216 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
+  p__2621 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2),0);
 } 
-return select_node__delegate.call(this, jnode, bridge, p__5216);
+return select_node__delegate.call(this, jnode, bridge, p__2621);
 };
 select_node.cljs$lang$maxFixedArity = 2;
-select_node.cljs$lang$applyTo = (function (arglist__5219){
-var jnode = cljs.core.first(arglist__5219);
-var bridge = cljs.core.first(cljs.core.next(arglist__5219));
-var p__5216 = cljs.core.rest(cljs.core.next(arglist__5219));
-return select_node__delegate(jnode, bridge, p__5216);
+select_node.cljs$lang$applyTo = (function (arglist__2624){
+var jnode = cljs.core.first(arglist__2624);
+var bridge = cljs.core.first(cljs.core.next(arglist__2624));
+var p__2621 = cljs.core.rest(cljs.core.next(arglist__2624));
+return select_node__delegate(jnode, bridge, p__2621);
 });
 select_node.cljs$core$IFn$_invoke$arity$variadic = select_node__delegate;
 return select_node;
