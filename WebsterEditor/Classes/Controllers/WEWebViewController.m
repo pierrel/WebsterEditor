@@ -46,6 +46,7 @@ static const int ICON_DIM = 13;
         if ([classes indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return [((NSString*)obj) isEqualToString:@"image-thumb"];
         }] != NSNotFound) {
+            [self closeDialog];
             [self openImagePickerWithData:data withCallback:responseCallback];
         } else {
             [self openDialogWithData:data];
