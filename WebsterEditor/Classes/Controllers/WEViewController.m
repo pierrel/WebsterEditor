@@ -269,11 +269,11 @@ Export
 }
 
 -(void)saveProject {
+    NSError *error;
     NSString *devFile = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
     NSString *html = [self.contentController.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
-    NSData *docData = [document dataUsingEncoding:NSStringEncodingConversionAllowLossy];
-    [docData writeToFile:devFile atomically:NO];
+    [document writeToFile:devFile atomically:NO encoding:NSUnicodeStringEncoding error:&error];
     
     // save the settings
     self.settings.title = self.titleText.text;
