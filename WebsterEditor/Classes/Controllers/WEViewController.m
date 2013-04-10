@@ -298,8 +298,9 @@ Export
     
 -(BOOL)validateSettings {
     NSString *bucket = self.bucketText.text;
-    NSRange range = [bucket rangeOfString:@" "];
-    if (range.location != NSNotFound) {        
+    NSRange emptyRange = [bucket rangeOfString:@" "];
+    NSRange periodRange = [bucket rangeOfString:@"."];
+    if (emptyRange.location != NSNotFound) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad bucket name"
                                                         message:@"No spaces are allowed in the bucket name"
                                                        delegate:nil
@@ -310,6 +311,14 @@ Export
     } else if ([bucket isEqualToString:@""]){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad bucket name"
                                                         message:@"Bucket must have a name"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    } else if (periodRange.location != NSNotFound) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad bucket name"
+                                                        message:@"No periods are allowed in the bucket name"
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
