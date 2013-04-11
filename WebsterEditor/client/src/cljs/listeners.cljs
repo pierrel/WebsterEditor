@@ -1,5 +1,5 @@
 (ns webster.listeners
-    (:use [domina :only (log has-class? attr)]
+    (:use [domina :only (log has-class? classes children)]
         [domina.css :only (sel)]
         [domina.events :only (listen! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
@@ -114,13 +114,13 @@
   (let [pos (dom/offset el)
         the-info {:top (:top pos)
                   :left (:left pos)
-                  :classes (.split (.attr el "class") " ")
                   :width (dom/width el)
                   :height (dom/height el)
                   :tag (.-tagName el)
+                  :classes (classes el)
                   :addable (elements/possible-under (elements/node-to-element el))}]
     (clj->js (if (is-row? el)
-               (conj the-info [:children (dom/map-nodes  node-info (.find jnode "> div"))])
+               (conj the-info [:children (dom/map-nodes  node-info (children el))])
                the-info))))
  
 (defn get-selected []
