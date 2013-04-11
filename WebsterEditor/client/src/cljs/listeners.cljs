@@ -111,7 +111,6 @@
 
 (defn node-info
   [el]
-  (log (dom/offset el))
   (let [pos (dom/offset el)
         width (:width el)
         height (:height el)
