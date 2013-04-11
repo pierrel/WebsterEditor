@@ -16,6 +16,11 @@
                                            :left (+ (:left off) (-> current-el offset-from-parent :left))))
       off)))
 
+(defn width [el]
+  (.-offsetWidth el))
+(defn height [el]
+  (.-offsetHeight el))
+
 (defn each-node
   "Calls callback for each DOM node in node-list"
   [node-list callback]

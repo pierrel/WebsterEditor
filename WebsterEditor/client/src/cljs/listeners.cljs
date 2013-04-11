@@ -112,14 +112,12 @@
 (defn node-info
   [el]
   (let [pos (dom/offset el)
-        width (:width el)
-        height (:height el)
         the-info {:top (:top pos)
                   :left (:left pos)
-                  :width width
-                  :height height
                   :tag (.prop el "tagName")
                   :classes (.split (.attr el "class") " ")
+                  :width (dom/width el)
+                  :height (dom/height el)
                   :addable (elements/possible-under (elements/node-to-element el))}]
     (clj->js (if (is-row? el)
                (conj the-info [:children (dom/map-nodes  node-info (.find jnode "> div"))])
