@@ -273,7 +273,7 @@ Export
     NSString *devFile = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
     NSString *html = [self.contentController.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
-    [document writeToFile:devFile atomically:NO encoding:NSUnicodeStringEncoding error:&error];
+    [document writeToFile:devFile atomically:NO encoding:NSUTF8StringEncoding error:&error];
     
     // save the settings
     self.settings.title = self.titleText.text;

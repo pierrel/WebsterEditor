@@ -126,7 +126,7 @@
                                                           error:&error];
         [contents writeToFile:fullPath
                    atomically:NO
-                     encoding:NSStringEncodingConversionAllowLossy
+                     encoding:NSUTF8StringEncoding
                         error:&error];
     }
     
