@@ -1,4 +1,7 @@
 (ns webster.main
+  (:use [domina :only (log has-class?)]
+        [domina.css :only (sel)]
+        [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.dom :as dom]
             [webster.listeners :as listeners]
             [webster.html :as html]
@@ -6,33 +9,27 @@
             [webster.elements :as elements]
             [clojure.string :as string]))
 
+(listen! (sel ".selectable") :click #(listeners/container-listener % bridge))
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
     ;; initialize the bridge
     (.init bridge "handler?")
-    ;; Setup selectable containers
-    (dom/each-node (.getElementsByClassName js/document "selectable")
-                   (fn [node]
-                     (.addEventListener node
-                                        "click"
-                                        (fn [event] (listeners/container-listener event bridge))
-                                        false)))
-    ;; Don't allow link clicks in dev mode
-    (dom/each-node (.getElementsByTagName js/document "a")
-                   (fn [node]
-                     (.addEventListener node "click" (fn [event]
-                                                       (.preventDefault event)
-                                                       true))))
+
+    ;; Setup default listener
+    (listen! :click #(listeners/default-listener % bridge))
+    (listen! (sel ".selectable") :click #(listeners/container-listener % bridge))
+    (listen! (sel "a") :click #(prevent-default %))
 
     ;; deselect on scroll
+    ;; (listen! :onscroll #(when (not (listeners/nothing-selected))
+    ;;                       (listeners/make-unselected (listeners/get-selected))
+    ;;                       (.callHandler bridge "defaultSelectedHandler" (js-obj))))
     (set! (.-onscroll js/window) (fn [event]
                                    (when (not (listeners/nothing-selected))
                                      (listeners/make-unselected (listeners/get-selected))
                                      (.callHandler bridge "defaultSelectedHandler" (js-obj)))))
     
-    ;; Setup default listener
-    (.addEventListener js/document "click" (fn [event] (listeners/default-listener event bridge)) false)
     (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
     (.registerHandler bridge "editElementHandler" edit-element-handler)
     (.registerHandler bridge "deselectSelectedElement" deselect-selected-element)
@@ -196,6 +193,7 @@
         element (elements/get-by-name el-name)
         jnode (listeners/get-selected)
         new-el (dom/new-element-with-info element)
+        
         add-listener (fn [jel]
                        (.addEventListener jel
                                           "click"

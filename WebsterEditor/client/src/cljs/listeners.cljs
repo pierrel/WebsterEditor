@@ -1,4 +1,7 @@
 (ns webster.listeners
+    (:use [domina :only (log has-class? attr)]
+        [domina.css :only (sel)]
+        [domina.events :only (listen! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
             [webster.elements :as elements]
             [webster.html :as html]
@@ -19,16 +22,16 @@
 
 (defn container-listener
   [event bridge]
-  (let [el (js/$ (.-currentTarget event))]
+  (let [el (current-target event)]
     (cond
-     (and (.hasClass el "image-thumb") (not (.hasClass el "selected"))) (do
+     (and (has-class? el "image-thumb") (not (has-class? el "selected"))) (do
                                                                           (thumbnail-listener event bridge)
-                                                                          (.stopPropagation event)
-                                                                          (.preventDefault event))
-     (and (not (.hasClass el "selected")) (nothing-selected)) (do
+                                                                          (stop-propagation event)
+                                                                          (stop-propagation event))
+     (and (not (has-class? el "selected")) (nothing-selected)) (do
                                                                 (select-node el bridge)
-                                                                (.stopPropagation event)
-                                                                (.preventDefault event)))))
+                                                                (stop-propagation event)
+                                                                (prevent-default event)))))
 
 (defn thumbnail-listener
   [event bridge]
@@ -95,9 +98,9 @@
     (.addEventListener (.get $empty-thumb 0) "click" (fn [event] (container-listener event bridge)))
     $empty-thumb))
 
-(defn select-node [jnode bridge & [callback]]
-  (let [row-info (node-info jnode)]
-    (make-selected jnode)
+(defn select-node [el bridge & [callback]]
+  (let [row-info (node-info el)]
+    (make-selected el)
     (.callHandler bridge
                   "containerSelectedHandler"
                   row-info
