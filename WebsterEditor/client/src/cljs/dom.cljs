@@ -2,6 +2,20 @@
   (:require [webster.html :as html]
             [webster.elements :as elements]))
 
+
+(defn offset-from-parent [el]
+  {:top (.-offsetTop el)
+   :left (.-offsetLeft el)})
+
+(defn offset [el]
+  (loop [current-el el
+         off {:top 0, :left 0}]
+    (if current-el
+      (recur (.-offsetParent current-el) (assoc off
+                                           :top (+ (:top off) (-> current-el offset-from-parent :top))
+                                           :left (+ (:left off) (-> current-el offset-from-parent :left))))
+      off)))
+
 (defn each-node
   "Calls callback for each DOM node in node-list"
   [node-list callback]
