@@ -1,3 +1,8 @@
 WebsterEditor/config.json
 *xcuserdata*
 
+WebsterEditor/client/target
+WebsterEditor/client/repl
+WebsterEditor/client/out
+WebsterEditor/Resources
+
