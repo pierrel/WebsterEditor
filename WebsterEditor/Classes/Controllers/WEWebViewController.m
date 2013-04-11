@@ -33,13 +33,6 @@ static const int ICON_DIM = 13;
     WebViewJavascriptBridge *jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"bridge enabled");
     }];
-    [jsBridge send:@"A string sent from ObjC before Webview has loaded."
-  responseCallback:^(id responseData) {
-        NSLog(@"objc got response! %@", responseData);
-    }];
-    [jsBridge callHandler:@"testJavascriptHandler"
-                     data:[NSDictionary dictionaryWithObject:@"before ready" forKey:@"foo"]];
-    
     [jsBridge registerHandler:@"containerSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"got %@", data);
         NSArray *classes = (NSArray*)[data objectForKey:@"classes"];
