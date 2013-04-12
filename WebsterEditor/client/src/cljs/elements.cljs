@@ -1,4 +1,5 @@
 (ns webster.elements
+  (:use [domina :only (log attr)])
   (:require
    [clojure.string :as string]
    [clojure.set :as set]))
@@ -40,6 +41,6 @@
   (first (filter #(= (:name %) name) all-flat)))
 
 (defn node-to-element [node]
-  (let [type (.attr node "data-type")]
+  (let [type (attr node :data-type)]
     (if (seq type)
       (get-by-name type))))

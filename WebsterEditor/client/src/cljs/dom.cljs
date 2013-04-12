@@ -1,4 +1,7 @@
 (ns webster.dom
+  (:use [domina :only (log has-class? add-class! remove-attr! add-attr!)]
+        [domina.css :only (sel)]
+        [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.html :as html]
             [webster.elements :as elements]))
 
@@ -21,25 +24,25 @@
 (defn height [el]
   (.-offsetHeight el))
 
-(defn each-node
-  "Calls callback for each DOM node in node-list"
-  [node-list callback]
-  (doseq [index (range (.-length node-list))]
-    (callback (.item node-list index))))
+;; (defn each-node
+;;   "Calls callback for each DOM node in node-list"
+;;   [node-list callback]
+;;   (doseq [index (range (.-length node-list))]
+;;     (callback (.item node-list index))))
 
-(defn map-nodes
-  [callback node-list]
-  (map (fn [index] (callback (js/$ (.get node-list index))))
-       (range (.-length node-list))))
+;; (defn map-nodes
+;;   [callback node-list]
+;;   (map (fn [index] (callback (js/$ (.get node-list index))))
+;;        (range (.-length node-list))))
 
-(defn get-jnode
-  "grabs the node at index in jnodes and returns the corresponding jnode"
-  [jnodes index]
-  (js/$ (.get jnodes index)))
+;; (defn get-jnode
+;;   "grabs the node at index in jnodes and returns the corresponding jnode"
+;;   [jnodes index]
+;;   (js/$ (.get jnodes index)))
 
 (defn get-column-span
-  [jnode]
-  (let [matches (re-find #"span(\d+)" (.attr jnode "class"))]
+  [el]
+  (let [matches (re-find #"span(\d+)" (attr el "class"))]
     (if (> (count matches) 1)
       (js/parseInt (second matches) 10)
       0)))
@@ -47,62 +50,62 @@
 (defn set-column-span
   [jnode count]
   (let [old-count (get-column-span jnode)]
-    (.removeClass jnode (str "span" old-count))
-    (.addClass jnode (str "span" count))))
+    (remove-class! jnode (str "span" old-count))
+    (add-class! jnode (str "span" count))))
 
 (defn increment-column-span
-  [jnode]
-  (set-column-span jnode (+ (get-column-span jnode) 1)))
+  [el]
+  (set-column-span el (+ (get-column-span el) 1)))
 (defn decrement-column-span
-  [jnode]
-  (set-column-span jnode (- (get-column-span jnode) 1)))
+  [el]
+  (set-column-span el (- (get-column-span el) 1)))
 
 
 (defn get-column-offset
-  [jnode]
-    (let [matches (re-find #"offset(\d+)" (.attr jnode "class"))]
+  [el]
+    (let [matches (re-find #"offset(\d+)" (.attr el "class"))]
     (if (> (count matches) 1)
       (js/parseInt (second matches) 10)
       0)))
 
 (defn set-column-offset
-  [jnode count]
-  (let [old-count (get-column-offset jnode)]
-    (.removeClass jnode (str "offset" old-count))
-    (.addClass jnode (str "offset" count))))
+  [el count]
+  (let [old-count (get-column-offset el)]
+    (remove-class! el (str "offset" old-count))
+    (add-class! el (str "offset" count))))
 
 (defn increment-column-offset
-  [jnode]
-  (set-column-offset jnode (+ (get-column-offset jnode) 1)))
+  [el]
+  (set-column-offset jnode (+ (get-column-offset el) 1)))
 (defn decrement-column-offset
-  [jnode]
-  (set-column-offset jnode (- (get-column-offset jnode) 1)))
+  [el]
+  (set-column-offset jnode (- (get-column-offset el) 1)))
 
 (defn get-column-width
-  [jnode]
-  (+ (get-column-span jnode) (get-column-offset jnode)))
+  [el]
+  (+ (get-column-span jnode) (get-column-offset el)))
 
 (def column-max 12)
 
 (defn make-editable
-  [node & focus]
-  (.attr node "contenteditable" "true")
-  (.addClass node "editing")
+  [el & focus]
+  (set-attr! el :contenteditable "true")
+  (add-class! el "editing")
   (if focus
     (let [r (.createRange js/rangy)]
-      (.setStart r (.get node 0) 0)
+      (.setStart r (single-node el) 0)
       (.collapse r true)
       (.setSingleRange (.getSelection js/rangy) r))))
 
 (defn stop-editing
   ([]
-     (stop-editing (js/$ ".editing")))
-  ([$el]
-     (.removeAttr $el "contenteditable")
-     (.removeClass $el "editing")))
+     (stop-editing (sel ".editing")))
+  ([el]
+     (remove-attr! el "contenteditable")
+     (remove-class! el "editing")))
 
 (defn new-element-with-info [el-info]
-  (js/$ (html/compile (new-element-structure el-info))))
+  (html/compile (new-element-structure el-info)))
 
 (defn new-element-structure [el-info]
   [(:tag el-info)
@@ -119,8 +122,8 @@
     (merge class type)))
 
 (defn new-image-gallery []
-  (js/$ (html/compile [:div {:class "row-fluid selectable"}
-                       [:ul {:class "thumbnails" :data-span "4"}]])))
+  (html/compile [:div {:class "row-fluid selectable"}
+                 [:ul {:class "thumbnails" :data-span "4"}]]))
 
 (defn empty-image-thumbnail []
   (html/compile (new-element-structure (elements/get-by-name "gallery image"))))

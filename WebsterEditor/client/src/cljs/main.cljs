@@ -1,5 +1,5 @@
 (ns webster.main
-  (:use [domina :only (log has-class?)]
+  (:use [domina :only (log has-class? html set-style! remove-style! style)]
         [domina.css :only (sel)]
         [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.dom :as dom]
@@ -54,55 +54,55 @@
 
 (defn export-markup
   [data callback]
-  (let [$body (.clone (js/$ "html"))]
+  (let [body (clone (sel "html"))]
     ;; remove some elements
-    (.remove (.find $body "head"))
-    (.remove (.find $body "iframe"))
-    (.remove (.find $body "script[src*=rangy]"))
-    (.remove (.find $body "script[src*=development]"))
-    (.remove (.find $body ".thumbnails .empty"))
+    (.remove (sel body "head"))
+    (.remove (sel body "iframe"))
+    (.remove (sel body "script[src*=rangy]"))
+    (.remove (sel body "script[src*=development]"))
+    (.remove (sel body ".thumbnails .empty"))
 
     ;; remove development classe
-    (.removeClass (.find $body ".selectable") "selectable")
-    (.removeClass (.find $body ".selectable-thumb") "selectable-thumb")
-    (.removeClass (.find $body ".selected") "selected")
-    (.removeClass (.find $body ".empty") "empty")
+    (remove-class! (sel body ".selectable") "selectable")
+    (remove-class! (sel body ".selectable-thumb") "selectable-thumb")
+    (remove-class! (sel body ".selected") "selected")
+    (remove-class! (sel body ".empty") "empty")
 
     ;; make sure bg is correct
-    (let [$body-el (.find $body "body")
-          bg (.css $body-el "background-image")]
+    (let [body-el (sel body "body")
+          bg (.css body-el "background-image")]
       (if (not (string/blank? bg))
         (let [main-path (second (re-matches #"url\(.*/(media/.*)\)" bg))]
-          (.css (.find $body "body") "background-image" nil)
+          (remove-style! (sel body "body") :background-image)
           ;; didn't want to use "attr" here but "css" doesn't seem to work...
-          (.attr $body-el "style" (format "zoom: 1; background-image: url(%s);" main-path)))))
+          (set-style! body-el (format "zoom: 1; background-image: url(%s);" main-path)))))
 
     ;; add lightbox js
-    (if (> (.-length (.find $body ".thumbnails")) 0)
-      (.append $body (html/compile [:script {:src "js/bootstrap-lightbox.js"}])))
+    (if (sel body ".thumbnails")
+      (append! body (html/compile [:script {:src "js/bootstrap-lightbox.js"}])))
 
     ;; return the new markup
-    (callback (js-obj "markup" (string/trim (.html $body))))))
+    (callback (js-obj "markup" (string/trim (html body))))))
 
 (defn set-background-image
   [data callback bridge]
   (remove-background-image (js-obj) nil bridge)
-  (let [$body (js/$ "body")
+  (let [body (sel "body")
         full-path (aget data "path")
         url (str "url(" (dir/rel-path full-path) ")")]
-    (.addClass $body "with-background")
-    (.css $body "background-image" url)))
+    (add-class! body "with-background")
+    (set-style! body "background-image" url)))
 (defn remove-background-image
   [data callback bridge]
-  (let [$body (js/$ "body")
-        url (second (re-matches #"url\((.*)\)" (.css $body "background-image")))]
+  (let [body (sel "body")
+        url (second (re-matches #"url\((.*)\)" (style body :background-image)))]
     (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
-    (.removeClass $body "with-background")
-    (.css $body "background-image" "none")
+    (remove-class! body "with-background")
+    (set-style! body :background-image "none")
     (if callback (callback (js-obj)))))
 (defn has-background-image
   [data callback]
-  (callback (js-obj "hasBackground" (if (.hasClass (js/$ "body") "with-background")
+  (callback (js-obj "hasBackground" (if (has-class? (sel "body") "with-background")
                                       "true"
                                       "false"))))
 
@@ -110,7 +110,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
-        all-columns (.find jselected "> div")
+        all-columns (sel jselected "> div")
         jcolumn (dom/get-jnode all-columns index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
@@ -122,7 +122,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
-        all-columns (.find jselected "> div")
+        all-columns (sel jselected "> div")
         jcolumn (dom/get-jnode all-columns index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
@@ -133,7 +133,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index") 10)
-        all-columns (.find jselected "> div")
+        all-columns (sel jselected "> div")
         column-count (.-length all-columns)
         jcolumn (dom/get-jnode all-columns index)
         offset-num (dom/get-column-offset jcolumn)]
@@ -148,7 +148,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index") 10)
-        all-columns (.find jselected "> div")
+        all-columns (sel jselected "> div")
         column-count (.-length all-columns)
         jcolumn (dom/get-jnode all-columns index)
         span-num (dom/get-column-span jcolumn)]
@@ -170,22 +170,22 @@
  
 (defn remove-element-handler
   ([data callback]
-     (let [jnode (js/$ ".selected")]
-       (listeners/make-unselected jnode)
-       (.remove jnode)))
+     (let [el (sel ".selected")]
+       (listeners/make-unselected el)
+       (detach! el)))
   ([data callback bridge]
      (remove-element-handler data callback)
      (listeners/default-listener nil bridge)))
 
 (defn edit-element-handler
   [data callback]
-  (let [node (js/$ ".selected")]
-    (dom/make-editable node true)))
+  (let [el (sel ".selected")]
+    (dom/make-editable el true)))
 
 (defn deselect-selected-element
   [data]
-  (let [$selected (listeners/get-selected)]
-    (if $selected (listeners/make-unselected $selected))))
+  (if-let [selected (listeners/get-selected)]
+    (listeners/make-unselected selected)))
 
 (defn add-element-handler
   [data callback bridge]
@@ -195,15 +195,13 @@
         new-el (dom/new-element-with-info element)
         
         add-listener (fn [jel]
-                       (.addEventListener jel
-                                          "click"
-                                          (fn [event]
-                                            (listeners/container-listener event bridge))))]
+                       (listen! jel :click (fn [event]
+                                             (listeners/container-listener event bridge))))]
     (.append jnode new-el)
     (listeners/default-listener nil bridge)
-    (.each (.find new-el ".selectable")
-           (fn [i el] (add-listener el)))
-    (add-listener (.get new-el 0))
+    (doseq [el (sel new-el ".selectable")]
+      (add-listener el))
+    (add-listener new-el)
     (listeners/select-node new-el bridge)))
 
 ;; IMAGE GALLERY STUFF
@@ -211,7 +209,7 @@
   [data callback bridge]
   (let [jnode (listeners/get-selected)
         new-row (dom/new-image-gallery)
-        gallery (.find new-row ".thumbnails")]
+        gallery (sel new-row ".thumbnails")]
     (.append jnode new-row)
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))

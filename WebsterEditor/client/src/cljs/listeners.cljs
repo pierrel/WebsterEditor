@@ -1,7 +1,7 @@
 (ns webster.listeners
-    (:use [domina :only (log has-class? classes children)]
+    (:use [domina :only (log has-class? classes add-class! children detach! nodes)]
         [domina.css :only (sel)]
-        [domina.events :only (listen! current-target stop-propagation prevent-default)])
+        [domina.events :only (listen! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
             [webster.elements :as elements]
             [webster.html :as html]
@@ -16,7 +16,7 @@
 
 (defn default-listener
   [event bridge]
-  (make-unselected (js/$ ".selected"))
+  (make-unselected (sel ".selected"))
   (dom/stop-editing)
   (.callHandler bridge "defaultSelectedHandler" (js-obj)))
 
@@ -29,34 +29,34 @@
                                                                           (stop-propagation event)
                                                                           (stop-propagation event))
      (and (not (has-class? el "selected")) (nothing-selected)) (do
-                                                                (select-node el bridge)
-                                                                (stop-propagation event)
-                                                                (prevent-default event)))))
+                                                                 (select-node el bridge)
+                                                                 (stop-propagation event)
+                                                                 (prevent-default event)))))
 
 (defn thumbnail-listener
   [event bridge]
   (clear-selection)
-  (let [$el (js/$ (.-currentTarget event))]
-    (select-node $el bridge (fn [data callback]
+  (let [el (current-target event)]
+    (select-node el bridge (fn [data callback]
                               (if (aget data "delete")
-                                (let [$thumb-image (.find $el "img")
+                                (let [$thumb-image (sel el "img")
                                       thumb-src (.attr $thumb-image "src")
                                       lightbox-src (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))
                                       old-id (str "thumb-" (string/replace (dir/file-name (.attr $thumb-image "src")) "_THUMB" ""))
                                       old-href (str "#" old-id)
-                                      $lightbox (js/$ old-href)]
+                                      lightbox (sel old-href)]
                                   (.callHandler bridge "removingMedia" (js-obj "media-src" thumb-src))
                                   (.callHandler bridge "removingMedia" (js-obj "media-src" lightbox-src))
-                                  (.remove $lightbox)
-                                  (.remove $el))
+                                  (detach! lightbox)
+                                  (detach! el))
                                 (let [full-path (aget data "resource-path")
                                       thumb-full-path (aget data "thumb-path")
                                       thumb-rel-path (dir/rel-path thumb-full-path)
                                       rel-path (dir/rel-path full-path)
                                       id (str "thumb-" (dir/file-name full-path))
                                       href (str "#" id)]
-                                  (if (.hasClass $el "empty")
-                                    (let [old-element (.find $el ".empty-decorations")
+                                  (if (has-class? el "empty")
+                                    (let [old-element (sel el ".empty-decorations")
                                           new-element (html/compile [:a {:href href
                                                                          :class "thumbnail"
                                                                          :data-toggle "lightbox"}
@@ -69,34 +69,34 @@
                                                                            :style "z-index: 10000;"}
                                                                      [:div {:class "lightbox-content"}
                                                                       [:img {:class "media-object" :src rel-path}]]])]
-                                      (.remove old-element)
-                                      (.removeClass $el "empty")
-                                      (.append $el new-element)
-                                      (.append (js/$ " body") lightbox-el)
-                                      (.addEventListener (aget (.find $el "a:last") 0) "click" (fn [event]
-                                                                                                 (.preventDefault event)
-                                                                                                 true)))
-                                    (let [$thumb-image (.find $el "img")
-                                          $link (.closest $thumb-image "a")
-                                          old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (.attr $thumb-image "src"))))
+                                      (detach! old-element)
+                                      (remove-class! el "empty")
+                                      (append! el new-element)
+                                      (append! (sel " body") lightbox-el)
+                                      (listen! (sel el "a:last") :click (fn [event]
+                                                                          (prevent-default event)
+                                                                          true)))
+                                    (let [thumb-image (sel el "img")
+                                          link (dom/closest thumb-image "a")
+                                          old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (attr thumb-image "src"))))
                                           old-href (str "#" old-id)
-                                          $lightbox (js/$ old-href)]
-                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (.attr $thumb-image "src")))
-                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))))
-                                      (.attr $thumb-image "src" rel-path)
-                                      (.attr $link "href" href)
-                                      (.attr $lightbox "id" id)
-                                      (.attr (.find $lightbox "img") "src" rel-path)))
-                                  (let [$thumbnails (.closest $el ".thumbnails")]
-                                    (if (= (.-length (.find $thumbnails ".image-thumb.empty")) 0)
-                                      (.click (add-empty-thumbnail $thumbnails  bridge))
+                                          lightbox (sel old-href)]
+                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (attr thumb-image "src")))
+                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/thumb-to-lightbox-src (attr thumb-image "src"))))
+                                      (set-attr! thumb-image "src" rel-path)
+                                      (set-attr! link "href" href)
+                                      (set-attr! lightbox "id" id)
+                                      (set-attr! (sel lightbox "img") "src" rel-path)))
+                                  (let [thumbnails (dom/closest el ".thumbnails")]
+                                    (if (nil? (sel thumbnails ".image-thumb.empty"))
+                                      (dispatch! (add-empty-thumbnail thumbnails  bridge))
                                       (clear-selection)))))))))
 
-(defn add-empty-thumbnail [$gallery bridge]
-  (let [$empty-thumb (js/$ (dom/empty-image-thumbnail))]
-    (.append $gallery $empty-thumb)
-    (.addEventListener (.get $empty-thumb 0) "click" (fn [event] (container-listener event bridge)))
-    $empty-thumb))
+(defn add-empty-thumbnail [gallery bridge]
+  (append gallery (dom/empty-image-thumbnail))
+  (let [empty-thumb (last (children gallery))]
+    (listen! empty-thumb :click (fn [event] (container-listener event bridge)))
+    empty-thumb))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
@@ -124,24 +124,18 @@
                the-info))))
  
 (defn get-selected []
-  (js/$ ".selected"))
+  (sel ".selected"))
 (defn nothing-selected []
-  (= (.-length (js/$ ".selected")) 0))
+  (empty? (nodes (sel ".selected"))))
 
-(defn make-selected
-  [jnode]
-  (let [node (.get jnode 0)]
-    (.addClass jnode "selected")
-    (if node (.addEventListener node "click" selected-listener))))
-(defn make-unselected
-  [jnode]
-  (let [node (.get jnode 0)]
-    (.removeClass jnode "selected")
-    (if node (.removeEventListener node "click" selected-listener))))
-(defn is-selected
-  [jnode]
-  (.hasClass jnode "selected"))
+(defn make-selected [el]
+  (add-class! el "selected")
+  (listen! el :click selected-listener))
+(defn make-unselected [el]
+  (remove-class! el "selected")
+  (unlisten! el :click selected-listener))
+(defn is-selected [el]
+  (has-class? el "selected"))
 
-(defn is-row?
-      [jnode]
-      (.hasClass jnode "row-fluid"))
+(defn is-row? [el]
+  (has-class? el "row-fluid"))
