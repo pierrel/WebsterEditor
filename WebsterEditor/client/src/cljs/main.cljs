@@ -1,5 +1,5 @@
 (ns webster.main
-  (:use [domina :only (log has-class? html set-style! remove-style! style)]
+  (:use [domina :only (log has-class? remove-class! append! html set-style! remove-style! style detach! nodes)]
         [domina.css :only (sel)]
         [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.dom :as dom]
@@ -169,9 +169,7 @@
  
 (defn remove-element-handler
   ([data callback]
-     (let [el (sel ".selected")]
-       (listeners/make-unselected el)
-       (detach! el)))
+     (-> ".selected" sel detach!))
   ([data callback bridge]
      (remove-element-handler data callback)
      (listeners/default-listener nil bridge)))

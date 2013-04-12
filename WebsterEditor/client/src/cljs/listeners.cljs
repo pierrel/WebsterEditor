@@ -1,5 +1,5 @@
 (ns webster.listeners
-    (:use [domina :only (log has-class? classes remove-class! add-class! children detach! nodes)]
+    (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes)]
         [domina.css :only (sel)]
         [domina.events :only (listen! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
@@ -12,7 +12,7 @@
 (defn selected-listener
   [event bridge]
   (if (= (.-target event) (.-currentTarget event))
-    (.stopPropagation event)))
+    (stop-propagation event)))
 
 (defn default-listener
   [event bridge]
@@ -93,7 +93,7 @@
                                       (clear-selection)))))))))
 
 (defn add-empty-thumbnail [gallery bridge]
-  (append gallery (dom/empty-image-thumbnail))
+  (append! gallery (dom/empty-image-thumbnail))
   (let [empty-thumb (last (children gallery))]
     (listen! empty-thumb :click (fn [event] (container-listener event bridge)))
     empty-thumb))
@@ -133,7 +133,7 @@
   (listen! el :click selected-listener))
 (defn make-unselected [el]
   (remove-class! el "selected")
-  (unlisten! el :click selected-listener))
+  (unlisten! el :click))
 (defn is-selected [el]
   (has-class? el "selected"))
 

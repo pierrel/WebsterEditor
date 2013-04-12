@@ -1,5 +1,5 @@
 (ns webster.dom
-  (:use [domina :only (log has-class? add-class! remove-attr! add-attr!)]
+  (:use [domina :only (log has-class? add-class! remove-class! remove-attr! add-attr! attr)]
         [domina.css :only (sel)]
         [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.html :as html]
