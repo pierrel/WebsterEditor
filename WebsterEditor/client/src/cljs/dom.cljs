@@ -1,5 +1,5 @@
 (ns webster.dom
-  (:use [domina :only (log has-class? add-class! remove-class! remove-attr! add-attr! attr)]
+  (:use [domina :only (log has-class? add-class! remove-class! remove-attr! add-attr! attr single-node)]
         [domina.css :only (sel)]
         [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.html :as html]
@@ -23,6 +23,9 @@
   (.-offsetWidth el))
 (defn height [el]
   (.-offsetHeight el))
+
+(defn parent [el]
+  (.-parentNode (single-node el)))
 
 ;; (defn each-node
 ;;   "Calls callback for each DOM node in node-list"

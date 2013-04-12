@@ -1,5 +1,5 @@
 (ns webster.main
-  (:use [domina :only (log has-class? remove-class! append! html set-style! remove-style! style detach! nodes)]
+  (:use [domina :only (log has-class? remove-class! append! html set-style! remove-style! style detach! nodes single-node)]
         [domina.css :only (sel)]
         [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.dom :as dom]
@@ -46,8 +46,8 @@
 
 (defn select-parent-element [data callback bridge]
   (let [selected-node (listeners/get-selected)
-        parent-node (.parent selected-node)]
-    (when (> (.-length parent-node) 0)
+        parent-node (dom/parent selected-node)]
+    (when parent-node
       (listeners/make-unselected selected-node)
       (listeners/select-node parent-node bridge))))
 
