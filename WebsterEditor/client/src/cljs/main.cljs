@@ -7,8 +7,9 @@
             [webster.html :as html]
             [webster.dir :as dir]
             [webster.elements :as elements]
-            [clojure.string :as string]))
-
+            [clojure.string :as string]
+            [clojure.browser.repl :as repl]))
+(repl/connect "http://localhost:9000/repl")
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
