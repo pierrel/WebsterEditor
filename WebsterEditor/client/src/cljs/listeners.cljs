@@ -1,5 +1,5 @@
 (ns webster.listeners
-    (:use [domina :only (log has-class? classes add-class! children detach! nodes)]
+    (:use [domina :only (log has-class? classes remove-class! add-class! children detach! nodes)]
         [domina.css :only (sel)]
         [domina.events :only (listen! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
