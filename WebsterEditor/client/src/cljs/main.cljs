@@ -9,7 +9,6 @@
             [webster.elements :as elements]
             [clojure.string :as string]))
 
-(listen! (sel ".selectable") :click #(listeners/container-listener % bridge))
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
