@@ -1,8 +1,13 @@
 (defproject webster "1"
   :description "in-browser code for the webster html editor"
   :dependencies [[org.clojure/clojure "1.4.0"]
+                 [compojure "1.1.5"]
+                 [org.clojure/clojurescript "0.0-1552"]
+                 [org.clojure/google-closure-library-third-party "0.0-2029"]
                  [domina "1.0.2-SNAPSHOT"]]
-  :plugins [[lein-cljsbuild "0.3.0"]]
+  :plugins [[lein-cljsbuild "0.3.0"]
+            [lein-ring "0.8.2"]]
+  :ring {:handler test.handler/app}
   :cljsbuild {:builds [{:source-paths ["src/cljs"]
                         :compiler {:output-to "src/js/development.js"
                                    :optimizations :whitespace
