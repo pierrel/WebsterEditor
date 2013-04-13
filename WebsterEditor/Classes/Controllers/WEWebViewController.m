@@ -114,8 +114,8 @@ static const int ICON_DIM = 13;
     // position buttons
     CGSize buttonSize = CGSizeMake(25, 25);
     CGRect frame = [WEUtils frameFromData:data];
-    CGFloat maxX = self.view.frame.size.width;
-    CGFloat maxY = self.view.frame.size.height;
+    CGFloat maxX = self.view.frame.size.width - buttonSize.width;
+    CGFloat maxY = self.view.frame.size.height - buttonSize.height;
     
     removeButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
                                     MAX(frame.origin.y - (buttonSize.height/2), 0),
