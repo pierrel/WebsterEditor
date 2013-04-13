@@ -128,13 +128,14 @@
 
 (defn make-selected [el]
   (make-unselected)
-  (add-class! el "selected")
-  (listen! el :click selected-listener))
+  (add-class! el "selected"))
+(defn make-unselected
   ([]
      (if-let [selected (get-selected)]
        (make-unselected selected)))
   ([el]
-      (remove-class! el "selected")))
+     (remove-class! el "selected")))
+
 (defn is-selected? [el]
   (has-class? el "selected"))
 
