@@ -51,7 +51,7 @@
                                     (when (nil? (single-node placeholder))
                                       (let [placeholder (dom/add-thumbnail-placeholder! gallery)]
                                         (listen! placeholder :click #(container-listener % bridge))
-                                        (dispatch! placeholder :click))))))))))
+                                        (dispatch! placeholder :click {}))))))))))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
