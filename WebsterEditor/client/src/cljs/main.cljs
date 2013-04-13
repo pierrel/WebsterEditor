@@ -189,10 +189,12 @@
   [data callback bridge]
   (let [new-el (-> (aget data "element-name") elements/get-by-name dom/new-element-with-info domi/string-to-dom)
         to-el (listeners/get-selected)
-        new-el-in-dom (-> (domi/append! to-el new-el)  domi/children last)]
-      (events/listen! new-el-in-dom :click #(listeners/container-listener % bridge))
-      (listeners/default-listener nil bridge)
-      (listeners/select-node new-el-in-dom bridge)))
+        new-el-in-dom (-> (domi/append! to-el new-el)  domi/children last)
+        new-selectables (conj (domi/nodes (css/sel new-el-in-dom ".selectable")) new-el-in-dom)]
+    (doseq [new-selectable new-selectables]
+      (events/listen! new-selectable :click #(listeners/container-listener % bridge)))
+    (listeners/default-listener nil bridge)
+    (listeners/select-node new-el-in-dom bridge)))
 
 ;; IMAGE GALLERY STUFF
 (defn add-gallery-handler
