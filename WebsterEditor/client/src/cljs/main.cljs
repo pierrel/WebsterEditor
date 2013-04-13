@@ -1,14 +1,14 @@
 (ns webster.main
-  (:use [domina :only (log has-class? remove-class! append! html set-style! remove-style! style detach! nodes single-node)]
-        [domina.css :only (sel)]
-        [domina.events :only (listen! stop-propagation current-target)])
   (:require [webster.dom :as dom]
             [webster.listeners :as listeners]
             [webster.html :as html]
             [webster.dir :as dir]
             [webster.elements :as elements]
             [clojure.string :as string]
-            [clojure.browser.repl :as repl]))
+            [clojure.browser.repl :as repl]
+            [domina :as domi]
+            [domina.css :as css]
+            [domina.events :as events]))
 
 (defn on-bridge-ready
   [event]
@@ -17,12 +17,12 @@
     (.init bridge "handler?")
 
     ;; Setup default listener
-    (listen! :click #(listeners/default-listener % bridge))
-    (listen! (sel ".selectable") :click #(listeners/container-listener % bridge))
-    (listen! (sel "a") :click #(prevent-default %))
+    (events/listen! :click #(listeners/default-listener % bridge))
+    (events/listen! (css/sel ".selectable") :click #(listeners/container-listener % bridge))
+    (events/listen! (css/sel "a") :click #(events/prevent-default %))
 
     ;; deselect on scroll
-    ;; (listen! :onscroll #(when (not (listeners/nothing-selected))
+    ;; (events/listen! :onscroll #(when (not (listeners/nothing-selected))
     ;;                       (listeners/make-unselected (listeners/get-selected))
     ;;                       (.callHandler bridge "defaultSelectedHandler" (js-obj))))
     (set! (.-onscroll js/window) (fn [event]
@@ -45,7 +45,7 @@
     (.registerHandler bridge "exportMarkup" export-markup)
     (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))))
 
-(log (repl/connect "http://localhost:9000/repl"))
+(domi/log (repl/connect "http://localhost:9000/repl"))
 (defn select-parent-element [data callback bridge]
   (let [selected-node (listeners/get-selected)
         parent-node (dom/parent selected-node)]
@@ -55,32 +55,32 @@
 
 (defn export-markup
   [data callback]
-  (let [body (clone (sel "html"))]
+  (let [body (domi/clone (css/sel "html"))]
     ;; remove some elements
-    (.remove (sel body "head"))
-    (.remove (sel body "iframe"))
-    (.remove (sel body "script[src*=rangy]"))
-    (.remove (sel body "script[src*=development]"))
-    (.remove (sel body ".thumbnails .empty"))
+    (domi/destroy! (css/sel body "head"))
+    (domi/destroy! (css/sel body "iframe"))
+    (domi/destroy! (css/sel body "script[src*=rangy]"))
+    (domi/destroy! (css/sel body "script[src*=development]"))
+    (domi/destroy! (css/sel body ".thumbnails .empty"))
 
     ;; remove development classe
-    (remove-class! (sel body ".selectable") "selectable")
-    (remove-class! (sel body ".selectable-thumb") "selectable-thumb")
-    (remove-class! (sel body ".selected") "selected")
-    (remove-class! (sel body ".empty") "empty")
+    (domi/remove-class (css/sel body ".selectable") "selectable")
+    (domi/remove-class (css/sel body ".selectable-thumb") "selectable-thumb")
+    (domi/remove-class (css/sel body ".selected") "selected")
+    (domi/remove-class (css/sel body ".empty") "empty")
 
     ;; make sure bg is correct
-    (let [body-el (sel body "body")
+    (let [body-el (css/sel body "body")
           bg (.css body-el "background-image")]
       (if (not (string/blank? bg))
         (let [main-path (second (re-matches #"url\(.*/(media/.*)\)" bg))]
-          (remove-style! (sel body "body") :background-image)
+          (domi/remove-style! (css/sel body "body") :background-image)
           ;; didn't want to use "attr" here but "css" doesn't seem to work...
-          (set-style! body-el (format "zoom: 1; background-image: url(%s);" main-path)))))
+          (domi/set-style! body-el (format "zoom: 1; background-image: url(%s);" main-path)))))
 
     ;; add lightbox js
-    (if (sel body ".thumbnails")
-      (append! body (html/compile [:script {:src "js/bootstrap-lightbox.js"}])))
+    (if (css/sel body ".thumbnails")
+      (domi/append! body (html/compile [:script {:src "js/bootstrap-lightbox.js"}])))
 
     ;; return the new markup
     (callback (js-obj "markup" (string/trim (html body))))))
@@ -88,22 +88,22 @@
 (defn set-background-image
   [data callback bridge]
   (remove-background-image (js-obj) nil bridge)
-  (let [body (sel "body")
+  (let [body (css/sel "body")
         full-path (aget data "path")
         url (str "url(" (dir/rel-path full-path) ")")]
-    (add-class! body "with-background")
-    (set-style! body "background-image" url)))
+    (domi/add-class! body "with-background")
+    (domi/set-style! body "background-image" url)))
 (defn remove-background-image
   [data callback bridge]
-  (let [body (sel "body")
-        url (second (re-matches #"url\((.*)\)" (style body :background-image)))]
+  (let [body (css/sel "body")
+        url (second (re-matches #"url\((.*)\)" (domi/style body :background-image)))]
     (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
-    (remove-class! body "with-background")
-    (set-style! body :background-image "none")
+    (domi/remove-class body "with-background")
+    (domi/set-style! body :background-image "none")
     (if callback (callback (js-obj)))))
 (defn has-background-image
   [data callback]
-  (callback (js-obj "hasBackground" (if (has-class? (sel "body") "with-background")
+  (callback (js-obj "hasBackground" (if (domi/has-class? (css/sel "body") "with-background")
                                       "true"
                                       "false"))))
 
@@ -111,7 +111,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
-        all-columns (sel jselected "> div")
+        all-columns (css/sel jselected "> div")
         jcolumn (dom/get-jnode all-columns index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
@@ -123,7 +123,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
-        all-columns (sel jselected "> div")
+        all-columns (css/sel jselected "> div")
         jcolumn (dom/get-jnode all-columns index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
@@ -134,13 +134,12 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index") 10)
-        all-columns (sel jselected "> div")
+        all-columns (css/sel jselected "> div")
         column-count (.-length all-columns)
         jcolumn (dom/get-jnode all-columns index)
         offset-num (dom/get-column-offset jcolumn)]
     (if (> offset-num 0)
       (do
-        (.log js/console offset-num)
         (dom/set-column-offset jcolumn (- offset-num 1))
         (dom/set-column-span jcolumn (+ (dom/get-column-span jcolumn) 1))))
     (callback (listeners/node-info jselected))))
@@ -149,7 +148,7 @@
   [data callback]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index") 10)
-        all-columns (sel jselected "> div")
+        all-columns (css/sel jselected "> div")
         column-count (.-length all-columns)
         jcolumn (dom/get-jnode all-columns index)
         span-num (dom/get-column-span jcolumn)]
@@ -171,14 +170,14 @@
  
 (defn remove-element-handler
   ([data callback]
-     (-> ".selected" sel detach!))
+     (-> ".selected" css/sel domi/detach!))
   ([data callback bridge]
      (remove-element-handler data callback)
      (listeners/default-listener nil bridge)))
 
 (defn edit-element-handler
   [data callback]
-  (let [el (sel ".selected")]
+  (let [el (css/sel ".selected")]
     (dom/make-editable el true)))
 
 (defn deselect-selected-element
@@ -194,11 +193,11 @@
         new-el (dom/new-element-with-info element)
         
         add-listener (fn [jel]
-                       (listen! jel :click (fn [event]
+                       (events/listen! jel :click (fn [event]
                                              (listeners/container-listener event bridge))))]
     (.append jnode new-el)
     (listeners/default-listener nil bridge)
-    (doseq [el (sel new-el ".selectable")]
+    (doseq [el (css/sel new-el ".selectable")]
       (add-listener el))
     (add-listener new-el)
     (listeners/select-node new-el bridge)))
@@ -208,7 +207,7 @@
   [data callback bridge]
   (let [jnode (listeners/get-selected)
         new-row (dom/new-image-gallery)
-        gallery (sel new-row ".thumbnails")]
+        gallery (css/sel new-row ".thumbnails")]
     (.append jnode new-row)
     (listeners/default-listener nil bridge)
     (.addEventListener (.get new-row 0) "click" (fn [event] (listeners/container-listener event bridge)))
