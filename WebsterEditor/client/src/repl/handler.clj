@@ -1,10 +1,11 @@
 (ns repl.handler
   (:use compojure.core)
   (:require [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [ring.util.response :as resp]))
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
+  (GET "/" [] (resp/file-response "development.html" {:root "resources/public/html"}))
   (route/resources "/")
   (route/not-found "Not Found"))
 
