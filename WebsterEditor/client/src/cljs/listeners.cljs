@@ -8,12 +8,6 @@
             [webster.dir :as dir]
             [clojure.string :as string]))
 
-;; listeners
-(defn selected-listener
-  [event bridge]
-  (if (= (.-target event) (.-currentTarget event))
-    (stop-propagation event)))
-
 (defn default-listener
   [event bridge]
   (make-unselected (sel ".selected"))
@@ -24,14 +18,18 @@
   [event bridge]
   (let [el (current-target event)]
     (cond
+     (is-selected? el) (stop-propagation event)
      (and (has-class? el "image-thumb") (not (has-class? el "selected"))) (do
-                                                                          (thumbnail-listener event bridge)
                                                                           (stop-propagation event)
-                                                                          (stop-propagation event))
-     (and (not (has-class? el "selected")) (nothing-selected)) (do
                                                                  (select-node el bridge)
                                                                  (stop-propagation event)
-                                                                 (prevent-default event)))))
+                                                                            (thumbnail-listener event bridge)
+                                                                            (stop-propagation event)
+                                                                            (stop-propagation event))
+     (not (is-selected? el)) (do
+                              (select-node el bridge)
+                              (stop-propagation event)
+                              (prevent-default event)))))
 
 (defn thumbnail-listener
   [event bridge]
@@ -129,12 +127,15 @@
   (empty? (nodes (sel ".selected"))))
 
 (defn make-selected [el]
+  (make-unselected)
   (add-class! el "selected")
   (listen! el :click selected-listener))
-(defn make-unselected [el]
-  (remove-class! el "selected")
-  (unlisten! el :click))
-(defn is-selected [el]
+  ([]
+     (if-let [selected (get-selected)]
+       (make-unselected selected)))
+  ([el]
+      (remove-class! el "selected")))
+(defn is-selected? [el]
   (has-class? el "selected"))
 
 (defn is-row? [el]
