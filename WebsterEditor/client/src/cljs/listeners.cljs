@@ -43,17 +43,9 @@
                                       href (str "#" id)]
                                   (if (has-class? el "empty")
                                     (dom/set-placeholder-thumbnail-src! el (aget data "resource-path") (aget data "thumb-path"))
-                                    (let [thumb-image (sel el "img")
-                                          link (dom/closest thumb-image "a")
-                                          old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (attr thumb-image "src"))))
-                                          old-href (str "#" old-id)
-                                          lightbox (sel old-href)]
-                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (attr thumb-image "src")))
-                                      (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/thumb-to-lightbox-src (attr thumb-image "src"))))
-                                      (set-attr! thumb-image "src" rel-path)
-                                      (set-attr! link "href" href)
-                                      (set-attr! lightbox "id" id)
-                                      (set-attr! (sel lightbox "img") "src" rel-path)))
+                                    (do
+                                      (dom/replace-thumbnail-src! el  (aget data "resource-path") (aget data "thumb-path"))
+                                      (default-listener nil bridge)))
                                   (let [gallery (dom/closest el ".thumbnails")
                                         placeholder (sel gallery ".image-thumb.empty")]
                                     (when (nil? (single-node placeholder))

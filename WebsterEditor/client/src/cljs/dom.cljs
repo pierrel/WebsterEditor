@@ -108,6 +108,24 @@
     (dom/append! (css/sel " body") lightbox-el)
     (events/listen! (css/sel placeholder-el "a:last") :click dom/prevent-default)))
 
+(defn replace-thumbnail-src! [thumbnail new-image-path new-thumb-path & [bridge]]
+  (let [thumb-rel-path (dir/rel-path new-thumb-path)
+        image-rel-path (dir/rel-path new-image-path)
+        id (str "thumb-" (dir/file-name new-image-path))
+        href (str "#" id)
+        thumb-image (css/sel thumbnail "img")
+        link (closest thumb-image "a")
+        old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (dom/attr thumb-image "src"))))
+        old-href (str "#" old-id)
+        lightbox (css/sel old-href)]
+    (when bridge
+      (.callHandler bridge "removingMedia" (js-obj "media-src" (dom/attr thumb-image "src")))
+      (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/thumb-to-lightbox-src (dom/attr thumb-image "src")))))
+    (dom/set-attr! thumb-image "src" thumb-rel-path)
+    (dom/set-attr! link "href" href)
+    (dom/set-attr! lightbox "id" id)
+    (dom/set-attr! (css/sel lightbox "img") "src" image-rel-path)))
+
 ;; (defn each-node
 ;;   "Calls callback for each DOM node in node-list"
 ;;   [node-list callback]
