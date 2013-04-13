@@ -118,7 +118,7 @@
                   :classes (classes el)
                   :addable (elements/possible-under (elements/node-to-element el))}]
     (clj->js (if (is-row? el)
-               (conj the-info [:children (dom/map-nodes  node-info (children el))])
+               (conj the-info [:children (map  node-info (children el))])
                the-info))))
  
 (defn get-selected []

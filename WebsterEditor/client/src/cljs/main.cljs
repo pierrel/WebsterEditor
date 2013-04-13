@@ -187,20 +187,14 @@
 
 (defn add-element-handler
   [data callback bridge]
-  (let [el-name (aget data "element-name")
-        element (elements/get-by-name el-name)
-        jnode (listeners/get-selected)
-        new-el (dom/new-element-with-info element)
-        
-        add-listener (fn [jel]
-                       (events/listen! jel :click (fn [event]
-                                             (listeners/container-listener event bridge))))]
-    (.append jnode new-el)
-    (listeners/default-listener nil bridge)
-    (doseq [el (css/sel new-el ".selectable")]
-      (add-listener el))
-    (add-listener new-el)
     (listeners/select-node new-el bridge)))
+  (let [new-el (-> (aget data "element-name") elements/get-by-name dom/new-element-with-info domi/string-to-dom)
+        to-el (listeners/get-selected)]
+    (domi/append! to-el new-el)
+    (let [new-el-in-dom (-> to-el domi/children last)]
+      (events/listen! new-el-in-dom :click #(listeners/container-listener % bridge))
+      (listeners/default-listener nil bridge)
+      (listeners/select-node new-el-in-dom bridge))))
 
 ;; IMAGE GALLERY STUFF
 (defn add-gallery-handler
