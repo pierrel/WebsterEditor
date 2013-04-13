@@ -4,6 +4,7 @@
             [webster.elements :as elements]
             [domina :as dom]
             [domina.css :as css]
+            [domina.events :as events]
             [clojure.string :as string]))
 
 (defn offset-from-parent [el]
@@ -39,6 +40,31 @@
   (let [all-matching-els (disj (-> selector css/sel dom/nodes set) (dom/single-node el))]
     (first (filter all-matching-els (ancestors el)))))
 
+(defn new-element-attrs [el-info]
+  (let [class {:class (str (if (not (:unselectable el-info)) "selectable" "")
+                           " "
+                           (if (:class el-info) (:class el-info) "")) } 
+        type {:data-type (:name el-info)}]
+    (merge class type)))
+
+(defn new-element-structure [el-info]
+  [(:tag el-info)
+   (new-element-attrs el-info)
+   (cond
+    (:contains-text el-info) (:contains-text el-info)
+    (:contains el-info) (new-element-structure (elements/get-by-name (:contains el-info))))])
+
+(defn new-element-with-info [el-info]
+  (html/compile (new-element-structure el-info)))
+
+(defn new-image-gallery []
+  (html/compile [:div {:class "row-fluid selectable"}
+                 [:ul {:class "thumbnails" :data-span "4"}]]))
+
+(defn empty-image-thumbnail []
+  (html/compile (new-element-structure (elements/get-by-name "gallery image"))))
+
+;; Thumbnail interactions
 (defn delete-thumbnail! [thumbnail-el & [bridge]]
   (let [thumb-image (css/sel thumbnail-el "img")
         thumb-src (dom/attr thumb-image "src")
@@ -57,6 +83,30 @@
   [gallery]
   (dom/append! gallery (empty-image-thumbnail))
   (-> gallery dom/children last))
+
+(defn set-placeholder-thumbnail-src! [placeholder-el image-path thumb-path]
+  (let [thumb-rel-path (dir/rel-path thumb-path)
+        image-rel-path (dir/rel-path image-path)
+        id (str "thumb-" (dir/file-name image-path))
+        href (str "#" id)
+        old-element (css/sel placeholder-el ".empty-decorations")
+        new-element (html/compile [:a {:href href
+                                       :class "thumbnail"
+                                       :data-toggle "lightbox"}
+                                   [:img {:src thumb-rel-path}]])
+        lightbox-el (html/compile [:div {:id id
+                                         :class "lightbox hide fade"
+                                         :tabindex "-1"
+                                         :role "dialog"
+                                         :aria-hidden true
+                                         :style "z-index: 10000;"}
+                                   [:div {:class "lightbox-content"}
+                                    [:img {:class "media-object" :src image-rel-path}]]])]
+    (dom/destroy! old-element)
+    (dom/remove-class! placeholder-el "empty")
+    (dom/append! placeholder-el new-element)
+    (dom/append! (css/sel " body") lightbox-el)
+    (events/listen! (css/sel placeholder-el "a:last") :click dom/prevent-default)))
 
 ;; (defn each-node
 ;;   "Calls callback for each DOM node in node-list"
@@ -137,27 +187,3 @@
   ([el]
      (dom/remove-attr! el "contenteditable")
      (dom/remove-class! el "editing")))
-
-(defn new-element-attrs [el-info]
-  (let [class {:class (str (if (not (:unselectable el-info)) "selectable" "")
-                           " "
-                           (if (:class el-info) (:class el-info) "")) } 
-        type {:data-type (:name el-info)}]
-    (merge class type)))
-
-(defn new-element-structure [el-info]
-  [(:tag el-info)
-   (new-element-attrs el-info)
-   (cond
-    (:contains-text el-info) (:contains-text el-info)
-    (:contains el-info) (new-element-structure (elements/get-by-name (:contains el-info))))])
-
-(defn new-element-with-info [el-info]
-  (html/compile (new-element-structure el-info)))
-
-(defn new-image-gallery []
-  (html/compile [:div {:class "row-fluid selectable"}
-                 [:ul {:class "thumbnails" :data-span "4"}]]))
-
-(defn empty-image-thumbnail []
-  (html/compile (new-element-structure (elements/get-by-name "gallery image"))))

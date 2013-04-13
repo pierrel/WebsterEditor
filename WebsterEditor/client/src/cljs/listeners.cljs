@@ -42,26 +42,7 @@
                                       id (str "thumb-" (dir/file-name full-path))
                                       href (str "#" id)]
                                   (if (has-class? el "empty")
-                                    (let [old-element (sel el ".empty-decorations")
-                                          new-element (html/compile [:a {:href href
-                                                                         :class "thumbnail"
-                                                                         :data-toggle "lightbox"}
-                                                                     [:img {:src thumb-rel-path}]])
-                                          lightbox-el (html/compile [:div {:id id
-                                                                           :class "lightbox hide fade"
-                                                                           :tabindex "-1"
-                                                                           :role "dialog"
-                                                                           :aria-hidden true
-                                                                           :style "z-index: 10000;"}
-                                                                     [:div {:class "lightbox-content"}
-                                                                      [:img {:class "media-object" :src rel-path}]]])]
-                                      (detach! old-element)
-                                      (remove-class! el "empty")
-                                      (append! el new-element)
-                                      (append! (sel " body") lightbox-el)
-                                      (listen! (sel el "a:last") :click (fn [event]
-                                                                          (prevent-default event)
-                                                                          true)))
+                                    (dom/set-placeholder-thumbnail-src! el (aget data "resource-path") (aget data "thumb-path"))
                                     (let [thumb-image (sel el "img")
                                           link (dom/closest thumb-image "a")
                                           old-id (str "thumb-" (second (re-matches #".*media/(.*)\..*" (attr thumb-image "src"))))
