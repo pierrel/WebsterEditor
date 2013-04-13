@@ -4,9 +4,6 @@
             [domina :as dom]
             [domina.css :as css]))
 
-(defn closest [el selector]
-  (let [matching-els (-> selector css/sel )]))
-
 (defn offset-from-parent [el]
   {:top (.-offsetTop el)
    :left (.-offsetLeft el)})
@@ -27,6 +24,19 @@
 
 (defn parent [el]
   (.-parentNode (dom/single-node el)))
+
+(defn ancestors
+  "Returns a vector of all ancestors, starting with the immediate parent"
+  [of-el]
+  (loop [ancestor (parent (dom/single-node of-el)) acc []]
+    (if ancestor
+      (recur (parent ancestor) (conj acc ancestor))
+      acc)))
+
+(defn closest [el selector]
+  (let [all-matching-els (disj (-> selector css/sel dom/nodes set) (dom/single-node el))]
+    (first (filter all-matching-els (ancestors el)))))
+
 
 ;; (defn each-node
 ;;   "Calls callback for each DOM node in node-list"
