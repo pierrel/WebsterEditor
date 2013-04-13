@@ -57,7 +57,11 @@ static const int ICON_DIM = 13;
     }];
     
     NSString *indexPath = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
+    if ([self pageOverHTTP]) { // DEV MODE
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
+    } else {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
+    }
     //[self.webView loadHTMLString:html baseURL:base];
     self.webView.keyboardDisplayRequiresUserAction = NO;
     
@@ -259,6 +263,27 @@ static const int ICON_DIM = 13;
 
 -(void)actionSelect:(WEActionSelectViewController*)actionController didSelectAction:(NSString*)element {
     [[WEPageManager sharedManager] addElementUnderSelectedElement:element];
+}
+
+-(BOOL)pageOverHTTP {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:10];
+    
+    [request setHTTPMethod: @"GET"];
+    
+    NSError *requestError;
+    NSURLResponse *urlResponse = nil;
+    
+    
+    NSData *response1 = [NSURLConnection sendSynchronousRequest:request
+                                              returningResponse:&urlResponse
+                                                          error:&requestError];
+    if (response1) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 

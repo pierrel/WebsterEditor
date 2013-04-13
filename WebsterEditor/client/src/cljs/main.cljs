@@ -9,7 +9,7 @@
             [webster.elements :as elements]
             [clojure.string :as string]
             [clojure.browser.repl :as repl]))
-(repl/connect "http://localhost:9000/repl")
+
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
@@ -45,6 +45,7 @@
     (.registerHandler bridge "exportMarkup" export-markup)
     (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))))
 
+(log (repl/connect "http://localhost:9000/repl"))
 (defn select-parent-element [data callback bridge]
   (let [selected-node (listeners/get-selected)
         parent-node (dom/parent selected-node)]
