@@ -1,8 +1,10 @@
 (ns webster.dom
   (:require [webster.html :as html]
+            [webster.dir :as dir]
             [webster.elements :as elements]
             [domina :as dom]
-            [domina.css :as css]))
+            [domina.css :as css]
+            [clojure.string :as string]))
 
 (defn offset-from-parent [el]
   {:top (.-offsetTop el)
@@ -37,6 +39,18 @@
   (let [all-matching-els (disj (-> selector css/sel dom/nodes set) (dom/single-node el))]
     (first (filter all-matching-els (ancestors el)))))
 
+(defn delete-thumbnail! [thumbnail-el & [bridge]]
+  (let [thumb-image (css/sel thumbnail-el "img")
+        thumb-src (dom/attr thumb-image "src")
+        lightbox-src (dir/thumb-to-lightbox-src (dom/attr thumb-image "src"))
+        old-id (str "thumb-" (string/replace (dir/file-name thumb-src) "_THUMB" ""))
+        old-href (str "#" old-id)
+        lightbox (css/sel old-href)]
+    (when bridge
+      (.callHandler bridge "removingMedia" (js-obj "media-src" thumb-src))
+      (.callHandler bridge "removingMedia" (js-obj "media-src" lightbox-src)))
+    (dom/detach! lightbox)
+    (dom/detach! thumbnail-el)))
 
 ;; (defn each-node
 ;;   "Calls callback for each DOM node in node-list"
