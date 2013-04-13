@@ -187,7 +187,6 @@
 
 (defn add-element-handler
   [data callback bridge]
-    (listeners/select-node new-el bridge)))
   (let [new-el (-> (aget data "element-name") elements/get-by-name dom/new-element-with-info domi/string-to-dom)
         to-el (listeners/get-selected)]
     (domi/append! to-el new-el)
