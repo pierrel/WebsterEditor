@@ -1,3 +1,4 @@
 #!/bin/bash
 
-cljs-watch client/src/cljs '{:optimizations :simple :pretty-print true :output-to "client/src/js/development.js"}'
+cd client
+lein cljsbuild auto

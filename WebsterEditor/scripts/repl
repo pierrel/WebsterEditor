@@ -1,14 +1,4 @@
 #!/bin/bash
 
-CLOJURESCRIPT_HOME=~/Documents/Source/clojurescript
-
-CLJSC_CP=''
-for next in lib/: lib/*: src/clj: src/cljs: test/cljs; do
-  CLJSC_CP=$CLJSC_CP$CLOJURESCRIPT_HOME'/'$next
-done
-
-java -server -cp $CLJSC_CP clojure.main -e \
-"(require '[cljs.repl :as repl])
-(require '[cljs.repl.rhino :as rhino])
-(def env (rhino/repl-env))
-(repl/repl env)"
+cd WebsterEditor/client
+lein trampoline cljsbuild repl-listen
