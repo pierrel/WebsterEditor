@@ -287,6 +287,7 @@ static const int ICON_DIM = 13;
 }
 
 -(void)refresh {
+    [self closeDialog];
     [self.webView reload];
 }
 
