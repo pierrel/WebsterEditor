@@ -35,9 +35,9 @@
     (select-node el bridge (fn [data callback]
                               (if (aget data "delete")
                                 (let [$thumb-image (sel el "img")
-                                      thumb-src (.attr $thumb-image "src")
-                                      lightbox-src (dir/thumb-to-lightbox-src (.attr $thumb-image "src"))
-                                      old-id (str "thumb-" (string/replace (dir/file-name (.attr $thumb-image "src")) "_THUMB" ""))
+                                      thumb-src (attr $thumb-image "src")
+                                      lightbox-src (dir/thumb-to-lightbox-src (attr $thumb-image "src"))
+                                      old-id (str "thumb-" (string/replace (dir/file-name (attr $thumb-image "src")) "_THUMB" ""))
                                       old-href (str "#" old-id)
                                       lightbox (sel old-href)]
                                   (.callHandler bridge "removingMedia" (js-obj "media-src" thumb-src))
