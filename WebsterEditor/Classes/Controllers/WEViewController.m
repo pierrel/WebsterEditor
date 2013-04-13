@@ -19,7 +19,7 @@
 @end
 
 @implementation WEViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
@@ -83,6 +83,8 @@
     if ([self.settings.lastExportURL isEqualToString:@""]) {
         [goButton setHidden:YES];
     }
+    
+    [refreshButton addTarget:self.contentController action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
     
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     

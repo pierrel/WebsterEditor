@@ -26,5 +26,6 @@
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info;
 -(void)removeBackground;
+-(void)refresh;
 @end
 
