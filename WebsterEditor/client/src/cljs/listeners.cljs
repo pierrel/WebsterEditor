@@ -20,12 +20,9 @@
     (cond
      (is-selected? el) (stop-propagation event)
      (and (has-class? el "image-thumb") (not (has-class? el "selected"))) (do
+                                                                          (thumbnail-listener event bridge)
                                                                           (stop-propagation event)
-                                                                 (select-node el bridge)
-                                                                 (stop-propagation event)
-                                                                            (thumbnail-listener event bridge)
-                                                                            (stop-propagation event)
-                                                                            (stop-propagation event))
+                                                                          (stop-propagation event))
      (not (is-selected? el)) (do
                               (select-node el bridge)
                               (stop-propagation event)
