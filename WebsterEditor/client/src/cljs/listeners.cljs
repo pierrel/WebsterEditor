@@ -1,7 +1,7 @@
 (ns webster.listeners
-    (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes)]
+    (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes single-node)]
         [domina.css :only (sel)]
-        [domina.events :only (listen! unlisten! current-target stop-propagation prevent-default)])
+        [domina.events :only (listen! dispatch! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
             [webster.elements :as elements]
             [webster.html :as html]
@@ -73,16 +73,12 @@
                                       (set-attr! link "href" href)
                                       (set-attr! lightbox "id" id)
                                       (set-attr! (sel lightbox "img") "src" rel-path)))
-                                  (let [thumbnails (dom/closest el ".thumbnails")]
-                                    (if (nil? (sel thumbnails ".image-thumb.empty"))
-                                      (dispatch! (add-empty-thumbnail thumbnails  bridge))
-                                      (clear-selection)))))))))
-
-(defn add-empty-thumbnail [gallery bridge]
-  (append! gallery (dom/empty-image-thumbnail))
-  (let [empty-thumb (last (children gallery))]
-    (listen! empty-thumb :click (fn [event] (container-listener event bridge)))
-    empty-thumb))
+                                  (let [gallery (dom/closest el ".thumbnails")
+                                        placeholder (sel gallery ".image-thumb.empty")]
+                                    (when (nil? (single-node placeholder))
+                                      (let [placeholder (dom/add-thumbnail-placeholder! gallery)]
+                                        (listen! placeholder :click #(container-listener % bridge))
+                                        (dispatch! placeholder :click))))))))))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]

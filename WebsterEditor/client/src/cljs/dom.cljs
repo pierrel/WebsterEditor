@@ -52,6 +52,12 @@
     (dom/detach! lightbox)
     (dom/detach! thumbnail-el)))
 
+(defn add-thumbnail-placeholder!
+  "adds a placeholder thumbnail to the gallery and returns the placeholder"
+  [gallery]
+  (dom/append! gallery (empty-image-thumbnail))
+  (-> gallery dom/children last))
+
 ;; (defn each-node
 ;;   "Calls callback for each DOM node in node-list"
 ;;   [node-list callback]
