@@ -35,12 +35,7 @@
     (select-node el bridge (fn [data callback]
                               (if (aget data "delete")
                                 (dom/delete-thumbnail! el bridge)
-                                (let [full-path (aget data "resource-path")
-                                      thumb-full-path (aget data "thumb-path")
-                                      thumb-rel-path (dir/rel-path thumb-full-path)
-                                      rel-path (dir/rel-path full-path)
-                                      id (str "thumb-" (dir/file-name full-path))
-                                      href (str "#" id)]
+                                (do
                                   (if (has-class? el "empty")
                                     (dom/set-placeholder-thumbnail-src! el (aget data "resource-path") (aget data "thumb-path"))
                                     (do
