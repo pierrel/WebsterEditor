@@ -203,5 +203,5 @@
   ([]
      (stop-editing (css/sel ".editing")))
   ([el]
-     (dom/remove-attr! el "contenteditable")
+     (dom/remove-attr! el :contenteditable)
      (dom/remove-class! el "editing")))

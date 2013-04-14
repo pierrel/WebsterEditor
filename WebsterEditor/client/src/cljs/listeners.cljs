@@ -10,9 +10,9 @@
 
 (defn default-listener
   [event bridge]
+  (.callHandler bridge "defaultSelectedHandler" (js-obj))
   (make-unselected (sel ".selected"))
-  (dom/stop-editing)
-  (.callHandler bridge "defaultSelectedHandler" (js-obj)))
+  (dom/stop-editing))
 
 (defn container-listener
   [event bridge]

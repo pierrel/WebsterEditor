@@ -158,6 +158,7 @@ static const int ICON_DIM = 13;
 }
 
 - (void)closeDialog {
+    [self.webView endEditing:YES];
     [self closeActionButtons];
     
     [self.addPopover dismissPopoverAnimated:YES]; // just in case
