@@ -108,7 +108,7 @@
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
         all-columns (css/sel jselected "> div")
-        jcolumn (dom/get-jnode all-columns index)]
+        jcolumn (nth (domi/nodes all-columns) index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
         (dom/decrement-column-span jcolumn)
@@ -120,7 +120,7 @@
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
         all-columns (css/sel jselected "> div")
-        jcolumn (dom/get-jnode all-columns index)]
+        jcolumn (nth (domi/nodes all-columns) index)]
     (if (> (dom/get-column-span jcolumn) 1)
       (do
         (dom/decrement-column-span jcolumn)))
@@ -132,7 +132,7 @@
         index (js/parseInt (aget data "index") 10)
         all-columns (css/sel jselected "> div")
         column-count (.-length all-columns)
-        jcolumn (dom/get-jnode all-columns index)
+        jcolumn (nth (domi/nodes all-columns) index)
         offset-num (dom/get-column-offset jcolumn)]
     (if (> offset-num 0)
       (do
@@ -146,10 +146,10 @@
         index (js/parseInt (aget data "index") 10)
         all-columns (css/sel jselected "> div")
         column-count (.-length all-columns)
-        jcolumn (dom/get-jnode all-columns index)
+        jcolumn (nth (domi/nodes all-columns) index)
         span-num (dom/get-column-span jcolumn)]
-    (let [all-jcols (map (fn [i] (dom/get-jnode all-columns i)) (range column-count))
-          jcols-after-jcolumn (map (fn [i] (dom/get-jnode all-columns i)) (range (+ index 1) column-count))
+    (let [all-jcols (map (fn [i] (nth (domi/nodes all-columns) i)) (range column-count))
+          jcols-after-jcolumn (map (fn [i] (nth (domi/nodes all-columns) i)) (range (+ index 1) column-count))
           jcols-to-decrement (filter (fn [jcol] (> (dom/get-column-span jcol) 1)) jcols-after-jcolumn)
           jcols-to-inset (filter (fn [jcol] (> (dom/get-column-offset jcol) 0)) jcols-after-jcolumn)]
       (let [jcol-to-decrement (first jcols-to-decrement)
