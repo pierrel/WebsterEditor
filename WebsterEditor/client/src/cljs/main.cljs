@@ -51,7 +51,7 @@
 
 (defn export-markup
   [data callback]
-  (let [body (domi/clone (css/sel "html"))]
+  (let [body (domi/clone (css/sel js/document "html"))]
     ;; remove some elements
     (domi/destroy! (css/sel body "head"))
     (domi/destroy! (css/sel body "iframe"))
@@ -60,26 +60,24 @@
     (domi/destroy! (css/sel body ".thumbnails .empty"))
 
     ;; remove development classe
-    (domi/remove-class (css/sel body ".selectable") "selectable")
-    (domi/remove-class (css/sel body ".selectable-thumb") "selectable-thumb")
-    (domi/remove-class (css/sel body ".selected") "selected")
-    (domi/remove-class (css/sel body ".empty") "empty")
+    (domi/remove-class! (css/sel body ".selectable") "selectable")
+    (domi/remove-class! (css/sel body ".selectable-thumb") "selectable-thumb")
+    (domi/remove-class! (css/sel body ".selected") "selected")
+    (domi/remove-class! (css/sel body ".empty") "empty")
 
     ;; make sure bg is correct
     (let [body-el (css/sel body "body")
-          bg (.css body-el "background-image")]
-      (if (not (string/blank? bg))
-        (let [main-path (second (re-matches #"url\(.*/(media/.*)\)" bg))]
-          (domi/remove-style! (css/sel body "body") :background-image)
-          ;; didn't want to use "attr" here but "css" doesn't seem to work...
-          (domi/set-style! body-el (format "zoom: 1; background-image: url(%s);" main-path)))))
+          bg (domi/style body-el "background-image")]
+      (if-let [main-path (second (re-matches #"url\(.*/(media/.*)\)" bg))]
+        (domi/set-style! body-el :zoom "1")
+        (domi/set-style! body-el :background-image (str "url(" main-path ")"))))
 
     ;; add lightbox js
-    (if (css/sel body ".thumbnails")
+    (if (domi/single-node (css/sel body ".thumbnails"))
       (domi/append! body (html/compile [:script {:src "js/bootstrap-lightbox.js"}])))
 
     ;; return the new markup
-    (callback (js-obj "markup" (string/trim (html body))))))
+    (callback (js-obj "markup" (string/trim (domi/html body))))))
 
 (defn set-background-image
   [data callback bridge]
@@ -94,7 +92,7 @@
   (let [body (css/sel "body")
         url (second (re-matches #"url\((.*)\)" (domi/style body :background-image)))]
     (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
-    (domi/remove-class body "with-background")
+    (domi/remove-class! body "with-background")
     (domi/set-style! body :background-image "none")
     (if callback (callback (js-obj)))))
 (defn has-background-image
