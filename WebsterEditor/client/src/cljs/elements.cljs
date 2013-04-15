@@ -10,7 +10,8 @@
                    {:name "row", :tag :div, :class "row-fluid", :only-under #{"container"}}
                    {:name "column", :tag :div, :class "span1", :only-under #{"row"}}]
       :text       [{:name "paragraph", :tag :p, :class "text-editable"}
-                   {:name "heading", :tag :h1, :class "text-editable"}]
+                   {:name "heading", :tag :h1, :class "text-editable"}
+                   {:name "subheading", :tag :h2, :class "text-editable"}] 
       :components [{:name "gallery", :tag :ul, :class "thumbnails", :contains "gallery image", :only-under #{"row"}}
                    {:name "gallery image", :tag :li, :class "span4 empty image-thumb", :contains "empty gallery image", :only-under #{"gallery"}}
                    {:name "empty gallery image", :tag :div, :class "empty-decorations", :contains-text "Add Image", :only-under #{"gallery image"}, :unselectable true}]))
