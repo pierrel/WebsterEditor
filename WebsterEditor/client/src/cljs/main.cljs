@@ -25,10 +25,6 @@
     ;; (events/listen! :onscroll #(when (not (listeners/nothing-selected))
     ;;                       (listeners/make-unselected (listeners/get-selected))
     ;;                       (.callHandler bridge "defaultSelectedHandler" (js-obj))))
-    (set! (.-onscroll js/window) (fn [event]
-                                   (when (not (listeners/nothing-selected))
-                                     (listeners/make-unselected (listeners/get-selected))
-                                     (.callHandler bridge "defaultSelectedHandler" (js-obj)))))
     
     (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
     (.registerHandler bridge "editElementHandler" edit-element-handler)
