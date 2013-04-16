@@ -215,7 +215,7 @@ Export
         NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:self.settings.title];
         html = [html stringByReplacingOccurrencesOfString:@"[[BODY]]" withString:markup];
         
-        NSData *htmlData = [html dataUsingEncoding:NSStringEncodingConversionAllowLossy];
+        NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
         S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:@"index.html" inBucket:bucket];
         put.contentType = @"text/html";
         put.data = htmlData;
