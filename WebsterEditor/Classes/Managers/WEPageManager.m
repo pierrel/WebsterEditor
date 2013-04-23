@@ -96,6 +96,14 @@ static WEPageManager *gSharedManager;
     }];
 }
 
+-(void)setMode:(NSString *)modeName {
+    [bridge callHandler:@"setMode"
+                   data:[NSDictionary dictionaryWithObject:modeName forKey:@"mode"]
+       responseCallback:^(id responseData) {
+         NSLog(@"mode changed to %@", modeName);
+    }];
+}
+
 -(void)exportMarkup:(WEResponseCallback)callback {
     [bridge callHandler:@"exportMarkup"
                    data:[NSDictionary dictionary]

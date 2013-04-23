@@ -35,6 +35,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *refreshButton;
 @property (nonatomic, strong) IBOutlet UITextField *titleText;
 @property (nonatomic, strong) IBOutlet UITextField *bucketText;
+@property (nonatomic, strong) IBOutlet UISwitch *modeSwitch;
 
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *exportActivity;
 

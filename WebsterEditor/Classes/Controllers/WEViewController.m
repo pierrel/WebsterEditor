@@ -20,6 +20,7 @@
 
 @implementation WEViewController
 @synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton, modeSwitch;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
@@ -107,6 +108,8 @@
     [closeGesture addTarget:self action:@selector(closeSettings:)];
     [contentView addGestureRecognizer:closeGesture];
     
+    
+    [modeSwitch addTarget:self action:@selector(modeSwitched:) forControlEvents:UIControlEventValueChanged];
 
 }
 
@@ -398,6 +401,14 @@ Export
 
 -(BOOL)isOpen {
     return self.contentView.frame.origin.x > 0;
+}
+
+-(void)modeSwitched:(UISwitch*)switcher {
+    if ([switcher isOn]) {
+        [[WEPageManager sharedManager] setMode:@"blueprint"];
+    } else {
+        [[WEPageManager sharedManager] setMode:@"content"];
+    }
 }
 
 -(void)appClosingNotification:(NSNotification*)notification {

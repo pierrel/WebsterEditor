@@ -205,3 +205,19 @@
   ([el]
      (dom/remove-attr! el :contenteditable)
      (dom/remove-class! el "editing")))
+
+(defn set-blueprint-mode []
+  (if (not (is-blueprint-mode?))
+    (dom/add-class! (css/sel "body") "blueprint")))
+(defn set-content-mode []
+  (if (not (is-content-mode?))
+    (dom/remove-class! (css/sel "body") "blueprint")))
+
+(defn get-mode []
+  (if (dom/has-class? (css/sel "body") "blueprint")
+    "blueprint"
+    "content"))s
+(defn is-blueprint-mode? []
+  (= (get-mode) "blueprint"))
+(defn is-content-mode? []
+  (= (get-mode) "content"))

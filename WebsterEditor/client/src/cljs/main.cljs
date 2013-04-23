@@ -39,7 +39,14 @@
     (.registerHandler bridge "removeBackgroundImage" (fn [data callback] (remove-background-image data callback bridge)))
     (.registerHandler bridge "hasBackgroundImage" has-background-image)
     (.registerHandler bridge "exportMarkup" export-markup)
-    (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))))
+    (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))
+    (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))))
+
+(defn set-mode [data callback bridge]
+  (if (= (aget data "mode") "blueprint")
+    (dom/set-blueprint-mode)
+    (dom/set-content-mode))
+  (callback))
 
 (domi/log (repl/connect "http://localhost:9000/repl"))
 (defn select-parent-element [data callback bridge]

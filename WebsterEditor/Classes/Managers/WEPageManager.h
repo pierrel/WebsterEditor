@@ -36,6 +36,11 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback;
 -(void)hasBackgroundWithCallback:(WEResponseCallback)callback;
 
+/*
+ * Mode handling
+ */
+-(void)setMode:(NSString*)modeName;
+
 -(void)exportMarkup:(WEResponseCallback)callback;
 
 +(WEPageManager *)sharedManager;
