@@ -9,7 +9,7 @@
             [lein-ring "0.8.2"]
             [lein-lesscss "1.2"]]
   :ring {:handler repl.handler/app}
-  :cljsbuild {:builds [{:source-paths ["src/cljs"]
+  :cljsbuild {:builds [{:source-paths ["src/webster"]
                         :compiler {:output-to "resources/public/js/development.js"
                                    :optimizations :whitespace
                                    :pretty-print true}}]}

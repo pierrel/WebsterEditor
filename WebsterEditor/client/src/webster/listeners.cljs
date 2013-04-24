@@ -1,5 +1,6 @@
 (ns webster.listeners
-    (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes single-node)]
+  (:require-macros [webster.macros :as macros])
+  (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes single-node)]
         [domina.css :only (sel)]
         [domina.events :only (listen! dispatch! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
@@ -53,6 +54,19 @@
                                         (listen! placeholder :click #(container-listener % bridge))
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
+
+(defn move-start [event bridge]
+  (macros/blueprint-event event bridge
+                          (log "start")))
+(defn move [event bridge]
+  (when (dom/is-blueprint-mode?)
+    (log "move")))
+(defn move-end [event bridge]
+  (when (dom/is-blueprint-mode?)
+    (log "end")))
+(defn move-cancel [event bridge]
+  (when (dom/is-blueprint-mode?)
+    (log "cancel")))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]

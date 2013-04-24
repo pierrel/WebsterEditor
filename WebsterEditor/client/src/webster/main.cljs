@@ -21,6 +21,12 @@
     (events/listen! (css/sel ".selectable") :click #(listeners/container-listener % bridge))
     (events/listen! (css/sel "a") :click #(events/prevent-default %))
 
+    ;; blueprint listeners
+    (events/listen! :touchstart #(listeners/move-start % bridge))
+    (events/listen! :touchmove #(listeners/move % bridge))
+    (events/listen! :touchend #(listeners/move-end % bridge))
+    (events/listen! :touchcancel #(listeners/move-cancel % bridge))
+
     ;; deselect on scroll
     ;; (events/listen! :onscroll #(when (not (listeners/nothing-selected))
     ;;                       (listeners/make-unselected (listeners/get-selected))
