@@ -16,6 +16,11 @@
 
 (defn container-listener
   [event bridge]
+  (if (dom/is-content-mode?)
+    (content-listener event bridge)))
+
+(defn content-listener
+  [event bridge]
   (let [el (current-target event)]
     (cond
      (is-selected? el) (stop-propagation event)
