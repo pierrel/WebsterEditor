@@ -12,7 +12,16 @@ body {
             background-color: fade(gray, 50%);
         }
         .selectable {
-            outline: 1px solid white;
+            outline: 2px solid white;
+        }
+
+        div[class*='span'], .text-editable {
+            outline: 2px dashed white;
+        }
+
+        // exceptions
+        .container-fluid {
+            outline: none;
         }
     }
 }

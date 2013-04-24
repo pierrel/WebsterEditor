@@ -14,7 +14,14 @@ body.blueprint .selected {
   background-color: rgba(128, 128, 128, 0.5);
 }
 body.blueprint .selectable {
-  outline: 1px solid white;
+  outline: 2px solid white;
+}
+body.blueprint div[class*='span']:empty,
+body.blueprint .text-editable {
+  outline: 2px dashed white;
+}
+body.blueprint .container-fluid {
+  outline: none;
 }
 .editing {
   -webkit-user-select: text;
