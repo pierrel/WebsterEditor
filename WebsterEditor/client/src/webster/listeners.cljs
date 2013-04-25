@@ -60,7 +60,7 @@
     (prevent-default event)
     (stop-propagation event)
     (let [element (current-target event)]
-      (dom/start-dragging! element))))
+      (dom/start-dragging! element {:x 0 :y 0}))))
 (defn move [event bridge]
   (when (dom/is-blueprint-mode?)
     (log "move")))
