@@ -213,6 +213,18 @@
   (if (not (is-content-mode?))
     (dom/remove-class! (css/sel "body") "blueprint")))
 
+(defn dragging-element []
+  (first (dragging-elements)))
+(defn dragging-elements []
+  (-> "dragging" dom/by-class dom/nodes))
+(defn stop-dragging!
+  ([]
+     (stop-dragging! (dragging-elements)))
+  ([content]
+     (dom/remove-class! content "dragging")))
+(defn start-dragging! [content]
+  (dom/add-class! content "dragging"))
+
 (defn get-mode []
   (if (dom/has-class? (css/sel "body") "blueprint")
     "blueprint"
