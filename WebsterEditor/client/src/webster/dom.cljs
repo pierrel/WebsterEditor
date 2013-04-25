@@ -236,6 +236,13 @@
   ([content]
      (dom/set-style! content "-webkit-transform" nil)))
 
+(defn data-attr [key]
+  (format "data-%s" key))
+(defn set-data! [content data-key data-str]
+  (dom/set-attr! content (data-attr (str data-key)) data-str))
+(defn data [content data-key]
+  (dom/attr (dom/single-node content) (data-attr data-key)))
+
 (defn dragging-element []
   (first (dragging-elements)))
 (defn dragging-elements []
