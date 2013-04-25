@@ -213,6 +213,29 @@
   (if (not (is-content-mode?))
     (dom/remove-class! (css/sel "body") "blueprint")))
 
+(defn scale-transform [scale]
+  (if scale
+    (format "scale(%s)" (str scale))
+    ""))
+(defn translate-transform
+  ([x y]
+     (if (and x y)
+       (format "translate(%spx, %spx)" (str x) (str y))
+       ""))
+  ([opts]
+     (translate-transform (:x opts) (:y opts))))
+(defn transform [opts]
+  (format "%s %s"
+          (scale-transform (:scale opts))
+          (translate-transform (:translate opts))))
+(defn set-transform!
+  ([content opts]
+     (dom/set-style! content
+                    "-webkit-transform"
+                    (transform opts)))
+  ([content]
+     (dom/set-style! content "-webkit-transform" nil)))
+
 (defn dragging-element []
   (first (dragging-elements)))
 (defn dragging-elements []
