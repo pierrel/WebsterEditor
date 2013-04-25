@@ -85,7 +85,7 @@
         [goButton setHidden:YES];
     }
     
-    [refreshButton addTarget:self.contentController action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
+    [refreshButton addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
     
     self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
     
@@ -413,5 +413,9 @@ Export
 
 -(void)appClosingNotification:(NSNotification*)notification {
     [self saveProject];
+}
+
+-(void)refresh {
+    [self.contentController refresh];
 }
 @end
