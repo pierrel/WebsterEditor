@@ -416,6 +416,7 @@ Export
 }
 
 -(void)refresh {
+    [modeSwitch setOn:NO animated:YES];
     [self.contentController refresh];
 }
 @end
