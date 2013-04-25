@@ -56,8 +56,11 @@
                                         (make-selected placeholder))))))))))
 
 (defn move-start [event bridge]
-  (macros/blueprint-event event bridge
-                          (log "start")))
+  (when (dom/is-blueprint-mode?)
+    (prevent-default event)
+    (stop-propagation event)
+    (let [element (current-target event)]
+      (dom/start-dragging! element))))
 (defn move [event bridge]
   (when (dom/is-blueprint-mode?)
     (log "move")))
