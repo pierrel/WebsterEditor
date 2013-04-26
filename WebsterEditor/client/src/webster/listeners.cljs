@@ -65,7 +65,12 @@
       (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)}))))
 (defn move [event bridge]
   (when (dom/is-blueprint-mode?)
-    (log "move")))
+    (prevent-default event)
+    (stop-propagation event)
+    (let [element (current-target event)
+          touches (touch/touches event)]
+      (dom/drag! element {:x (touch/page-x touches)
+                          :y (touch/page-y touches)}))))
 (defn move-end [event bridge]
   (when (dom/is-blueprint-mode?)
     (log "end")))

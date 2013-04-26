@@ -257,6 +257,14 @@
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
   (set-data! content "touch-origin-x" (:x origin))
   (set-data! content "touch-origin-y" (:y origin)))
+(defn drag! [content to-point]
+  (let [diff-x (- (:x to-point)
+                  (data content "touch-origin-x"))
+        diff-y (- (:y to-point)
+                  (data content "touch-origin-y"))]
+    (set-transform! content {:translate {:x diff-x
+                                         :y diff-y}
+                             :scale 1.05})))
 
 (defn get-mode []
   (if (dom/has-class? (css/sel "body") "blueprint")
