@@ -238,8 +238,11 @@
 
 (defn data-attr [key]
   (format "data-%s" key))
-(defn set-data! [content data-key data-str]
-  (dom/set-attr! content (data-attr (str data-key)) data-str))
+(defn set-data!
+  ([content data-key data-str]
+     (dom/set-attr! content (data-attr (str data-key)) data-str))
+  ([content data-key]
+     (dom/remove-attr! content (data-attr (str data-key)))))
 (defn data [content data-key]
   (dom/attr (dom/single-node content) (data-attr data-key)))
 
@@ -252,7 +255,9 @@
      (stop-dragging! (dragging-elements)))
   ([content]
      (dom/remove-class! content "dragging")
-     (set-transform! content)))
+     (set-transform! content)
+       (set-data! content "touch-origin-x")
+       (set-data! content "touch-origin-y")))
 (defn start-dragging! [content origin]
   (dom/add-class! content "dragging")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
