@@ -10,24 +10,29 @@
             [domina.css :as css]
             [domina.events :as events]))
 
+(defn add-selectable-listeners [selectable bridge]
+  ;; content listeners
+  (events/listen! selectable :click #(listeners/container-listener % bridge))
+  (events/listen! (css/sel selectable "a") :click #(events/prevent-default %))
+  
+  ;; blueprint listeners
+  (events/listen! selectable :touchstart #(listeners/move-start % bridge))
+  (events/listen! selectable :touchmove #(listeners/move % bridge))
+  (events/listen! selectable :touchend #(listeners/move-end % bridge))
+  (events/listen! selectable :touchcancel #(listeners/move-cancel % bridge)))
+
+
+
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
     ;; initialize the bridge
     (.init bridge "handler?")
 
-    ;; set up listeners
+    ;; default listener
     (events/listen! :click #(listeners/default-listener % bridge))
-    (events/listen! (css/sel ".selectable") :click #(listeners/container-listener % bridge))
-    (events/listen! (css/sel "a") :click #(events/prevent-default %))
-    
-    ;; blueprint listeners
-    (let [selectables (css/sel ".selectable")]
-      (events/listen! selectables :touchstart #(listeners/move-start % bridge))
-      (events/listen! selectables :touchmove #(listeners/move % bridge))
-      (events/listen! selectables :touchend #(listeners/move-end % bridge))
-      (events/listen! selectables :touchcancel #(listeners/move-cancel % bridge)))
 
+    (add-selectable-listeners (domi/by-class "selectable") bridge)
 
     ;; deselect on scroll
     ;; (events/listen! :onscroll #(when (not (listeners/nothing-selected))
@@ -201,7 +206,7 @@
         new-el-in-dom (-> (domi/append! to-el new-el)  domi/children last)
         new-selectables (conj (domi/nodes (css/sel new-el-in-dom ".selectable")) new-el-in-dom)]
     (doseq [new-selectable new-selectables]
-      (events/listen! new-selectable :click #(listeners/container-listener % bridge)))
+      (add-selectable-listeners new-selectable bridge))
     (listeners/default-listener nil bridge)
     (listeners/select-node new-el-in-dom bridge)))
 
