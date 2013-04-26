@@ -254,12 +254,16 @@
   ([]
      (stop-dragging! (dragging-elements)))
   ([content]
+     (dom/add-class! content "transitioning")
+     (events/listen! content :webkitTransitionEnd
+                     #(dom/remove-class! content "transitioning"))
      (dom/remove-class! content "dragging")
      (set-transform! content)
        (set-data! content "touch-origin-x")
        (set-data! content "touch-origin-y")))
 (defn start-dragging! [content origin]
   (dom/add-class! content "dragging")
+  (dom/add-class! content "transitioning")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
   (set-data! content "touch-origin-x" (:x origin))
   (set-data! content "touch-origin-y" (:y origin)))
@@ -268,6 +272,7 @@
                   (data content "touch-origin-x"))
         diff-y (- (:y to-point)
                   (data content "touch-origin-y"))]
+    (dom/remove-class! content "transitioning")
     (set-transform! content {:translate {:x diff-x
                                          :y diff-y}
                              :scale 1.05})))
