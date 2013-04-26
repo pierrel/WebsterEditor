@@ -251,7 +251,8 @@
   ([]
      (stop-dragging! (dragging-elements)))
   ([content]
-     (dom/remove-class! content "dragging")))
+     (dom/remove-class! content "dragging")
+     (set-transform! content)))
 (defn start-dragging! [content origin]
   (dom/add-class! content "dragging")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})

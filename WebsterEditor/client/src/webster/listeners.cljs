@@ -73,7 +73,7 @@
                           :y (touch/page-y touches)}))))
 (defn move-end [event bridge]
   (when (dom/is-blueprint-mode?)
-    (log "end")))
+    (-> event current-target dom/stop-dragging!)))
 (defn move-cancel [event bridge]
   (when (dom/is-blueprint-mode?)
     (log "cancel")))
