@@ -7,6 +7,7 @@
             [webster.elements :as elements]
             [webster.html :as html]
             [webster.dir :as dir]
+            [webster.touch :as touch]
             [clojure.string :as string]))
 
 (defn default-listener
@@ -59,8 +60,9 @@
   (when (dom/is-blueprint-mode?)
     (prevent-default event)
     (stop-propagation event)
-    (let [element (current-target event)]
-      (dom/start-dragging! element {:x 0 :y 0}))))
+    (let [element (current-target event)
+          touches (touch/touches event)]
+      (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)}))))
 (defn move [event bridge]
   (when (dom/is-blueprint-mode?)
     (log "move")))
