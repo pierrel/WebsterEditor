@@ -87,7 +87,8 @@
     (-> event current-target dom/stop-dragging!)))
 (defn move-cancel [event bridge]
   (when (dom/is-blueprint-mode?)
-    (move-end event bridge)))
+    (-> event current-target dom/stop-dragging!)))
+
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
