@@ -22,7 +22,8 @@
 (defn allowed? [element parent-element]
   (cond
    (contains? (set (:text all)) parent-element) false
-   (seq (:only-under element))                     (contains? (:only-under element) (:name parent-element))
+   (seq (:only-under element))                  (contains? (:only-under element) (:name parent-element))
+   (or (nil? element) (nil? parent-element)) false
    :else true))
 
 (defn possible-under [element]
