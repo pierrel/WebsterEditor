@@ -10,17 +10,18 @@
             [domina.css :as css]
             [domina.events :as events]))
 
-(defn add-selectable-listeners [selectable bridge]
+(defn add-listeners! [bridge]
   ;; content listeners
-  (events/listen! selectable :click #(listeners/container-listener % bridge))
-  (events/listen! (css/sel selectable "a") :click #(events/prevent-default %))
+  (let [selectable (domi/by-class "selectable")]
+    (events/listen! selectable :click #(listeners/container-listener % bridge))
+    (events/listen! (css/sel selectable "a") :click #(events/prevent-default %)))
   
   ;; blueprint listeners
-  (events/listen! selectable :touchstart #(listeners/move-start % bridge))
-  (events/listen! selectable :touchmove #(listeners/move % bridge))
-  (events/listen! selectable :touchend #(listeners/move-end % bridge))
-  (events/listen! selectable :touchcancel #(listeners/move-cancel % bridge)))
-
+  (let [draggable (domi/by-class "draggable")]
+    (events/listen! draggable :touchstart #(listeners/move-start % bridge))
+    (events/listen! draggable :touchmove #(listeners/move % bridge))
+    (events/listen! draggable :touchend #(listeners/move-end % bridge))
+    (events/listen! draggable :touchcancel #(listeners/move-cancel % bridge))))
 
 
 (defn on-bridge-ready
@@ -32,7 +33,7 @@
     ;; default listener
     (events/listen! :click #(listeners/default-listener % bridge))
 
-    (add-selectable-listeners (domi/by-class "selectable") bridge)
+    (add-listeners! bridge)
 
     ;; deselect on scroll
     ;; (events/listen! :onscroll #(when (not (listeners/nothing-selected))

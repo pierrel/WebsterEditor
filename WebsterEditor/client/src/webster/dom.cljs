@@ -43,7 +43,9 @@
 (defn new-element-attrs [el-info]
   (let [class {:class (str (if (not (:unselectable el-info)) "selectable" "")
                            " "
-                           (if (:class el-info) (:class el-info) "")) } 
+                           (if (:class el-info) (:class el-info) "")
+                           " "
+                           (if (contains? (elements/categories el-info) :structure) "draggable" "")) } 
         type {:data-type (:name el-info)}]
     (merge class type)))
 

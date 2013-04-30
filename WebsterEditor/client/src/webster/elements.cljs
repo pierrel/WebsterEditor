@@ -26,6 +26,13 @@
    (or (nil? element) (nil? parent-element)) false
    :else true))
 
+(defn in-category? [element category]
+  (contains? (set (category all)) element))
+
+(defn categories [element]
+  (set (filter #(in-category? element %) (keys all))))
+
+
 (defn possible-under [element]
   (loop [category-els all acc {}]
     (if (seq category-els)

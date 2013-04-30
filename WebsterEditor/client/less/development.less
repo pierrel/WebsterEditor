@@ -8,15 +8,8 @@ body {
     -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
     &.blueprint {
         background-color: @blueprint-color;
-        .selected {
-            background-color: fade(gray, 50%);
-        }
-        .selectable {
+        .draggable {
             outline: 2px solid white;
-        }
-
-        div[class*='span'], .text-editable {
-            outline: 2px dashed white;
         }
 
         .container-fluid {
@@ -27,6 +20,7 @@ body {
         .dragging {
             z-index: 100;
             -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+            background-color: fade(gray, 50%);
         }
         .transitioning {
             -webkit-transition: -webkit-transform 0.2s ease-in-out;
