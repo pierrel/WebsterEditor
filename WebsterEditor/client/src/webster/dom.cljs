@@ -291,7 +291,6 @@
   (dom/add-class! content "transitioning")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
   (set-data! content "touch-origin-x" (:x origin))
-  (set-data! content "touch-origin-y" (:y origin)))
   (set-data! content "touch-origin-y" (:y origin))
   (doseq [node (possible-droppables (dom/single-node content))]
     (make-droppable! node)))
