@@ -247,6 +247,26 @@
 (defn data [content data-key]
   (dom/attr (dom/single-node content) (data-attr data-key)))
 
+(defn possible-droppables
+  "list of dom nodes the given dom node can be dropped on"
+  [node]
+  (let [element (elements/node-to-element node)
+        ancestors (set (ancestors node))]
+    (filter #(and (elements/allowed?
+                   element
+                   (elements/node-to-element %))
+                  (not (contains? ancestors %)))
+            (dom/nodes (dom/by-class "selectable")))))
+
+(defn make-droppable! [node]
+  (dom/add-class! node "droppable"))
+(defn clear-droppable!
+  ([]
+     (doseq [node (dom/nodes (dom/by-class "droppable"))]
+       (clear-droppable! node)))
+  ([node]
+     (dom/remove-class! node "droppable")))
+
 (defn dragging-element []
   (first (dragging-elements)))
 (defn dragging-elements []

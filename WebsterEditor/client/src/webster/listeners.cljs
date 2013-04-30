@@ -56,17 +56,6 @@
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
 
-(defn possible-droppables
-  "list of dom nodes the given dom node can be dropped on"
-  [node]
-  (let [element (elements/node-to-element node)
-        ancestors (set (dom/ancestors node))]
-    (filter #(and (elements/allowed?
-                   element
-                   (elements/node-to-element %))
-                  (not (contains? ancestors %)))
-            (nodes (sel ".selectable")))))
-
 (defn move-start [event bridge]
   (when (dom/is-blueprint-mode?)
     (prevent-default event)
