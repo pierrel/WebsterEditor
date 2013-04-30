@@ -143,22 +143,6 @@
     (dom/set-attr! lightbox "id" id)
     (dom/set-attr! (css/sel lightbox "img") "src" image-rel-path)))
 
-;; (defn each-node
-;;   "Calls callback for each DOM node in node-list"
-;;   [node-list callback]
-;;   (doseq [index (range (.-length node-list))]
-;;     (callback (.item node-list index))))
-
-;; (defn map-nodes
-;;   [callback node-list]
-;;   (map (fn [index] (callback (js/$ (.get node-list index))))
-;;        (range (.-length node-list))))
-
-;; (defn get-jnode
-;;   "grabs the node at index in jnodes and returns the corresponding jnode"
-;;   [jnodes index]
-;;   (js/$ (.get jnodes index)))
-
 (defn get-column-span
   [el]
   (let [matches (re-find #"span(\d+)" (dom/attr el "class"))]
