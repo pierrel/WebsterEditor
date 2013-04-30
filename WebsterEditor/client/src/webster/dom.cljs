@@ -275,19 +275,26 @@
   ([]
      (stop-dragging! (dragging-elements)))
   ([content]
-     (dom/add-class! content "transitioning")
-     (events/listen! content :webkitTransitionEnd
-                     #(dom/remove-class! content "transitioning"))
+     (stop-dragging! content true))
+  ([content animate]
+     (when animate
+       (dom/add-class! content "transitioning")
+       (events/listen! content :webkitTransitionEnd
+                       #(dom/remove-class! content "transitioning")))
      (dom/remove-class! content "dragging")
      (set-transform! content)
-       (set-data! content "touch-origin-x")
-       (set-data! content "touch-origin-y")))
+     (set-data! content "touch-origin-x")
+     (set-data! content "touch-origin-y")
+     (clear-droppable!)))
 (defn start-dragging! [content origin]
   (dom/add-class! content "dragging")
   (dom/add-class! content "transitioning")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
   (set-data! content "touch-origin-x" (:x origin))
   (set-data! content "touch-origin-y" (:y origin)))
+  (set-data! content "touch-origin-y" (:y origin))
+  (doseq [node (possible-droppables (dom/single-node content))]
+    (make-droppable! node)))
 (defn drag! [content to-point]
   (let [diff-x (- (:x to-point)
                   (data content "touch-origin-x"))

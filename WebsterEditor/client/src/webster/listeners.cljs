@@ -73,7 +73,21 @@
                           :y (touch/page-y touches)}))))
 (defn move-end [event bridge]
   (when (dom/is-blueprint-mode?)
-    (-> event current-target dom/stop-dragging!)))
+    (prevent-default event)
+    (stop-propagation event)
+    (let [el (current-target event)
+          droppables (dom/possible-droppables el)
+          touches (touch/changed-touches event)
+          point {:left (touch/page-x touches)
+                 :top (touch/page-y touches)}
+          drop-on (first (filter #(dom/point-in-element? point %)
+                                 droppables))]
+      (if drop-on
+        (do
+          (detach! el)
+          (append! drop-on el)
+          (dom/stop-dragging! el false))
+        (dom/stop-dragging! el)))))
 (defn move-cancel [event bridge]
   (when (dom/is-blueprint-mode?)
     (-> event current-target dom/stop-dragging!)))
