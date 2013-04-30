@@ -25,6 +25,21 @@
 (defn height [el]
   (.-offsetHeight el))
 
+(defn frame [el]
+  (merge {:width (width el)
+          :height (height el)}
+         (offset el)))
+
+(defn point-in-frame? [point frame]
+  (and
+   (> (:left point) (:left frame))
+   (> (:top point) (:top frame))
+   (< (:left point) (+ (:left frame) (:width frame)))
+   (< (:top point) (+ (:top frame) (:height frame)))))
+
+(defn point-in-element? [point element]
+  (point-in-frame? point (frame element)))
+
 (defn parent [el]
   (.-parentNode (dom/single-node el)))
 
