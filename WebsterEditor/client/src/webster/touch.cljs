@@ -3,7 +3,8 @@
             [domina.events :as events]))
   
 (defprotocol TouchEvent
-  (touches [touch-evt] "returns a sequence of touchs objects"))
+  (touches [touch-evt] "returns a sequence of touch objects")
+  (changed-touches [touch-evt] "returns a sequence of cahnged touch objects"))
 
 (defn- lazy-tl-via-item
   ([tl] (lazy-tl-via-item tl 0))
@@ -26,15 +27,22 @@
     (lazy-tl-via-item tl)
     (lazy-tl-via-array-ref tl)))
 
-(defn touches-from-raw [raw-event]
-  (lazy-touchlist (.-touches (.getBrowserEvent raw-event))))
+(defn property-from-raw [property raw-event]
+  (lazy-touchlist (aget (.getBrowserEvent raw-event) property)))
+
+(def touches-from-raw (partial property-from-raw "touches"))
+(def changed-touches-from-raw (partial property-from-raw "changedTouches"))
 
 (extend-protocol TouchEvent
   goog.events/Event
   (touches [event] (touches-from-raw event))
+  (changed-touches [event] (changed-touches-from-raw event))
   
   default
-  (touches [event] (touches-from-raw (events/raw-event event))))
+  (touches [event]
+           (touches-from-raw (events/raw-event event)))
+  (changed-touches [event]
+                   (changed-touches-from-raw (events/raw-event event))))
 
 (defn single-touch [content]
   (cond
