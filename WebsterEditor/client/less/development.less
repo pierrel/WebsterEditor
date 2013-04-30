@@ -15,6 +15,10 @@ body {
             background-color: fade(green, 30%);
         }
 
+        .selectable:empty, .row-fluid {
+            min-height: 30px;
+        }
+
         .container-fluid {
             outline: none;
         }
@@ -37,10 +41,6 @@ body {
 
 .container-fluid:empty {
     min-height: 500px;
-}
-
-.selectable:empty {
-    min-height: 30px;
 }
 
 .selected {
