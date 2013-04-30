@@ -252,10 +252,9 @@
   [node]
   (let [element (elements/node-to-element node)
         ancestors (set (ancestors node))]
-    (filter #(and (elements/allowed?
-                   element
-                   (elements/node-to-element %))
-                  (not (contains? ancestors %)))
+    (filter #(elements/allowed?
+                element
+                (elements/node-to-element %))
             (dom/nodes (dom/by-class "selectable")))))
 
 (defn make-droppable! [node]
@@ -266,6 +265,20 @@
        (clear-droppable! node)))
   ([node]
      (dom/remove-class! node "droppable")))
+
+(defn arrange-in-nodes [el point nodes]
+  (def goes-before?
+       (fn [point node]
+         (let [nframe (frame node)]
+           (and (> (:top point) (:top nframe))
+                (< (:top point) (+ (:top nframe) (:height nframe)))
+                (< (:left point) (:left nframe))))))
+  (loop [inodes nodes, acc []]
+    (if-let [node (first inodes)]
+      (if (goes-before? point node)
+        (concat acc [el] inodes)
+        (recur (rest inodes) (conj acc node)))
+      (seq (conj acc el)))))
 
 (defn dragging-element []
   (first (dragging-elements)))

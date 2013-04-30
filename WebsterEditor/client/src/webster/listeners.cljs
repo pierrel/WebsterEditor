@@ -82,12 +82,13 @@
                  :top (touch/page-y touches)}
           drop-on (first (filter #(dom/point-in-element? point %)
                                  droppables))]
-      (if drop-on
-        (do
-          (detach! el)
-          (append! drop-on el)
-          (dom/stop-dragging! el false))
-        (dom/stop-dragging! el)))))
+      (when drop-on
+        (detach! el)
+        (doseq [new-child
+                (dom/arrange-in-nodes el point (children drop-on))]
+          (detach! new-child)
+          (append! drop-on new-child)))
+      (dom/stop-dragging! el))))
 (defn move-cancel [event bridge]
   (when (dom/is-blueprint-mode?)
     (-> event current-target dom/stop-dragging!)))
