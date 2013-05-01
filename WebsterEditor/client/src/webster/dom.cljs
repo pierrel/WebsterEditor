@@ -30,6 +30,20 @@
           :height (height el)}
          (offset el)))
 
+(defn point-left-of?
+  "Returns true when p1 is just left of p2"
+  [p1 p2]
+  (and (> (:top p1) (:top p2))
+       (< (:top p1) (+ (:top p2) (:height p2)))
+       (< (:left p1) (:left p2))))
+
+(defn point-above?
+  "return true when p1 is just above p2"
+  [p1 p2]
+  (and (> (:left p1) (:left p2))
+       (< (:left p1) (+ (:left p2) (:width p2)))
+       (< (:top p1) (:top p2))))
+
 (defn point-in-frame? [point frame]
   (and
    (> (:left point) (:left frame))
@@ -270,9 +284,8 @@
   (def goes-before?
        (fn [point node]
          (let [nframe (frame node)]
-           (and (> (:top point) (:top nframe))
-                (< (:top point) (+ (:top nframe) (:height nframe)))
-                (< (:left point) (:left nframe))))))
+           (or (point-left-of? point nframe)
+               (point-above? point nframe)))))
   (loop [inodes nodes, acc []]
     (if-let [node (first inodes)]
       (if (goes-before? point node)
