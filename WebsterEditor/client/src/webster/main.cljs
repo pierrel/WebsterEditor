@@ -10,22 +10,28 @@
             [domina.css :as css]
             [domina.events :as events]))
 
-(defn add-listeners! [bridge]
+(defn add-selectable-listeners! [selectable bridge]
+  ;; content listeners
+  (events/listen! selectable
+                  :click
+                  #(listeners/container-listener % bridge))
+  (events/listen! (css/sel selectable "a")
+                  :click
+                  #(events/prevent-default %))
+
+  ;; blueprint listeners
+  (when (domi/has-class? selectable "draggable")
+    (events/listen! selectable :touchstart #(listeners/move-start % bridge))
+    (events/listen! selectable :touchmove #(listeners/move % bridge))
+    (events/listen! selectable :touchend #(listeners/move-end % bridge))
+    (events/listen! selectable :touchcancel #(listeners/move-cancel % bridge))))
+
+(defn init-listeners! [bridge]
   ;; default listener
   (events/listen! :click #(listeners/default-listener % bridge))
 
-  ;; content listeners
-  (let [selectable (domi/by-class "selectable")]
-    (events/listen! selectable :click #(listeners/container-listener % bridge))
-    (events/listen! (css/sel selectable "a") :click #(events/prevent-default %)))
-  
-  ;; blueprint listeners
-  (let [draggable (domi/by-class "draggable")]
-    (events/listen! draggable :touchstart #(listeners/move-start % bridge))
-    (events/listen! draggable :touchmove #(listeners/move % bridge))
-    (events/listen! draggable :touchend #(listeners/move-end % bridge))
-    (events/listen! draggable :touchcancel #(listeners/move-cancel % bridge))))
-
+  (doseq [selectable (domi/nodes (domi/by-class "selectable"))]
+    (add-selectable-listeners! selectable bridge)))
 
 (defn on-bridge-ready
   [event]
@@ -33,7 +39,7 @@
     ;; initialize the bridge
     (.init bridge "handler?")
 
-    (add-listeners! bridge)
+    (init-listeners! bridge)
 
     ;; deselect on scroll
     ;; (events/listen! :onscroll #(when (not (listeners/nothing-selected))
@@ -207,7 +213,7 @@
         new-el-in-dom (-> (domi/append! to-el new-el)  domi/children last)
         new-selectables (conj (domi/nodes (css/sel new-el-in-dom ".selectable")) new-el-in-dom)]
     (doseq [new-selectable new-selectables]
-      (add-selectable-listeners new-selectable bridge))
+      (add-selectable-listeners! new-selectable bridge))
     (listeners/default-listener nil bridge)
     (listeners/select-node new-el-in-dom bridge)))
 
