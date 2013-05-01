@@ -11,6 +11,9 @@
             [domina.events :as events]))
 
 (defn add-listeners! [bridge]
+  ;; default listener
+  (events/listen! :click #(listeners/default-listener % bridge))
+
   ;; content listeners
   (let [selectable (domi/by-class "selectable")]
     (events/listen! selectable :click #(listeners/container-listener % bridge))
@@ -29,9 +32,6 @@
   (let [bridge (.-bridge event)]
     ;; initialize the bridge
     (.init bridge "handler?")
-
-    ;; default listener
-    (events/listen! :click #(listeners/default-listener % bridge))
 
     (add-listeners! bridge)
 
