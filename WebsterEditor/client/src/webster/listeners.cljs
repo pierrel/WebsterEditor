@@ -8,6 +8,7 @@
             [webster.html :as html]
             [webster.dir :as dir]
             [webster.touch :as touch]
+            [webster.cart :as cart]
             [clojure.string :as string]))
 
 (defn default-listener
@@ -56,6 +57,10 @@
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
 
+(defn touch-blueprint-listener [event bridge]
+  (let [el (current-target event)]
+    (select-node el bridge)))
+
 (defn move-start [event bridge]
   (when (dom/is-blueprint-mode?)
     (prevent-default event)
@@ -79,16 +84,19 @@
           droppables (dom/possible-droppables el)
           touches (touch/changed-touches event)
           point {:left (touch/page-x touches)
-                 :top (touch/page-y touches)}
-          drop-on (first (filter #(dom/point-in-element? point %)
-                                 droppables))]
-      (when drop-on
-        (detach! el)
-        (doseq [new-child
-                (dom/arrange-in-nodes el point (children drop-on))]
-          (detach! new-child)
-          (append! drop-on new-child)))
-      (dom/stop-dragging! el))))
+                 :top (touch/page-y touches)}]
+      (if (= 0 (cart/distance {:left (js/parseInt (dom/data el "touch-origin-x"))
+                               :top (js/parseInt (dom/data el "touch-origin-y"))}
+                              point))
+        (touch-blueprint-listener event bridge) ;; hasn't moved so it's a "click"
+        (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
+          (when drop-on
+            (detach! el)
+            (doseq [new-child
+                    (dom/arrange-in-nodes el point (children drop-on))]
+              (detach! new-child)
+              (append! drop-on new-child)))))
+      (dom/stop-dragging! el)))) 
 (defn move-cancel [event bridge]
   (when (dom/is-blueprint-mode?)
     (-> event current-target dom/stop-dragging!)))
