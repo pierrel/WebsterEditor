@@ -78,7 +78,7 @@
         point {:left (touch/page-x touches)
                :top (touch/page-y touches)}]
     (if (not (dom/moved-from? el point))
-      (content-listener event bridge) ;; hasn't moved so it's a "click"
+      (if (dom/dragging? el) (container-listener event bridge)) ;; hasn't moved so it's a "click"
       (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
         (when drop-on
           (detach! el)

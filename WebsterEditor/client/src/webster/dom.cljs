@@ -284,6 +284,9 @@
       (not (= 0 (cart/distance {:left xel, :top yel} point)))
       false)))
 
+(defn dragging?
+  ([el]
+     (dom/has-class? el "dragging")))
 (defn dragging-element []
   (first (dragging-elements)))
 (defn dragging-elements []
