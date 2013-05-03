@@ -61,6 +61,7 @@
 (defn move [event bridge]
   (prevent-default event)
   (stop-propagation event)
+  (default-listener event bridge)
   (let [element (current-target event)
         touches (touch/touches event)]
     (dom/drag! element {:x (touch/page-x touches)
