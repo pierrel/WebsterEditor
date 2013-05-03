@@ -12,9 +12,6 @@
 
 (defn add-selectable-listeners! [selectable bridge]
   ;; content listeners
-  (events/listen! selectable
-                  :click
-                  #(listeners/container-listener % bridge))
   (events/listen! (css/sel selectable "a")
                   :click
                   #(events/prevent-default %))

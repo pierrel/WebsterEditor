@@ -273,6 +273,15 @@
         (recur (rest inodes) (conj acc node)))
       (seq (conj acc el)))))
 
+(defn moved-from? [element point]
+  (let [x-string (data element "touch-origin-x")
+        y-string (data element "touch-origin-y")
+        xel (js/parseInt x-string)
+        yel (js/parseInt y-string)]
+    (if (and x-string y-string)
+      (not (= 0 (cart/distance {:left xel, :top yel} point)))
+      false)))
+
 (defn dragging-element []
   (first (dragging-elements)))
 (defn dragging-elements []

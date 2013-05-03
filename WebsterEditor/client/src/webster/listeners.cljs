@@ -77,9 +77,7 @@
         touches (touch/changed-touches event)
         point {:left (touch/page-x touches)
                :top (touch/page-y touches)}]
-    (if (= 0 (cart/distance {:left (js/parseInt (dom/data el "touch-origin-x"))
-                             :top (js/parseInt (dom/data el "touch-origin-y"))}
-                            point))
+    (if (not (dom/moved-from? el point))
       (content-listener event bridge) ;; hasn't moved so it's a "click"
       (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
         (when drop-on
