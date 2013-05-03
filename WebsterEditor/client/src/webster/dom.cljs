@@ -251,6 +251,8 @@
                 (elements/node-to-element %))
             (dom/nodes (dom/by-class "selectable")))))
 
+(defn droppable? [el]
+  (dom/has-class? el "droppable"))
 (defn make-droppable! [node]
   (dom/add-class! node "droppable"))
 (defn clear-droppable!
@@ -306,9 +308,7 @@
   (dom/add-class! content "transitioning")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
   (set-data! content "touch-origin-x" (:x origin))
-  (set-data! content "touch-origin-y" (:y origin))
-  (doseq [node (possible-droppables (dom/single-node content))]
-    (make-droppable! node)))
+  (set-data! content "touch-origin-y" (:y origin)))
 (defn drag! [content to-point]
   (let [diff-x (- (:x to-point)
                   (data content "touch-origin-x"))
@@ -317,7 +317,9 @@
     (dom/remove-class! content "transitioning")
     (set-transform! content {:translate {:x diff-x
                                          :y diff-y}
-                             :scale 1.05})))
+                             :scale 1.05})
+    (doseq [node (possible-droppables (dom/single-node content))]
+      (make-droppable! node))))
 
 (defn get-mode []
   (if (dom/has-class? (css/sel "body") "blueprint")
