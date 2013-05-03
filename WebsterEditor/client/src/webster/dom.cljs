@@ -2,11 +2,12 @@
   (:require [webster.html :as html]
             [webster.dir :as dir]
             [webster.elements :as elements]
+            [webster.cart :as cart]
             [domina :as dom]
             [domina.css :as css]
             [domina.events :as events]
             [clojure.string :as string]))
-
+ 
 (defn offset-from-parent [el]
   {:top (.-offsetTop el)
    :left (.-offsetLeft el)})
@@ -30,29 +31,8 @@
           :height (height el)}
          (offset el)))
 
-(defn point-left-of?
-  "Returns true when p1 is just left of p2"
-  [p1 p2]
-  (and (> (:top p1) (:top p2))
-       (< (:top p1) (+ (:top p2) (:height p2)))
-       (< (:left p1) (:left p2))))
-
-(defn point-above?
-  "return true when p1 is just above p2"
-  [p1 p2]
-  (and (> (:left p1) (:left p2))
-       (< (:left p1) (+ (:left p2) (:width p2)))
-       (< (:top p1) (:top p2))))
-
-(defn point-in-frame? [point frame]
-  (and
-   (> (:left point) (:left frame))
-   (> (:top point) (:top frame))
-   (< (:left point) (+ (:left frame) (:width frame)))
-   (< (:top point) (+ (:top frame) (:height frame)))))
-
 (defn point-in-element? [point element]
-  (point-in-frame? point (frame element)))
+  (cart/point-in-frame? point (frame element)))
 
 (defn parent [el]
   (.-parentNode (dom/single-node el)))
@@ -284,8 +264,8 @@
   (def goes-before?
        (fn [point node]
          (let [nframe (frame node)]
-           (or (point-left-of? point nframe)
-               (point-above? point nframe)))))
+           (or (cart/point-left-of? point nframe)
+               (cart/point-above? point nframe)))))
   (loop [inodes nodes, acc []]
     (if-let [node (first inodes)]
       (if (goes-before? point node)
