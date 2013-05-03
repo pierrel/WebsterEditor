@@ -13,14 +13,13 @@
 
 (defn default-listener
   [event bridge]
-  (.callHandler bridge "defaultSelectedHandler" (js-obj))
+  (if bridge (.callHandler bridge "defaultSelectedHandler" (js-obj)))
   (make-unselected (sel ".selected"))
   (dom/stop-editing))
 
 (defn container-listener
   [event bridge]
-  (if (dom/is-content-mode?)
-    (content-listener event bridge)))
+  (content-listener event bridge))
 
 (defn content-listener
   [event bridge]
@@ -57,58 +56,50 @@
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
 
-(defn touch-blueprint-listener [event bridge]
-  (let [el (current-target event)]
-    (select-node el bridge)))
-
 (defn move-start [event bridge]
-  (when (dom/is-blueprint-mode?)
-    (prevent-default event)
-    (stop-propagation event)
-    (let [element (current-target event)
-          touches (touch/touches event)]
-      (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)}))))
+  (prevent-default event)
+  (stop-propagation event)
+  (let [element (current-target event)
+        touches (touch/touches event)]
+    (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
 (defn move [event bridge]
-  (when (dom/is-blueprint-mode?)
-    (prevent-default event)
-    (stop-propagation event)
-    (let [element (current-target event)
-          touches (touch/touches event)]
-      (dom/drag! element {:x (touch/page-x touches)
-                          :y (touch/page-y touches)}))))
+  (prevent-default event)
+  (stop-propagation event)
+  (let [element (current-target event)
+        touches (touch/touches event)]
+    (dom/drag! element {:x (touch/page-x touches)
+                        :y (touch/page-y touches)})))
 (defn move-end [event bridge]
-  (when (dom/is-blueprint-mode?)
-    (prevent-default event)
-    (stop-propagation event)
-    (let [el (current-target event)
-          droppables (dom/possible-droppables el)
-          touches (touch/changed-touches event)
-          point {:left (touch/page-x touches)
-                 :top (touch/page-y touches)}]
-      (if (= 0 (cart/distance {:left (js/parseInt (dom/data el "touch-origin-x"))
-                               :top (js/parseInt (dom/data el "touch-origin-y"))}
-                              point))
-        (touch-blueprint-listener event bridge) ;; hasn't moved so it's a "click"
-        (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
-          (when drop-on
-            (detach! el)
-            (doseq [new-child
-                    (dom/arrange-in-nodes el point (children drop-on))]
-              (detach! new-child)
-              (append! drop-on new-child)))))
-      (dom/stop-dragging! el)))) 
+  (prevent-default event)
+  (stop-propagation event)
+  (let [el (current-target event)
+        droppables (dom/possible-droppables el)
+        touches (touch/changed-touches event)
+        point {:left (touch/page-x touches)
+               :top (touch/page-y touches)}]
+    (if (= 0 (cart/distance {:left (js/parseInt (dom/data el "touch-origin-x"))
+                             :top (js/parseInt (dom/data el "touch-origin-y"))}
+                            point))
+      (content-listener event bridge) ;; hasn't moved so it's a "click"
+      (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
+        (when drop-on
+          (detach! el)
+          (doseq [new-child
+                  (dom/arrange-in-nodes el point (children drop-on))]
+            (detach! new-child)
+            (append! drop-on new-child)))))
+    (dom/stop-dragging! el))) 
 (defn move-cancel [event bridge]
-  (when (dom/is-blueprint-mode?)
-    (-> event current-target dom/stop-dragging!)))
+  (-> event current-target dom/stop-dragging!))
 
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
     (make-selected el)
-    (.callHandler bridge
-                  "containerSelectedHandler"
-                  row-info
-                  (if callback callback))))
+    (if bridge (.callHandler bridge
+                             "containerSelectedHandler"
+                             row-info
+                             (if callback callback)))))
 (defn clear-selection []
   (if (not (nothing-selected))
     (make-unselected (get-selected))))

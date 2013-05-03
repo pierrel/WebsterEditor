@@ -11,9 +11,6 @@ body {
         .draggable {
             outline: 2px solid white;
         }
-        .droppable {
-            background-color: fade(green, 30%);
-        }
 
         .selectable:empty, .row-fluid {
             min-height: 30px;
@@ -23,15 +20,23 @@ body {
             outline: none;
         }
 
-        // drag stuff
-        .dragging {
-            z-index: 100;
-            -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
-            background-color: fade(gray, 50%);
+        // selected stuff
+        .selected {
+            -webkit-box-shadow: 0 0 2em rgba(0, 0, 0, 0.9);
+            outline: 1px dashed white;
         }
-        .transitioning {
-            -webkit-transition: -webkit-transform 0.2s ease-in-out;
-        }
+    }
+    
+    .droppable {
+        outline: 2px solid green;
+    }
+    .dragging {
+        z-index: 100;
+        -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+        background-color: fade(gray, 50%);
+    }
+    .transitioning {
+        -webkit-transition: -webkit-transform 0.2s ease-in-out;
     }
 }
 
@@ -44,7 +49,7 @@ body {
 }
 
 .selected {
-    -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.7);
 }
 .selectable {
     -webkit-transition: -webkit-box-shadow 0.3s ease-in-out 0s;
