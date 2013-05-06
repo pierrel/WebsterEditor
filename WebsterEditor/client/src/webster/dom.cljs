@@ -258,6 +258,7 @@
 (defn clear-droppable!
   ([]
      (doseq [node (dom/nodes (dom/by-class "droppable"))]
+       (remove-forced-visibility! node)
        (clear-droppable! node)))
   ([node]
      (dom/remove-class! node "droppable")))
@@ -292,7 +293,6 @@
   ([node]
      (let [height (-> node frame :height)]
        (when (< height 30)
-         (dom/log node)
          (set-data! node "original-height" (str height "px"))
          (if (nil? (dom/style node "height")) (dom/set-style! node "height" height))
          (dom/set-style! node "height" "30px")))))
@@ -312,7 +312,7 @@
            (dom/set-style! node "height" height)
            (events/listen! node :webkitTransitionEnd
                            #(remove-forced-height node))))
-       (remove-forced-height node))))
+       (remove-forced-height! node))))
 
 (defn dragging?
   ([el]
