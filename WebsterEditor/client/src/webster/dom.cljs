@@ -284,6 +284,36 @@
       (not (= 0 (cart/distance {:left xel, :top yel} point)))
       false)))
 
+(defn force-visible!
+  "if given, makes the given node visible otherwise makes all selectables visible"
+  ([]
+     (doseq [node (dom/nodes (dom/by-class "selectable"))]
+       (make-visible node)))
+  ([node]
+     (let [height (-> node frame :height)]
+       (when (< height 30)
+         (dom/log node)
+         (set-data! node "original-height" (str height "px"))
+         (if (nil? (dom/style node "height")) (dom/set-style! node "height" height))
+         (dom/set-style! node "height" "30px")))))
+
+(defn remove-forced-height! [node]
+  (set-data! node "height")
+  (dom/set-style! node "height"))
+
+(defn remove-forced-visibility!
+  ([]
+     (doseq [node (dom/nodes (dom/by-class "selectable"))]
+       (remove-forced-visibility! node)))
+  ([node]
+     (let [height (data node "height")]
+       (if height
+         (do
+           (dom/set-style! node "height" height)
+           (events/listen! node :webkitTransitionEnd
+                           #(remove-forced-height node))))
+       (remove-forced-height node))))
+
 (defn dragging?
   ([el]
      (dom/has-class? el "dragging")))
@@ -322,6 +352,7 @@
                                          :y diff-y}
                              :scale 1.05})
     (doseq [node (possible-droppables (dom/single-node content))]
+      (force-visible! node)
       (make-droppable! node))))
 
 (defn get-mode []
