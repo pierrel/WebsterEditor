@@ -292,7 +292,7 @@
        (make-visible node)))
   ([node]
      (let [height (-> node frame :height)]
-       (when (< height 30)
+       (when (needs-force-visibility? node)
          (set-data! node "original-height" (str height "px"))
          (if (nil? (dom/style node "height")) (dom/set-style! node "height" height))
          (dom/set-style! node "height" "30px")))))
@@ -300,6 +300,12 @@
 (defn remove-forced-height! [node]
   (set-data! node "height")
   (dom/set-style! node "height"))
+
+(defn needs-force-visibility? [node]
+  (let [diff (- 30 (-> node frame :height))]
+    (if (> diff 0)
+      diff
+      false)))
 
 (defn remove-forced-visibility!
   ([]
