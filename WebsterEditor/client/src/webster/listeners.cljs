@@ -58,7 +58,9 @@
   (let [element (current-target event)
         touches (touch/touches event)]
     (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
+(def moved? (atom false))
 (defn move [event bridge]
+  (reset! moved? true)
   (prevent-default event)
   (stop-propagation event)
   (if (not (nothing-selected)) (default-listener event bridge))
@@ -74,9 +76,10 @@
         touches (touch/changed-touches event)
         point {:left (touch/page-x touches)
                :top (touch/page-y touches)}]
-    (if (not (dom/moved-from? el point))
+    (if (not @moved?)
       (if (dom/dragging? el) (container-listener event bridge)) ;; hasn't moved so it's a "click"
       (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
+        (reset! moved? false)
         (when drop-on
           (detach! el)
           (doseq [new-child
@@ -85,6 +88,7 @@
             (append! drop-on new-child)))))
     (dom/stop-dragging! el))) 
 (defn move-cancel [event bridge]
+  (reset! moved? false)
   (-> event current-target dom/stop-dragging!))
 
 
