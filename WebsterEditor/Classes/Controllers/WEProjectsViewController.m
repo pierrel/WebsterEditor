@@ -60,10 +60,12 @@
         return cell;
         
     } else {
+        WEProjectSettings *settings = [self settingsForId:[[self projects] objectAtIndex:indexPath.row]];
         WEProjectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectCell" forIndexPath:indexPath];
         NSString *projectId = [[self projects] objectAtIndex:indexPath.row];
         NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg" withProjectId:projectId];
         UIImage *thumb = [UIImage imageWithContentsOfFile:thumbPath];
+        [cell setName:settings.name];
         if (thumb) [cell setImage:thumb];
         return cell;
     }
@@ -136,7 +138,7 @@
         CGFloat diff = 20;
         [self.view setFrame:CGRectMake(current.origin.x+diff, current.origin.y+diff, current.size.width-(diff*2), current.size.height-(diff*2))];
     }];
-    WEProjectSettings *settings = [NSKeyedUnarchiver unarchiveObjectWithFile:[WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]];
+    WEProjectSettings *settings = [self settingsForId:projectId];
     NSLog(@"%@", [WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]);
     WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId withSettings:settings];
     mainController.delegate = self;
@@ -145,6 +147,11 @@
                      completion:^{
                          [self.view setFrame:current];
                      }];
+}
+
+-(WEProjectSettings*)settingsForId:(NSString*)projectId {
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:[WEUtils pathInDocumentDirectory:@"settings"
+                                                                         withProjectId:projectId]];
 }
 
 -(void)didSaveViewController:(WEViewController *)controller {

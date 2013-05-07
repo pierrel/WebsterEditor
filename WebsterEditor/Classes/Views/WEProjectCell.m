@@ -10,20 +10,33 @@
 
 @interface WEProjectCell()
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *nameView;
 @end
 
 @implementation WEProjectCell
 
-
+CGFloat const NAME_HEIGHT = 20;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                       0,
+                                                                       frame.size.width,
+                                                                       frame.size.height - NAME_HEIGHT)];
         self.imageView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:self.imageView];
         self.contentView.backgroundColor = [UIColor clearColor];
+        
+        self.nameView = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                  frame.size.height - NAME_HEIGHT,
+                                                                  frame.size.width,
+                                                                  NAME_HEIGHT)];
+        [self.nameView setBackgroundColor:[UIColor clearColor]];
+        [self.nameView setTextAlignment:NSTextAlignmentCenter];
+        [self.nameView setTextColor:[UIColor whiteColor]];
+        [self.contentView addSubview:self.nameView];
     }
     return self;
 }
@@ -33,8 +46,12 @@
     CGRect frame = self.frame;
     CGFloat width = (frame.size.height/size.height) * size.width;
     self.imageView.backgroundColor = [UIColor clearColor];
-    [self.imageView setFrame:CGRectMake((frame.size.width - width)/2, 0, width, frame.size.height)];
+    [self.imageView setFrame:CGRectMake((frame.size.width - width)/2, 0, width, frame.size.height - NAME_HEIGHT)];
     [self.imageView setImage:image];
+}
+
+-(void)setName:(NSString *)name {
+    [self.nameView setText:name];
 }
 
 

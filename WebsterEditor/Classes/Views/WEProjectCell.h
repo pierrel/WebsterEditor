@@ -10,4 +10,5 @@
 
 @interface WEProjectCell : UICollectionViewCell
 -(void)setImage:(UIImage*)image;
+-(void)setName:(NSString*)name;
 @end

@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+FOUNDATION_EXPORT NSString *const DEFAULT_NAME;
+
 @interface WEProjectSettings : NSObject<NSCoding>
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *bucket;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *lastExportURL;
