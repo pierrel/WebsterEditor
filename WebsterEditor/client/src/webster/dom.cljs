@@ -310,11 +310,6 @@ otherwise returns false"
       diff
       false)))
 
-(defn forced-height [node]
-  (if-let [original-h (data node "original-height")]
-    (- (-> node frame :height) (js/parseInt original-h))
-    0))
-
 (defn remove-forced-visibility!
   ([]
      (doseq [node (dom/nodes (dom/by-class "selectable"))]
@@ -354,16 +349,15 @@ otherwise returns false"
   (dom/add-class! content "dragging")
   (dom/add-class! content "transitioning")
   (set-transform! content {:translate {:x 0 :y 0} :scale 1.05})
-  (set-data! content "touch-origin-x" (:x origin))
-  (set-data! content "touch-origin-y" (:y origin)))
+  (set-data! content "touch-origin-x" (- (-> content frame :left) (:x origin)))
+  (set-data! content "touch-origin-y" (- (-> content frame :top) (:y origin))))
 (defn drag! [content to-point]
   (let [droppables (possible-droppables (dom/single-node content))
-        c-top (-> content dom/single-node frame :top)
+        c-frame (frame content)
         diff-x (- (:x to-point)
-                  (data content "touch-origin-x"))
+                  (- (:left c-frame) (data content "touch-origin-x")))
         diff-y (- (:y to-point)
-                  (data content "touch-origin-y")
-                  (reduce + 0 (map forced-height (filter #(< (-> % frame :top) c-top) droppables))))]
+                  (- (:top c-frame) (data content "touch-origin-y")))]
     (dom/remove-class! content "transitioning")
     (set-transform! content {:translate {:x diff-x
                                          :y diff-y}
