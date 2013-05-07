@@ -183,7 +183,11 @@
  
 (defn remove-element-handler
   ([data callback]
-     (-> ".selected" css/sel domi/detach!))
+     (let [selected (-> "selected" domi/by-class domi/single-node first)]
+       (domi/add-class! selected "hinge")
+       (.addEventListener selected
+                          "webkitAnimationEnd"
+                          #(domi/detach! selected))))
   ([data callback bridge]
      (remove-element-handler data callback)
      (listeners/default-listener nil bridge)))
