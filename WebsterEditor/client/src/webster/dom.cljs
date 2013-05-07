@@ -262,7 +262,8 @@
 (defn clear-droppable!
   ([]
      (doseq [node (dom/nodes (dom/by-class "droppable"))]
-       (remove-forced-visibility! node)
+       (when (not (is-blueprint-mode?))
+         (remove-forced-visibility! node))
        (clear-droppable! node)))
   ([node]
      (dom/remove-class! node "droppable")))
