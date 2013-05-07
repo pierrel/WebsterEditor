@@ -86,7 +86,7 @@
     
     [refreshButton addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
     
-    self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dark_exa.png"]];
+    self.settingsView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_wash_wall.png"]];
     
     contentView.layer.masksToBounds = NO;
     contentView.layer.shadowOffset = CGSizeMake(-15, 0);
