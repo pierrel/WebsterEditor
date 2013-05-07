@@ -292,20 +292,28 @@
        (make-visible node)))
   ([node]
      (let [height (-> node frame :height)]
-       (when (needs-force-visibility? node)
+       (when (and (not (data node "original-height")) (needs-force-visibility? node))
          (set-data! node "original-height" (str height "px"))
          (if (nil? (dom/style node "height")) (dom/set-style! node "height" height))
          (dom/set-style! node "height" "30px")))))
 
 (defn remove-forced-height! [node]
-  (set-data! node "height")
+  (set-data! node "original-height")
   (dom/set-style! node "height"))
 
-(defn needs-force-visibility? [node]
+(defn needs-force-visibility?
+  "if the height is below the threshold (30) then returns the difference
+otherwise returns false"
+  [node]
   (let [diff (- 30 (-> node frame :height))]
     (if (> diff 0)
       diff
       false)))
+
+(defn forced-height [node]
+  (if-let [original-h (data node "original-height")]
+    (- (-> node frame :height) (js/parseInt original-h))
+    0))
 
 (defn remove-forced-visibility!
   ([]
@@ -349,15 +357,18 @@
   (set-data! content "touch-origin-x" (:x origin))
   (set-data! content "touch-origin-y" (:y origin)))
 (defn drag! [content to-point]
-  (let [diff-x (- (:x to-point)
+  (let [droppables (possible-droppables (dom/single-node content))
+        c-top (-> content dom/single-node frame :top)
+        diff-x (- (:x to-point)
                   (data content "touch-origin-x"))
         diff-y (- (:y to-point)
-                  (data content "touch-origin-y"))]
+                  (data content "touch-origin-y")
+                  (reduce + 0 (map forced-height (filter #(< (-> % frame :top) c-top) droppables))))]
     (dom/remove-class! content "transitioning")
     (set-transform! content {:translate {:x diff-x
                                          :y diff-y}
                              :scale 1.05})
-    (doseq [node (possible-droppables (dom/single-node content))]
+    (doseq [node droppables]
       (force-visible! node)
       (make-droppable! node))))
 

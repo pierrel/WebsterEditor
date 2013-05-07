@@ -29,7 +29,7 @@
 
   (doseq [selectable (domi/nodes (domi/by-class "selectable"))]
     (add-selectable-listeners! selectable bridge)))
-
+(init-listeners! nil)
 (defn on-bridge-ready
   [event]
   (let [bridge (.-bridge event)]
