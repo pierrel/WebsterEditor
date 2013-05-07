@@ -193,14 +193,11 @@
                                                                      withProjectId:projectId]];
     
     // write the html template
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     @"development", @"name",
-     @"html", @"ext", nil];
-    NSString *name = @"development";
+    NSString *name = @"index";
     NSString *ext = @"html";
     NSString *fullPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.%@", name, ext]
                                             withProjectId:projectId];
-    NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name
+    NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"development"
                                                                                             ofType:ext]
                                                    encoding:NSUTF8StringEncoding
                                                       error:&error];

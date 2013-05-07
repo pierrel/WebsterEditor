@@ -56,7 +56,7 @@ static const int ICON_DIM = 13;
         [self closeDialog];
     }];
     
-    NSString *indexPath = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
+    NSString *indexPath = [WEUtils pathInDocumentDirectory:@"index.html" withProjectId:self.projectId];
     if ([self pageOverHTTP]) { // DEV MODE
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
     } else {

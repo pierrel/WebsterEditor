@@ -274,7 +274,7 @@ Export
 
 -(void)saveProject {
     NSError *error;
-    NSString *devFile = [WEUtils pathInDocumentDirectory:@"development.html" withProjectId:self.projectId];
+    NSString *devFile = [WEUtils pathInDocumentDirectory:@"index.html" withProjectId:self.projectId];
     NSString *html = [self.contentController.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
     [document writeToFile:devFile atomically:NO encoding:NSUTF8StringEncoding error:&error];
