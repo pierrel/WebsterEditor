@@ -202,11 +202,15 @@
      (dom/remove-class! el "editing")))
 
 (defn set-blueprint-mode []
-  (if (not (is-blueprint-mode?))
-    (dom/add-class! (css/sel "body") "blueprint")))
+  (when (not (is-blueprint-mode?))
+    (dom/add-class! (css/sel "body") "blueprint")
+    (doseq [draggable (dom/nodes (dom/by-class "draggable"))]
+      (force-visible! draggable))))
 (defn set-content-mode []
-  (if (not (is-content-mode?))
-    (dom/remove-class! (css/sel "body") "blueprint")))
+  (when (not (is-content-mode?))
+    (dom/remove-class! (css/sel "body") "blueprint")
+    (doseq [draggable (dom/nodes (dom/by-class "draggable"))]
+      (remove-forced-visibility! draggable))))
 
 (defn scale-transform [scale]
   (if scale
@@ -373,4 +377,4 @@ otherwise returns false"
 (defn is-blueprint-mode? []
   (= (get-mode) "blueprint"))
 (defn is-content-mode? []
-  (= (get-mode) "content"))
+  (= (get-mode) "content")) 
