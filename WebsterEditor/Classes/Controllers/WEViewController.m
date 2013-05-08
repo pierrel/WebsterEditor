@@ -114,6 +114,7 @@
     
     WEPageCollectionViewLayout *layout = [[WEPageCollectionViewLayout alloc] init];
     self.pageCollectionController = [[WEPageCollectionViewController alloc] initWithCollectionViewLayout:layout];
+    self.pageCollectionController.projectId = self.projectId;
     self.pageCollectionController.view.frame = CGRectMake(0,
                                                           0,
                                                           self.pagesView.frame.size.width,

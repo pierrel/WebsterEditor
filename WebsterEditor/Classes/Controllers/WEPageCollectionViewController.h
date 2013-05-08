@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface WEPageCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegate>
-
+@property (nonatomic, strong) NSString *projectId;
 @end
