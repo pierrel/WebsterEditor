@@ -8,7 +8,6 @@
 
 #import "WEProjectsViewController.h"
 #import "WEUtils.h"
-#import "WEProjectCell.h"
 #import "WEAddProjectCell.h"
 #import "WEViewController.h"
 
@@ -60,9 +59,11 @@
         return cell;
         
     } else {
-        WEProjectSettings *settings = [self settingsForId:[[self projects] objectAtIndex:indexPath.row]];
-        WEProjectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectCell" forIndexPath:indexPath];
         NSString *projectId = [[self projects] objectAtIndex:indexPath.row];
+        WEProjectSettings *settings = [self settingsForId:projectId];
+        WEProjectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProjectCell" forIndexPath:indexPath];
+        cell.projectId = projectId;
+        cell.delegate = self;
         NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg" withProjectId:projectId];
         UIImage *thumb = [UIImage imageWithContentsOfFile:thumbPath];
         [cell setName:settings.name];
@@ -239,6 +240,13 @@
     }
 
     return [NSArray arrayWithArray:filenames];
+}
+
+-(void)project:(NSString *)projectId renamedTo:(NSString *)newName {
+    WEProjectSettings *settings = [self settingsForId:projectId];
+    settings.name = newName;
+    [NSKeyedArchiver archiveRootObject:settings toFile:[WEUtils pathInDocumentDirectory:@"settings"
+                                                                          withProjectId:projectId]];
 }
 
 @end

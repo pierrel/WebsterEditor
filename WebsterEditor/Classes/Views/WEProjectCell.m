@@ -10,7 +10,7 @@
 
 @interface WEProjectCell()
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UILabel *nameView;
+@property (nonatomic, strong) UITextField *nameView;
 @end
 
 @implementation WEProjectCell
@@ -29,13 +29,14 @@ CGFloat const NAME_HEIGHT = 20;
         [self.contentView addSubview:self.imageView];
         self.contentView.backgroundColor = [UIColor clearColor];
         
-        self.nameView = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                  frame.size.height - NAME_HEIGHT,
-                                                                  frame.size.width,
-                                                                  NAME_HEIGHT)];
+        self.nameView = [[UITextField alloc] initWithFrame:CGRectMake(0,
+                                                                      frame.size.height - NAME_HEIGHT,
+                                                                      frame.size.width,
+                                                                      NAME_HEIGHT)];
         [self.nameView setBackgroundColor:[UIColor clearColor]];
         [self.nameView setTextAlignment:NSTextAlignmentCenter];
         [self.nameView setTextColor:[UIColor whiteColor]];
+        [self.nameView setDelegate:self];
         [self.contentView addSubview:self.nameView];
     }
     return self;
@@ -52,6 +53,10 @@ CGFloat const NAME_HEIGHT = 20;
 
 -(void)setName:(NSString *)name {
     [self.nameView setText:name];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if (self.delegate) [self.delegate project:self.projectId renamedTo:textField.text];
 }
 
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "WEViewController.h"
+#import "WEProjectCell.h"
 
-@interface WEProjectsViewController : UICollectionViewController<UICollectionViewDelegate,WEViewControllerDelegate>
+@interface WEProjectsViewController : UICollectionViewController<UICollectionViewDelegate,WEViewControllerDelegate,WEProjectRenameDelegate>
 -(NSArray*)projects;
 -(void)didSaveViewController:(WEViewController *)controller;
 @end

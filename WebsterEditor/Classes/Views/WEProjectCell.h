@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WEProjectCell : UICollectionViewCell
+@protocol WEProjectRenameDelegate <NSObject>
+-(void)project:(NSString*)projectId renamedTo:(NSString*)newName;
+@end
+
+
+@interface WEProjectCell : UICollectionViewCell<UITextFieldDelegate>
+@property (assign, nonatomic) id<WEProjectRenameDelegate>delegate;
+@property (strong, nonatomic) NSString *projectId;
 -(void)setImage:(UIImage*)image;
 -(void)setName:(NSString*)name;
 @end
+
