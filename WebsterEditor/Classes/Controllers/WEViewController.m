@@ -13,6 +13,7 @@
 #import "WEPageManager.h"
 #import "WEUtils.h"
 #import "NSThread+BlockAdditions.h"
+#import "WEPageCollectionViewLayout.h"
 
 @interface WEViewController ()
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
@@ -110,7 +111,14 @@
     
     
     [modeSwitch addTarget:self action:@selector(modeSwitched:) forControlEvents:UIControlEventValueChanged];
-
+    
+    WEPageCollectionViewLayout *layout = [[WEPageCollectionViewLayout alloc] init];
+    self.pageCollectionController = [[WEPageCollectionViewController alloc] initWithCollectionViewLayout:layout];
+    self.pageCollectionController.collectionView.frame = CGRectMake(0,
+                                                          0,
+                                                          self.pagesView.frame.size.width,
+                                                          self.pagesView.frame.size.height);
+    [self.pagesView addSubview:self.pageCollectionController.collectionView];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -395,7 +403,8 @@ Export
 -(void)openSettingsWithTiming:(NSTimeInterval)timing {
     [UIView animateWithDuration:timing animations:^{
         CGSize size = self.contentView.frame.size;
-        self.contentView.frame = CGRectMake(self.settingsView.frame.size.width, 0, size.width, size.height);
+        CGFloat openSize = self.settingsView.frame.size.width + self.pagesView.frame.size.width;
+        self.contentView.frame = CGRectMake(openSize, 0, size.width, size.height);
     }];
 }
 

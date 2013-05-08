@@ -10,6 +10,7 @@
 #import "GradientButton.h"
 #import "WEWebViewController.h"
 #import "WEProjectSettings.h"
+#import "WEPageCollectionViewController.h"
 
 @class WEViewController;
 @protocol WEViewControllerDelegate <NSObject>
@@ -24,9 +25,11 @@
 
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) WEWebViewController *contentController;
+@property (nonatomic, strong) WEPageCollectionViewController *pageCollectionController;
 
 @property (nonatomic, strong) IBOutlet UIView *contentView;
 @property (nonatomic, strong) IBOutlet UIView *settingsView;
+@property (nonatomic, strong) IBOutlet UIView *pagesView;
 @property (nonatomic, strong) IBOutlet GradientButton *bgSelect;
 @property (nonatomic, strong) IBOutlet GradientButton *bgRemove;
 @property (nonatomic, strong) IBOutlet GradientButton *exportButton;

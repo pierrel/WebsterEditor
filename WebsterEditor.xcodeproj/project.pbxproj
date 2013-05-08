@@ -37,6 +37,9 @@
 		A29459F516FB59B9004AA401 /* NSArray+WEExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F416FB59B9004AA401 /* NSArray+WEExtras.m */; };
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
 		A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E816F0287700BEDBC6 /* WEUtils.m */; };
+		A297EBFB1739F9E0004BBB24 /* WEPageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A297EBFA1739F9E0004BBB24 /* WEPageCollectionViewController.m */; };
+		A297EBFE1739FA67004BBB24 /* WEPageCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A297EBFD1739FA66004BBB24 /* WEPageCollectionViewLayout.m */; };
+		A297EC011739FC31004BBB24 /* WEPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A297EC001739FC31004BBB24 /* WEPageCell.m */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
 		A29CF1BC16EBD37400AB6D38 /* WEWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AF16EBD37400AB6D38 /* WEWebViewController.m */; };
 		A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1B316EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt */; };
@@ -117,6 +120,12 @@
 		A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEViewController+ImagePicker.m"; sourceTree = "<group>"; };
 		A29589E716F0287700BEDBC6 /* WEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEUtils.h; sourceTree = "<group>"; };
 		A29589E816F0287700BEDBC6 /* WEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEUtils.m; sourceTree = "<group>"; };
+		A297EBF91739F9DF004BBB24 /* WEPageCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageCollectionViewController.h; sourceTree = "<group>"; };
+		A297EBFA1739F9E0004BBB24 /* WEPageCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageCollectionViewController.m; sourceTree = "<group>"; };
+		A297EBFC1739FA66004BBB24 /* WEPageCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageCollectionViewLayout.h; sourceTree = "<group>"; };
+		A297EBFD1739FA66004BBB24 /* WEPageCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageCollectionViewLayout.m; sourceTree = "<group>"; };
+		A297EBFF1739FC31004BBB24 /* WEPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageCell.h; sourceTree = "<group>"; };
+		A297EC001739FC31004BBB24 /* WEPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageCell.m; sourceTree = "<group>"; };
 		A29CF1AC16EBD37400AB6D38 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
 		A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
 		A29CF1AE16EBD37400AB6D38 /* WEWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEWebViewController.h; sourceTree = "<group>"; };
@@ -311,6 +320,8 @@
 				A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */,
 				A239B61D1708D2EA00109734 /* WEProjectsViewController.h */,
 				A239B61E1708D2EA00109734 /* WEProjectsViewController.m */,
+				A297EBF91739F9DF004BBB24 /* WEPageCollectionViewController.h */,
+				A297EBFA1739F9E0004BBB24 /* WEPageCollectionViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -357,6 +368,10 @@
 				A239B6291708E85E00109734 /* WEAddProjectCell.m */,
 				A239B6251708E0E800109734 /* WEProjectCollectionViewLayout.h */,
 				A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */,
+				A297EBFC1739FA66004BBB24 /* WEPageCollectionViewLayout.h */,
+				A297EBFD1739FA66004BBB24 /* WEPageCollectionViewLayout.m */,
+				A297EBFF1739FC31004BBB24 /* WEPageCell.h */,
+				A297EC001739FC31004BBB24 /* WEPageCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -648,6 +663,9 @@
 				A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */,
 				A239B62A1708E85E00109734 /* WEAddProjectCell.m in Sources */,
 				A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */,
+				A297EBFB1739F9E0004BBB24 /* WEPageCollectionViewController.m in Sources */,
+				A297EBFE1739FA67004BBB24 /* WEPageCollectionViewLayout.m in Sources */,
+				A297EC011739FC31004BBB24 /* WEPageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
