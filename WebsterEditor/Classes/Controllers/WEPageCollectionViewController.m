@@ -8,6 +8,7 @@
 
 #import "WEPageCollectionViewController.h"
 #import "WEPageCell.h"
+#import "WEAddPageCell.h"
 #import "WEUtils.h"
 
 @interface WEPageCollectionViewController ()
@@ -31,6 +32,8 @@
     
     [self.collectionView registerClass:[WEPageCell class]
             forCellWithReuseIdentifier:@"PageCell"];
+    [self.collectionView registerClass:[WEAddPageCell class]
+            forCellWithReuseIdentifier:@"AddPageCell"];
     
     self.collectionView.backgroundColor = [UIColor clearColor];
 }
@@ -40,16 +43,23 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self pages].count;
+    return [self pages].count + 1;
 }
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *filename = [[self pages] objectAtIndex:indexPath.row];
-    NSString *pageName = [filename stringByReplacingOccurrencesOfString:@".html" withString:@""];
-    WEPageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PageCell" forIndexPath:indexPath];
-    [cell setName:pageName];
-    return cell;
+    if ([self isIndexPathAddPage:indexPath]) {
+        WEAddPageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddPageCell" forIndexPath:indexPath];
+        return cell;
+    } else {
+        NSArray *pages = [self pages];
+        NSString *filename = [pages objectAtIndex:indexPath.row];
+        NSString *pageName = [filename stringByReplacingOccurrencesOfString:@".html" withString:@""];
+        WEPageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PageCell" forIndexPath:indexPath];
+        [cell setName:pageName];
+        
+        return cell;
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,6 +92,12 @@
         
     return sortedFiles;
 }
+
+-(BOOL)isIndexPathAddPage:(NSIndexPath*)indexPath {
+    return indexPath.row == [self collectionView:self.collectionView
+                          numberOfItemsInSection:indexPath.section] - 1;
+}
+
 
 
 - (void)didReceiveMemoryWarning
