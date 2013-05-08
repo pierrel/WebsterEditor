@@ -10,4 +10,5 @@
 
 @interface WEPageCell : UICollectionViewCell
 
+-(void)setName:(NSString*)name;
 @end

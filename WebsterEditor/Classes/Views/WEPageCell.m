@@ -8,7 +8,14 @@
 
 #import "WEPageCell.h"
 
+@interface WEPageCell()
+@property UITextField *pageNameField;
+@end
+
 @implementation WEPageCell
+@synthesize pageNameField;
+
+int const TEXT_HEIGHT = 20;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,8 +25,22 @@
         something.backgroundColor = [UIColor blackColor];
         something.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:something];
+        
+        pageNameField = [[UITextField alloc] initWithFrame:CGRectMake(0,
+                                                                     frame.size.height - TEXT_HEIGHT,
+                                                                     frame.size.width,
+                                                                     TEXT_HEIGHT)];
+        [pageNameField setBackgroundColor:[UIColor clearColor]];
+        [pageNameField setTextColor:[UIColor whiteColor]];
+        [pageNameField setTextAlignment:NSTextAlignmentCenter];
+        
+        [self addSubview:pageNameField];
     }
     return self;
+}
+
+-(void)setName:(NSString *)name {
+    [pageNameField setText:name];
 }
 
 /*

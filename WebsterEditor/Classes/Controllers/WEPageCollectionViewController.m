@@ -45,7 +45,10 @@
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *filename = [[self pages] objectAtIndex:indexPath.row];
+    NSString *pageName = [filename stringByReplacingOccurrencesOfString:@".html" withString:@""];
     WEPageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PageCell" forIndexPath:indexPath];
+    [cell setName:pageName];
     return cell;
 }
 
