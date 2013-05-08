@@ -17,7 +17,7 @@
 -(void)didSaveViewController:(WEViewController*)controller;
 @end
 
-@interface WEViewController : UIViewController<UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
+@interface WEViewController : UIViewController<UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate>
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;

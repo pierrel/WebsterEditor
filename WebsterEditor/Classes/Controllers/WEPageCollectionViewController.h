@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PageCollectionDelegate<NSObject>
+
+-(void)addAndSwitchToNewPage;
+
+@end
+
 @interface WEPageCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (nonatomic, strong) NSString *projectId;
+@property (nonatomic, assign) id<PageCollectionDelegate> delegate;
+
+-(NSArray*)pages;
 @end

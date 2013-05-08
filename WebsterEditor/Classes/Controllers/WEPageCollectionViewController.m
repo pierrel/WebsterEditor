@@ -63,7 +63,11 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"YAY");
+    if ([self isIndexPathAddPage:indexPath]) {
+        if (self.delegate) [self.delegate addAndSwitchToNewPage];
+    } else {
+        NSLog(@"click on existing page!");
+    }
 }
 
 -(NSArray*)pages {

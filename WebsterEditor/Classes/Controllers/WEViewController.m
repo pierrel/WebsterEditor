@@ -12,6 +12,7 @@
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
 #import "WEUtils.h"
+#import "NSArray+WEExtras.h"
 #import "NSThread+BlockAdditions.h"
 #import "WEPageCollectionViewLayout.h"
 
@@ -119,6 +120,7 @@
                                                           0,
                                                           self.pagesView.frame.size.width,
                                                           self.pagesView.frame.size.height);
+    self.pageCollectionController.delegate = self;
     [self.pagesView addSubview:self.pageCollectionController.view];
     self.pagesView.backgroundColor = [UIColor clearColor];
 }
@@ -424,6 +426,29 @@ Export
 
 -(void)appClosingNotification:(NSNotification*)notification {
     [self saveProject];
+}
+
+// Page duties
+-(NSString*)newPageName {
+    NSString *prefix = @"new";
+    NSString *suffix = @".html";
+    int num = 0;
+    NSArray *pages = [self.pageCollectionController pages];
+
+    while (YES) {
+        NSString *infix = (num == 0 ? @"" : [NSString stringWithFormat:@"%i", num]);
+        NSString *match = [NSString stringWithFormat:@"%@%@%@", prefix, infix, suffix];
+        
+        if (![pages containsString:match]) {
+            return match;
+        }
+        
+        num++;
+    }
+}
+
+-(void)addAndSwitchToNewPage {
+    NSLog(@"new page name: %@", [self newPageName]);
 }
 
 -(void)refresh {
