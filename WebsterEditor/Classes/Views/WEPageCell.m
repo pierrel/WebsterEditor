@@ -21,7 +21,7 @@ int const TEXT_HEIGHT = 20;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIView *something = [[UIView alloc] initWithFrame:frame];
+        UIView *something = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         something.backgroundColor = [UIColor blackColor];
         something.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:something];
