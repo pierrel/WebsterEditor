@@ -114,11 +114,12 @@
     
     WEPageCollectionViewLayout *layout = [[WEPageCollectionViewLayout alloc] init];
     self.pageCollectionController = [[WEPageCollectionViewController alloc] initWithCollectionViewLayout:layout];
-    self.pageCollectionController.collectionView.frame = CGRectMake(0,
+    self.pageCollectionController.view.frame = CGRectMake(0,
                                                           0,
                                                           self.pagesView.frame.size.width,
                                                           self.pagesView.frame.size.height);
-    [self.pagesView addSubview:self.pageCollectionController.collectionView];
+    [self.pagesView addSubview:self.pageCollectionController.view];
+    self.pagesView.backgroundColor = [UIColor clearColor];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
