@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WEViewController.h"
+#import "WEEditorViewController.h"
 #import "WEProjectCell.h"
 
 @interface WEProjectsViewController : UICollectionViewController<UICollectionViewDelegate,WEViewControllerDelegate,WEProjectRenameDelegate>
 -(NSArray*)projects;
--(void)didSaveViewController:(WEViewController *)controller;
+-(void)didSaveViewController:(WEEditorViewController *)controller;
 @end

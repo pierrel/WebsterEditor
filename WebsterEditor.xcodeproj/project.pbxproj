@@ -30,8 +30,8 @@
 		A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A27C9FEE170A6C490095D273 /* WEProjectSettings.m */; };
 		A27C9FFA170A7D3A0095D273 /* grey_wash_wall_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */; };
 		A27C9FFB170A7D3A0095D273 /* grey_wash_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF9170A7D3A0095D273 /* grey_wash_wall.png */; };
-		A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEViewController.m */; };
-		A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEViewController.xib */; };
+		A27D62BD16FC17FB005C114A /* WEEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A27D62BB16FC17FB005C114A /* WEEditorViewController.m */; };
+		A27D62BE16FC17FB005C114A /* WEEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEEditorViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
 		A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C116FC2063005C114A /* dark_exa_@2X.png */; };
 		A29459F116FACC19004AA401 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F016FACC19004AA401 /* GradientButton.m */; };
@@ -110,9 +110,9 @@
 		A27C9FEE170A6C490095D273 /* WEProjectSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEProjectSettings.m; path = Models/WEProjectSettings.m; sourceTree = "<group>"; };
 		A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_wash_wall_@2X.png"; sourceTree = "<group>"; };
 		A27C9FF9170A7D3A0095D273 /* grey_wash_wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey_wash_wall.png; sourceTree = "<group>"; };
-		A27D62BA16FC17FB005C114A /* WEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEViewController.h; sourceTree = "<group>"; };
-		A27D62BB16FC17FB005C114A /* WEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEViewController.m; sourceTree = "<group>"; };
-		A27D62BC16FC17FB005C114A /* WEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEViewController.xib; sourceTree = "<group>"; };
+		A27D62BA16FC17FB005C114A /* WEEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEEditorViewController.h; sourceTree = "<group>"; };
+		A27D62BB16FC17FB005C114A /* WEEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEEditorViewController.m; sourceTree = "<group>"; };
+		A27D62BC16FC17FB005C114A /* WEEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEEditorViewController.xib; sourceTree = "<group>"; };
 		A27D62C016FC2063005C114A /* dark_exa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_exa.png; sourceTree = "<group>"; };
 		A27D62C116FC2063005C114A /* dark_exa_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_exa_@2X.png"; sourceTree = "<group>"; };
 		A29459EF16FACC19004AA401 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
@@ -316,9 +316,9 @@
 				A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */,
 				A2F0540216F975B3008061EE /* WEImagePopoverViewController.h */,
 				A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */,
-				A27D62BA16FC17FB005C114A /* WEViewController.h */,
-				A27D62BB16FC17FB005C114A /* WEViewController.m */,
-				A27D62BC16FC17FB005C114A /* WEViewController.xib */,
+				A27D62BA16FC17FB005C114A /* WEEditorViewController.h */,
+				A27D62BB16FC17FB005C114A /* WEEditorViewController.m */,
+				A27D62BC16FC17FB005C114A /* WEEditorViewController.xib */,
 				A29FB3C617009E2D00216969 /* WEActionSelectViewController.h */,
 				A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */,
 				A239B61D1708D2EA00109734 /* WEProjectsViewController.h */,
@@ -598,7 +598,7 @@
 				A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */,
 				A29CF1E316EBD37C00AB6D38 /* glyphicons-halflings-white.png in Resources */,
 				A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */,
-				A27D62BE16FC17FB005C114A /* WEViewController.xib in Resources */,
+				A27D62BE16FC17FB005C114A /* WEEditorViewController.xib in Resources */,
 				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 				A22BEB0417016FE40039625D /* config.json in Resources */,
@@ -659,7 +659,7 @@
 				A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */,
 				A29459F116FACC19004AA401 /* GradientButton.m in Sources */,
 				A29459F516FB59B9004AA401 /* NSArray+WEExtras.m in Sources */,
-				A27D62BD16FC17FB005C114A /* WEViewController.m in Sources */,
+				A27D62BD16FC17FB005C114A /* WEEditorViewController.m in Sources */,
 				A29FB3C817009E2D00216969 /* WEActionSelectViewController.m in Sources */,
 				A2282F75170349250034214A /* NSThread+BlockAdditions.m in Sources */,
 				A2F12495170792C80012D1AF /* UIImage+WEExtras.m in Sources */,

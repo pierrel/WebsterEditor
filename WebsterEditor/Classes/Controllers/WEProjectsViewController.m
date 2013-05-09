@@ -9,7 +9,7 @@
 #import "WEProjectsViewController.h"
 #import "WEUtils.h"
 #import "WEAddProjectCell.h"
-#import "WEViewController.h"
+#import "WEEditorViewController.h"
 
 @interface WEProjectsViewController ()
 
@@ -141,7 +141,7 @@
     }];
     WEProjectSettings *settings = [self settingsForId:projectId];
     NSLog(@"%@", [WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]);
-    WEViewController *mainController = [[WEViewController alloc] initWithProjectId:projectId withSettings:settings];
+    WEEditorViewController *mainController = [[WEEditorViewController alloc] initWithProjectId:projectId withSettings:settings];
     mainController.delegate = self;
     [self presentViewController:mainController
                        animated:YES
@@ -155,7 +155,7 @@
                                                                          withProjectId:projectId]];
 }
 
--(void)didSaveViewController:(WEViewController *)controller {
+-(void)didSaveViewController:(WEEditorViewController *)controller {
     [self.collectionView reloadData];
 }
 

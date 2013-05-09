@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WEViewController.h"
+#import "WEEditorViewController.h"
 #import "WEProjectsViewController.h"
 
 @class WEWebViewController;

@@ -12,12 +12,12 @@
 #import "WEProjectSettings.h"
 #import "WEPageCollectionViewController.h"
 
-@class WEViewController;
+@class WEEditorViewController;
 @protocol WEViewControllerDelegate <NSObject>
--(void)didSaveViewController:(WEViewController*)controller;
+-(void)didSaveViewController:(WEEditorViewController*)controller;
 @end
 
-@interface WEViewController : UIViewController<UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate>
+@interface WEEditorViewController : UIViewController<UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate>
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;

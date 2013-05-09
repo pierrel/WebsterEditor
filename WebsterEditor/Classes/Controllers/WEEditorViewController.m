@@ -8,7 +8,7 @@
 
 #import <AWSiOSSDK/S3/AmazonS3Client.h>
 #import <AWSiOSSDK/AmazonEndpoints.h>
-#import "WEViewController.h"
+#import "WEEditorViewController.h"
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
 #import "WEUtils.h"
@@ -16,11 +16,11 @@
 #import "NSThread+BlockAdditions.h"
 #import "WEPageCollectionViewLayout.h"
 
-@interface WEViewController ()
+@interface WEEditorViewController ()
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
 @end
 
-@implementation WEViewController
+@implementation WEEditorViewController
 @synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton, modeSwitch;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
