@@ -17,6 +17,7 @@
 #import "WEPageCollectionViewLayout.h"
 
 @interface WEEditorViewController ()
+@property (nonatomic, assign) BOOL animateBack;
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
 @end
 
@@ -27,7 +28,7 @@
     self = [self init];
     if (self) {
         self.projectId = projectId;
-        self.settings = settings;        
+        self.settings = settings;
     }
     
     return self;
@@ -43,6 +44,8 @@
 
         self.popover = [[UIPopoverController alloc] initWithContentViewController:picker];
         self.popover.delegate = self;
+        
+        self.animateBack = NO;
     }
     return self;
 }
@@ -98,6 +101,7 @@
     
     self.contentController = [[WEWebViewController alloc] initWithNibName:@"WEWebViewController_iPad" bundle:nil];
     self.contentController.projectId = self.projectId;
+    self.contentController.delegate = self;
     [self.contentView addSubview:self.contentController.view];
     
     UISwipeGestureRecognizer *openGesture = [[UISwipeGestureRecognizer alloc] init];
@@ -479,7 +483,28 @@ Export
 }
 -(void)switchToPage:(NSString*)pageName animated:(BOOL)animate {
     [self saveProject];
+    if (animate) {
+        self.animateBack = YES;
+        [UIView animateWithDuration:0.2 animations:^{
+            CGSize size = self.contentView.frame.size;
+            [self.contentView setFrame:CGRectMake(self.view.frame.size.width,
+                                                  0,
+                                                  size.width,
+                                                  size.height)];
+        }];
+    }
     [self.contentController loadPage:pageName];
+}
+
+-(void)webViewDidLoad {
+    if (self.animateBack) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGSize size = self.contentView.frame.size;
+            [self.contentView setFrame:CGRectMake(0, 0, size.width, size.height)];
+        }];
+    }
+    
+    self.animateBack = NO;
 }
 
 -(void)refresh {

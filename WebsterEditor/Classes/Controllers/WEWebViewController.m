@@ -117,6 +117,7 @@ static const int ICON_DIM = 13;
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
     if (![webView isLoading]) {
+        if (self.delegate) [self.delegate webViewDidLoad];
         [UIView animateWithDuration:0.3 animations:^{
             [self.webView setAlpha:1.0];
         }];

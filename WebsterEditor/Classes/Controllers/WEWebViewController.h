@@ -12,7 +12,14 @@
 #import "WEColumnResizeView.h"
 #import "WEImagePopoverViewController.h"
 
+@protocol WEWebViewDelegate <NSObject>
+
+-(void)webViewDidLoad;
+
+@end
+
 @interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate>
+@property (strong, nonatomic) id<WEWebViewDelegate> delegate;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 @property (strong, nonatomic) UIButton *removeButton;
 @property (strong, nonatomic) UIButton *addButton;
