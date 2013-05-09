@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
+-(NSString*)getCurrentPage;
 -(void)loadPage:(NSString*)pageName;
 -(void)setBackgroundWithInfo:(NSDictionary *)info;
 -(void)removeBackground;

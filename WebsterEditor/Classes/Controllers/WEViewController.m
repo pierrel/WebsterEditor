@@ -290,7 +290,8 @@ Export
 
 -(void)saveProject {
     NSError *error;
-    NSString *devFile = [WEUtils pathInDocumentDirectory:@"index.html" withProjectId:self.projectId];
+    NSString *devFile = [WEUtils pathInDocumentDirectory:[self.contentController getCurrentPage]
+                                           withProjectId:self.projectId];
     NSString *html = [self.contentController.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
     [document writeToFile:devFile atomically:NO encoding:NSUTF8StringEncoding error:&error];
@@ -472,7 +473,11 @@ Export
     [self switchToPage:pageName animated:YES];
 }
 
+-(void)switchToPage:(NSString *)pageName {
+    [self switchToPage:pageName animated:YES];
+}
 -(void)switchToPage:(NSString*)pageName animated:(BOOL)animate {
+    [self saveProject];
     [self.contentController loadPage:pageName];
 }
 

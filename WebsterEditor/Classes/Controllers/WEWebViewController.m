@@ -18,6 +18,8 @@
 static const int ICON_DIM = 13;
 
 @interface WEWebViewController ()
+@property (strong, nonatomic) NSString *currentPage;
+
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
 - (WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index;
@@ -97,6 +99,7 @@ static const int ICON_DIM = 13;
 }
 
 -(void)loadPage:(NSString*)pageName {
+    self.currentPage = pageName;
     NSString *indexPath = [WEUtils pathInDocumentDirectory:pageName withProjectId:self.projectId];
     if ([self pageOverHTTP]) { // DEV MODE
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
@@ -104,6 +107,10 @@ static const int ICON_DIM = 13;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
     }
     self.webView.keyboardDisplayRequiresUserAction = NO;
+}
+
+-(NSString*)getCurrentPage {
+    return self.currentPage;
 }
 
 - (void)openDialogWithData:(id)data {

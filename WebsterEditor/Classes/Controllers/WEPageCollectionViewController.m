@@ -67,7 +67,8 @@
         if (self.delegate) [self.delegate addAndSwitchToNewPage];
         [self.collectionView reloadData];
     } else {
-        NSLog(@"click on existing page!");
+        NSString *pageName = [[self pages] objectAtIndex:indexPath.row];
+        if (self.delegate) [self.delegate switchToPage:pageName];
     }
 }
 

@@ -11,6 +11,7 @@
 @protocol PageCollectionDelegate<NSObject>
 
 -(void)addAndSwitchToNewPage;
+-(void)switchToPage:(NSString*)pageName;
 
 @end
 
