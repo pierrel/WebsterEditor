@@ -65,6 +65,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self isIndexPathAddPage:indexPath]) {
         if (self.delegate) [self.delegate addAndSwitchToNewPage];
+        [self.collectionView reloadData];
     } else {
         NSLog(@"click on existing page!");
     }

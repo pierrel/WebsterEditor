@@ -123,6 +123,9 @@
     self.pageCollectionController.delegate = self;
     [self.pagesView addSubview:self.pageCollectionController.view];
     self.pagesView.backgroundColor = [UIColor clearColor];
+    
+    // after-load stuff
+    [self switchToPage:[[self.pageCollectionController pages] objectAtIndex:0] animated:NO];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -448,7 +451,29 @@ Export
 }
 
 -(void)addAndSwitchToNewPage {
-    NSLog(@"new page name: %@", [self newPageName]);
+    NSString *newName = [self newPageName];
+    [self addAndSwitchToPage:newName];
+}
+
+-(void)addAndSwitchToPage:(NSString*)pageName {
+    // write the html template
+    NSError *error;
+    NSString *fullPath = [WEUtils pathInDocumentDirectory:pageName
+                                            withProjectId:self.projectId];
+    NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"development"
+                                                                                            ofType:@"html"]
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:&error];
+    [contents writeToFile:fullPath
+               atomically:NO
+                 encoding:NSStringEncodingConversionAllowLossy
+                    error:&error];
+    
+    [self switchToPage:pageName animated:YES];
+}
+
+-(void)switchToPage:(NSString*)pageName animated:(BOOL)animate {
+    [self.contentController loadPage:pageName];
 }
 
 -(void)refresh {

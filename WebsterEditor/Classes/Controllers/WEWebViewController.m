@@ -55,16 +55,7 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self closeDialog];
     }];
-    
-    NSString *indexPath = [WEUtils pathInDocumentDirectory:@"index.html" withProjectId:self.projectId];
-    if ([self pageOverHTTP]) { // DEV MODE
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
-    } else {
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
-    }
-    //[self.webView loadHTMLString:html baseURL:base];
-    self.webView.keyboardDisplayRequiresUserAction = NO;
-    
+        
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];
     [manager setBridge:jsBridge];
@@ -103,6 +94,16 @@ static const int ICON_DIM = 13;
     [editTextButton setHidden:YES];
     [self.view addSubview:editTextButton];
     
+}
+
+-(void)loadPage:(NSString*)pageName {
+    NSString *indexPath = [WEUtils pathInDocumentDirectory:pageName withProjectId:self.projectId];
+    if ([self pageOverHTTP]) { // DEV MODE
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
+    } else {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
+    }
+    self.webView.keyboardDisplayRequiresUserAction = NO;
 }
 
 - (void)openDialogWithData:(id)data {
