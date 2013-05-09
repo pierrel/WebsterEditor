@@ -57,6 +57,8 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self closeDialog];
     }];
+    
+    self.webView.delegate = self;
         
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];
@@ -99,6 +101,10 @@ static const int ICON_DIM = 13;
 }
 
 -(void)loadPage:(NSString*)pageName {
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.webView setAlpha:0.0];
+    }];
+
     self.currentPage = pageName;
     NSString *indexPath = [WEUtils pathInDocumentDirectory:pageName withProjectId:self.projectId];
     if ([self pageOverHTTP]) { // DEV MODE
@@ -107,6 +113,14 @@ static const int ICON_DIM = 13;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
     }
     self.webView.keyboardDisplayRequiresUserAction = NO;
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (![webView isLoading]) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.webView setAlpha:1.0];
+        }];
+    }
 }
 
 -(NSString*)stringFromCurrentPage {
