@@ -109,6 +109,13 @@ static const int ICON_DIM = 13;
     self.webView.keyboardDisplayRequiresUserAction = NO;
 }
 
+-(NSString*)stringFromCurrentPage {
+    NSString *html = [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+    NSString *document = [NSString stringWithFormat:@"<!DOCTYPE html>%@", html];
+
+    return document;
+}
+
 -(NSString*)getCurrentPage {
     return self.currentPage;
 }
