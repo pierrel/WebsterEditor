@@ -128,8 +128,12 @@
     [self.pagesView addSubview:self.pageCollectionController.view];
     self.pagesView.backgroundColor = [UIColor clearColor];
     
+    [self.activityView setHidesWhenStopped:YES];
+    [self.activityView stopAnimating];
+    
     // after-load stuff
-    [self switchToPage:[[self.pageCollectionController pages] objectAtIndex:0] animated:NO];
+    [self switchToPage:[[self.pageCollectionController pages] objectAtIndex:0]
+              animated:NO]; // load first page
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -482,6 +486,7 @@ Export
     [self switchToPage:pageName animated:YES];
 }
 -(void)switchToPage:(NSString*)pageName animated:(BOOL)animate {
+    [self.activityView startAnimating];
     [self saveProject];
     if (animate) {
         self.animateBack = YES;
@@ -503,7 +508,7 @@ Export
             [self.contentView setFrame:CGRectMake(0, 0, size.width, size.height)];
         }];
     }
-    
+    [self.activityView stopAnimating];
     self.animateBack = NO;
 }
 
