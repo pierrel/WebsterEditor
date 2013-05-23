@@ -86,7 +86,7 @@
 -(void)transitionToProject:(NSString*)projectId {
     NSError *error;
     
-    // copy latest css/js/html
+    // copy latest css/js
     NSArray *resources = [NSArray arrayWithObjects:
                           [NSDictionary dictionaryWithObjectsAndKeys:
                            @"development", @"name",
@@ -120,7 +120,7 @@
         NSDictionary *fileInfo = [resources objectAtIndex:i];
         NSString *ext = [fileInfo objectForKey:@"ext"];
         NSString *name = [fileInfo objectForKey:@"name"];
-        NSString *topLevelPath = ([ext isEqualToString:@"html"] ? @"" : [NSString stringWithFormat:@"%@/", ext]);
+        NSString *topLevelPath = [NSString stringWithFormat:@"%@/", ext];
         NSString *fullPath = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@%@.%@", topLevelPath, name, ext] withProjectId:projectId];
         
         NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name
@@ -151,8 +151,9 @@
 }
 
 -(WEProjectSettings*)settingsForId:(NSString*)projectId {
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:[WEUtils pathInDocumentDirectory:@"settings"
-                                                                         withProjectId:projectId]];
+    NSString *path = [WEUtils pathInDocumentDirectory:@"settings"
+                                        withProjectId:projectId];
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 }
 
 -(void)didSaveViewController:(WEEditorViewController *)controller {
@@ -192,6 +193,18 @@
     [NSKeyedArchiver archiveRootObject:settings
                                            toFile:[WEUtils pathInDocumentDirectory:@"settings"
                                                                      withProjectId:projectId]];
+    
+    // Setup index file
+    NSString *htmlBundle = [[NSBundle mainBundle] pathForResource:@"development"
+                                                           ofType:@"html"];
+    NSString *contents = [NSString stringWithContentsOfFile:htmlBundle
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:&error];
+    [contents writeToFile:[WEUtils pathInDocumentDirectory:@"index.html" withProjectId:projectId]
+               atomically:NO
+                 encoding:NSUTF8StringEncoding
+                    error:&error];
+    
     [self transitionToProject:projectId];
 }
 
