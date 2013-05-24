@@ -316,6 +316,7 @@ Export
     NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg"
                                              withProjectId:self.projectId];
     UIView *webView = self.contentController.view;
+    webView.frame = CGRectMake(webView.frame.origin.x, webView.frame.origin.y, 768, 1004);
     UIGraphicsBeginImageContext(webView.frame.size);
     [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
