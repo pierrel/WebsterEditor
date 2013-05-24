@@ -18,6 +18,7 @@
 
 @interface WEEditorViewController ()
 @property (nonatomic, assign) BOOL animateBack;
+@property (nonatomic, assign) BOOL webPageLoaded;
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
 @end
 
@@ -46,6 +47,7 @@
         self.popover.delegate = self;
         
         self.animateBack = NO;
+        self.webPageLoaded = NO;
     }
     return self;
 }
@@ -158,15 +160,15 @@ Export
     if ([self validateSettings]) {
         [exportActivity startAnimating];
         [goButton setHidden:YES];
-        [self saveProject];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
-                                                 (unsigned long)NULL), ^(void) {
-            [self doExportWorkWithCompletion:^(NSError *error) {
-                [goButton setHidden:NO];
-                [exportActivity stopAnimating];
-            }];
-        });
+        [self saveProjectWithCompletion:^(NSError *err) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+                                                     (unsigned long)NULL), ^(void) {
+                [self doExportWorkWithCompletion:^(NSError *error) {
+                    [goButton setHidden:NO];
+                    [exportActivity stopAnimating];
+                }];
+            });
+        }];
     }
 }
 
@@ -235,7 +237,7 @@ Export
         //html
         NSString *htmlTemplateFile = [mainBundle pathForResource:@"production" ofType:@"html"];
         NSString *htmlTemplate = [NSString stringWithContentsOfFile:htmlTemplateFile
-                                                           encoding:NSStringEncodingConversionAllowLossy
+                                                           encoding:NSUTF8StringEncoding
                                                               error:&error];
         NSString *markup = [responseData objectForKey:@"markup"];
         NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:self.settings.title];
@@ -296,15 +298,15 @@ Export
     }];
 }
 
--(void)saveProject {
+-(void)saveProjectWithCompletion:(void (^)(NSError*))block {
     NSError *error;
-    NSString *devFile = [WEUtils pathInDocumentDirectory:[self.contentController getCurrentPage]
+    NSString *currentPage = [self.contentController getCurrentPage];
+    NSString *devFile = [WEUtils pathInDocumentDirectory:currentPage
                                            withProjectId:self.projectId];
     [[self.contentController stringFromCurrentPage] writeToFile:devFile
                                                      atomically:NO
                                                        encoding:NSUTF8StringEncoding
-                                                          error:&error];
-    
+                                                          error:&error];    
     // save the settings
     self.settings.title = self.titleText.text;
     self.settings.bucket = self.bucketText.text;
@@ -324,7 +326,23 @@ Export
     NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
     [thumbData writeToFile:thumbPath atomically:NO];
     
-    if (self.delegate) [self.delegate didSaveViewController:self];
+    NSLog(@"done dev");
+    
+    if (self.webPageLoaded) {
+        [[WEPageManager sharedManager] exportMarkup:^(id responseData) {
+            NSError *innerError;
+            NSString *markup = [responseData objectForKey:@"markup"];
+            NSString *prodPage = [currentPage stringByReplacingOccurrencesOfString:@"." withString:@"_prod."];
+            NSString *prodFile = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
+            
+            [markup writeToFile:prodFile atomically:NO encoding:NSUTF8StringEncoding error:&innerError];
+            NSLog(@"done prod");
+            if (self.delegate) [self.delegate didSaveViewController:self];
+            block(nil);
+        }];
+    } else {
+        block(nil);
+    }
 }
     
 -(BOOL)validateSettings {
@@ -361,11 +379,12 @@ Export
 }
 
 -(void)backToProjects {
-    [self saveProject];
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 NSLog(@"dismissed");
-                             }];
+    [self saveProjectWithCompletion:^(NSError *err) {
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     NSLog(@"dismissed");
+                                 }];
+    }];
 }
 
 /*
@@ -439,7 +458,9 @@ Export
 }
 
 -(void)appClosingNotification:(NSNotification*)notification {
-    [self saveProject];
+    [self saveProjectWithCompletion:^(NSError *err) {
+        NSLog(@"saved and exiting");
+    }];
 }
 
 // Page duties
@@ -459,6 +480,10 @@ Export
         
         num++;
     }
+}
+
+-(NSArray*)pages {
+    return [self.pageCollectionController pages];
 }
 
 -(void)addAndSwitchToNewPage {
@@ -487,22 +512,25 @@ Export
     [self switchToPage:pageName animated:YES];
 }
 -(void)switchToPage:(NSString*)pageName animated:(BOOL)animate {
+    self.webPageLoaded = NO;
     [self.activityView startAnimating];
-    [self saveProject];
-    if (animate) {
-        self.animateBack = YES;
-        [UIView animateWithDuration:0.2 animations:^{
-            CGSize size = self.contentView.frame.size;
-            [self.contentView setFrame:CGRectMake(self.view.frame.size.width,
-                                                  0,
-                                                  size.width,
-                                                  size.height)];
-        }];
-    }
-    [self.contentController loadPage:pageName];
+    [self saveProjectWithCompletion:^(NSError *err) {
+        if (animate) {
+            self.animateBack = YES;
+            [UIView animateWithDuration:0.2 animations:^{
+                CGSize size = self.contentView.frame.size;
+                [self.contentView setFrame:CGRectMake(self.view.frame.size.width,
+                                                      0,
+                                                      size.width,
+                                                      size.height)];
+            }];
+        }
+        [self.contentController loadPage:pageName];
+    }];
 }
 
 -(void)webViewDidLoad {
+    self.webPageLoaded = YES;
     if (self.animateBack) {
         [UIView animateWithDuration:0.3 animations:^{
             CGSize size = self.contentView.frame.size;
