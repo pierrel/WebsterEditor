@@ -78,7 +78,7 @@
     NSArray *projectFiles = [fileManager contentsOfDirectoryAtPath:[WEUtils pathInDocumentDirectory:@""
                                                                                             withProjectId:self.projectId]
                                                                    error:&error];
-    NSPredicate *htmlPred = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.html'"];
+    NSPredicate *htmlPred = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.html' AND NOT SELF ENDSWITH '_prod.html'"];
     NSArray *filteredFiles = [projectFiles filteredArrayUsingPredicate:htmlPred];
 
     NSArray *sortedFiles = [filteredFiles sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
