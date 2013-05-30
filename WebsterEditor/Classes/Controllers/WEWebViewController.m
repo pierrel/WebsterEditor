@@ -31,8 +31,9 @@ static const int ICON_DIM = 13;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    WebViewJavascriptBridge *jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView handler:^(id data, WVJBResponseCallback responseCallback) {
+    WebViewJavascriptBridge *jsBridge = [WebViewJavascriptBridge bridgeForWebView:self.webView
+                                                                  webViewDelegate:self
+                                                                          handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"bridge enabled");
     }];
     [jsBridge registerHandler:@"containerSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
@@ -57,9 +58,7 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self closeDialog];
     }];
-    
-    self.webView.delegate = self;
-        
+            
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];
     [manager setBridge:jsBridge];
@@ -115,13 +114,12 @@ static const int ICON_DIM = 13;
     self.webView.keyboardDisplayRequiresUserAction = NO;
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView {
+#pragma mark UIWebViewDelegate
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView {    
     if (![webView isLoading]) {
         if (self.delegate) [self.delegate webViewDidLoad];
-        
-        // let the bridge know
-        [[WEPageManager sharedManager].bridge webViewDidFinishLoad:webView];
-        
+                
         [UIView animateWithDuration:0.3 animations:^{
             [self.webView setAlpha:1.0];
         }];
