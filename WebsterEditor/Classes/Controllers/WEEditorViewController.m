@@ -181,7 +181,7 @@ Export
     [[WEPageManager sharedManager] exportMarkup:^(id responseData) {
         NSError *error;
         NSBundle *mainBundle = [NSBundle mainBundle];
-        
+
         // region info
         S3Region *region = [S3Region USWest];
         AmazonRegion endpoint = US_WEST_1;
@@ -233,24 +233,29 @@ Export
         if (bucketWebResp.error != nil) NSLog(@"Error setting website config: %@", bucketWebResp.error);
         
         S3CannedACL *acl = [S3CannedACL publicRead];
+        S3PutObjectRequest *put;
         
         //html
         NSString *htmlTemplateFile = [mainBundle pathForResource:@"production" ofType:@"html"];
         NSString *htmlTemplate = [NSString stringWithContentsOfFile:htmlTemplateFile
                                                            encoding:NSUTF8StringEncoding
                                                               error:&error];
-        NSString *markup = [responseData objectForKey:@"markup"];
-        NSString *html = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:self.settings.title];
-        html = [html stringByReplacingOccurrencesOfString:@"[[BODY]]" withString:markup];
+        for (NSString *pagePath in [self.pageCollectionController pages]) {
+            NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
+            NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
+            NSString *html = [NSString stringWithContentsOfFile:fullPagePath
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
+            NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
+            put = [[S3PutObjectRequest alloc] initWithKey:pagePath inBucket:bucket];
+            put.contentType = @"text/html";
+            put.data = htmlData;
+            put.cannedACL = acl;
+            S3PutObjectResponse *resp = [s3 putObject:put];
+            if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
+        }
         
-        NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-        S3PutObjectRequest *put = [[S3PutObjectRequest alloc] initWithKey:@"index.html" inBucket:bucket];
-        put.contentType = @"text/html";
-        put.data = htmlData;
-        put.cannedACL = acl;
-        S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
-        
+
         // media
         NSString *pathPrefix = @"media";
         NSFileManager *fileManager = [NSFileManager defaultManager];
