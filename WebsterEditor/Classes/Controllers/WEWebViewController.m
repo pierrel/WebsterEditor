@@ -118,6 +118,10 @@ static const int ICON_DIM = 13;
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
     if (![webView isLoading]) {
         if (self.delegate) [self.delegate webViewDidLoad];
+        
+        // let the bridge know
+        [[WEPageManager sharedManager].bridge webViewDidFinishLoad:webView];
+        
         [UIView animateWithDuration:0.3 animations:^{
             [self.webView setAlpha:1.0];
         }];
