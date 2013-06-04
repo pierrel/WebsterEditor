@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WEPageCell : UICollectionViewCell
+@protocol WEPageRenameDelegate <NSObject>
+-(void)page:(NSString*)pageName renamedTo:(NSString*)newName;
+@end
 
+
+@interface WEPageCell : UICollectionViewCell<UITextFieldDelegate>
+@property (assign, nonatomic) id<WEPageRenameDelegate>delegate;
 -(void)setName:(NSString*)name;
 @end

@@ -9,7 +9,8 @@
 #import "WEPageCell.h"
 
 @interface WEPageCell()
-@property UITextField *pageNameField;
+@property (nonatomic, strong) UITextField *pageNameField;
+@property (nonatomic, strong) NSString *name;
 @end
 
 @implementation WEPageCell
@@ -33,6 +34,7 @@ int const TEXT_HEIGHT = 20;
         [pageNameField setBackgroundColor:[UIColor clearColor]];
         [pageNameField setTextColor:[UIColor whiteColor]];
         [pageNameField setTextAlignment:NSTextAlignmentCenter];
+        [pageNameField setDelegate:self];
         
         [self addSubview:pageNameField];
     }
@@ -41,6 +43,12 @@ int const TEXT_HEIGHT = 20;
 
 -(void)setName:(NSString *)name {
     [pageNameField setText:name];
+    _name = name;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if (self.delegate) [self.delegate page:_name renamedTo:textField.text];
+    _name = textField.text;
 }
 
 /*

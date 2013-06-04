@@ -7,7 +7,6 @@
 //
 
 #import "WEPageCollectionViewController.h"
-#import "WEPageCell.h"
 #import "WEAddPageCell.h"
 #import "WEUtils.h"
 
@@ -57,6 +56,7 @@
         NSString *pageName = [filename stringByReplacingOccurrencesOfString:@".html" withString:@""];
         WEPageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PageCell" forIndexPath:indexPath];
         [cell setName:pageName];
+        [cell setDelegate:self];
         
         return cell;
     }
@@ -102,6 +102,22 @@
 -(BOOL)isIndexPathAddPage:(NSIndexPath*)indexPath {
     return indexPath.row == [self collectionView:self.collectionView
                           numberOfItemsInSection:indexPath.section] - 1;
+}
+
+-(void)page:(NSString *)pageName renamedTo:(NSString *)newName {
+    NSError *err;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *oldFile = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.html", pageName]
+                                           withProjectId:self.projectId];
+    NSString *newFile = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.html", newName]
+                                          withProjectId:self.projectId];
+    
+    if ([fileManager fileExistsAtPath:oldFile]) {
+        [fileManager moveItemAtPath:oldFile toPath:newFile error:&err];
+        if (err) NSLog(@"Error! copying %@ to %@: %@", oldFile, newFile, err);
+    } else {
+        NSLog(@"Error! %@ (renamed to %@) should exist", oldFile, newFile);
+    }
 }
 
 

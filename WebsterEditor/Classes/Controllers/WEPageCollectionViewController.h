@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WEPageCell.h"
 
 @protocol PageCollectionDelegate<NSObject>
 
@@ -15,7 +16,7 @@
 
 @end
 
-@interface WEPageCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface WEPageCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegate,WEPageRenameDelegate>
 @property (nonatomic, strong) NSString *projectId;
 @property (nonatomic, assign) id<PageCollectionDelegate> delegate;
 
