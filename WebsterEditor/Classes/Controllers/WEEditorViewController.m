@@ -320,7 +320,8 @@ Export
                                                           withProjectId:self.projectId]];
     
     // save the thumbnail
-    NSString *thumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg"
+    NSString *thumbName = [currentPage stringByReplacingOccurrencesOfString:@".html" withString:@".jpeg"];
+    NSString *thumbPath = [WEUtils pathInDocumentDirectory:thumbName
                                              withProjectId:self.projectId];
     UIView *webView = self.contentController.view;
     webView.frame = CGRectMake(webView.frame.origin.x, webView.frame.origin.y, 768, 1004);
@@ -330,6 +331,9 @@ Export
     UIGraphicsEndImageContext();
     NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
     [thumbData writeToFile:thumbPath atomically:NO];
+    [thumbData writeToFile:[WEUtils pathInDocumentDirectory:@"thumb.jpeg"
+                                              withProjectId:self.projectId]
+                atomically:NO];
     
     NSLog(@"done dev");
     

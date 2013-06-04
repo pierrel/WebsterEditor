@@ -107,6 +107,18 @@
 -(BOOL)page:(NSString *)pageName renamedTo:(NSString *)newName {
     NSError *err;
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // thumb
+    NSString *oldThumb = [NSString stringWithFormat:@"%@.jpeg", pageName];
+    NSString *oldThumbFile = [WEUtils pathInDocumentDirectory:oldThumb withProjectId:self.projectId];
+    if ([fileManager fileExistsAtPath:oldThumbFile]) {
+        NSString *newThumbFile = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.jpeg", newName]
+                                                    withProjectId:self.projectId];
+        [fileManager moveItemAtPath:oldThumbFile toPath:newThumbFile error:&err];
+        if (err) NSLog(@"problem updating thumb for %@ to %@", pageName, newName);
+    } // else don't worry about it
+    
+    // HTML
     NSString *oldFileName = [NSString stringWithFormat:@"%@.html", pageName];
     NSString *newFileName = [NSString stringWithFormat:@"%@.html", newName];
     NSString *oldFile = [WEUtils pathInDocumentDirectory:oldFileName
