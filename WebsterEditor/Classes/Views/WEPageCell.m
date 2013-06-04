@@ -47,8 +47,22 @@ int const TEXT_HEIGHT = 20;
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    if (self.delegate) [self.delegate page:_name renamedTo:textField.text];
-    _name = textField.text;
+    if (self.delegate) {
+        if ([self.delegate page:_name renamedTo:textField.text]) {
+            _name = textField.text;
+        } else {
+            textField.text = self.name;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not rename page"
+                                                            message:@"Make sure the name is not taken"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    } else {
+        textField.text = self.name;
+        NSLog(@"Error! Must set delegate to change page name");
+    }
 }
 
 /*

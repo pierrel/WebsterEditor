@@ -104,19 +104,29 @@
                           numberOfItemsInSection:indexPath.section] - 1;
 }
 
--(void)page:(NSString *)pageName renamedTo:(NSString *)newName {
+-(BOOL)page:(NSString *)pageName renamedTo:(NSString *)newName {
     NSError *err;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *oldFile = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.html", pageName]
+    NSString *oldFileName = [NSString stringWithFormat:@"%@.html", pageName];
+    NSString *newFileName = [NSString stringWithFormat:@"%@.html", newName];
+    NSString *oldFile = [WEUtils pathInDocumentDirectory:oldFileName
                                            withProjectId:self.projectId];
-    NSString *newFile = [WEUtils pathInDocumentDirectory:[NSString stringWithFormat:@"%@.html", newName]
+    NSString *newFile = [WEUtils pathInDocumentDirectory:newFileName
                                           withProjectId:self.projectId];
     
     if ([fileManager fileExistsAtPath:oldFile]) {
         [fileManager moveItemAtPath:oldFile toPath:newFile error:&err];
-        if (err) NSLog(@"Error! copying %@ to %@: %@", oldFile, newFile, err);
+        if (err) {
+            NSLog(@"Error! copying %@ to %@: %@", oldFile, newFile, err);
+            return NO;
+        } else {
+            [self.delegate page:oldFileName renamedTo:newFileName];
+            return YES;
+        }
+        
     } else {
         NSLog(@"Error! %@ (renamed to %@) should exist", oldFile, newFile);
+        return NO;
     }
 }
 

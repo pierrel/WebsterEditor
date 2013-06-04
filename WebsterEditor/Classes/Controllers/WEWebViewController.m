@@ -114,6 +114,10 @@ static const int ICON_DIM = 13;
     self.webView.keyboardDisplayRequiresUserAction = NO;
 }
 
+-(void)currentPageRenamedTo:(NSString *)newName {
+    self.currentPage = newName;
+}
+
 #pragma mark UIWebViewDelegate
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView {    

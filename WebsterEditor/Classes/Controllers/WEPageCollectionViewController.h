@@ -13,6 +13,7 @@
 
 -(void)addAndSwitchToNewPage;
 -(void)switchToPage:(NSString*)pageName;
+-(void)page:(NSString *)pageName renamedTo:(NSString *)newName;
 
 @end
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol WEPageRenameDelegate <NSObject>
--(void)page:(NSString*)pageName renamedTo:(NSString*)newName;
+-(BOOL)page:(NSString*)pageName renamedTo:(NSString*)newName;
 @end
 
 

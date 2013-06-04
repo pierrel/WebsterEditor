@@ -33,6 +33,7 @@
 
 -(NSString*)getCurrentPage;
 -(NSString*)stringFromCurrentPage;
+-(void)currentPageRenamedTo:(NSString*)newName;
 -(void)loadPage:(NSString*)pageName;
 -(void)setBackgroundWithInfo:(NSDictionary *)info;
 -(void)removeBackground;

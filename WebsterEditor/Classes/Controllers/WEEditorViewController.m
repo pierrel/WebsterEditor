@@ -383,6 +383,12 @@ Export
     }
 }
 
+-(void)page:(NSString *)pageName renamedTo:(NSString *)newName {
+    if ([[self.contentController getCurrentPage] isEqualToString:pageName]) {
+        [self.contentController currentPageRenamedTo:newName];
+    }
+}
+
 -(void)backToProjects {
     [self saveProjectWithCompletion:^(NSError *err) {
         [self dismissViewControllerAnimated:YES
