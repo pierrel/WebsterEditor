@@ -29,7 +29,7 @@ int const TEXT_HEIGHT = 20;
         CGRect effectiveFrame = CGRectMake(buffer,
                                            (buffer/2),
                                            frame.size.width - (buffer*2),
-                                           frame.size.height - (buffer/2));
+                                           frame.size.height - (buffer*1.5));
 
         self.bgView = [[WEPageBackgroundView alloc] initWithFrame:effectiveFrame];
         [self.bgView setColor:[UIColor blueColor]];
