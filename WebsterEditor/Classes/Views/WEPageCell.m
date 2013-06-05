@@ -7,9 +7,11 @@
 //
 
 #import "WEPageCell.h"
+#import "WEPageBackgroundView.h"
 
 @interface WEPageCell()
 @property (nonatomic, strong) UITextField *pageNameField;
+@property (nonatomic, strong) WEPageBackgroundView *bgView;
 @property (nonatomic, strong) NSString *name;
 @end
 
@@ -22,7 +24,18 @@ int const TEXT_HEIGHT = 20;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIView *something = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        CGFloat buffer = TEXT_HEIGHT;
+        CGRect effectiveFrame = CGRectMake(buffer,
+                                           (buffer/2),
+                                           frame.size.width - (buffer*2),
+                                           frame.size.height - (buffer/2));
+
+        self.bgView = [[WEPageBackgroundView alloc] initWithFrame:effectiveFrame];
+        [self.bgView setColor:[UIColor blueColor]];
+        [self.bgView setHidden:YES];
+        [self addSubview:self.bgView];
+        
+        UIView *something = [[UIView alloc] initWithFrame:effectiveFrame];
         something.backgroundColor = [UIColor blackColor];
         something.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:something];
@@ -44,6 +57,14 @@ int const TEXT_HEIGHT = 20;
 -(void)setName:(NSString *)name {
     [pageNameField setText:name];
     _name = name;
+}
+
+-(void)setHighlighted:(BOOL)highlighted {
+    if (highlighted) {
+        [self.bgView setHidden:NO];
+    } else {
+        [self.bgView setHidden:YES];
+    }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {

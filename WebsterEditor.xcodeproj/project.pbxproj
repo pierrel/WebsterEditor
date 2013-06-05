@@ -50,6 +50,7 @@
 		A29CF1E316EBD37C00AB6D38 /* glyphicons-halflings-white.png in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D316EBD37C00AB6D38 /* glyphicons-halflings-white.png */; };
 		A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1D416EBD37C00AB6D38 /* glyphicons-halflings.png */; };
 		A29FB3C817009E2D00216969 /* WEActionSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */; };
+		A2B0B75E175E359600FD2E90 /* WEPageBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B0B75D175E359600FD2E90 /* WEPageBackgroundView.m */; };
 		A2D15F10171227AD009FF2D8 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0B171227AD009FF2D8 /* add.png */; };
 		A2D15F11171227AD009FF2D8 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0C171227AD009FF2D8 /* blue.png */; };
 		A2D15F12171227AD009FF2D8 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0D171227AD009FF2D8 /* delete.png */; };
@@ -155,6 +156,8 @@
 		A29CF1D916EBD37C00AB6D38 /* rangy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rangy.js; sourceTree = "<group>"; };
 		A29FB3C617009E2D00216969 /* WEActionSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEActionSelectViewController.h; sourceTree = "<group>"; };
 		A29FB3C717009E2D00216969 /* WEActionSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEActionSelectViewController.m; sourceTree = "<group>"; };
+		A2B0B75C175E359600FD2E90 /* WEPageBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageBackgroundView.h; sourceTree = "<group>"; };
+		A2B0B75D175E359600FD2E90 /* WEPageBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageBackgroundView.m; sourceTree = "<group>"; };
 		A2D15F0B171227AD009FF2D8 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		A2D15F0C171227AD009FF2D8 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
 		A2D15F0D171227AD009FF2D8 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -377,6 +380,8 @@
 				A297EC001739FC31004BBB24 /* WEPageCell.m */,
 				A23E7DE9173AA34B004CDDF7 /* WEAddPageCell.h */,
 				A23E7DEA173AA34B004CDDF7 /* WEAddPageCell.m */,
+				A2B0B75C175E359600FD2E90 /* WEPageBackgroundView.h */,
+				A2B0B75D175E359600FD2E90 /* WEPageBackgroundView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -672,6 +677,7 @@
 				A297EBFE1739FA67004BBB24 /* WEPageCollectionViewLayout.m in Sources */,
 				A297EC011739FC31004BBB24 /* WEPageCell.m in Sources */,
 				A23E7DEB173AA34B004CDDF7 /* WEAddPageCell.m in Sources */,
+				A2B0B75E175E359600FD2E90 /* WEPageBackgroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

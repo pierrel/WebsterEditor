@@ -11,6 +11,7 @@
 #import "WEUtils.h"
 
 @interface WEPageCollectionViewController ()
+@property (nonatomic, assign) NSInteger selectedRow;
 -(NSArray*)pages;
 @end
 
@@ -20,7 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.selectedRow = 0;
     }
     return self;
 }
@@ -58,17 +59,38 @@
         [cell setName:pageName];
         [cell setDelegate:self];
         
+        if (indexPath.row == self.selectedRow) {
+            [cell setHighlighted:YES];
+        }
+                
         return cell;
     }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // deselect the old row
+    NSIndexPath *oldPath = [NSIndexPath indexPathForItem:self.selectedRow inSection:0];
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:oldPath];
+    [cell setHighlighted:NO];
+    
     if ([self isIndexPathAddPage:indexPath]) {
+        // let the content know
         if (self.delegate) [self.delegate addAndSwitchToNewPage];
+                
+        // prepare the new one to be highlighted
+        self.selectedRow = 0;
+        
+        // refresh the collection
         [self.collectionView reloadData];
-    } else {
+    } else {        
+        // let the content know
         NSString *pageName = [[self pages] objectAtIndex:indexPath.row];
         if (self.delegate) [self.delegate switchToPage:pageName];
+        
+        // highlight the current one
+        cell = [collectionView cellForItemAtIndexPath:indexPath];
+        [cell setHighlighted:YES];
+        self.selectedRow = indexPath.row;
     }
 }
 
