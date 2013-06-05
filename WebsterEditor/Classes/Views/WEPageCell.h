@@ -16,4 +16,5 @@
 @interface WEPageCell : UICollectionViewCell<UITextFieldDelegate>
 @property (assign, nonatomic) id<WEPageRenameDelegate>delegate;
 -(void)setName:(NSString*)name;
+-(void)setImage:(UIImage *)image;
 @end

@@ -12,6 +12,7 @@
 @interface WEPageCell()
 @property (nonatomic, strong) UITextField *pageNameField;
 @property (nonatomic, strong) WEPageBackgroundView *bgView;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) NSString *name;
 @end
 
@@ -40,6 +41,10 @@ int const TEXT_HEIGHT = 20;
         something.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:something];
         
+        self.imageView = [[UIImageView alloc] initWithFrame:effectiveFrame];
+        [self.imageView setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:self.imageView];
+                
         pageNameField = [[UITextField alloc] initWithFrame:CGRectMake(0,
                                                                      frame.size.height - TEXT_HEIGHT,
                                                                      frame.size.width,
@@ -52,6 +57,10 @@ int const TEXT_HEIGHT = 20;
         [self addSubview:pageNameField];
     }
     return self;
+}
+
+-(void)setImage:(UIImage *)image {
+    [self.imageView setImage:image];
 }
 
 -(void)setName:(NSString *)name {

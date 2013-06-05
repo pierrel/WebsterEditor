@@ -59,6 +59,16 @@
         [cell setName:pageName];
         [cell setDelegate:self];
         
+        dispatch_async(dispatch_get_global_queue(0, 0),^ {
+            NSString *thumbName = [NSString stringWithFormat:@"%@.jpeg", pageName];
+            NSString *thumbPath = [WEUtils pathInDocumentDirectory:thumbName withProjectId:self.projectId];
+            NSFileManager *fs = [NSFileManager defaultManager];
+            if ([fs fileExistsAtPath:thumbPath]) {
+                UIImage *image = [UIImage imageWithContentsOfFile:thumbPath];
+                [cell setImage:image];
+            }
+        });
+        
         if (indexPath.row == self.selectedRow) {
             [cell setHighlighted:YES];
         }
