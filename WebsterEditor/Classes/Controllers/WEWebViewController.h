@@ -21,10 +21,6 @@
 @interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate>
 @property (strong, nonatomic) id<WEWebViewDelegate> delegate;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
-@property (strong, nonatomic) UIButton *removeButton;
-@property (strong, nonatomic) UIButton *addButton;
-@property (strong, nonatomic) UIButton *parentButton;
-@property (strong, nonatomic) UIButton *editTextButton;
 @property (strong, nonatomic) NSString *projectId;
 @property (strong, nonatomic) UIPopoverController *addPopover;
 @property (strong, nonatomic) WEActionSelectViewController *addSelectionController;

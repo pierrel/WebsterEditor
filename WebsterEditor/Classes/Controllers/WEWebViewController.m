@@ -18,6 +18,11 @@
 static const int ICON_DIM = 13;
 
 @interface WEWebViewController ()
+@property (strong, nonatomic) UIButton *removeButton;
+@property (strong, nonatomic) UIButton *addButton;
+@property (strong, nonatomic) UIButton *parentButton;
+@property (strong, nonatomic) UIButton *editTextButton;
+@property (strong, nonatomic) UIButton *styleButton;
 @property (strong, nonatomic) NSString *currentPage;
 
 - (void)openDialogWithData:(id)data;
@@ -26,7 +31,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton;
 
 - (void)viewDidLoad
 {
@@ -97,6 +102,11 @@ static const int ICON_DIM = 13;
     [editTextButton setHidden:YES];
     [self.view addSubview:editTextButton];
     
+    self.styleButton = [[UIButton alloc] init];
+    [styleButton setImage:[UIImage imageNamed:@"information.png"] forState:UIControlStateNormal];
+    [styleButton addTarget:self action:@selector(styleButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [styleButton setHidden:YES];
+    [self.view addSubview:styleButton];
 }
 
 -(void)loadPage:(NSString*)pageName {
@@ -169,10 +179,15 @@ static const int ICON_DIM = 13;
                                       MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                       buttonSize.width,
                                       buttonSize.height);
+    styleButton.frame = CGRectMake(MIN(frame.origin.x + frame.size.width - (buttonSize.width/2), maxX),
+                                   MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
+                                   buttonSize.width,
+                                   buttonSize.height);
     [removeButton setHidden:NO];
     [parentButton setHidden:NO];
     if ([addables count] > 0) [addButton setHidden:NO];
     if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
+    [styleButton setHidden:NO];
     
     // let the add popover know
     [self.addSelectionController setData:data];
@@ -211,6 +226,7 @@ static const int ICON_DIM = 13;
     [addButton setHidden:YES];
     [parentButton setHidden:YES];
     [editTextButton setHidden:YES];
+    [styleButton setHidden:YES];
 }
 
 -(WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index {
@@ -280,6 +296,10 @@ static const int ICON_DIM = 13;
 
 -(void)editTextButtonTapped:(UIButton*)button {
     [[WEPageManager sharedManager] editSelectedElement];
+}
+
+-(void)styleButtonTapped:(UIButton*)button {
+    NSLog(@"editing style");
 }
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info {
