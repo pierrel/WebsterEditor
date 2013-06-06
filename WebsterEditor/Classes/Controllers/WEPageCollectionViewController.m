@@ -65,7 +65,9 @@
             NSFileManager *fs = [NSFileManager defaultManager];
             if ([fs fileExistsAtPath:thumbPath]) {
                 UIImage *image = [UIImage imageWithContentsOfFile:thumbPath];
-                [cell setImage:image];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [cell setImage:image];
+                });
             }
         });
         
