@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd client
-lein cljsbuild auto
+lein lesscss auto
