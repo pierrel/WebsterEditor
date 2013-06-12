@@ -141,7 +141,10 @@
     }];
     WEProjectSettings *settings = [self settingsForId:projectId];
     NSLog(@"%@", [WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]);
-    WEEditorViewController *mainController = [[WEEditorViewController alloc] initWithProjectId:projectId withSettings:settings];
+    NSString *nibName = @"WEEditorViewController";
+    WEEditorViewController *mainController = [[WEEditorViewController alloc] initWithNibName:nibName bundle:nil];
+    mainController.projectId = projectId;
+    mainController.settings = settings;
     mainController.delegate = self;
     [self presentViewController:mainController
                        animated:YES

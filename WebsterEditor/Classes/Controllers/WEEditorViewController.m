@@ -20,7 +20,6 @@
 @property (nonatomic, assign) BOOL animateBack;
 @property (nonatomic, assign) BOOL webPageLoaded;
 @property (nonatomic, strong) UIImagePickerController *picker;
--(void)openSettings:(UIGestureRecognizer*)openGesture;
 @end
 
 @implementation WEEditorViewController
@@ -111,12 +110,12 @@
     
     UISwipeGestureRecognizer *openGesture = [[UISwipeGestureRecognizer alloc] init];
     openGesture.direction = UISwipeGestureRecognizerDirectionRight;
-    [openGesture addTarget:self action:@selector(openSettings:)];
+    [openGesture addTarget:self action:@selector(swipeRight:)];
     [contentView addGestureRecognizer:openGesture];
     
     UISwipeGestureRecognizer *closeGesture = [[UISwipeGestureRecognizer alloc] init];
     closeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-    [closeGesture addTarget:self action:@selector(closeSettings:)];
+    [closeGesture addTarget:self action:@selector(swipeLeft:)];
     [contentView addGestureRecognizer:closeGesture];
     
     
@@ -443,23 +442,31 @@ Export
  Setting stuff
  */
 
--(void)openSettings:(UIGestureRecognizer *)openGesture {
-    if (openGesture.state == UIGestureRecognizerStateEnded && ![self isOpen]) {
-        [[WEPageManager sharedManager] hasBackgroundWithCallback:^(id responseData) {
-            NSString *hasBG = [responseData objectForKey:@"hasBackground"];
-            if ([hasBG isEqualToString:@"true"]) {
-                [bgRemove setHidden:NO];
-            } else {
-                [bgRemove setHidden:YES];
-            }
-        }];
-        [self openSettingsWithTiming:0.1];
+-(void)swipeRight:(UIGestureRecognizer *)openGesture {
+    if (openGesture.state == UIGestureRecognizerStateEnded) {
+        if ([self isPagesOpen]) {
+            [self closePagesWithTiming:0.1];
+        } else {
+            [[WEPageManager sharedManager] hasBackgroundWithCallback:^(id responseData) {
+                NSString *hasBG = [responseData objectForKey:@"hasBackground"];
+                if ([hasBG isEqualToString:@"true"]) {
+                    [bgRemove setHidden:NO];
+                } else {
+                    [bgRemove setHidden:YES];
+                }
+            }];
+            [self openSettingsWithTiming:0.1];
+        }
     }
 }
 
--(void)closeSettings:(UIGestureRecognizer *)closeGesture {
-    if (closeGesture.state == UIGestureRecognizerStateEnded && [self isOpen]) {
-        [self closeSettingsWithTiming:0.1];
+-(void)swipeLeft:(UIGestureRecognizer *)closeGesture {
+    if (closeGesture.state == UIGestureRecognizerStateEnded) {
+        if ([self isSettingsOpen]){
+            [self closeSettingsWithTiming:0.1];
+        } else {
+            [self openPagesWithTiming:0.1];
+        }
     }
 }
 
@@ -473,13 +480,33 @@ Export
 -(void)openSettingsWithTiming:(NSTimeInterval)timing {
     [UIView animateWithDuration:timing animations:^{
         CGSize size = self.contentView.frame.size;
-        CGFloat openSize = self.settingsView.frame.size.width + self.pagesView.frame.size.width;
+        CGFloat openSize = self.settingsView.frame.size.width;
         self.contentView.frame = CGRectMake(openSize, 0, size.width, size.height);
     }];
 }
 
--(BOOL)isOpen {
+-(BOOL)isSettingsOpen {
     return self.contentView.frame.origin.x > 0;
+}
+
+-(void)closePagesWithTiming:(NSTimeInterval)timing {
+    [UIView animateWithDuration:timing animations:^{
+        CGSize size = self.contentView.frame.size;
+        self.contentView.frame = CGRectMake(0, 0, size.width, size.height);
+    }];
+}
+
+-(void)openPagesWithTiming:(NSTimeInterval)timing {
+    [UIView animateWithDuration:timing animations:^{
+        CGSize size = self.contentView.frame.size;
+        CGFloat openSize = -1 * self.pagesView.frame.size.width;
+        self.contentView.frame = CGRectMake(openSize, 0, size.width, size.height);
+    }];
+}
+
+
+-(BOOL)isPagesOpen {
+    return self.contentView.frame.origin.x < 0;
 }
 
 -(void)modeSwitched:(UISwitch*)switcher {
