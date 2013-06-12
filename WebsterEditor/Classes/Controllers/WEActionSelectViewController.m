@@ -27,12 +27,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTapped:)];
+    [self.navigationItem setRightBarButtonItem:cancelButton];
+    [self.navigationItem setTitle:@"Add Element"];
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+-(void)cancelTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"cancelled add");
+    }];
 }
 
 - (void)didReceiveMemoryWarning

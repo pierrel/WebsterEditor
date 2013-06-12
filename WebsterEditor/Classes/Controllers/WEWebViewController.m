@@ -24,6 +24,7 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UIButton *editTextButton;
 @property (strong, nonatomic) UIButton *styleButton;
 @property (strong, nonatomic) NSString *currentPage;
+@property (nonatomic, strong) UINavigationController *navController;
 
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
@@ -73,9 +74,13 @@ static const int ICON_DIM = 13;
     self.addSelectionController.delegate = self;
     
     // popover
-    self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
-    self.addPopover.delegate = self;
-    [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
+        self.addPopover.delegate = self;
+        [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
+    } else {
+        self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
+    }
     
     // Buttons
     self.removeButton = [[UIButton alloc] init];
@@ -133,7 +138,7 @@ static const int ICON_DIM = 13;
 -(void)webViewDidFinishLoad:(UIWebView *)webView {    
     if (![webView isLoading]) {
         if (self.delegate) [self.delegate webViewDidLoad];
-                
+        
         [UIView animateWithDuration:0.3 animations:^{
             [self.webView setAlpha:1.0];
         }];
@@ -212,7 +217,13 @@ static const int ICON_DIM = 13;
     [self.webView endEditing:YES];
     [self closeActionButtons];
     
-    [self.addPopover dismissPopoverAnimated:YES]; // just in case
+    if (self.addPopover) {
+        [self.addPopover dismissPopoverAnimated:YES]; // just in case
+    } else {
+        [self.addSelectionController dismissViewControllerAnimated:YES completion:^{
+            NSLog(@"something");
+        }];
+    }
     
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {
@@ -284,10 +295,16 @@ static const int ICON_DIM = 13;
 }
 
 -(void)addButtonTapped:(UIButton*)button {
-    [self.addPopover presentPopoverFromRect:button.frame
-                                     inView:self.view
-                   permittedArrowDirections:UIPopoverArrowDirectionAny
-                                   animated:YES];
+    if (self.addPopover) {
+        [self.addPopover presentPopoverFromRect:button.frame
+                                         inView:self.view
+                       permittedArrowDirections:UIPopoverArrowDirectionAny
+                                       animated:YES];
+    } else {
+        [self presentViewController:self.navController animated:YES completion:^{
+            NSLog(@"showing add selection");
+        }];
+    }
 }
 
 -(void)parentButtonTapped:(UIButton*)button {

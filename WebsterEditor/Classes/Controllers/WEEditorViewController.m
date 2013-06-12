@@ -19,11 +19,12 @@
 @interface WEEditorViewController ()
 @property (nonatomic, assign) BOOL animateBack;
 @property (nonatomic, assign) BOOL webPageLoaded;
+@property (nonatomic, strong) UIImagePickerController *picker;
 -(void)openSettings:(UIGestureRecognizer*)openGesture;
 @end
 
 @implementation WEEditorViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton, modeSwitch;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton, modeSwitch, picker;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
@@ -38,14 +39,7 @@
 - (id)init
 {
     self = [super init];
-    if (self) {
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
-        self.popover = [[UIPopoverController alloc] initWithContentViewController:picker];
-        self.popover.delegate = self;
-        
+    if (self) {        
         self.animateBack = NO;
         self.webPageLoaded = NO;
     }
@@ -55,6 +49,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.popover = [[UIPopoverController alloc] initWithContentViewController:picker];
+        self.popover.delegate = self;
+    }
     
     [exportActivity setHidesWhenStopped:YES];
     [exportActivity stopAnimating];
@@ -405,8 +408,17 @@ Export
 /*
  Background Selection
  */
--(void)selectingBackgroundImage {    
-    [self.popover presentPopoverFromRect:self.bgSelect.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+-(void)selectingBackgroundImage {
+    if (self.popover) {
+        [self.popover presentPopoverFromRect:self.bgSelect.frame
+                                      inView:self.view
+                    permittedArrowDirections:UIPopoverArrowDirectionAny
+                                    animated:YES];
+    } else {
+        [self presentViewController:self.picker animated:YES completion:^{
+            NSLog(@"showing picker modally");
+        }];
+    }
 }
 
 -(void)removeBackgroundImage {
@@ -416,7 +428,13 @@ Export
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     // get the thing
-    [self.popover dismissPopoverAnimated:YES];
+    if (self.popover) {
+        [self.popover dismissPopoverAnimated:YES];
+    } else {
+        [self.picker dismissViewControllerAnimated:YES completion:^{
+            NSLog(@"back to editor");
+        }];
+    }
     [bgRemove setHidden:NO];
     [self.contentController setBackgroundWithInfo:info];
 }

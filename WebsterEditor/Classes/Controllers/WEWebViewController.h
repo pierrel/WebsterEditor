@@ -18,7 +18,7 @@
 
 @end
 
-@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate>
+@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) id<WEWebViewDelegate> delegate;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 @property (strong, nonatomic) NSString *projectId;
