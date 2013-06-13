@@ -26,10 +26,10 @@
                                                                             (thumbnail-listener event bridge)
                                                                             (stop-propagation event)
                                                                             (stop-propagation event))
-     (not (is-selected? el)) (do
-                               (select-node el bridge)
-                               (stop-propagation event)
-                               (prevent-default event)))))
+     :else (do
+             (select-node (or (dom/first-content-child el) el) bridge)
+             (stop-propagation event)
+             (prevent-default event)))))
 
 (defn thumbnail-listener
   [event bridge]

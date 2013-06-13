@@ -369,4 +369,7 @@ otherwise returns false"
 (defn is-blueprint-mode? []
   (= (get-mode) "blueprint"))
 (defn is-content-mode? []
-  (= (get-mode) "content")) 
+  (= (get-mode) "content"))
+
+(defn first-content-child [el]
+  (first (filter #(elements/in-category? (elements/node-to-element %) :content) (dom/children el))))
