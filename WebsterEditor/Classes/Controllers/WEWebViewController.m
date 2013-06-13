@@ -23,8 +23,9 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UIButton *parentButton;
 @property (strong, nonatomic) UIButton *editTextButton;
 @property (strong, nonatomic) UIButton *styleButton;
+@property (strong, nonatomic) UIButton *imageButton;
 @property (strong, nonatomic) NSString *currentPage;
-@property (nonatomic, strong) UINavigationController *navController;
+@property (strong, nonatomic) UINavigationController *navController;
 
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
@@ -32,7 +33,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton, imageButton;
 
 - (void)viewDidLoad
 {
@@ -112,6 +113,12 @@ static const int ICON_DIM = 13;
     [styleButton addTarget:self action:@selector(styleButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [styleButton setHidden:YES];
     [self.view addSubview:styleButton];
+    
+    self.imageButton = [[UIButton alloc] init];
+    [imageButton setTitle:@"📷" forState:UIControlStateNormal];
+    [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [imageButton setHidden:YES];
+    [self.view addSubview:imageButton];
 }
 
 -(void)loadPage:(NSString*)pageName {
@@ -188,11 +195,18 @@ static const int ICON_DIM = 13;
                                    MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                    buttonSize.width,
                                    buttonSize.height);
+    imageButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
+                                   MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
+                                   buttonSize.width,
+                                   buttonSize.height);
     [removeButton setHidden:NO];
     [parentButton setHidden:NO];
-    if ([addables count] > 0) [addButton setHidden:NO];
-    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
     [styleButton setHidden:NO];
+    
+    if ([addables count] > 0) [addButton setHidden:NO];
+    
+    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
+    else if ([classes containsString:@"image"]) [imageButton setHidden:NO];
     
     // let the add popover know
     [self.addSelectionController setData:data];
@@ -238,6 +252,7 @@ static const int ICON_DIM = 13;
     [parentButton setHidden:YES];
     [editTextButton setHidden:YES];
     [styleButton setHidden:YES];
+    [imageButton setHidden:YES];
 }
 
 -(WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index {
@@ -317,6 +332,9 @@ static const int ICON_DIM = 13;
 
 -(void)styleButtonTapped:(UIButton*)button {
     NSLog(@"editing style");
+}
+
+-(void)imageButtonTapped:(UIButton*)button {
 }
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info {
