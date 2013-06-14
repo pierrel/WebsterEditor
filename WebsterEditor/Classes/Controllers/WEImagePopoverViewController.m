@@ -18,10 +18,10 @@
 @implementation WEImagePopoverViewController
 @synthesize imagePicker, popover, deleteButton;
 
--(id)initWithType:(WEImagePopoverType)type {
+-(id)initWithDeleteButtonVisible:(BOOL)deleteVisible {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.type = type;
+        self.deleteVisible = deleteVisible;
         
         self.imagePicker = [[UIImagePickerController alloc] init];
         self.imagePicker.delegate = self;
@@ -51,7 +51,7 @@
     CGFloat buffer = 5;
     CGFloat bHeight = 40;
     
-    if (self.type == WEImagePopoverEmpty) {
+    if (!self.deleteVisible) {
         buffer = 0;
         bHeight = 0;
     }
@@ -61,7 +61,7 @@
                                           self.view.frame.size.height - bHeight - (buffer*2))];
     [self.view addSubview:imagePicker.view];
     
-    if (self.type == WEImagePopoverOccupied) {
+    if (self.deleteVisible) {
         CGRect bFrame = CGRectMake(0,
                                    buffer,
                                    size.width,

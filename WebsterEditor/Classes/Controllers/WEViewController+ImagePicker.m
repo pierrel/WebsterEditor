@@ -12,17 +12,14 @@
 #import "NSArray+WEExtras.h"
 #import "UIImage+WEExtras.h"
 
-
-
 @implementation WEWebViewController (ImagePicker)
 
 - (void)openImagePickerWithData:(id)data withCallback:(WVJBResponseCallback)callback {
     if (callback) self.imagePickerCallback = callback;
     
-    WEImagePopoverType type = WEImagePopoverOccupied;
     NSArray *classes = [data objectForKey:@"classes"];
-    if (classes && [classes containsString:@"empty"]) type = WEImagePopoverEmpty;
-    WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] initWithType:type];
+    BOOL deleteVisible = classes && [classes containsString:@"image-thumb"] && ![classes containsString:@"empty"];
+    WEImagePopoverViewController *popover = [[WEImagePopoverViewController alloc] initWithDeleteButtonVisible:deleteVisible];
     popover.delegate = self;
 
     [popover popOverView:self.view withFrame:[WEUtils frameFromData:data]];
