@@ -334,7 +334,9 @@ static const int ICON_DIM = 13;
 }
 
 -(void)styleButtonTapped:(UIButton*)button {
-    NSLog(@"editing style");
+    [[WEPageManager sharedManager] getSelectedNodeStyleWithCallback:^(id responseData) {
+        NSLog(@"response: %@", responseData);
+    }];
 }
 
 -(void)imageButtonTapped:(UIButton*)button {

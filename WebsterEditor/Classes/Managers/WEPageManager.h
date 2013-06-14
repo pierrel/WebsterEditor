@@ -41,6 +41,8 @@ typedef void (^WEResponseCallback)(id responseData);
  */
 -(void)setSrcForSelectedImage:(NSString*)path;
 
+-(void)getSelectedNodeStyleWithCallback:(WEResponseCallback)callback;
+
 /*
  * Mode handling
  */

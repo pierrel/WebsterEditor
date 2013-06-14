@@ -372,3 +372,18 @@ otherwise returns false"
 
 (defn first-content-child [el]
   (first (filter #(elements/in-category? (elements/node-to-element %) :content) (dom/children el))))
+
+(defn style-map [node]
+  (if-let [styles (style-list node)]
+    (loop [struct {}
+           styles-left styles]
+      (if (seq styles-left)
+        (let [current-style (string/split (first styles-left) ":")]
+          (recur (assoc struct
+                   (first current-style)
+                   (second current-style))
+                 (rest styles-left)))
+        struct))))
+(defn style-list [node]
+  (if-let [style-string (dom/attr node "style")]
+    (filter #(not (= "" %)) (string/split (string/replace style-string #"\n| " "") ";"))))

@@ -53,7 +53,11 @@
     (.registerHandler bridge "exportMarkup" export-markup)
     (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))
     (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))
-    (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)))
+    (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)
+    (.registerHandler bridge "getSelectedNodeStyle" selected-node-style)))
+
+(defn selected-node-style [data callback]
+  (callback (clj->js (dom/style-map (listeners/get-selected)))))
 
 (defn set-selected-image-src [data callback]
   (let [path (aget data "path")]
