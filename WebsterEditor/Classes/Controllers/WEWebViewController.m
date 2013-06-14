@@ -26,6 +26,7 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UIButton *imageButton;
 @property (strong, nonatomic) NSString *currentPage;
 @property (strong, nonatomic) UINavigationController *navController;
+@property (strong, nonatomic) id selectedData;
 
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
@@ -165,6 +166,7 @@ static const int ICON_DIM = 13;
 
 - (void)openDialogWithData:(id)data {
     [self closeActionButtons];
+    self.selectedData = data;
     
     NSDictionary *addables = [data objectForKey:@"addable"];
     NSArray *classes = [data objectForKey:@"classes"];
@@ -228,6 +230,7 @@ static const int ICON_DIM = 13;
 }
 
 - (void)closeDialog {
+    self.selectedData = nil;
     [self.webView endEditing:YES];
     [self closeActionButtons];
     
@@ -335,6 +338,9 @@ static const int ICON_DIM = 13;
 }
 
 -(void)imageButtonTapped:(UIButton*)button {
+    [self openImagePickerWithData:self.selectedData withCallback:^(id responseData) {
+        [[WEPageManager sharedManager] setSrcForSelectedImage:(NSString*)[responseData objectForKey:@"resource-path"]];
+    }];
 }
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info {

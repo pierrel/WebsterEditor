@@ -80,6 +80,11 @@ static WEPageManager *gSharedManager;
                    data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
 }
 
+-(void)setSrcForSelectedImage:(NSString *)path {
+    [bridge callHandler:@"setSelectedImageSrc"
+                   data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
+}
+
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback {
     [bridge callHandler:@"removeBackgroundImage"
                    data:[NSDictionary dictionary]
