@@ -52,7 +52,13 @@
     (.registerHandler bridge "hasBackgroundImage" has-background-image)
     (.registerHandler bridge "exportMarkup" export-markup)
     (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))
-    (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))))
+    (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))
+    (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)))
+
+(defn set-selected-image-src [data callback]
+  (let [path (aget data "path")]
+    (if-let [selected (listeners/get-selected)]
+      (domi/set-attr! selected "src" (dir/rel-path path)))))
 
 (defn set-mode [data callback bridge]
   (if (= (aget data "mode") "blueprint")
