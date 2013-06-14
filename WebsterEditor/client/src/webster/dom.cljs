@@ -53,8 +53,7 @@
   (let [class {:class (str (if (not (:unselectable el-info)) "selectable" "")
                            " "
                            (if (:class el-info) (:class el-info) "")
-                           " "
-                           (if (contains? (elements/categories el-info) :structure) "draggable" "")) } 
+                           " draggable") } 
         type {:data-type (:name el-info)}]
     (merge class type)))
 
