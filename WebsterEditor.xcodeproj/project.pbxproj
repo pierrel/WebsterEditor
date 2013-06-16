@@ -75,6 +75,7 @@
 		A2ECB9071718E465003F9E36 /* rangy.js in Resources */ = {isa = PBXBuildFile; fileRef = A2ECB8F11718E416003F9E36 /* rangy.js */; };
 		A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */; };
 		A2F12495170792C80012D1AF /* UIImage+WEExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F12494170792C80012D1AF /* UIImage+WEExtras.m */; };
+		A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2F80566176E57F70030A97A /* WEStyleCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -192,6 +193,7 @@
 		A2F0540316F975B3008061EE /* WEImagePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEImagePopoverViewController.m; sourceTree = "<group>"; };
 		A2F12493170792C80012D1AF /* UIImage+WEExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WEExtras.h"; path = "Categories/UIImage+WEExtras.h"; sourceTree = "<group>"; };
 		A2F12494170792C80012D1AF /* UIImage+WEExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WEExtras.m"; path = "Categories/UIImage+WEExtras.m"; sourceTree = "<group>"; };
+		A2F80566176E57F70030A97A /* WEStyleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEStyleCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +394,7 @@
 				A2B0B75D175E359600FD2E90 /* WEPageBackgroundView.m */,
 				A2E7722E176D4B41006D281D /* WEStyleCell.h */,
 				A2E7722F176D4B41006D281D /* WEStyleCell.m */,
+				A2F80566176E57F70030A97A /* WEStyleCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				A2ECB8F91718E416003F9E36 /* development.html in Resources */,
 				A2ECB8FA1718E416003F9E36 /* production.html in Resources */,
 				A2ECB8FB1718E416003F9E36 /* test.html in Resources */,
+				A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

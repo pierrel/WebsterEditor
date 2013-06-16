@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[WEStyleCell class] forCellReuseIdentifier:@"StyleCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"WEStyleCell" bundle:nil] forCellReuseIdentifier:@"StyleCell"];
     if (self.navigationItem) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped:)];
         [self.navigationItem setRightBarButtonItem:doneButton];
@@ -77,8 +77,11 @@
 {
     NSString *cssStyle = [self.styleData.allKeys objectAtIndex:indexPath.row];
     NSString *cssVal = [self.styleData objectForKey:cssStyle];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StyleCell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@: %@", cssStyle, cssVal];
+    WEStyleCell *cell = (WEStyleCell*)[tableView dequeueReusableCellWithIdentifier:@"StyleCell"
+                                                                      forIndexPath:indexPath];
+    
+    cell.styleName.text = cssStyle;
+    cell.styleValue.text = cssVal;    
     return cell;
 }
 

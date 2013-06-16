@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface WEStyleCell : UITableViewCell
-
+@property (nonatomic, strong) IBOutlet UITextField *styleValue;
+@property (nonatomic, strong) IBOutlet UILabel *styleName;
 @end
