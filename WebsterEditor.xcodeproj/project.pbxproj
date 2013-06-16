@@ -27,6 +27,7 @@
 		A239B62A1708E85E00109734 /* WEAddProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6291708E85E00109734 /* WEAddProjectCell.m */; };
 		A23E7DEB173AA34B004CDDF7 /* WEAddPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A23E7DEA173AA34B004CDDF7 /* WEAddPageCell.m */; };
 		A25DA9A81712890000963A4D /* edit_text.png in Resources */ = {isa = PBXBuildFile; fileRef = A25DA9A71712890000963A4D /* edit_text.png */; };
+		A25EF895176D3D7700222144 /* WEStyleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25EF894176D3D7700222144 /* WEStyleTableViewController.m */; };
 		A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A27C9FEE170A6C490095D273 /* WEProjectSettings.m */; };
 		A27C9FFA170A7D3A0095D273 /* grey_wash_wall_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */; };
 		A27C9FFB170A7D3A0095D273 /* grey_wash_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF9170A7D3A0095D273 /* grey_wash_wall.png */; };
@@ -56,6 +57,7 @@
 		A2D15F12171227AD009FF2D8 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0D171227AD009FF2D8 /* delete.png */; };
 		A2D15F13171227AD009FF2D8 /* information.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0E171227AD009FF2D8 /* information.png */; };
 		A2D15F14171227AD009FF2D8 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0F171227AD009FF2D8 /* up.png */; };
+		A2E77230176D4B41006D281D /* WEStyleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E7722F176D4B41006D281D /* WEStyleCell.m */; };
 		A2ECB8F21718E416003F9E36 /* bootstrap-responsive.css in Resources */ = {isa = PBXBuildFile; fileRef = A2ECB8E01718E416003F9E36 /* bootstrap-responsive.css */; };
 		A2ECB8F31718E416003F9E36 /* bootstrap-responsive.min.css in Resources */ = {isa = PBXBuildFile; fileRef = A2ECB8E11718E416003F9E36 /* bootstrap-responsive.min.css */; };
 		A2ECB8F41718E416003F9E36 /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = A2ECB8E21718E416003F9E36 /* bootstrap.css */; };
@@ -107,6 +109,8 @@
 		A23E7DE9173AA34B004CDDF7 /* WEAddPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEAddPageCell.h; sourceTree = "<group>"; };
 		A23E7DEA173AA34B004CDDF7 /* WEAddPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEAddPageCell.m; sourceTree = "<group>"; };
 		A25DA9A71712890000963A4D /* edit_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_text.png; sourceTree = "<group>"; };
+		A25EF893176D3D7700222144 /* WEStyleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEStyleTableViewController.h; sourceTree = "<group>"; };
+		A25EF894176D3D7700222144 /* WEStyleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEStyleTableViewController.m; sourceTree = "<group>"; };
 		A27C9FED170A6C490095D273 /* WEProjectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEProjectSettings.h; path = Models/WEProjectSettings.h; sourceTree = "<group>"; };
 		A27C9FEE170A6C490095D273 /* WEProjectSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEProjectSettings.m; path = Models/WEProjectSettings.m; sourceTree = "<group>"; };
 		A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_wash_wall_@2X.png"; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 		A2D15F15171243C4009FF2D8 /* elements.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = elements.cljs; sourceTree = "<group>"; };
 		A2E00C56170945510024EA42 /* dir.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dir.cljs; sourceTree = "<group>"; };
 		A2E00C57170945510024EA42 /* html.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = html.cljs; sourceTree = "<group>"; };
+		A2E7722E176D4B41006D281D /* WEStyleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEStyleCell.h; sourceTree = "<group>"; };
+		A2E7722F176D4B41006D281D /* WEStyleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEStyleCell.m; sourceTree = "<group>"; };
 		A2ECB8E01718E416003F9E36 /* bootstrap-responsive.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "bootstrap-responsive.css"; sourceTree = "<group>"; };
 		A2ECB8E11718E416003F9E36 /* bootstrap-responsive.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "bootstrap-responsive.min.css"; sourceTree = "<group>"; };
 		A2ECB8E21718E416003F9E36 /* bootstrap.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.css; sourceTree = "<group>"; };
@@ -328,6 +334,8 @@
 				A239B61E1708D2EA00109734 /* WEProjectsViewController.m */,
 				A297EBF91739F9DF004BBB24 /* WEPageCollectionViewController.h */,
 				A297EBFA1739F9E0004BBB24 /* WEPageCollectionViewController.m */,
+				A25EF893176D3D7700222144 /* WEStyleTableViewController.h */,
+				A25EF894176D3D7700222144 /* WEStyleTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -382,6 +390,8 @@
 				A23E7DEA173AA34B004CDDF7 /* WEAddPageCell.m */,
 				A2B0B75C175E359600FD2E90 /* WEPageBackgroundView.h */,
 				A2B0B75D175E359600FD2E90 /* WEPageBackgroundView.m */,
+				A2E7722E176D4B41006D281D /* WEStyleCell.h */,
+				A2E7722F176D4B41006D281D /* WEStyleCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -678,6 +688,8 @@
 				A297EC011739FC31004BBB24 /* WEPageCell.m in Sources */,
 				A23E7DEB173AA34B004CDDF7 /* WEAddPageCell.m in Sources */,
 				A2B0B75E175E359600FD2E90 /* WEPageBackgroundView.m in Sources */,
+				A25EF895176D3D7700222144 /* WEStyleTableViewController.m in Sources */,
+				A2E77230176D4B41006D281D /* WEStyleCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

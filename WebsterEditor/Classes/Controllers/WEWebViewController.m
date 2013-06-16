@@ -12,6 +12,7 @@
 #import "WEViewController+ImagePicker.h"
 #import "WEUtils.h"
 #import "WEActionSelectViewController.h"
+#import "WEStyleTableViewController.h"
 
 #import "NSArray+WEExtras.h"
 
@@ -26,6 +27,9 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UIButton *imageButton;
 @property (strong, nonatomic) NSString *currentPage;
 @property (strong, nonatomic) UINavigationController *navController;
+@property (strong, nonatomic) UIPopoverController *stylePopover;
+@property (strong, nonatomic) UINavigationController *styleNav;
+@property (strong, nonatomic) WEStyleTableViewController *styleTable;
 @property (strong, nonatomic) id selectedData;
 
 - (void)openDialogWithData:(id)data;
@@ -75,13 +79,20 @@ static const int ICON_DIM = 13;
     self.addSelectionController = [[WEActionSelectViewController alloc] init];
     self.addSelectionController.delegate = self;
     
+    self.styleTable = [[WEStyleTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
     // popover
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
         self.addPopover.delegate = self;
         [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
+        
+        self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleTable];
+        self.stylePopover.delegate = self;
+        [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
     } else {
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
+        self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
     }
     
     // Buttons
@@ -335,7 +346,17 @@ static const int ICON_DIM = 13;
 
 -(void)styleButtonTapped:(UIButton*)button {
     [[WEPageManager sharedManager] getSelectedNodeStyleWithCallback:^(id responseData) {
-        NSLog(@"response: %@", responseData);
+        [self.styleTable setNewStyleData:(NSDictionary*)responseData];
+        if (self.stylePopover) {
+            [self.stylePopover presentPopoverFromRect:button.frame
+                                               inView:self.view
+                             permittedArrowDirections:UIPopoverArrowDirectionAny
+                                             animated:YES];
+        } else {
+            [self presentViewController:self.styleNav animated:YES completion:^{
+                NSLog(@"showing style edit");
+            }];
+        }
     }];
 }
 
