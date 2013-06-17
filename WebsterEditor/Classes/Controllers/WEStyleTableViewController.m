@@ -7,7 +7,9 @@
 //
 
 #import "WEStyleTableViewController.h"
+#import "UITableViewController+UITableViewControllerAdditions.h"
 #import "WEStyleCell.h"
+#import "WEPageManager.h"
 
 @interface WEStyleTableViewController ()
 @property (nonatomic, strong) NSMutableDictionary *styleData;
@@ -81,9 +83,29 @@
                                                                       forIndexPath:indexPath];
     
     cell.styleName.text = cssStyle;
-    cell.styleValue.text = cssVal;    
+    cell.styleValue.text = cssVal;
+    
+    cell.styleValue.delegate = self;
+    [cell.styleValue addTarget:self action:@selector(textFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
     return cell;
 }
+
+-(void)textFinished:(id)sender {
+    [sender resignFirstResponder];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
+    NSString *name = cell.styleName.text;
+    NSString *newValue = textField.text;
+    
+    [self.styleData setObject:newValue forKey:name];
+    [[WEPageManager sharedManager] setSelectedNodeStyle:self.styleData withCallback:^(id responseData) {
+        if (self.delegate) [self.delegate styleResetWithData:responseData];
+    }];
+}
+
+
 
 /*
 // Override to support conditional editing of the table view.

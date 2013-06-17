@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WEStyleTableViewController : UITableViewController
+@protocol WEStyleTableViewControllerDelegate <NSObject>
+
+-(void)styleResetWithData:(id)data;
+
+@end
+
+@interface WEStyleTableViewController : UITableViewController<UITextFieldDelegate>
+@property (nonatomic, assign) id<WEStyleTableViewControllerDelegate>delegate;
 -(void)setNewStyleData:(NSDictionary*)newStyleData;
 @end

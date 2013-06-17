@@ -28,7 +28,7 @@
 @property (nonatomic, strong) WEPageCollectionViewController *pageCollectionController;
 
 @property (nonatomic, strong) IBOutlet UIView *contentView;
-@property (nonatomic, strong) IBOutlet UIView *settingsView;
+@property (nonatomic, strong) IBOutlet UIScrollView *settingsView;
 @property (nonatomic, strong) IBOutlet UIView *pagesView;
 @property (nonatomic, strong) IBOutlet GradientButton *bgSelect;
 @property (nonatomic, strong) IBOutlet GradientButton *bgRemove;

@@ -12,7 +12,6 @@
 #import "WEViewController+ImagePicker.h"
 #import "WEUtils.h"
 #import "WEActionSelectViewController.h"
-#import "WEStyleTableViewController.h"
 
 #import "NSArray+WEExtras.h"
 
@@ -80,6 +79,7 @@ static const int ICON_DIM = 13;
     self.addSelectionController.delegate = self;
     
     self.styleTable = [[WEStyleTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.styleTable.delegate = self;
     
     // popover
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -182,6 +182,37 @@ static const int ICON_DIM = 13;
     NSDictionary *addables = [data objectForKey:@"addable"];
     NSArray *classes = [data objectForKey:@"classes"];
     
+    [self positionButtonsWithData:data];
+    
+    [removeButton setHidden:NO];
+    [parentButton setHidden:NO];
+    [styleButton setHidden:NO];
+    
+    if ([addables count] > 0) [addButton setHidden:NO];
+    
+    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
+    else if ([classes containsString:@"image"]) [imageButton setHidden:NO];
+    
+    // let the add popover know
+    [self.addSelectionController setData:data];
+    
+    // add resizers if any
+    NSArray *children = [data objectForKey:@"children"];
+    if (children) {
+        for (int i = 0; i < children.count; i++) {
+            id childData = [children objectAtIndex:i];
+            CGRect columnFrame = [WEUtils frameFromData:childData];
+            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
+                                                                   withElementIndex:i];
+            newView.delegate = self;
+            [self.view addSubview:newView];
+            [newView position];
+        }
+    }
+
+}
+
+-(void)positionButtonsWithData:(id)data {
     // position buttons
     CGSize buttonSize = CGSizeMake(25, 25);
     CGRect frame = [WEUtils frameFromData:data];
@@ -212,32 +243,6 @@ static const int ICON_DIM = 13;
                                    MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                    buttonSize.width,
                                    buttonSize.height);
-    [removeButton setHidden:NO];
-    [parentButton setHidden:NO];
-    [styleButton setHidden:NO];
-    
-    if ([addables count] > 0) [addButton setHidden:NO];
-    
-    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
-    else if ([classes containsString:@"image"]) [imageButton setHidden:NO];
-    
-    // let the add popover know
-    [self.addSelectionController setData:data];
-    
-    // add resizers if any
-    NSArray *children = [data objectForKey:@"children"];
-    if (children) {
-        for (int i = 0; i < children.count; i++) {
-            id childData = [children objectAtIndex:i];
-            CGRect columnFrame = [WEUtils frameFromData:childData];
-            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
-                                                                   withElementIndex:i];
-            newView.delegate = self;
-            [self.view addSubview:newView];
-            [newView position];
-        }
-    }
-
 }
 
 - (void)closeDialog {
@@ -405,6 +410,10 @@ static const int ICON_DIM = 13;
     } else {
         return NO;
     }
+}
+
+-(void)styleResetWithData:(id)data {
+    [self positionButtonsWithData:data]; // GETTING BAD DATA!
 }
 
 -(void)refresh {

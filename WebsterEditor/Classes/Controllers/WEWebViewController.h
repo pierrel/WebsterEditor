@@ -11,6 +11,7 @@
 #import "WebViewJavascriptBridge.h"
 #import "WEColumnResizeView.h"
 #import "WEImagePopoverViewController.h"
+#import "WEStyleTableViewController.h"
 
 @protocol WEWebViewDelegate <NSObject>
 
@@ -18,7 +19,7 @@
 
 @end
 
-@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate,UINavigationControllerDelegate>
+@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate,UINavigationControllerDelegate,WEStyleTableViewControllerDelegate>
 @property (strong, nonatomic) id<WEWebViewDelegate> delegate;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 @property (strong, nonatomic) id pickerData;

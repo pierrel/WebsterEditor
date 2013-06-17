@@ -91,6 +91,12 @@ static WEPageManager *gSharedManager;
     }];
 }
 
+-(void)setSelectedNodeStyle:(NSDictionary*)styleDict withCallback:(WEResponseCallback)callback {
+    [bridge callHandler:@"setSelectedNodeStyle" data:styleDict responseCallback:^(id responseData) {
+        callback(responseData);
+    }];
+}
+
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback {
     [bridge callHandler:@"removeBackgroundImage"
                    data:[NSDictionary dictionary]
