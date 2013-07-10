@@ -72,18 +72,23 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.styleData.count;
+    return self.styleData.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cssStyle = [self.styleData.allKeys objectAtIndex:indexPath.row];
-    NSString *cssVal = [self.styleData objectForKey:cssStyle];
     WEStyleCell *cell = (WEStyleCell*)[tableView dequeueReusableCellWithIdentifier:@"StyleCell"
                                                                       forIndexPath:indexPath];
-    
-    cell.styleName.text = cssStyle;
-    cell.styleValue.text = cssVal;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.row == self.styleData.count) {
+        cell.styleName.text = @"style";
+        cell.styleValue.text = @"value";
+    } else {
+        NSString *cssStyle = [self.styleData.allKeys objectAtIndex:indexPath.row];
+        NSString *cssVal = [self.styleData objectForKey:cssStyle];
+        cell.styleName.text = cssStyle;
+        cell.styleValue.text = cssVal;
+    }
     
     cell.styleValue.delegate = self;
     [cell.styleValue addTarget:self action:@selector(textFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
