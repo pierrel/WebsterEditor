@@ -91,7 +91,11 @@
     }
     
     cell.styleValue.delegate = self;
+    cell.styleNameField.delegate = self;
     [cell.styleValue addTarget:self action:@selector(textFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    
+    UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(styleNameSelected:)];
+    [cell.styleName addGestureRecognizer:labelTap];
     return cell;
 }
 
@@ -101,13 +105,34 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
-    NSString *name = cell.styleName.text;
-    NSString *newValue = textField.text;
+    if (textField == cell.styleValue) {
+        NSString *name = cell.styleName.text;
+        NSString *newValue = textField.text;
     
-    [self.styleData setObject:newValue forKey:name];
-    [[WEPageManager sharedManager] setSelectedNodeStyle:self.styleData withCallback:^(id responseData) {
-        if (self.delegate) [self.delegate styleResetWithData:responseData];
-    }];
+        [self.styleData setObject:newValue forKey:name];
+        [[WEPageManager sharedManager] setSelectedNodeStyle:self.styleData withCallback:^(id responseData) {
+            if (self.delegate) [self.delegate styleResetWithData:responseData];
+        }];
+    } else if (textField == cell.styleNameField) {
+        cell.styleName.text = textField.text;
+        [textField setHidden:YES];
+        [cell.styleName setHidden:NO];
+    }
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
+    if (textField == cell.styleNameField) {
+        [cell.styleName setHidden:YES];
+        textField.text = cell.styleName.text;
+        [textField setHidden:NO];
+    }
+}
+
+-(void)styleNameSelected:(UITapGestureRecognizer*)labelTap {
+    WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:labelTap.view];
+    [cell.styleNameField setHidden:NO];
+    [cell.styleNameField becomeFirstResponder];
 }
 
 
