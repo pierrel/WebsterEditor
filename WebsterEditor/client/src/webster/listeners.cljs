@@ -105,17 +105,19 @@
 
 (defn node-info
   [el]
-  (let [pos (dom/offset el)
-        the-info {:top (:top pos)
-                  :left (:left pos)
-                  :width (dom/width el)
-                  :height (dom/height el)
-                  :tag (.-tagName el)
-                  :classes (classes el)
-                  :addable (elements/possible-under (elements/node-to-element el))}]
+  (let [the-info (node-info-map el)]
     (clj->js (if (is-row? el)
                (conj the-info [:children (map  node-info (children el))])
                the-info))))
+
+(defn node-info-map
+  [el]
+  (let [node (single-node el)
+        frame (dom/frame node)]
+    (merge frame
+           {:tag (.-tagName node)
+            :classes (classes el)
+            :addable (elements/possible-under (elements/node-to-element el))})))
  
 (defn get-selected []
   (sel ".selected"))
