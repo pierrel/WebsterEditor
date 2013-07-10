@@ -64,8 +64,8 @@
       (if (seq styles)
         (do
           (domi/set-style! el (first styles) (get map-data (first styles)))
-          (recur (rest styles)))
-        (callback (listeners/node-info el)))))) ; GETTING BAD DATA!
+          (recur (rest styles)))))
+    (callback (listeners/node-info el))))
 
 (defn selected-node-style [data callback]
   (callback (clj->js (dom/style-map (listeners/get-selected)))))
