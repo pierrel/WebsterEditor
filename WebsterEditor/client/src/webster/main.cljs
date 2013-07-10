@@ -60,6 +60,7 @@
 (defn set-selected-node-style [data callback]
   (let [map-data (js->clj data)
         el (listeners/get-selected)]
+    (domi/remove-attr! el "style")
     (loop [styles (keys map-data)]
       (if (seq styles)
         (do
