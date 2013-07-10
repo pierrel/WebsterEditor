@@ -13,6 +13,7 @@
 
 @interface WEStyleTableViewController ()
 @property (nonatomic, strong) NSMutableDictionary *styleData;
+@property (nonatomic, strong) UITextField *editingField;
 @end
 
 @implementation WEStyleTableViewController
@@ -41,6 +42,9 @@
         [self.navigationItem setRightBarButtonItem:doneButton];
         [self.navigationItem setTitle:@"Edit Styles"];
     }
+    
+    UITapGestureRecognizer *dismissTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnTableView:)];
+    [self.tableView addGestureRecognizer:dismissTap];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -103,7 +107,14 @@
     [sender resignFirstResponder];
 }
 
+-(void)tappedOnTableView:(UITapGestureRecognizer*)dismissTap {
+    if (self.editingField) {
+        [self.editingField endEditing:YES];
+    }
+}
+
 -(void)textFieldDidEndEditing:(UITextField *)textField {
+    self.editingField = nil;
     WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
     if (textField == cell.styleValue) {
         NSString *name = cell.styleName.text;
@@ -121,6 +132,7 @@
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.editingField = textField;
     WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
     if (textField == cell.styleNameField) {
         [cell.styleName setHidden:YES];
