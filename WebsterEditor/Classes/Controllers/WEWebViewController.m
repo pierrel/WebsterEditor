@@ -413,7 +413,7 @@ static const int ICON_DIM = 13;
 }
 
 -(void)styleResetWithData:(id)data {
-    [self positionButtonsWithData:data]; // GETTING BAD DATA!
+    [self positionButtonsWithData:data];
 }
 
 -(void)refresh {
