@@ -121,6 +121,7 @@
         NSString *newValue = textField.text;
     
         [self.styleData setObject:newValue forKey:name];
+        [self.tableView reloadData];
         [[WEPageManager sharedManager] setSelectedNodeStyle:self.styleData withCallback:^(id responseData) {
             if (self.delegate) [self.delegate styleResetWithData:responseData];
         }];
