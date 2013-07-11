@@ -84,7 +84,24 @@
 }
 
 -(void)transitionToProject:(NSString*)projectId {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
+    
+    // Setup project dir
+    NSArray *topDirs = [NSArray arrayWithObjects:
+                        [WEUtils pathInDocumentDirectory:@"media" withProjectId:projectId],
+                        [WEUtils pathInDocumentDirectory:@"assets" withProjectId:projectId],
+                        [WEUtils pathInDocumentDirectory:@"css" withProjectId:projectId],
+                        [WEUtils pathInDocumentDirectory:@"js" withProjectId:projectId],
+                        [WEUtils pathInDocumentDirectory:@"" withProjectId:projectId], nil];
+    for (NSString *path in topDirs) {
+        if (![fileManager fileExistsAtPath:path])
+            [fileManager createDirectoryAtPath:path
+                   withIntermediateDirectories:NO
+                                    attributes:nil
+                                         error:&error];
+
+    }
     
     // copy latest css/js
     NSArray *resources = [NSArray arrayWithObjects:
@@ -141,7 +158,10 @@
     }];
     WEProjectSettings *settings = [self settingsForId:projectId];
     NSLog(@"%@", [WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]);
-    WEEditorViewController *mainController = [[WEEditorViewController alloc] initWithProjectId:projectId withSettings:settings];
+    NSString *nibName = @"WEEditorViewController";
+    WEEditorViewController *mainController = [[WEEditorViewController alloc] initWithNibName:nibName bundle:nil];
+    mainController.projectId = projectId;
+    mainController.settings = settings;
     mainController.delegate = self;
     [self presentViewController:mainController
                        animated:YES
@@ -164,29 +184,6 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSString *projectId = [WEUtils newId];
-        
-    // Setup project dir
-    NSString *media = [WEUtils pathInDocumentDirectory:@"media" withProjectId:projectId];
-    NSString *css = [WEUtils pathInDocumentDirectory:@"css" withProjectId:projectId];
-    NSString *js = [WEUtils pathInDocumentDirectory:@"js" withProjectId:projectId];
-    NSString *projectDir = [WEUtils pathInDocumentDirectory:@"" withProjectId:projectId];
-    
-    [fileManager createDirectoryAtPath:projectDir
-           withIntermediateDirectories:NO
-                            attributes:nil
-                                 error:&error];
-    [fileManager createDirectoryAtPath:media
-           withIntermediateDirectories:NO
-                            attributes:nil
-                                 error:&error];
-    [fileManager createDirectoryAtPath:css
-           withIntermediateDirectories:NO
-                            attributes:nil
-                                 error:&error];
-    [fileManager createDirectoryAtPath:js
-           withIntermediateDirectories:NO
-                            attributes:nil
-                                 error:&error];
     
     // Setup settings
     WEProjectSettings *settings = [[WEProjectSettings alloc] init];

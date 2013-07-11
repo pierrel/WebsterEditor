@@ -80,6 +80,23 @@ static WEPageManager *gSharedManager;
                    data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
 }
 
+-(void)setSrcForSelectedImage:(NSString *)path {
+    [bridge callHandler:@"setSelectedImageSrc"
+                   data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
+}
+
+-(void)getSelectedNodeStyleWithCallback:(WEResponseCallback)callback {
+    [bridge callHandler:@"getSelectedNodeStyle" data:[NSDictionary dictionary] responseCallback:^(id responseData) {
+        callback(responseData);
+    }];
+}
+
+-(void)setSelectedNodeStyle:(NSDictionary*)styleDict withCallback:(WEResponseCallback)callback {
+    [bridge callHandler:@"setSelectedNodeStyle" data:styleDict responseCallback:^(id responseData) {
+        callback(responseData);
+    }];
+}
+
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback {
     [bridge callHandler:@"removeBackgroundImage"
                    data:[NSDictionary dictionary]

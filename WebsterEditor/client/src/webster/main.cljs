@@ -52,7 +52,29 @@
     (.registerHandler bridge "hasBackgroundImage" has-background-image)
     (.registerHandler bridge "exportMarkup" export-markup)
     (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))
-    (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))))
+    (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))
+    (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)
+    (.registerHandler bridge "getSelectedNodeStyle" selected-node-style)
+    (.registerHandler bridge "setSelectedNodeStyle" set-selected-node-style)))
+
+(defn set-selected-node-style [data callback]
+  (let [map-data (js->clj data)
+        el (listeners/get-selected)]
+    (domi/remove-attr! el "style")
+    (loop [styles (keys map-data)]
+      (if (seq styles)
+        (do
+          (domi/set-style! el (first styles) (get map-data (first styles)))
+          (recur (rest styles)))))
+    (callback (listeners/node-info el))))
+
+(defn selected-node-style [data callback]
+  (callback (clj->js (dom/style-map (listeners/get-selected)))))
+
+(defn set-selected-image-src [data callback]
+  (let [path (aget data "path")]
+    (if-let [selected (listeners/get-selected)]
+      (domi/set-attr! selected "src" (dir/rel-path path)))))
 
 (defn set-mode [data callback bridge]
   (if (= (aget data "mode") "blueprint")

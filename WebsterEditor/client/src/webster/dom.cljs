@@ -53,8 +53,7 @@
   (let [class {:class (str (if (not (:unselectable el-info)) "selectable" "")
                            " "
                            (if (:class el-info) (:class el-info) "")
-                           " "
-                           (if (contains? (elements/categories el-info) :structure) "draggable" "")) } 
+                           " draggable") } 
         type {:data-type (:name el-info)}]
     (merge class type)))
 
@@ -369,4 +368,22 @@ otherwise returns false"
 (defn is-blueprint-mode? []
   (= (get-mode) "blueprint"))
 (defn is-content-mode? []
-  (= (get-mode) "content")) 
+  (= (get-mode) "content"))
+
+(defn first-content-child [el]
+  (first (filter #(elements/in-category? (elements/node-to-element %) :content) (dom/children el))))
+
+(defn style-map [node]
+  (if-let [styles (style-list node)]
+    (loop [struct {}
+           styles-left styles]
+      (if (seq styles-left)
+        (let [current-style (string/split (first styles-left) ":")]
+          (recur (assoc struct
+                   (first current-style)
+                   (second current-style))
+                 (rest styles-left)))
+        struct))))
+(defn style-list [node]
+  (if-let [style-string (dom/attr node "style")]
+    (filter #(not (= "" %)) (string/split (string/replace style-string #"\n| " "") ";"))))

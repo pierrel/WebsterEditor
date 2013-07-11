@@ -17,21 +17,15 @@
 -(void)imagePopoverControllerDidGetDismissed:(WEImagePopoverViewController*)picker;
 @end
 
-typedef enum imagePopoverTypes
-{
-    WEImagePopoverEmpty,
-    WEImagePopoverOccupied
-} WEImagePopoverType;
-
 @interface WEImagePopoverViewController : UIViewController<UIPopoverControllerDelegate, UIImagePickerControllerDelegate>
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) GradientButton *deleteButton;
-@property (nonatomic, assign) WEImagePopoverType type;
 @property (assign, nonatomic) id<WEImagePopoverControllerDelegate>delegate;
+@property (nonatomic, assign) BOOL deleteVisible;
 
 -(void)popOverView:(UIView*)view withFrame:(CGRect)frame;
 -(void)dismiss;
 
--(id)initWithType:(WEImagePopoverType)type;
+-(id)initWithDeleteButtonVisible:(BOOL)deleteVisible;
 @end

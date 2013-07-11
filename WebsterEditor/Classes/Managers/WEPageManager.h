@@ -37,6 +37,14 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)hasBackgroundWithCallback:(WEResponseCallback)callback;
 
 /*
+ *
+ */
+-(void)setSrcForSelectedImage:(NSString*)path;
+
+-(void)getSelectedNodeStyleWithCallback:(WEResponseCallback)callback;
+-(void)setSelectedNodeStyle:(NSDictionary*)styleDict withCallback:(WEResponseCallback)callback;
+
+/*
  * Mode handling
  */
 -(void)setMode:(NSString*)modeName;

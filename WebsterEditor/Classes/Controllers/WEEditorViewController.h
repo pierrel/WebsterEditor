@@ -17,7 +17,7 @@
 -(void)didSaveViewController:(WEEditorViewController*)controller;
 @end
 
-@interface WEEditorViewController : UIViewController<UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate,WEWebViewDelegate>
+@interface WEEditorViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate,WEWebViewDelegate>
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;
@@ -28,7 +28,7 @@
 @property (nonatomic, strong) WEPageCollectionViewController *pageCollectionController;
 
 @property (nonatomic, strong) IBOutlet UIView *contentView;
-@property (nonatomic, strong) IBOutlet UIView *settingsView;
+@property (nonatomic, strong) IBOutlet UIScrollView *settingsView;
 @property (nonatomic, strong) IBOutlet UIView *pagesView;
 @property (nonatomic, strong) IBOutlet GradientButton *bgSelect;
 @property (nonatomic, strong) IBOutlet GradientButton *bgRemove;

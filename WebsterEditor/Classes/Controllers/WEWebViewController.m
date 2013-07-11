@@ -18,7 +18,18 @@
 static const int ICON_DIM = 13;
 
 @interface WEWebViewController ()
+@property (strong, nonatomic) UIButton *removeButton;
+@property (strong, nonatomic) UIButton *addButton;
+@property (strong, nonatomic) UIButton *parentButton;
+@property (strong, nonatomic) UIButton *editTextButton;
+@property (strong, nonatomic) UIButton *styleButton;
+@property (strong, nonatomic) UIButton *imageButton;
 @property (strong, nonatomic) NSString *currentPage;
+@property (strong, nonatomic) UINavigationController *navController;
+@property (strong, nonatomic) UIPopoverController *stylePopover;
+@property (strong, nonatomic) UINavigationController *styleNav;
+@property (strong, nonatomic) WEStyleTableViewController *styleTable;
+@property (strong, nonatomic) id selectedData;
 
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
@@ -26,7 +37,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton, imageButton;
 
 - (void)viewDidLoad
 {
@@ -67,10 +78,22 @@ static const int ICON_DIM = 13;
     self.addSelectionController = [[WEActionSelectViewController alloc] init];
     self.addSelectionController.delegate = self;
     
+    self.styleTable = [[WEStyleTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.styleTable.delegate = self;
+    
     // popover
-    self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
-    self.addPopover.delegate = self;
-    [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
+        self.addPopover.delegate = self;
+        [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
+        
+        self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleTable];
+        self.stylePopover.delegate = self;
+        [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
+    } else {
+        self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
+        self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
+    }
     
     // Buttons
     self.removeButton = [[UIButton alloc] init];
@@ -97,6 +120,17 @@ static const int ICON_DIM = 13;
     [editTextButton setHidden:YES];
     [self.view addSubview:editTextButton];
     
+    self.styleButton = [[UIButton alloc] init];
+    [styleButton setImage:[UIImage imageNamed:@"information.png"] forState:UIControlStateNormal];
+    [styleButton addTarget:self action:@selector(styleButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [styleButton setHidden:YES];
+    [self.view addSubview:styleButton];
+    
+    self.imageButton = [[UIButton alloc] init];
+    [imageButton setTitle:@"📷" forState:UIControlStateNormal];
+    [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [imageButton setHidden:YES];
+    [self.view addSubview:imageButton];
 }
 
 -(void)loadPage:(NSString*)pageName {
@@ -123,7 +157,7 @@ static const int ICON_DIM = 13;
 -(void)webViewDidFinishLoad:(UIWebView *)webView {    
     if (![webView isLoading]) {
         if (self.delegate) [self.delegate webViewDidLoad];
-                
+        
         [UIView animateWithDuration:0.3 animations:^{
             [self.webView setAlpha:1.0];
         }];
@@ -143,10 +177,42 @@ static const int ICON_DIM = 13;
 
 - (void)openDialogWithData:(id)data {
     [self closeActionButtons];
+    self.selectedData = data;
     
     NSDictionary *addables = [data objectForKey:@"addable"];
     NSArray *classes = [data objectForKey:@"classes"];
     
+    [self positionButtonsWithData:data];
+    
+    [removeButton setHidden:NO];
+    [parentButton setHidden:NO];
+    [styleButton setHidden:NO];
+    
+    if ([addables count] > 0) [addButton setHidden:NO];
+    
+    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
+    else if ([classes containsString:@"image"]) [imageButton setHidden:NO];
+    
+    // let the add popover know
+    [self.addSelectionController setData:data];
+    
+    // add resizers if any
+    NSArray *children = [data objectForKey:@"children"];
+    if (children) {
+        for (int i = 0; i < children.count; i++) {
+            id childData = [children objectAtIndex:i];
+            CGRect columnFrame = [WEUtils frameFromData:childData];
+            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
+                                                                   withElementIndex:i];
+            newView.delegate = self;
+            [self.view addSubview:newView];
+            [newView position];
+        }
+    }
+
+}
+
+-(void)positionButtonsWithData:(id)data {
     // position buttons
     CGSize buttonSize = CGSizeMake(25, 25);
     CGRect frame = [WEUtils frameFromData:data];
@@ -169,35 +235,28 @@ static const int ICON_DIM = 13;
                                       MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                       buttonSize.width,
                                       buttonSize.height);
-    [removeButton setHidden:NO];
-    [parentButton setHidden:NO];
-    if ([addables count] > 0) [addButton setHidden:NO];
-    if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
-    
-    // let the add popover know
-    [self.addSelectionController setData:data];
-    
-    // add resizers if any
-    NSArray *children = [data objectForKey:@"children"];
-    if (children) {
-        for (int i = 0; i < children.count; i++) {
-            id childData = [children objectAtIndex:i];
-            CGRect columnFrame = [WEUtils frameFromData:childData];
-            WEColumnResizeView *newView = [[WEColumnResizeView alloc] initWithFrame:columnFrame
-                                                                   withElementIndex:i];
-            newView.delegate = self;
-            [self.view addSubview:newView];
-            [newView position];
-        }
-    }
-
+    styleButton.frame = CGRectMake(MIN(frame.origin.x + frame.size.width - (buttonSize.width/2), maxX),
+                                   MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
+                                   buttonSize.width,
+                                   buttonSize.height);
+    imageButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
+                                   MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
+                                   buttonSize.width,
+                                   buttonSize.height);
 }
 
 - (void)closeDialog {
+    self.selectedData = nil;
     [self.webView endEditing:YES];
     [self closeActionButtons];
     
-    [self.addPopover dismissPopoverAnimated:YES]; // just in case
+    if (self.addPopover) {
+        [self.addPopover dismissPopoverAnimated:YES]; // just in case
+    } else {
+        [self.addSelectionController dismissViewControllerAnimated:YES completion:^{
+            NSLog(@"something");
+        }];
+    }
     
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {
@@ -211,6 +270,8 @@ static const int ICON_DIM = 13;
     [addButton setHidden:YES];
     [parentButton setHidden:YES];
     [editTextButton setHidden:YES];
+    [styleButton setHidden:YES];
+    [imageButton setHidden:YES];
 }
 
 -(WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index {
@@ -268,10 +329,16 @@ static const int ICON_DIM = 13;
 }
 
 -(void)addButtonTapped:(UIButton*)button {
-    [self.addPopover presentPopoverFromRect:button.frame
-                                     inView:self.view
-                   permittedArrowDirections:UIPopoverArrowDirectionAny
-                                   animated:YES];
+    if (self.addPopover) {
+        [self.addPopover presentPopoverFromRect:button.frame
+                                         inView:self.view
+                       permittedArrowDirections:UIPopoverArrowDirectionAny
+                                       animated:YES];
+    } else {
+        [self presentViewController:self.navController animated:YES completion:^{
+            NSLog(@"showing add selection");
+        }];
+    }
 }
 
 -(void)parentButtonTapped:(UIButton*)button {
@@ -280,6 +347,33 @@ static const int ICON_DIM = 13;
 
 -(void)editTextButtonTapped:(UIButton*)button {
     [[WEPageManager sharedManager] editSelectedElement];
+}
+
+-(void)styleButtonTapped:(UIButton*)button {
+    [[WEPageManager sharedManager] getSelectedNodeStyleWithCallback:^(id responseData) {
+        NSDictionary *data;
+        if ([responseData isKindOfClass:[NSDictionary class]])
+            data = (NSDictionary*)responseData;
+        else
+            data = [NSDictionary dictionary];
+        [self.styleTable setNewStyleData:data];
+        if (self.stylePopover) {
+            [self.stylePopover presentPopoverFromRect:button.frame
+                                               inView:self.view
+                             permittedArrowDirections:UIPopoverArrowDirectionAny
+                                             animated:YES];
+        } else {
+            [self presentViewController:self.styleNav animated:YES completion:^{
+                NSLog(@"showing style edit");
+            }];
+        }
+    }];
+}
+
+-(void)imageButtonTapped:(UIButton*)button {
+    [self openImagePickerWithData:self.selectedData withCallback:^(id responseData) {
+        [[WEPageManager sharedManager] setSrcForSelectedImage:(NSString*)[responseData objectForKey:@"resource-path"]];
+    }];
 }
 
 -(void)setBackgroundWithInfo:(NSDictionary *)info {
@@ -321,6 +415,10 @@ static const int ICON_DIM = 13;
     } else {
         return NO;
     }
+}
+
+-(void)styleResetWithData:(id)data {
+    [self positionButtonsWithData:data];
 }
 
 -(void)refresh {
