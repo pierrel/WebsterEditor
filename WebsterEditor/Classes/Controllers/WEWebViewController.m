@@ -351,7 +351,12 @@ static const int ICON_DIM = 13;
 
 -(void)styleButtonTapped:(UIButton*)button {
     [[WEPageManager sharedManager] getSelectedNodeStyleWithCallback:^(id responseData) {
-        [self.styleTable setNewStyleData:(NSDictionary*)responseData];
+        NSDictionary *data;
+        if ([responseData isKindOfClass:[NSDictionary class]])
+            data = (NSDictionary*)responseData;
+        else
+            data = [NSDictionary dictionary];
+        [self.styleTable setNewStyleData:data];
         if (self.stylePopover) {
             [self.stylePopover presentPopoverFromRect:button.frame
                                                inView:self.view
