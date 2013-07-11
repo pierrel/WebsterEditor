@@ -51,24 +51,37 @@
                                         (listen! placeholder :click #(container-listener % bridge))
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
-
-(defn move-start [event bridge]
-  (prevent-default event)
-  (stop-propagation event)
-  (let [element (current-target event)
-        touches (touch/touches event)]
-    (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
+(def move-ended? (atom false))
+(def move-started? (atom false))
+(def move-canceled? (atom false))
 (def moved? (atom false))
-(defn move [event bridge]
-  (reset! moved? true)
-  (prevent-default event)
+(defn move-start [event bridge]
   (stop-propagation event)
-  (if (not (nothing-selected)) (default-listener event bridge))
-  (let [element (current-target event)
-        touches (touch/touches event)]
-    (dom/drag! element {:x (touch/page-x touches)
-                        :y (touch/page-y touches)})))
+  (reset! move-ended? false)
+  (reset! move-canceled? false)
+  (js/setTimeout
+   #(when-not (or @move-ended? @moved? @move-canceled?)
+      (prevent-default event)
+      (reset! move-started? true)
+      (let [element (current-target event)
+            touches (touch/touches event)]
+        (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
+   500))
+(defn move [event bridge]
+  (if (and @move-started? (not @move-canceled?))
+    (do
+      (reset! moved? true)
+      (prevent-default event)
+      (stop-propagation event)
+      (if (not (nothing-selected)) (default-listener event bridge))
+      (let [element (current-target event)
+            touches (touch/touches event)]
+        (dom/drag! element {:x (touch/page-x touches)
+                            :y (touch/page-y touches)})))
+    (reset! move-canceled? true)))
 (defn move-end [event bridge]
+  (reset! move-ended? true)
+  (reset! move-started? false)
   (prevent-default event)
   (stop-propagation event)
   (let [el (current-target event)
@@ -76,8 +89,8 @@
         touches (touch/changed-touches event)
         point {:left (touch/page-x touches)
                :top (touch/page-y touches)}]
-    (if (not @moved?)
-      (if (dom/dragging? el) (container-listener event bridge)) ;; hasn't moved so it's a "click"
+    (if-not @moved?
+      (if-not @move-canceled? (container-listener event bridge)) ;; hasn't moved so it's a "click"
       (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
         (reset! moved? false)
         (when drop-on
@@ -87,10 +100,6 @@
             (detach! new-child)
             (append! drop-on new-child)))))
     (dom/stop-dragging! el))) 
-(defn move-cancel [event bridge]
-  (reset! moved? false)
-  (-> event current-target dom/stop-dragging!))
-
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
