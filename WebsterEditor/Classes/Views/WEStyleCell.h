@@ -11,5 +11,4 @@
 @interface WEStyleCell : UITableViewCell
 @property (nonatomic, strong) IBOutlet UITextField *styleValue;
 @property (nonatomic, strong) IBOutlet UITextField *styleNameField;
-@property (nonatomic, strong) IBOutlet UILabel *styleName;
 @end

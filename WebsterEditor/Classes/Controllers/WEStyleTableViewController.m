@@ -84,13 +84,10 @@
     WEStyleCell *cell = (WEStyleCell*)[tableView dequeueReusableCellWithIdentifier:@"StyleCell"
                                                                       forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row == self.styleData.count) {
-        cell.styleName.text = @"style";
-        cell.styleValue.text = @"value";
-    } else {
+    if (indexPath.row != self.styleData.count) {
         NSString *cssStyle = [self.styleData.allKeys objectAtIndex:indexPath.row];
         NSString *cssVal = [self.styleData objectForKey:cssStyle];
-        cell.styleName.text = cssStyle;
+        cell.styleNameField.text = cssStyle;
         cell.styleValue.text = cssVal;
     }
     
@@ -98,8 +95,6 @@
     cell.styleNameField.delegate = self;
     [cell.styleValue addTarget:self action:@selector(textFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
     
-    UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(styleNameSelected:)];
-    [cell.styleName addGestureRecognizer:labelTap];
     return cell;
 }
 
@@ -117,39 +112,17 @@
     self.editingField = nil;
     WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
     if (textField == cell.styleValue) {
-        NSString *name = cell.styleName.text;
-        NSString *newValue = textField.text;
-    
-        [self.styleData setObject:newValue forKey:name];
+        [self.styleData setObject:textField.text forKey:cell.styleNameField.text];
         [self.tableView reloadData];
         [[WEPageManager sharedManager] setSelectedNodeStyle:self.styleData withCallback:^(id responseData) {
             if (self.delegate) [self.delegate styleResetWithData:responseData];
         }];
-    } else if (textField == cell.styleNameField) {
-        cell.styleName.text = textField.text;
-        [textField setHidden:YES];
-        [cell.styleName setHidden:NO];
     }
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     self.editingField = textField;
-    WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:textField];
-    if (textField == cell.styleNameField) {
-        [cell.styleName setHidden:YES];
-        textField.text = cell.styleName.text;
-        [textField setHidden:NO];
-    }
 }
-
--(void)styleNameSelected:(UITapGestureRecognizer*)labelTap {
-    WEStyleCell *cell = (WEStyleCell*)[self cellForSubview:labelTap.view];
-    [cell.styleNameField setHidden:NO];
-    [cell.styleNameField becomeFirstResponder];
-}
-
-
-
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,7 +136,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         WEStyleCell *cell = (WEStyleCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        [self.styleData removeObjectForKey:cell.styleName.text];
+        [self.styleData removeObjectForKey:cell.styleNameField.text];
         [[WEPageManager sharedManager] setSelectedNodeStyle:self.styleData withCallback:^(id responseData) {
             if (self.delegate) [self.delegate styleResetWithData:responseData];
         }];
