@@ -51,13 +51,17 @@
                                         (listen! placeholder :click #(container-listener % bridge))
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
-
+(def move-ended? (atom false))
 (defn move-start [event bridge]
-  (prevent-default event)
   (stop-propagation event)
-  (let [element (current-target event)
-        touches (touch/touches event)]
-    (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
+  (reset! move-ended? false)
+  (js/setTimeout
+   #(when-not @move-ended?
+      (prevent-default event)
+      (let [element (current-target event)
+            touches (touch/touches event)]
+        (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
+   500))
 (def moved? (atom false))
 (defn move [event bridge]
   (reset! moved? true)
@@ -69,6 +73,7 @@
     (dom/drag! element {:x (touch/page-x touches)
                         :y (touch/page-y touches)})))
 (defn move-end [event bridge]
+  (reset! move-ended? true)
   (prevent-default event)
   (stop-propagation event)
   (let [el (current-target event)
