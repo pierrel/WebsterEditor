@@ -262,12 +262,11 @@ static const int ICON_DIM = 13;
 
 -(void)showLinkButton {
     if (self.selectedData) {
+        [linkButton setAlpha:0];
         [linkButton setHidden:NO];
-//        [linkButton setAlpha:0];
-//        [linkButton setHidden:NO];
-//        [UIView animateWithDuration:0.2 animations:^{
-//            [linkButton setAlpha:1];
-//        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [linkButton setAlpha:1];
+        }];
     }
 }
 
