@@ -28,6 +28,8 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) NSString *currentPage;
 @property (strong, nonatomic) UINavigationController *navController;
 @property (strong, nonatomic) UIPopoverController *stylePopover;
+@property (strong, nonatomic) UIPopoverController *linkPopover;
+@property (strong, nonatomic) UINavigationController *linkNav;
 @property (strong, nonatomic) UINavigationController *styleNav;
 @property (strong, nonatomic) WEStyleTableViewController *styleTable;
 @property (strong, nonatomic) id selectedData;
@@ -95,9 +97,14 @@ static const int ICON_DIM = 13;
         self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleTable];
         self.stylePopover.delegate = self;
         [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
+        
+        self.linkPopover = [[UIPopoverController alloc] initWithContentViewController:[[UIViewController alloc] init]];
+        self.linkPopover.delegate = self;
+        [self.linkPopover setPopoverContentSize:CGSizeMake(300, 500)];
     } else {
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
         self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
+        self.linkNav = [[UINavigationController alloc] initWithRootViewController:[[UIViewController alloc] init]];
     }
     
     // Buttons
@@ -139,6 +146,7 @@ static const int ICON_DIM = 13;
     
     self.linkButton = [[UIButton alloc] init];
     [linkButton setTitle:@"🔗" forState:UIControlStateNormal];
+    [linkButton addTarget:self action:@selector(showLinkDialog) forControlEvents:UIControlEventTouchUpInside];
     [linkButton setHidden:YES];
     [self.view addSubview:linkButton];
 }
@@ -266,6 +274,16 @@ static const int ICON_DIM = 13;
         [linkButton setHidden:NO];
         [UIView animateWithDuration:0.2 animations:^{
             [linkButton setAlpha:1];
+        }];
+    }
+}
+
+-(void)showLinkDialog {
+    if (self.linkPopover) {
+        [self.linkPopover presentPopoverFromRect:self.linkButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [self presentViewController:self.linkNav animated:YES completion:^{
+            NSLog(@"done with link nav");
         }];
     }
 }
