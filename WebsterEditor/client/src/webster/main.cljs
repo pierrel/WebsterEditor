@@ -24,6 +24,10 @@
     (events/listen! selectable :touchend #(move/end % bridge))))
 
 (defn init-listeners! [bridge]
+  (.addEventListener js/document
+                     "selectionchange"
+                     #(listeners/text-selected bridge))
+  
   ;; default listener
   (events/listen! :click #(listeners/default-listener % bridge))
 

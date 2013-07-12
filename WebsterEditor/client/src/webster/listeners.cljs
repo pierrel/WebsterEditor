@@ -9,6 +9,7 @@
             [webster.dir :as dir]
             [webster.touch :as touch]
             [webster.cart :as cart]
+            [webster.range :as range]
             [clojure.string :as string]))
 
 (defn default-listener
@@ -51,6 +52,10 @@
                                         (listen! placeholder :click #(container-listener % bridge))
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
+
+(defn text-selected [bridge]
+  (if-not (= (range/selection-text) "")
+    (log "actually has something")))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
