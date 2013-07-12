@@ -4,6 +4,7 @@
             [webster.html :as html]
             [webster.dir :as dir]
             [webster.elements :as elements]
+            [webster.move :as move]
             [clojure.string :as string]
             [clojure.browser.repl :as repl]
             [domina :as domi]
@@ -18,10 +19,9 @@
 
   ;; blueprint listeners
   (when (domi/has-class? selectable "draggable")
-    (events/listen! selectable :touchstart #(listeners/move-start % bridge))
-    (events/listen! selectable :touchmove #(listeners/move % bridge))
-    (events/listen! selectable :touchend #(listeners/move-end % bridge))
-    (events/listen! selectable :touchcancel #(listeners/move-cancel % bridge))))
+    (events/listen! selectable :touchstart #(move/start % bridge))
+    (events/listen! selectable :touchmove #(move/move % bridge))
+    (events/listen! selectable :touchend #(move/end % bridge))))
 
 (defn init-listeners! [bridge]
   ;; default listener
