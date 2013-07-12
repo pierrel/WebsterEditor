@@ -69,6 +69,10 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self closeDialog];
     }];
+    
+    [jsBridge registerHandler:@"showLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"showing link button!");
+    }];
             
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];

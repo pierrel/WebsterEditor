@@ -55,7 +55,9 @@
 
 (defn text-selected [bridge]
   (if-not (= (range/selection-text) "")
-    (log "actually has something")))
+    (.callHandler bridge
+                  "showLinkButton"
+                  (clj->js {}))))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
