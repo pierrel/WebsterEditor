@@ -24,6 +24,7 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UIButton *editTextButton;
 @property (strong, nonatomic) UIButton *styleButton;
 @property (strong, nonatomic) UIButton *imageButton;
+@property (strong, nonatomic) UIButton *linkButton;
 @property (strong, nonatomic) NSString *currentPage;
 @property (strong, nonatomic) UINavigationController *navController;
 @property (strong, nonatomic) UIPopoverController *stylePopover;
@@ -37,7 +38,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton, imageButton;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton, imageButton, linkButton;
 
 - (void)viewDidLoad
 {
@@ -71,7 +72,7 @@ static const int ICON_DIM = 13;
     }];
     
     [jsBridge registerHandler:@"showLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"showing link button!");
+        [self showLinkButton];
     }];
             
     // setup the page manager
@@ -135,6 +136,11 @@ static const int ICON_DIM = 13;
     [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [imageButton setHidden:YES];
     [self.view addSubview:imageButton];
+    
+    self.linkButton = [[UIButton alloc] init];
+    [linkButton setTitle:@"🔗" forState:UIControlStateNormal];
+    [linkButton setHidden:YES];
+    [self.view addSubview:linkButton];
 }
 
 -(void)loadPage:(NSString*)pageName {
@@ -247,6 +253,22 @@ static const int ICON_DIM = 13;
                                    MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                    buttonSize.width,
                                    buttonSize.height);
+    linkButton.frame = CGRectMake(MIN(frame.origin.x + (frame.size.width/2) - (buttonSize.width/2), maxX),
+                                  MIN(frame.origin.y  + frame.size.height, maxY),
+                                  buttonSize.width,
+                                  buttonSize.height);
+
+}
+
+-(void)showLinkButton {
+    if (self.selectedData) {
+        [linkButton setHidden:NO];
+//        [linkButton setAlpha:0];
+//        [linkButton setHidden:NO];
+//        [UIView animateWithDuration:0.2 animations:^{
+//            [linkButton setAlpha:1];
+//        }];
+    }
 }
 
 - (void)closeDialog {
