@@ -30,12 +30,23 @@
 
     [self.tableView registerNib:[UINib nibWithNibName:@"WECustomLinkCell" bundle:nil]
          forCellReuseIdentifier:@"WECustomLinkCell"];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                target:self
+                                                                                action:@selector(doneButtonTapped:)];
+    [self.navigationItem setRightBarButtonItem:doneButton];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)doneButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"linking done");
+    }];
 }
 
 #pragma mark - Table view data source
