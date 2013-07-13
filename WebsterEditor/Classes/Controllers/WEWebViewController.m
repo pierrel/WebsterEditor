@@ -10,6 +10,7 @@
 #import "WEPageManager.h"
 #import "WEColumnResizeView.h"
 #import "WEViewController+ImagePicker.h"
+#import "WELinkViewController.h"
 #import "WEUtils.h"
 #import "WEActionSelectViewController.h"
 
@@ -32,6 +33,7 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UINavigationController *linkNav;
 @property (strong, nonatomic) UINavigationController *styleNav;
 @property (strong, nonatomic) WEStyleTableViewController *styleTable;
+@property (strong, nonatomic) WELinkViewController *linkTable;
 @property (strong, nonatomic) id selectedData;
 
 - (void)openDialogWithData:(id)data;
@@ -88,6 +90,8 @@ static const int ICON_DIM = 13;
     self.styleTable = [[WEStyleTableViewController alloc] initWithStyle:UITableViewStylePlain];
     self.styleTable.delegate = self;
     
+    self.linkTable = [[WELinkViewController alloc] initWithStyle:UITableViewStylePlain];
+    
     // popover
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
@@ -98,13 +102,13 @@ static const int ICON_DIM = 13;
         self.stylePopover.delegate = self;
         [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
         
-        self.linkPopover = [[UIPopoverController alloc] initWithContentViewController:[[UIViewController alloc] init]];
+        self.linkPopover = [[UIPopoverController alloc] initWithContentViewController:self.linkTable];
         self.linkPopover.delegate = self;
         [self.linkPopover setPopoverContentSize:CGSizeMake(300, 500)];
     } else {
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
         self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
-        self.linkNav = [[UINavigationController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+        self.linkNav = [[UINavigationController alloc] initWithRootViewController:self.linkTable];
     }
     
     // Buttons
