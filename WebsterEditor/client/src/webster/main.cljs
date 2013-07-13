@@ -61,10 +61,11 @@
     (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)
     (.registerHandler bridge "getSelectedNodeStyle" selected-node-style)
     (.registerHandler bridge "setSelectedNodeStyle" set-selected-node-style)
-    (bridging/register-handler bridge "setSelectedTextLink" set-selected-text-link)))
+    (bridging/register-handlers bridge
+                                {"setSelectedTextLink" set-selected-text-link})))
 
 (defn set-selected-text-link [data-map callback bridge]
-  (domi/log "got text"))
+  (domi/log "got textt"))
 
 (defn set-selected-node-style [data callback]
   (let [map-data (js->clj data)
