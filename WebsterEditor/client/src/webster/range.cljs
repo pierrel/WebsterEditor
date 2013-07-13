@@ -1,4 +1,7 @@
 (ns webster.range)
 
+(defn selection-obj []
+  (.getSelection js/rangy))
+
 (defn selection-text []
-  (.toString (.getSelection js/rangy)))
+  (.toString (selection-obj)))

@@ -10,7 +10,6 @@
 #import "WEPageManager.h"
 #import "WEColumnResizeView.h"
 #import "WEViewController+ImagePicker.h"
-#import "WELinkViewController.h"
 #import "WEUtils.h"
 #import "WEActionSelectViewController.h"
 
@@ -95,6 +94,7 @@ static const int ICON_DIM = 13;
     self.styleTable.delegate = self;
     
     self.linkTable = [[WELinkViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.linkTable.delegate = self;
     
     // popover
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -480,6 +480,10 @@ static const int ICON_DIM = 13;
 
 -(void)styleResetWithData:(id)data {
     [self positionButtonsWithData:data];
+}
+
+-(void)linkViewController:(WELinkViewController *)viewController setSelectedTextURL:(NSString *)url {
+    [[WEPageManager sharedManager] setSelectedTextURL:url];
 }
 
 -(void)refresh {

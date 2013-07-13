@@ -45,6 +45,11 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)setSelectedNodeStyle:(NSDictionary*)styleDict withCallback:(WEResponseCallback)callback;
 
 /*
+ * Link stuff
+ */
+-(void)setSelectedTextURL:(NSString*)url;
+
+/*
  * Mode handling
  */
 -(void)setMode:(NSString*)modeName;

@@ -97,6 +97,12 @@ static WEPageManager *gSharedManager;
     }];
 }
 
+-(void)setSelectedTextURL:(NSString *)url {
+    NSDictionary *data = [NSDictionary dictionaryWithObject:url forKey:@"url"];
+    [bridge callHandler:@"setSelectedTextLink" data:data responseCallback:^(id responseData) {
+    }];
+}
+
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback {
     [bridge callHandler:@"removeBackgroundImage"
                    data:[NSDictionary dictionary]

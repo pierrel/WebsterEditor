@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WELinkViewController : UITableViewController
+@class WELinkViewController;
 
+@protocol WELinkViewControllerDelegate<NSObject>
+-(void)linkViewController:(WELinkViewController*)viewController setSelectedTextURL:(NSString*)url;
+@end
+
+@interface WELinkViewController : UITableViewController<UITextFieldDelegate>
+@property (nonatomic, assign) id<WELinkViewControllerDelegate>delegate;
 @end
