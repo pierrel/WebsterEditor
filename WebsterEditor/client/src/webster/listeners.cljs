@@ -53,11 +53,20 @@
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
 
+(def last-selected-text (atom ""))
 (defn text-selected [bridge]
-  (if-not (= (range/selection-text) "")
-    (.callHandler bridge
-                  "showLinkButton"
-                  (clj->js {}))))
+  (let [current-selected-text (range/selection-text)]
+    (if (= current-selected-text "")
+      (when-not (= @last-selected-text "")
+        (reset! last-selected-text "")
+        (.callHandler bridge
+                      "hideLinkButton"
+                      (clj->js {})))
+      (do
+        (reset! last-selected-text current-selected-text)
+        (.callHandler bridge
+                      "showLinkButton"
+                      (clj->js {}))))))
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]

@@ -78,7 +78,11 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"showLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self showLinkButton];
     }];
-            
+    [jsBridge registerHandler:@"hideLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self hideLinkButton];
+    }];
+
+    
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];
     [manager setBridge:jsBridge];
@@ -278,6 +282,16 @@ static const int ICON_DIM = 13;
         [linkButton setHidden:NO];
         [UIView animateWithDuration:0.2 animations:^{
             [linkButton setAlpha:1];
+        }];
+    }
+}
+
+-(void)hideLinkButton {
+    if (![linkButton isHidden]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [linkButton setAlpha:1];
+        } completion:^(BOOL finished) {
+            [linkButton setHidden:YES];
         }];
     }
 }
