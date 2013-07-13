@@ -31,9 +31,6 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WECustomLinkCell" bundle:nil]
          forCellReuseIdentifier:@"WECustomLinkCell"];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
-    [self.tableView addGestureRecognizer:tap];
-    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                 target:self
                                                                                 action:@selector(doneButtonTapped:)];
