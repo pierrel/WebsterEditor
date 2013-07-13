@@ -5,6 +5,7 @@
             [webster.dir :as dir]
             [webster.elements :as elements]
             [webster.move :as move]
+            [webster.bridging :as bridging]
             [clojure.string :as string]
             [clojure.browser.repl :as repl]
             [domina :as domi]
@@ -60,9 +61,9 @@
     (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)
     (.registerHandler bridge "getSelectedNodeStyle" selected-node-style)
     (.registerHandler bridge "setSelectedNodeStyle" set-selected-node-style)
-    (.registerHandler bridge "setSelectedTextLink" set-selected-text-link)))
+    (bridging/register-handler bridge "setSelectedTextLink" set-selected-text-link)))
 
-(defn set-selected-text-link [data callback]
+(defn set-selected-text-link [data-map callback bridge]
   (domi/log "got text"))
 
 (defn set-selected-node-style [data callback]
