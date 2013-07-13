@@ -43,31 +43,32 @@
 
     (init-listeners! bridge)
 
-    (.registerHandler bridge "removeElementHandler" (fn [data callback] (remove-element-handler data callback bridge)))
-    (.registerHandler bridge "editElementHandler" edit-element-handler)
-    (.registerHandler bridge "deselectSelectedElement" deselect-selected-element)
-    (.registerHandler bridge "addElementUnderSelectedElement" (fn [data callback] (add-element-handler data callback bridge)))
-    (.registerHandler bridge "addGalleryUnderSelectedElement" (fn [data callback] (add-gallery-handler data callback bridge)))
-    (.registerHandler bridge "incrementColumn" increment-column)
-    (.registerHandler bridge "decrementColumn" decrement-column)
-    (.registerHandler bridge "incrementColumnOffset" increment-column-offset)
-    (.registerHandler bridge "decrementColumnOffset" decrement-column-offset)
-    (.registerHandler bridge "setBackgroundImage" (fn [data callback] (set-background-image data callback bridge)))
-    (.registerHandler bridge "removeBackgroundImage" (fn [data callback] (remove-background-image data callback bridge)))
-    (.registerHandler bridge "hasBackgroundImage" has-background-image)
-    (.registerHandler bridge "exportMarkup" export-markup)
-    (.registerHandler bridge "selectParentElement" (fn [data callback] (select-parent-element data callback bridge)))
-    (.registerHandler bridge "setMode" (fn [data callback] (set-mode data callback bridge)))
-    (.registerHandler bridge "setSelectedImageSrc" set-selected-image-src)
-    (.registerHandler bridge "getSelectedNodeStyle" selected-node-style)
-    (.registerHandler bridge "setSelectedNodeStyle" set-selected-node-style)
-    (bridging/register-handlers bridge
-                                {"setSelectedTextLink" set-selected-text-link})))
+    (bridging/register-handlers
+     bridge
+     {"removeElementHandler" remove-element-handler
+      "editElementHandler" edit-element-handler
+      "deselectSelectedElement" deselect-selected-element
+      "addElementUnderSelectedElement" add-element-handler
+      "addGalleryUnderSelectedElement" add-gallery-handler
+      "incrementColumn" increment-column
+      "decrementColumn" decrement-column
+      "incrementColumnOffset" increment-column-offset
+      "decrementColumnOffset" decrement-column-offset
+      "setBackgroundImage" set-background-image
+      "removeBackgroundImage" remove-background-image
+      "hasBackgroundImage" has-background-image
+      "exportMarkup" export-markup
+      "selectParentElement" select-parent-element
+      "setMode" set-mode
+      "setSelectedImageSrc" set-selected-image-src
+      "getSelectedNodeStyle" selected-node-style
+      "setSelectedNodeStyle" set-selected-node-style
+      "setSelectedTextLink" set-selected-text-link})))
 
 (defn set-selected-text-link [data-map callback bridge]
   (domi/log "got textt"))
 
-(defn set-selected-node-style [data callback]
+(defn set-selected-node-style [data callback bridge]
   (let [map-data (js->clj data)
         el (listeners/get-selected)]
     (domi/remove-attr! el "style")
@@ -78,10 +79,10 @@
           (recur (rest styles)))))
     (callback (listeners/node-info el))))
 
-(defn selected-node-style [data callback]
+(defn selected-node-style [data callback bridge]
   (callback (clj->js (dom/style-map (listeners/get-selected)))))
 
-(defn set-selected-image-src [data callback]
+(defn set-selected-image-src [data callback bridge]
   (let [path (aget data "path")]
     (if-let [selected (listeners/get-selected)]
       (domi/set-attr! selected "src" (dir/rel-path path)))))
@@ -101,7 +102,7 @@
       (listeners/select-node parent-node bridge))))
 
 (defn export-markup
-  [data callback]
+  [data callback bridge]
   (let [body (domi/clone (css/sel js/document "html"))]
     ;; remove some elements
     (domi/destroy! (css/sel body "head"))
@@ -147,13 +148,13 @@
     (domi/set-style! body :background-image "none")
     (if callback (callback (js-obj)))))
 (defn has-background-image
-  [data callback]
+  [data callback bridge]
   (callback (js-obj "hasBackground" (if (domi/has-class? (css/sel "body") "with-background")
                                       "true"
                                       "false"))))
 
 (defn increment-column-offset
-  [data callback]
+  [data callback bridge]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
         all-columns (css/sel jselected "> div")
@@ -165,7 +166,7 @@
     (callback (listeners/node-info jselected))))
 
 (defn decrement-column
-  [data callback]
+  [data callback bridge]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index"))
         all-columns (css/sel jselected "> div")
@@ -176,7 +177,7 @@
     (callback (listeners/node-info jselected))))
 
 (defn decrement-column-offset
-  [data callback]
+  [data callback bridge]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index") 10)
         all-columns (css/sel jselected "> div")
@@ -190,7 +191,7 @@
     (callback (listeners/node-info jselected))))
 
 (defn increment-column
-  [data callback]
+  [data callback bridge]
   (let [jselected (listeners/get-selected)
         index (js/parseInt (aget data "index") 10)
         all-columns (css/sel jselected "> div")
@@ -225,12 +226,12 @@
      (listeners/default-listener nil bridge)))
 
 (defn edit-element-handler
-  [data callback]
+  [data callback bridge]
   (let [el (css/sel ".selected")]
     (dom/make-editable el true)))
 
 (defn deselect-selected-element
-  [data]
+  [data callback bridge]
   (if-let [selected (listeners/get-selected)]
     (listeners/make-unselected selected)))
 
