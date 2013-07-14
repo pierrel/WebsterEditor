@@ -185,11 +185,15 @@
     NSError *error;
     NSString *projectId = [WEUtils newId];
     
+    // create project directory
+    [fileManager createDirectoryAtPath:[WEUtils pathInDocumentDirectory:nil withProjectId:projectId] withIntermediateDirectories:YES attributes:[NSDictionary dictionary] error:&error];
+    
     // Setup settings
     WEProjectSettings *settings = [[WEProjectSettings alloc] init];
+    NSString *settingsPath = [WEUtils pathInDocumentDirectory:@"settings"
+                                                withProjectId:projectId];
     [NSKeyedArchiver archiveRootObject:settings
-                                           toFile:[WEUtils pathInDocumentDirectory:@"settings"
-                                                                     withProjectId:projectId]];
+                                toFile:settingsPath];
     
     // Setup index file
     NSString *htmlBundle = [[NSBundle mainBundle] pathForResource:@"development"

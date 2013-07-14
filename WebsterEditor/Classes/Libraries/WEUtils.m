@@ -72,7 +72,11 @@
 + (NSString*) pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString *)projectId {
     NSString *projectsPath = [WEUtils pathInDocumentDirectory:@"projects"];
     NSString *projectPath = [projectsPath stringByAppendingPathComponent:projectId];
-    return [projectPath stringByAppendingPathComponent:filename];
+    if (!filename) {
+        return projectPath;
+    } else {
+        return [projectPath stringByAppendingPathComponent:filename];
+    }
 }
 
 + (NSString *)pathInDocumentDirectory:(NSString *)filename{
