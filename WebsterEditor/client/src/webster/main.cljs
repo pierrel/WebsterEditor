@@ -56,37 +56,36 @@
   (fn [data callback bridge]
     (domi/log "got textt")))
 
-(defhandler "set-selected-node-style"
+(defhandler "setSelectedNodeStyle"
   (fn [data callback bridge]
-    (let [map-data (js->clj data)
-          el (listeners/get-selected)]
+    (let [el (listeners/get-selected)]
       (domi/remove-attr! el "style")
-      (loop [styles (keys map-data)]
+      (loop [styles (keys data)]
         (if (seq styles)
           (do
-            (domi/set-style! el (first styles) (get map-data (first styles)))
+            (domi/set-style! el (first styles) (get data (first styles)))
             (recur (rest styles)))))
       (callback (listeners/node-info el)))))
 
-(defhandler "selected-node-style"
+(defhandler "getSelectedNodeStyle"
   (fn [data callback bridge]
     (callback (clj->js (dom/style-map (listeners/get-selected))))))
 
-(defhandler "set-selected-image-src"
+(defhandler "setSelectedImageSrc"
   (fn [data callback bridge]
-    (let [path (aget data "path")]
+    (let [path (get data "path")]
       (if-let [selected (listeners/get-selected)]
         (domi/set-attr! selected "src" (dir/rel-path path))))))
 
-(defhandler "set-mode"
+(defhandler "setMode"
   (fn [data callback bridge]
-    (if (= (aget data "mode") "blueprint")
+    (if (= (get data "mode") "blueprint")
       (dom/set-blueprint-mode)
       (dom/set-content-mode))
     (callback)))
 
 (domi/log (repl/connect "http://localhost:9000/repl"))
-(defhandler "select-parent-element"
+(defhandler "selectParentElement"
   (fn [data callback bridge]
     (let [selected-node (listeners/get-selected)
           parent-node (dom/parent selected-node)]
@@ -94,7 +93,7 @@
         (listeners/make-unselected selected-node)
         (listeners/select-node parent-node bridge)))))
 
-(defhandler "export-markup"
+(defhandler "exportMarkup"
   (fn [data callback bridge]
     (let [body (domi/clone (css/sel js/document "html"))]
       ;; remove some elements
@@ -124,15 +123,15 @@
       ;; return the new markup
       (callback (js-obj "markup" (string/trim (domi/html body)))))))
 
-(defhandler "set-background-image"
+(defhandler "setBackgroundImage"
   (fn [data callback bridge]
     (remove-background-image (js-obj) nil bridge))
   (let [body (css/sel "body")
-        full-path (aget data "path")
+        full-path (get data "path")
         url (str "url(" (dir/rel-path full-path) ")")]
     (domi/add-class! body "with-background")
     (domi/set-style! body "background-image" url)))
-(defhandler "remove-background-image"
+(defhandler "removeBackgroundImage"
   (fn [data callback bridge]
     (let [body (css/sel "body")
           url (second (re-matches #"url\((.*)\)" (domi/style body :background-image)))]
@@ -140,16 +139,16 @@
       (domi/remove-class! body "with-background")
       (domi/set-style! body :background-image "none")
       (if callback (callback (js-obj))))))
-(defhandler "has-background-image"
+(defhandler "hasBackgroundImage"
   (fn [data callback bridge]
     (callback (js-obj "hasBackground" (if (domi/has-class? (css/sel "body") "with-background")
                                         "true"
                                         "false")))))
 
-(defhandler "increment-column-offset"
+(defhandler "incrementColumnOffset"
   (fn [data callback bridge]
     (let [jselected (listeners/get-selected)
-          index (js/parseInt (aget data "index"))
+          index (js/parseInt (get data "index"))
           all-columns (css/sel jselected "> div")
           jcolumn (nth (domi/nodes all-columns) index)]
       (if (> (dom/get-column-span jcolumn) 1)
@@ -158,10 +157,10 @@
           (dom/increment-column-offset jcolumn)))
       (callback (listeners/node-info jselected)))))
 
-(defhandler "decrement-column"
+(defhandler "decrementColumn"
   (fn [data callback bridge]
     (let [jselected (listeners/get-selected)
-          index (js/parseInt (aget data "index"))
+          index (js/parseInt (get data "index"))
           all-columns (css/sel jselected "> div")
           jcolumn (nth (domi/nodes all-columns) index)]
       (if (> (dom/get-column-span jcolumn) 1)
@@ -169,10 +168,10 @@
           (dom/decrement-column-span jcolumn)))
       (callback (listeners/node-info jselected)))))
 
-(defhandler "decrement-column-offset"
+(defhandler "decrementColumnOffset"
   (fn [data callback bridge]
     (let [jselected (listeners/get-selected)
-          index (js/parseInt (aget data "index") 10)
+          index (js/parseInt (get data "index") 10)
           all-columns (css/sel jselected "> div")
           column-count (.-length all-columns)
           jcolumn (nth (domi/nodes all-columns) index)
@@ -183,10 +182,10 @@
           (dom/set-column-span jcolumn (+ (dom/get-column-span jcolumn) 1))))
       (callback (listeners/node-info jselected)))))
 
-(defhandler "increment-column"
+(defhandler "incrementColumn"
   (fn [data callback bridge]
     (let [jselected (listeners/get-selected)
-          index (js/parseInt (aget data "index") 10)
+          index (js/parseInt (get data "index") 10)
           all-columns (css/sel jselected "> div")
           column-count (.-length all-columns)
           jcolumn (nth (domi/nodes all-columns) index)
@@ -207,29 +206,28 @@
               (dom/set-column-span jcolumn (+ 1 span-num))))))
       (callback (listeners/node-info jselected)))))
  
-(defhandler "remove-element-handler"
+(defhandler "removeElementHandler"
   (fn [data callback bridge]
     (let [selected (-> "selected" domi/by-class domi/single-node first)]
       (domi/add-class! selected "hinge")
       (.addEventListener selected
                          "webkitAnimationEnd"
-                         #(domi/detach! selected))))
-  (remove-element-handler data callback)
-  (listeners/default-listener nil bridge))
+                         #(domi/detach! selected)))
+    (listeners/default-listener nil bridge)))
 
-(defhandler "edit-element-handler"
+(defhandler "editElementHandler"
   (fn [data callback bridge]
     (let [el (css/sel ".selected")]
       (dom/make-editable el true))))
 
-(defhandler "deselect-selected-element"
+(defhandler "deselectSelectedElement"
   (fn [data callback bridge]
     (if-let [selected (listeners/get-selected)]
       (listeners/make-unselected selected))))
 
-(defhandler "add-element-handler"
+(defhandler "addElementHandler"
   (fn [data callback bridge]
-    (let [new-el (-> (aget data "element-name") elements/get-by-name dom/new-element-with-info domi/string-to-dom)
+    (let [new-el (-> (get data "element-name") elements/get-by-name dom/new-element-with-info domi/string-to-dom)
           to-el (listeners/get-selected)
           new-el-in-dom (-> (domi/append! to-el new-el)  domi/children last)
           new-selectables (conj (domi/nodes (css/sel new-el-in-dom ".selectable")) new-el-in-dom)]
@@ -239,7 +237,7 @@
       (listeners/select-node new-el-in-dom bridge))))
 
 ;; IMAGE GALLERY STUFF
-(defhandler "add-gallery-handler"
+(defhandler "addGalleryHandler"
   (fn [data callback bridge]
     (let [jnode (listeners/get-selected)
           new-row (dom/new-image-gallery)
