@@ -54,7 +54,13 @@
 
 (defhandler "setSelectedTextLink"
   (fn [data callback bridge]
-    (domi/log "got textt")))
+    (let [url (get data "url")
+          sel-text (listeners/get-last-selected-text)
+          html (format "<a href=\"%s\">%s</a>" url sel-text)
+          node (domi/single-node (domi/html-to-dom html))]
+      (when-let [rangy (listeners/get-last-range-obj)]
+        (.deleteContents rangy)
+        (.insertNode rangy node)))))
 
 (defhandler "setSelectedNodeStyle"
   (fn [data callback bridge]
