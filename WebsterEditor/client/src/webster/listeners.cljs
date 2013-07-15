@@ -55,7 +55,6 @@
 
 (def last-selected-text (atom ""))
 (def last-used-selected-text (atom ""))
-(def last-selected-obj (atom nil))
 (def last-range-obj (atom nil))
 (defn text-selected [bridge]
   (let [current-selected-text (range/selection-text)]
@@ -67,15 +66,12 @@
                       (clj->js {})))
       (do
         (reset! last-selected-text current-selected-text)
-        (reset! last-selected-obj (range/selection-obj))
-        (reset! last-range-obj (.getRangeAt @last-selected-obj 0))
-        (reset! last-used-selected-text (.toString @last-selected-obj))
+        (reset! last-range-obj (.getRangeAt (range/selection-obj) 0))
+        (reset! last-used-selected-text current-selected-text)
         (.callHandler bridge
                       "showLinkButton"
                       (clj->js {}))))))
 
-(defn get-last-selected-obj []
-  @last-selected-obj)
 (defn get-last-range-obj []
   @last-range-obj)
 (defn get-last-selected-text []
