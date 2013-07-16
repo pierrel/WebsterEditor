@@ -32,6 +32,9 @@
              (stop-propagation event)
              (prevent-default event)))))
 
+(defn link-listener [event bridge]
+  (log "got a click!"))
+
 (defn thumbnail-listener
   [event bridge]
   (clear-selection)

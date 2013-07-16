@@ -13,16 +13,20 @@
             [domina.events :as events]))
 
 (defn add-selectable-listeners! [selectable bridge]
-  ;; content listeners
-  (events/listen! (css/sel selectable "a")
-                  :click
-                  #(events/prevent-default %))
-
   ;; blueprint listeners
   (when (domi/has-class? selectable "draggable")
     (events/listen! selectable :touchstart #(move/start % bridge))
     (events/listen! selectable :touchmove #(move/move % bridge))
     (events/listen! selectable :touchend #(move/end % bridge))))
+
+(defn add-link-listeners! [link bridge]
+  (events/listen! link :touchstart #(do
+                                      (events/prevent-default %)
+                                      (events/stop-propagation %)))
+  (events/listen! link :touchend #(do
+                                    (events/prevent-default %)
+                                    (events/stop-propagation %)
+                                    (listeners/link-listener % bridge))))
 
 (defn init-listeners! [bridge]
   (.addEventListener js/document
@@ -33,7 +37,10 @@
   (events/listen! :click #(listeners/default-listener % bridge))
 
   (doseq [selectable (domi/nodes (domi/by-class "selectable"))]
-    (add-selectable-listeners! selectable bridge)))
+    (add-selectable-listeners! selectable bridge))
+
+  (doseq [link (domi/nodes (css/sel "a"))]
+    (add-link-listeners! link bridge)))
 
 (def handler-list (atom []))
 (defn defhandler [name func]
