@@ -1,6 +1,6 @@
 (ns webster.listeners
   (:require-macros [webster.macros :as macros])
-  (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes single-node)]
+  (:use [domina :only (log append! attr attrs text has-class? classes remove-class! add-class! children detach! nodes single-node)]
         [domina.css :only (sel)]
         [domina.events :only (listen! dispatch! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
@@ -106,7 +106,9 @@
     (merge frame
            {:tag (.-tagName node)
             :classes (classes el)
-            :addable (elements/possible-under (elements/node-to-element el))})))
+            :addable (elements/possible-under (elements/node-to-element el))
+            :attrs (attrs node)
+            :text (text node)})))
  
 (defn get-selected []
   (sel ".selected"))
