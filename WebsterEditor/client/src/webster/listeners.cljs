@@ -1,6 +1,6 @@
 (ns webster.listeners
   (:require-macros [webster.macros :as macros])
-  (:use [domina :only (log append! attr has-class? classes remove-class! add-class! children detach! nodes single-node)]
+  (:use [domina :only (log append! set-attr! attr attrs text has-class? classes remove-class! add-class! children detach! nodes single-node)]
         [domina.css :only (sel)]
         [domina.events :only (listen! dispatch! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
@@ -9,6 +9,7 @@
             [webster.dir :as dir]
             [webster.touch :as touch]
             [webster.cart :as cart]
+            [webster.range :as range]
             [clojure.string :as string]))
 
 (defn default-listener
@@ -31,6 +32,15 @@
              (stop-propagation event)
              (prevent-default event)))))
 
+(defn link-listener [event bridge]
+  (let [el (current-target event)]
+    (.callHandler bridge
+                  "linkSelected"
+                  (node-info el)
+                  (fn [new-url]
+                    (if new-url
+                      (set-attr! el :href new-url))))))
+
 (defn thumbnail-listener
   [event bridge]
   (clear-selection)
@@ -51,55 +61,31 @@
                                         (listen! placeholder :click #(container-listener % bridge))
                                         (dispatch! placeholder :click {})
                                         (make-selected placeholder))))))))))
-(def move-ended? (atom false))
-(def move-started? (atom false))
-(def move-canceled? (atom false))
-(def moved? (atom false))
-(defn move-start [event bridge]
-  (stop-propagation event)
-  (reset! move-ended? false)
-  (reset! move-canceled? false)
-  (js/setTimeout
-   #(when-not (or @move-ended? @moved? @move-canceled?)
-      (prevent-default event)
-      (reset! move-started? true)
-      (let [element (current-target event)
-            touches (touch/touches event)]
-        (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
-   500))
-(defn move [event bridge]
-  (if (and @move-started? (not @move-canceled?))
-    (do
-      (reset! moved? true)
-      (prevent-default event)
-      (stop-propagation event)
-      (if (not (nothing-selected)) (default-listener event bridge))
-      (let [element (current-target event)
-            touches (touch/touches event)]
-        (dom/drag! element {:x (touch/page-x touches)
-                            :y (touch/page-y touches)})))
-    (reset! move-canceled? true)))
-(defn move-end [event bridge]
-  (reset! move-ended? true)
-  (reset! move-started? false)
-  (prevent-default event)
-  (stop-propagation event)
-  (let [el (current-target event)
-        droppables (dom/possible-droppables el)
-        touches (touch/changed-touches event)
-        point {:left (touch/page-x touches)
-               :top (touch/page-y touches)}]
-    (if-not @moved?
-      (if-not @move-canceled? (container-listener event bridge)) ;; hasn't moved so it's a "click"
-      (let [drop-on (first (filter #(dom/point-in-element? point %) droppables))]
-        (reset! moved? false)
-        (when drop-on
-          (detach! el)
-          (doseq [new-child
-                  (dom/arrange-in-nodes el point (children drop-on))]
-            (detach! new-child)
-            (append! drop-on new-child)))))
-    (dom/stop-dragging! el))) 
+
+(def last-selected-text (atom ""))
+(def last-used-selected-text (atom ""))
+(def last-range-obj (atom nil))
+(defn text-selected [bridge]
+  (let [current-selected-text (range/selection-text)]
+    (if (= current-selected-text "")
+      (when-not (= @last-selected-text "")
+        (reset! last-selected-text "")
+        (.callHandler bridge
+                      "hideLinkButton"
+                      (clj->js {})))
+      (do
+        (reset! last-selected-text current-selected-text)
+        (reset! last-range-obj (.getRangeAt (range/selection-obj) 0))
+        (reset! last-used-selected-text current-selected-text)
+        (.callHandler bridge
+                      "showLinkButton"
+                      (clj->js {}))))))
+
+(defn get-last-range-obj []
+  @last-range-obj)
+(defn get-last-selected-text []
+  @last-used-selected-text)
+
 
 (defn select-node [el bridge & [callback]]
   (let [row-info (node-info el)]
@@ -126,7 +112,9 @@
     (merge frame
            {:tag (.-tagName node)
             :classes (classes el)
-            :addable (elements/possible-under (elements/node-to-element el))})))
+            :addable (elements/possible-under (elements/node-to-element el))
+            :attrs (attrs node)
+            :text (text node)})))
  
 (defn get-selected []
   (sel ".selected"))

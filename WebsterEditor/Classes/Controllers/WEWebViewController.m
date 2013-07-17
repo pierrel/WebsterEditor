@@ -24,12 +24,18 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) UIButton *editTextButton;
 @property (strong, nonatomic) UIButton *styleButton;
 @property (strong, nonatomic) UIButton *imageButton;
+@property (strong, nonatomic) UIButton *linkButton;
 @property (strong, nonatomic) NSString *currentPage;
 @property (strong, nonatomic) UINavigationController *navController;
 @property (strong, nonatomic) UIPopoverController *stylePopover;
+@property (strong, nonatomic) UIPopoverController *linkPopover;
+@property (strong, nonatomic) UINavigationController *linkNav;
 @property (strong, nonatomic) UINavigationController *styleNav;
 @property (strong, nonatomic) WEStyleTableViewController *styleTable;
+@property (strong, nonatomic) WELinkViewController *linkTable;
 @property (strong, nonatomic) id selectedData;
+
+@property (strong, nonatomic) WVJBResponseCallback linkSelectCallback;
 
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
@@ -37,7 +43,7 @@ static const int ICON_DIM = 13;
 @end
 
 @implementation WEWebViewController
-@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton, imageButton;
+@synthesize  imagePickerCallback, removeButton, addButton, parentButton, editTextButton, styleButton, imageButton, linkButton;
 
 - (void)viewDidLoad
 {
@@ -69,7 +75,21 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self closeDialog];
     }];
-            
+    
+    [jsBridge registerHandler:@"showLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self showLinkButton];
+    }];
+    [jsBridge registerHandler:@"hideLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self hideLinkButton];
+    }];
+    
+    [jsBridge registerHandler:@"linkSelected" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSString *url = (NSString*)[[(NSDictionary*)data objectForKey:@"attrs"] objectForKey:@"href"];
+        [self showLinkDialogOver:[WEUtils frameFromData:data] withURLString:url];
+        self.linkSelectCallback = responseCallback;
+    }];
+
+    
     // setup the page manager
     WEPageManager *manager = [WEPageManager sharedManager];
     [manager setBridge:jsBridge];
@@ -81,6 +101,9 @@ static const int ICON_DIM = 13;
     self.styleTable = [[WEStyleTableViewController alloc] initWithStyle:UITableViewStylePlain];
     self.styleTable.delegate = self;
     
+    self.linkTable = [[WELinkViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.linkTable.delegate = self;
+    
     // popover
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
@@ -90,9 +113,14 @@ static const int ICON_DIM = 13;
         self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleTable];
         self.stylePopover.delegate = self;
         [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
+        
+        self.linkPopover = [[UIPopoverController alloc] initWithContentViewController:self.linkTable];
+        self.linkPopover.delegate = self;
+        [self.linkPopover setPopoverContentSize:CGSizeMake(300, 500)];
     } else {
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
         self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
+        self.linkNav = [[UINavigationController alloc] initWithRootViewController:self.linkTable];
     }
     
     // Buttons
@@ -131,6 +159,12 @@ static const int ICON_DIM = 13;
     [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [imageButton setHidden:YES];
     [self.view addSubview:imageButton];
+    
+    self.linkButton = [[UIButton alloc] init];
+    [linkButton setTitle:@"🔗" forState:UIControlStateNormal];
+    [linkButton addTarget:self action:@selector(showLinkDialog) forControlEvents:UIControlEventTouchUpInside];
+    [linkButton setHidden:YES];
+    [self.view addSubview:linkButton];
 }
 
 -(void)loadPage:(NSString*)pageName {
@@ -243,6 +277,47 @@ static const int ICON_DIM = 13;
                                    MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
                                    buttonSize.width,
                                    buttonSize.height);
+    linkButton.frame = CGRectMake(MIN(frame.origin.x + (frame.size.width/2) - (buttonSize.width/2), maxX),
+                                  MIN(frame.origin.y  + frame.size.height, maxY),
+                                  buttonSize.width,
+                                  buttonSize.height);
+
+}
+
+-(void)showLinkButton {
+    if (self.selectedData) {
+        [linkButton setAlpha:0];
+        [linkButton setHidden:NO];
+        [UIView animateWithDuration:0.2 animations:^{
+            [linkButton setAlpha:1];
+        }];
+    }
+}
+
+-(void)hideLinkButton {
+    if (![linkButton isHidden]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [linkButton setAlpha:1];
+        } completion:^(BOOL finished) {
+            [linkButton setHidden:YES];
+        }];
+    }
+}
+
+-(void)showLinkDialog {
+    [self showLinkDialogOver:self.linkButton.frame withURLString:nil];
+}
+
+-(void)showLinkDialogOver:(CGRect)frame withURLString:(NSString*)url {
+    if (url) self.linkTable.urlString = url;
+    
+    if (self.linkPopover) {
+        [self.linkPopover presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [self presentViewController:self.linkNav animated:YES completion:^{
+            NSLog(@"done with link nav");
+        }];
+    }
 }
 
 - (void)closeDialog {
@@ -419,6 +494,15 @@ static const int ICON_DIM = 13;
 
 -(void)styleResetWithData:(id)data {
     [self positionButtonsWithData:data];
+}
+
+-(void)linkViewController:(WELinkViewController *)viewController setSelectedTextURL:(NSString *)url {
+    if (self.linkSelectCallback) {
+        self.linkSelectCallback(url);
+        self.linkSelectCallback = nil;
+    } else {
+        [[WEPageManager sharedManager] setSelectedTextURL:url];
+    }
 }
 
 -(void)refresh {

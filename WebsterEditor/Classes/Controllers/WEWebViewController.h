@@ -12,6 +12,7 @@
 #import "WEColumnResizeView.h"
 #import "WEImagePopoverViewController.h"
 #import "WEStyleTableViewController.h"
+#import "WELinkViewController.h"
 
 @protocol WEWebViewDelegate <NSObject>
 
@@ -19,7 +20,7 @@
 
 @end
 
-@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate,UINavigationControllerDelegate,WEStyleTableViewControllerDelegate>
+@interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate,UINavigationControllerDelegate,WEStyleTableViewControllerDelegate,WELinkViewControllerDelegate>
 @property (strong, nonatomic) id<WEWebViewDelegate> delegate;
 @property (strong, nonatomic) WVJBResponseCallback imagePickerCallback;
 @property (strong, nonatomic) id pickerData;
