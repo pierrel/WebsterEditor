@@ -68,7 +68,7 @@
       (when-let [rangy (listeners/get-last-range-obj)]
         (.deleteContents rangy)
         (.insertNode rangy node)
-        (add-link-listeners! (domi/nodes node))))))
+        (add-link-listeners! (domi/nodes node) bridge)))))
 
 (defhandler "setSelectedNodeStyle"
   (fn [data callback bridge]
