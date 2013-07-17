@@ -82,7 +82,8 @@ static const int ICON_DIM = 13;
     }];
     
     [jsBridge registerHandler:@"linkSelected" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"got it!: %@", data);
+        NSString *url = (NSString*)[[(NSDictionary*)data objectForKey:@"attrs"] objectForKey:@"href"];
+        [self showLinkDialogOver:[WEUtils frameFromData:data] withURLString:url];
     }];
 
     
@@ -301,8 +302,14 @@ static const int ICON_DIM = 13;
 }
 
 -(void)showLinkDialog {
+    [self showLinkDialogOver:self.linkButton.frame withURLString:nil];
+}
+
+-(void)showLinkDialogOver:(CGRect)frame withURLString:(NSString*)url {
+    if (url) self.linkTable.urlString = url;
+    
     if (self.linkPopover) {
-        [self.linkPopover presentPopoverFromRect:self.linkButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [self.linkPopover presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     } else {
         [self presentViewController:self.linkNav animated:YES completion:^{
             NSLog(@"done with link nav");

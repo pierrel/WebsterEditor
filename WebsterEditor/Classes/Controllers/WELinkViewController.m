@@ -37,6 +37,13 @@
     [self.navigationItem setRightBarButtonItem:doneButton];
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    self.urlString = nil;
+    [self.tableView reloadData];
+    
+    [super viewDidDisappear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -68,6 +75,11 @@
     static NSString *CellIdentifier = @"WECustomLinkCell";
     WECustomLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     [cell.urlField setDelegate:self];
+    
+    if (self.urlString) {
+        [cell.urlField setText:self.urlString];
+    }
+    
     return cell;
 }
 

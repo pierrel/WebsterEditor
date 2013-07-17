@@ -15,5 +15,6 @@
 @end
 
 @interface WELinkViewController : UITableViewController<UITextFieldDelegate>
+@property (nonatomic, strong) NSString *urlString;
 @property (nonatomic, assign) id<WELinkViewControllerDelegate>delegate;
 @end
