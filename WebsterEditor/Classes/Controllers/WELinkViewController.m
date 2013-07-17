@@ -78,6 +78,8 @@
     
     if (self.urlString) {
         [cell.urlField setText:self.urlString];
+    } else {
+        [cell.urlField setText:@""];
     }
     
     return cell;
