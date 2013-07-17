@@ -35,6 +35,8 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) WELinkViewController *linkTable;
 @property (strong, nonatomic) id selectedData;
 
+@property (strong, nonatomic) WVJBResponseCallback linkSelectCallback;
+
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
 - (WEColumnResizeView*)resizeViewAtIndex:(NSInteger)index;
@@ -84,6 +86,7 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"linkSelected" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSString *url = (NSString*)[[(NSDictionary*)data objectForKey:@"attrs"] objectForKey:@"href"];
         [self showLinkDialogOver:[WEUtils frameFromData:data] withURLString:url];
+        self.linkSelectCallback = responseCallback;
     }];
 
     
@@ -494,7 +497,12 @@ static const int ICON_DIM = 13;
 }
 
 -(void)linkViewController:(WELinkViewController *)viewController setSelectedTextURL:(NSString *)url {
-    [[WEPageManager sharedManager] setSelectedTextURL:url];
+    if (self.linkSelectCallback) {
+        self.linkSelectCallback(url);
+        self.linkSelectCallback = nil;
+    } else {
+        [[WEPageManager sharedManager] setSelectedTextURL:url];
+    }
 }
 
 -(void)refresh {

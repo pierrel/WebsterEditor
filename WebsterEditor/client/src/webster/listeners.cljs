@@ -1,6 +1,6 @@
 (ns webster.listeners
   (:require-macros [webster.macros :as macros])
-  (:use [domina :only (log append! attr attrs text has-class? classes remove-class! add-class! children detach! nodes single-node)]
+  (:use [domina :only (log append! set-attr! attr attrs text has-class? classes remove-class! add-class! children detach! nodes single-node)]
         [domina.css :only (sel)]
         [domina.events :only (listen! dispatch! unlisten! current-target stop-propagation prevent-default)])
   (:require [webster.dom :as dom]
@@ -33,7 +33,13 @@
              (prevent-default event)))))
 
 (defn link-listener [event bridge]
-  (.callHandler bridge "linkSelected" (-> event current-target node-info))) 
+  (let [el (current-target event)]
+    (.callHandler bridge
+                  "linkSelected"
+                  (node-info el)
+                  (fn [new-url]
+                    (if new-url
+                      (set-attr! el :href new-url))))))
 
 (defn thumbnail-listener
   [event bridge]
