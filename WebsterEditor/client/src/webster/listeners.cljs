@@ -33,7 +33,7 @@
              (prevent-default event)))))
 
 (defn link-listener [event bridge]
-  (log "got a click!"))
+  (.callHandler bridge "linkSelected" (-> event current-target node-info))) 
 
 (defn thumbnail-listener
   [event bridge]

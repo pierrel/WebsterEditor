@@ -80,6 +80,10 @@ static const int ICON_DIM = 13;
     [jsBridge registerHandler:@"hideLinkButton" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self hideLinkButton];
     }];
+    
+    [jsBridge registerHandler:@"linkSelected" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"got it!: %@", data);
+    }];
 
     
     // setup the page manager
