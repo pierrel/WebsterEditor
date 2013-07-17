@@ -63,7 +63,7 @@
   (fn [data callback bridge]
     (let [url (get data "url")
           sel-text (listeners/get-last-selected-text)
-          html (format "<span class=\"selectable\"><a href=\"%s\">%s</a></span>" url sel-text)
+          html (format "<a href=\"%s\">%s</a>" url sel-text)
           node (domi/single-node (domi/html-to-dom html))]
       (when-let [rangy (listeners/get-last-range-obj)]
         (.deleteContents rangy)
