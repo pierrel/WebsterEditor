@@ -94,8 +94,15 @@
         return cell;
     } else {
         NSArray *pages = [self pages];
+        NSString *page = [pages objectAtIndex:indexPath.row];
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-        [cell.textLabel setText:[pages objectAtIndex:indexPath.row]];
+        [cell.textLabel setText:page];
+        
+        if ([page isEqualToString:self.urlString]) {
+            [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        } else {
+            [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        }
         
         return cell;
     }
@@ -158,10 +165,45 @@
     if (indexPath.section == 1) {
         NSArray *pages = [self pages];
         NSString *page = [pages objectAtIndex:indexPath.row];
-        NSLog(@"Selected %@", page);        
+        
+        // set the new url
+        if (self.delegate) [self.delegate linkViewController:self setSelectedTextURL:page];
+        
+        // clear custom field
+        WECustomLinkCell *customCell = (WECustomLinkCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0
+                                                                                                                inSection:0]];
+        customCell.urlField.text = @"";
+        
+        // set current custom url and clear old one
+        int oldPageIndex = [self indexForPageNamed:self.urlString];
+        if (oldPageIndex != NSNotFound)
+            [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForItem:oldPageIndex inSection:1]
+                                     animated:YES];
+        self.urlString = page;
+        
+    } else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+-(int)indexForPageNamed:(NSString*)pageName {
+    NSArray *pages = [self pages];
+    int oldPageIndex;
+    BOOL pageFound = NO;
+    for (int i = 0; i < pages.count; i++) {
+        NSString *oldPage = [pages objectAtIndex:i];
+        if ([oldPage isEqualToString:pageName]) {
+            oldPageIndex = i;
+            pageFound = YES;
+            break;
+        }
     }
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (pageFound) {
+        return oldPageIndex;
+    } else {
+        return NSNotFound;
+    }
 }
 
 @end
