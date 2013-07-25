@@ -35,7 +35,7 @@ static const int ICON_DIM = 13;
 @property (strong, nonatomic) WELinkViewController *linkTable;
 @property (strong, nonatomic) id selectedData;
 
-@property (strong, nonatomic) WVJBResponseCallback linkSelectCallback;
+@property (copy, nonatomic) WVJBResponseCallback linkSelectCallback;
 
 - (void)openDialogWithData:(id)data;
 - (void)closeDialog;
