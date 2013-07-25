@@ -601,6 +601,10 @@ Export
     self.animateBack = NO;
 }
 
+-(NSArray*)getPages {
+    return [self.pageCollectionController pages];
+}
+
 -(void)refresh {
     [modeSwitch setOn:NO animated:YES];
     [self.contentController refresh];

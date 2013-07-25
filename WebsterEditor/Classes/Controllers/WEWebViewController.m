@@ -505,6 +505,14 @@ static const int ICON_DIM = 13;
     }
 }
 
+-(NSArray*)getPagesForLinkViewController:(WELinkViewController *)viewController {
+    if (self.delegate) {
+        return [self.delegate getPages];
+    } else {
+        return nil;
+    }
+}
+
 -(void)refresh {
     [self closeDialog];
     [self.webView reload];

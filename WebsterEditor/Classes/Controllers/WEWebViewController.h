@@ -17,6 +17,7 @@
 @protocol WEWebViewDelegate <NSObject>
 
 -(void)webViewDidLoad;
+-(NSArray*)getPages;
 
 @end
 

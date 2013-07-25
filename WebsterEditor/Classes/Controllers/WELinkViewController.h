@@ -11,7 +11,9 @@
 @class WELinkViewController;
 
 @protocol WELinkViewControllerDelegate<NSObject>
--(void)linkViewController:(WELinkViewController*)viewController setSelectedTextURL:(NSString*)url;
+-(void)linkViewController:(WELinkViewController*)viewController
+       setSelectedTextURL:(NSString*)url;
+-(NSArray*)getPagesForLinkViewController:(WELinkViewController*)viewController;
 @end
 
 @interface WELinkViewController : UITableViewController<UITextFieldDelegate>

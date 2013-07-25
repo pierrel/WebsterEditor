@@ -30,6 +30,7 @@
 
     [self.tableView registerNib:[UINib nibWithNibName:@"WECustomLinkCell" bundle:nil]
          forCellReuseIdentifier:@"WECustomLinkCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                 target:self
@@ -61,32 +62,62 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    NSArray *pages = [self pages];
+    if (pages && pages.count > 0)
+        return 2;
+    else
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    if (section == 0)
+        return 1;
+    else
+        return [self pages].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"WECustomLinkCell";
-    WECustomLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    [cell.urlField setDelegate:self];
-    
-    if (self.urlString) {
-        [cell.urlField setText:self.urlString];
+    if (indexPath.section == 0) {
+        NSString *CellIdentifier = @"WECustomLinkCell";
+        WECustomLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        [cell.urlField setDelegate:self];
+        
+        if (self.urlString) {
+            [cell.urlField setText:self.urlString];
+        } else {
+            [cell.urlField setText:@""];
+        }
+        
+        return cell;
     } else {
-        [cell.urlField setText:@""];
+        NSArray *pages = [self pages];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        [cell.textLabel setText:[pages objectAtIndex:indexPath.row]];
+        
+        return cell;
     }
-    
-    return cell;
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Custom URL";
+    } else {
+        return @"Local Pages";
+    }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     if (self.delegate) [self.delegate linkViewController:self setSelectedTextURL:textField.text];
+}
+
+-(NSArray*)pages {
+    if (self.delegate)
+        return [self.delegate getPagesForLinkViewController:self];
+    else
+        return nil;
 }
 
 /*
