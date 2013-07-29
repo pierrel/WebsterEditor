@@ -159,6 +159,7 @@
 Export
  */
 -(void)exportProject {
+    [self.exportButton setEnabled:NO];
     if ([self validateSettings]) {
         [exportActivity startAnimating];
         [goButton setHidden:YES];
@@ -166,6 +167,7 @@ Export
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
                                                      (unsigned long)NULL), ^(void) {
                 [self doExportWorkWithCompletion:^(NSError *error) {
+                    [self.exportButton setEnabled:YES];
                     [goButton setHidden:NO];
                     [exportActivity stopAnimating];
                 }];
