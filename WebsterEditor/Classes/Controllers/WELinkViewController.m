@@ -85,7 +85,7 @@
         WECustomLinkCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         [cell.urlField setDelegate:self];
         
-        if (self.urlString) {
+        if (self.urlString && [self indexForPageNamed:self.urlString] == NSNotFound) {
             [cell.urlField setText:self.urlString];
         } else {
             [cell.urlField setText:@""];
