@@ -237,10 +237,6 @@ Export
     S3PutObjectRequest *put;
     
     //html
-    NSString *htmlTemplateFile = [mainBundle pathForResource:@"production" ofType:@"html"];
-    NSString *htmlTemplate = [NSString stringWithContentsOfFile:htmlTemplateFile
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
     for (NSString *pagePath in [self.pageCollectionController pages]) {
         NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
         NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
@@ -338,13 +334,19 @@ Export
     NSLog(@"done dev");
     
     if (self.webPageLoaded) {
+        NSString *htmlTemplateFile = [[NSBundle mainBundle] pathForResource:@"production" ofType:@"html"];
+        NSString *htmlTemplate = [NSString stringWithContentsOfFile:htmlTemplateFile
+                                                           encoding:NSUTF8StringEncoding
+                                                              error:&error];
         [[WEPageManager sharedManager] exportMarkup:^(id responseData) {
             NSError *innerError;
             NSString *markup = [responseData objectForKey:@"markup"];
             NSString *prodPage = [currentPage stringByReplacingOccurrencesOfString:@"." withString:@"_prod."];
             NSString *prodFile = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
+            NSString *withBody = [htmlTemplate stringByReplacingOccurrencesOfString:@"[[BODY]]" withString:markup];
+            NSString *withTitle = [withBody stringByReplacingOccurrencesOfString:@"[[TITLE]]" withString:self.settings.title];
             
-            [markup writeToFile:prodFile atomically:NO encoding:NSUTF8StringEncoding error:&innerError];
+            [withTitle writeToFile:prodFile atomically:NO encoding:NSUTF8StringEncoding error:&innerError];
             NSLog(@"done prod");
             if (self.delegate) [self.delegate didSaveViewController:self];
             block(nil);
