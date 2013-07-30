@@ -15,4 +15,6 @@
 + (NSURL *)applicationDocumentsDirectory;
 + (NSString*)newId;
 + (NSString*)pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString*)projectId;
++ (id)getObjectInDictionary:(NSDictionary*)dict withPath:(NSString *)firstString, ...
+NS_REQUIRES_NIL_TERMINATION;
 @end

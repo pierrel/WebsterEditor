@@ -106,4 +106,21 @@
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     return (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
 }
+
++(id)getObjectInDictionary:(NSDictionary *)dict withPath:(NSString *)firstString, ... {
+    va_list args;
+    id final = dict;
+    
+    va_start(args, firstString);
+    for (NSString *arg = firstString; arg != nil; arg = va_arg(args, NSString*)) {
+       if (final) {
+            final = [((NSDictionary*)final) objectForKey:arg];
+        } else {
+            return nil;
+        }
+    }
+    va_end(args);
+    
+    return final;
+}
 @end

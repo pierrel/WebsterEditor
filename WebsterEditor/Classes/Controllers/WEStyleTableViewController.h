@@ -15,6 +15,7 @@
 @end
 
 @interface WEStyleTableViewController : UITableViewController<UITextFieldDelegate>
+@property (nonatomic, strong) NSString *type;
 @property (nonatomic, assign) id<WEStyleTableViewControllerDelegate>delegate;
 -(void)setNewStyleData:(NSDictionary*)newStyleData;
 @end

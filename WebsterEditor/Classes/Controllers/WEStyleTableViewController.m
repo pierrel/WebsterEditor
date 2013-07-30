@@ -10,6 +10,7 @@
 #import "UITableViewController+UITableViewControllerAdditions.h"
 #import "WEStyleCell.h"
 #import "WEPageManager.h"
+#import "WEUtils.h"
 
 @interface WEStyleTableViewController ()
 @property (nonatomic, strong) NSMutableDictionary *styleData;
@@ -142,6 +143,11 @@
         }];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return self.type;
 }
 
 /*
