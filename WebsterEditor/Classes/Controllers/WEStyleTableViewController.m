@@ -147,7 +147,7 @@
 
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return self.type;
+    return [self.type capitalizedString];
 }
 
 /*
