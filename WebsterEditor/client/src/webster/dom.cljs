@@ -7,6 +7,11 @@
             [domina.css :as css]
             [domina.events :as events]
             [clojure.string :as string]))
+
+(defn child-seq
+  "Returns a tree-seq of the children of the given element"
+  [el]
+  (tree-seq #(not (nil? %)) dom/children el))
  
 (defn offset-from-parent [el]
   {:top (.-offsetTop el)

@@ -5,6 +5,18 @@
             [domina :as domi]
             [domina.events :as events]))
 
+(defn child-movable? [el]
+  (not (domi/has-class? el "editing")))
+
+(defn movable? [el]
+  (loop [all-children (dom/child-seq el)]
+    (let [current-el (first all-children)]
+      (domi/log current-el)
+      (cond
+       (nil? current-el) true
+       (child-movable? current-el) (recur (rest all-children))
+       :else false))))
+
 (def move-ended? (atom false))
 (def move-started? (atom false))
 (def move-canceled? (atom false))
@@ -12,16 +24,19 @@
 
 (defn start [event bridge]
   (events/stop-propagation event)
-  (reset! move-ended? false)
-  (reset! move-canceled? false)
-  (js/setTimeout
-   #(when-not (or @move-ended? @moved? @move-canceled?)
-      (events/prevent-default event)
-      (reset! move-started? true)
-      (let [element (events/current-target event)
-            touches (touch/touches event)]
-        (dom/start-dragging! element {:x (touch/page-x touches) :y (touch/page-y touches)})))
-   500))
+  (when (movable? (events/current-target event))
+    (reset! move-ended? false)
+    (reset! move-canceled? false)
+    (js/setTimeout
+     #(when-not (or @move-ended? @moved? @move-canceled?)
+        (events/prevent-default event)
+        (reset! move-started? true)
+        (let [element (events/current-target event)
+              touches (touch/touches event)]
+          (dom/start-dragging! element
+                               {:x (touch/page-x touches)
+                                :y (touch/page-y touches)})))
+     500)))
 
 (defn move [event bridge]
   (if (and @move-started? (not @move-canceled?))
