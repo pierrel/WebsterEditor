@@ -386,7 +386,7 @@ otherwise returns false"
         (let [current-style (string/split (first styles-left) ":")]
           (recur (assoc struct
                    (first current-style)
-                   (second current-style))
+                   (string/join ":" (rest current-style)))
                  (rest styles-left)))
         struct))))
 (defn style-list [node]
