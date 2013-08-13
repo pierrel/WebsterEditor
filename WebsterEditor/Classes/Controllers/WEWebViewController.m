@@ -431,9 +431,10 @@ static const int ICON_DIM = 13;
             data = (NSDictionary*)responseData;
         else
             data = [NSDictionary dictionary];
-        [self.styleTable setNewStyleData:data];
         self.styleTable.type = [WEUtils getObjectInDictionary:(NSDictionary*)self.selectedData
                                                      withPath:@"attrs", @"data-type", nil];
+        self.styleTable.tag = [WEUtils getObjectInDictionary:(NSDictionary*)self.selectedData withPath:@"tag", nil];
+        [self.styleTable setNewStyleData:data];
         if (self.stylePopover) {
             [self.stylePopover presentPopoverFromRect:button.frame
                                                inView:self.view

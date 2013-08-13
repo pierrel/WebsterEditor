@@ -41,7 +41,6 @@
     if (self.navigationItem) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped:)];
         [self.navigationItem setRightBarButtonItem:doneButton];
-        [self.navigationItem setTitle:@"Edit Styles"];
     }
     
     UITapGestureRecognizer *dismissTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnTableView:)];
@@ -52,6 +51,16 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    if (self.navigationItem) {
+        if ((self.type == nil || [self.type isEqualToString:@""]) && (self.tag != nil && ![self.tag isEqualToString:@""])) {
+            [self.navigationItem setTitle:[NSString stringWithFormat:@"<%@>", [self.tag lowercaseString]]];
+        } else {
+            [self.navigationItem setTitle:[self.type capitalizedString]];
+        }
+    }
 }
 
 -(void)doneTapped:(id)button {
