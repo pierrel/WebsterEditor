@@ -8,6 +8,7 @@
 
 #import "WEStyleTableViewController.h"
 #import "UITableViewController+UITableViewControllerAdditions.h"
+#import "WEBodyBackgroundCell.h"
 #import "WEStyleCell.h"
 #import "WEPageManager.h"
 #import "WEUtils.h"
@@ -38,6 +39,7 @@
     [super viewDidLoad];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"WEStyleCell" bundle:nil] forCellReuseIdentifier:@"StyleCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"WEBodyBackgroundCell" bundle:nil] forCellReuseIdentifier:@"BodyBackgroundCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     if (self.navigationItem) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped:)];
@@ -118,8 +120,12 @@
         
         return cell;
     } else if (indexPath.section == 1) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-        cell.textLabel.text = @"booo";
+        WEBodyBackgroundCell *cell = (WEBodyBackgroundCell*)[tableView dequeueReusableCellWithIdentifier:@"BodyBackgroundCell" forIndexPath:indexPath];
+        if ([self.styleData objectForKey:@"background-image"] != nil) {
+            [cell.deleteButton setHidden:NO];
+        } else {
+            [cell.deleteButton setHidden:YES];
+        }
         
         return cell;
     } else {

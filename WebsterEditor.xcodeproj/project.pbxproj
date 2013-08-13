@@ -55,6 +55,8 @@
 		A2B5F3A2179201020026A982 /* WELinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B5F3A1179201020026A982 /* WELinkViewController.m */; };
 		A2B5F3A81792018C0026A982 /* WECustomLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B5F3A71792018C0026A982 /* WECustomLinkCell.m */; };
 		A2B5F3AA179201A90026A982 /* WECustomLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2B5F3A9179201A90026A982 /* WECustomLinkCell.xib */; };
+		A2BBBAB217B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2BBBAB117B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib */; };
+		A2BBBAB517B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2BBBAB417B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m */; };
 		A2D15F10171227AD009FF2D8 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0B171227AD009FF2D8 /* add.png */; };
 		A2D15F11171227AD009FF2D8 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0C171227AD009FF2D8 /* blue.png */; };
 		A2D15F12171227AD009FF2D8 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D15F0D171227AD009FF2D8 /* delete.png */; };
@@ -172,6 +174,9 @@
 		A2B5F3A61792018C0026A982 /* WECustomLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WECustomLinkCell.h; sourceTree = "<group>"; };
 		A2B5F3A71792018C0026A982 /* WECustomLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WECustomLinkCell.m; sourceTree = "<group>"; };
 		A2B5F3A9179201A90026A982 /* WECustomLinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WECustomLinkCell.xib; sourceTree = "<group>"; };
+		A2BBBAB117B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEBodyBackgroundCell.xib; sourceTree = "<group>"; };
+		A2BBBAB317B9FDAE00DFD1E1 /* WEBodyBackgroundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEBodyBackgroundCell.h; sourceTree = "<group>"; };
+		A2BBBAB417B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEBodyBackgroundCell.m; sourceTree = "<group>"; };
 		A2D15F0B171227AD009FF2D8 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		A2D15F0C171227AD009FF2D8 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
 		A2D15F0D171227AD009FF2D8 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -413,6 +418,9 @@
 				A2B5F3A61792018C0026A982 /* WECustomLinkCell.h */,
 				A2B5F3A71792018C0026A982 /* WECustomLinkCell.m */,
 				A2B5F3A9179201A90026A982 /* WECustomLinkCell.xib */,
+				A2BBBAB317B9FDAE00DFD1E1 /* WEBodyBackgroundCell.h */,
+				A2BBBAB417B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m */,
+				A2BBBAB117B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -657,6 +665,7 @@
 				A2ECB8FB1718E416003F9E36 /* test.html in Resources */,
 				A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */,
 				A2B5F3AA179201A90026A982 /* WECustomLinkCell.xib in Resources */,
+				A2BBBAB217B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +725,7 @@
 				A2F8056A176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.m in Sources */,
 				A2B5F3A2179201020026A982 /* WELinkViewController.m in Sources */,
 				A2B5F3A81792018C0026A982 /* WECustomLinkCell.m in Sources */,
+				A2BBBAB517B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
