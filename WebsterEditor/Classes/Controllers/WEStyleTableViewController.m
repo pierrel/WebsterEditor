@@ -38,6 +38,7 @@
     [super viewDidLoad];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"WEStyleCell" bundle:nil] forCellReuseIdentifier:@"StyleCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     if (self.navigationItem) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped:)];
         [self.navigationItem setRightBarButtonItem:doneButton];
@@ -80,32 +81,50 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    if ([self isBody]) {
+        return 2;
+    }
+    else {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.styleData.count + 1;
+    if (section == 1 && [self isBody]) {
+        return 1;
+    } else {
+        return self.styleData.count + 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WEStyleCell *cell = (WEStyleCell*)[tableView dequeueReusableCellWithIdentifier:@"StyleCell"
-                                                                      forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row != self.styleData.count) {
-        NSString *cssStyle = [self.styleData.allKeys objectAtIndex:indexPath.row];
-        NSString *cssVal = [self.styleData objectForKey:cssStyle];
-        cell.styleNameField.text = cssStyle;
-        cell.styleValue.text = cssVal;
+    if (indexPath.section == 0) {
+        WEStyleCell *cell = (WEStyleCell*)[tableView dequeueReusableCellWithIdentifier:@"StyleCell"
+                                                                          forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row != self.styleData.count) {
+            NSString *cssStyle = [self.styleData.allKeys objectAtIndex:indexPath.row];
+            NSString *cssVal = [self.styleData objectForKey:cssStyle];
+            cell.styleNameField.text = cssStyle;
+            cell.styleValue.text = cssVal;
+        }
+        
+        cell.styleValue.delegate = self;
+        cell.styleNameField.delegate = self;
+        [cell.styleValue addTarget:self action:@selector(textFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
+        
+        return cell;
+    } else if (indexPath.section == 1) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        cell.textLabel.text = @"booo";
+        
+        return cell;
+    } else {
+        return nil;
     }
-    
-    cell.styleValue.delegate = self;
-    cell.styleNameField.delegate = self;
-    [cell.styleValue addTarget:self action:@selector(textFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    return cell;
 }
 
 -(void)textFinished:(id)sender {
@@ -140,7 +159,6 @@
     return indexPath.row != self.styleData.count;
 }
 
-
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -156,7 +174,11 @@
 
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.type capitalizedString];
+    if (section == 1) {
+        return @"Extra styles";
+    } else {
+        return @"CSS";
+    }
 }
 
 /*
@@ -185,5 +207,10 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+-(BOOL)isBody {
+    return [self.tag isEqualToString:@"BODY"];
+}
+        
 
 @end
