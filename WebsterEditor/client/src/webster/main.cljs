@@ -152,7 +152,8 @@
     (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
     (domi/remove-class! body "with-background")
     (domi/set-style! body :background-image nil)
-    (if callback (callback (js-obj)))))
+    (if callback (callback (-> body dom/style-map clj->js)))))
+
 (defhandler "removeBackgroundImage" remove-background-image)
 
 (defhandler "hasBackgroundImage"

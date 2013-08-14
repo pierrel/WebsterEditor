@@ -477,7 +477,9 @@ static const int ICON_DIM = 13;
 }
 
 -(void)removeBackground {
-    [[WEPageManager sharedManager] removeBackgroundImageWithCallback:nil];
+    [[WEPageManager sharedManager] removeBackgroundImageWithCallback:^(id responseData) {
+        [self resetNodeStyle:responseData];
+    }];
 }
 
 -(void)actionSelect:(WEActionSelectViewController*)actionController didSelectAction:(NSString*)element {
