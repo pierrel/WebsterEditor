@@ -26,8 +26,8 @@
 		A239B6271708E0E800109734 /* WEProjectCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6261708E0E800109734 /* WEProjectCollectionViewLayout.m */; };
 		A239B62A1708E85E00109734 /* WEAddProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B6291708E85E00109734 /* WEAddProjectCell.m */; };
 		A23E7DEB173AA34B004CDDF7 /* WEAddPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A23E7DEA173AA34B004CDDF7 /* WEAddPageCell.m */; };
-		A24E68FB17BBCF800090D2F1 /* add-image.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68ED17BBCF800090D2F1 /* add-image.png */; };
-		A24E68FC17BBCF800090D2F1 /* add-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68EE17BBCF800090D2F1 /* add-image@2x.png */; };
+		A24E68FB17BBCF800090D2F1 /* add_image.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68ED17BBCF800090D2F1 /* add_image.png */; };
+		A24E68FC17BBCF800090D2F1 /* add_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68EE17BBCF800090D2F1 /* add_image@2x.png */; };
 		A24E68FD17BBCF800090D2F1 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68EF17BBCF800090D2F1 /* add.png */; };
 		A24E68FE17BBCF800090D2F1 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68F017BBCF800090D2F1 /* add@2x.png */; };
 		A24E68FF17BBCF800090D2F1 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E68F117BBCF800090D2F1 /* delete.png */; };
@@ -123,8 +123,8 @@
 		A239B6291708E85E00109734 /* WEAddProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEAddProjectCell.m; sourceTree = "<group>"; };
 		A23E7DE9173AA34B004CDDF7 /* WEAddPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEAddPageCell.h; sourceTree = "<group>"; };
 		A23E7DEA173AA34B004CDDF7 /* WEAddPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEAddPageCell.m; sourceTree = "<group>"; };
-		A24E68ED17BBCF800090D2F1 /* add-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-image.png"; sourceTree = "<group>"; };
-		A24E68EE17BBCF800090D2F1 /* add-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-image@2x.png"; sourceTree = "<group>"; };
+		A24E68ED17BBCF800090D2F1 /* add_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_image.png; sourceTree = "<group>"; };
+		A24E68EE17BBCF800090D2F1 /* add_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image@2x.png"; sourceTree = "<group>"; };
 		A24E68EF17BBCF800090D2F1 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		A24E68F017BBCF800090D2F1 /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		A24E68F117BBCF800090D2F1 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -304,8 +304,8 @@
 		A24E68EC17BBCF800090D2F1 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				A24E68ED17BBCF800090D2F1 /* add-image.png */,
-				A24E68EE17BBCF800090D2F1 /* add-image@2x.png */,
+				A24E68ED17BBCF800090D2F1 /* add_image.png */,
+				A24E68EE17BBCF800090D2F1 /* add_image@2x.png */,
 				A24E68EF17BBCF800090D2F1 /* add.png */,
 				A24E68F017BBCF800090D2F1 /* add@2x.png */,
 				A24E68F117BBCF800090D2F1 /* delete.png */,
@@ -684,8 +684,8 @@
 				A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */,
 				A2B5F3AA179201A90026A982 /* WECustomLinkCell.xib in Resources */,
 				A2BBBAB217B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib in Resources */,
-				A24E68FB17BBCF800090D2F1 /* add-image.png in Resources */,
-				A24E68FC17BBCF800090D2F1 /* add-image@2x.png in Resources */,
+				A24E68FB17BBCF800090D2F1 /* add_image.png in Resources */,
+				A24E68FC17BBCF800090D2F1 /* add_image@2x.png in Resources */,
 				A24E68FD17BBCF800090D2F1 /* add.png in Resources */,
 				A24E68FE17BBCF800090D2F1 /* add@2x.png in Resources */,
 				A24E68FF17BBCF800090D2F1 /* delete.png in Resources */,

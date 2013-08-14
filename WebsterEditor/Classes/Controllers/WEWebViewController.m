@@ -158,13 +158,13 @@ static const int ICON_DIM = 13;
     [self.view addSubview:styleButton];
     
     self.imageButton = [[UIButton alloc] init];
-    [imageButton setTitle:@"📷" forState:UIControlStateNormal];
+    [imageButton setImage:[UIImage imageNamed:@"add_image.png"] forState:UIControlStateNormal];
     [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [imageButton setHidden:YES];
     [self.view addSubview:imageButton];
     
     self.linkButton = [[UIButton alloc] init];
-    [linkButton setTitle:@"🔗" forState:UIControlStateNormal];
+    [linkButton setImage:[UIImage imageNamed:@"link.png"] forState:UIControlStateNormal];
     [linkButton addTarget:self action:@selector(showLinkDialog) forControlEvents:UIControlEventTouchUpInside];
     [linkButton setHidden:YES];
     [self.view addSubview:linkButton];
