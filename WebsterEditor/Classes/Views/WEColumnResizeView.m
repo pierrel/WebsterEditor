@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 pierre larochelle. All rights reserved.
 //
 
-static const int ICON_DIM = 13;
+static const int ICON_DIM = 25;
 
 #import "WEColumnResizeView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface WEColumnResizeView ()
 @property (assign, nonatomic) CGFloat touchOriginX;
@@ -28,11 +29,12 @@ static const int ICON_DIM = 13;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImage *image = [UIImage imageNamed:@"blue.png"];
+        [self setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:1 alpha:0.2]];
+        
         rightResize = [[UIButton alloc] init];
-        [rightResize setBackgroundImage:image forState:UIControlStateNormal];
+        [rightResize setTitle:@"🔴" forState:UIControlStateNormal];
         leftResize = [[UIButton alloc] init];
-        [leftResize setBackgroundImage:image forState:UIControlStateNormal];
+        [leftResize setTitle:@"🔴" forState:UIControlStateNormal];
         
         [self addSubview:rightResize];
         [self addSubview:leftResize];
