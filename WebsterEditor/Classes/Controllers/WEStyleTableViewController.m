@@ -112,6 +112,9 @@
             NSString *cssVal = [self.styleData objectForKey:cssStyle];
             cell.styleNameField.text = cssStyle;
             cell.styleValue.text = cssVal;
+        } else {
+            cell.styleNameField.text = @"";
+            cell.styleValue.text = @"";
         }
         
         cell.styleValue.delegate = self;
