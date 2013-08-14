@@ -242,6 +242,9 @@ static const int ICON_DIM = 13;
     // let the add popover know
     [self.addSelectionController setData:data];
     
+    // remove resizers
+    [self removeResizers];
+    
     // add resizers if any
     NSArray *children = [data objectForKey:@"children"];
     if (children) {
@@ -348,7 +351,9 @@ static const int ICON_DIM = 13;
             NSLog(@"something");
         }];
     }
-    
+}
+
+-(void)removeResizers {
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {
             [subview removeFromSuperview];
