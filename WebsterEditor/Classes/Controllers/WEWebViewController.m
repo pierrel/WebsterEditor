@@ -428,26 +428,34 @@ static const int ICON_DIM = 13;
 
 -(void)styleButtonTapped:(UIButton*)button {
     [[WEPageManager sharedManager] getSelectedNodeStyleWithCallback:^(id responseData) {
-        NSDictionary *data;
-        if ([responseData isKindOfClass:[NSDictionary class]])
-            data = (NSDictionary*)responseData;
-        else
-            data = [NSDictionary dictionary];
-        self.styleTable.type = [WEUtils getObjectInDictionary:(NSDictionary*)self.selectedData
-                                                     withPath:@"attrs", @"data-type", nil];
-        self.styleTable.tag = [WEUtils getObjectInDictionary:(NSDictionary*)self.selectedData withPath:@"tag", nil];
-        [self.styleTable setNewStyleData:data];
-        if (self.stylePopover) {
-            [self.stylePopover presentPopoverFromRect:button.frame
-                                               inView:self.view
-                             permittedArrowDirections:UIPopoverArrowDirectionAny
-                                             animated:YES];
-        } else {
-            [self presentViewController:self.styleNav animated:YES completion:^{
-                NSLog(@"showing style edit");
-            }];
-        }
+        [self resetNodeStyle:responseData];
+        [self showStyleDialogFrom:button];
     }];
+}
+
+-(void)resetNodeStyle:(id)responseData {
+    NSDictionary *data;
+    if ([responseData isKindOfClass:[NSDictionary class]])
+        data = (NSDictionary*)responseData;
+    else
+        data = [NSDictionary dictionary];
+    self.styleTable.type = [WEUtils getObjectInDictionary:(NSDictionary*)self.selectedData
+                                                 withPath:@"attrs", @"data-type", nil];
+    self.styleTable.tag = [WEUtils getObjectInDictionary:(NSDictionary*)self.selectedData withPath:@"tag", nil];
+    [self.styleTable setNewStyleData:data];
+}
+
+-(void)showStyleDialogFrom:(UIButton*)button {
+    if (self.stylePopover) {
+        [self.stylePopover presentPopoverFromRect:button.frame
+                                           inView:self.view
+                         permittedArrowDirections:UIPopoverArrowDirectionAny
+                                         animated:YES];
+    } else {
+        [self presentViewController:self.styleNav animated:YES completion:^{
+            NSLog(@"showing style edit");
+        }];
+    }
 }
 
 -(void)imageButtonTapped:(UIButton*)button {
