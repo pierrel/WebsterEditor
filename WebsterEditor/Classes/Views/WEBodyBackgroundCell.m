@@ -31,7 +31,7 @@
 }
 
 -(void)removeBackgroundImageTapped:(id)sender {
-    NSLog(@"removing background");
+    if (self.delegate) [self.delegate bodyBackgroundWantsToRemoveBackground];
 }
 
 @end

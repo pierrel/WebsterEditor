@@ -11,7 +11,7 @@
 @protocol WEBodyBackgroundDelegate <NSObject>
 
 -(void)bodyBackgroundWantsToSetBackground;
-
+-(void)bodyBackgroundWantsToRemoveBackground;
 @end
 
 @interface WEBodyBackgroundCell : UITableViewCell

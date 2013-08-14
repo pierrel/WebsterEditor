@@ -227,6 +227,10 @@
     }];
 }
 
+-(void) bodyBackgroundWantsToRemoveBackground {
+    if (self.delegate) [self.delegate removeBackground];
+}
+
 // picker delegates
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info {
     [self dismissViewControllerAnimated:YES completion:^{

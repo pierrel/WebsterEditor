@@ -15,6 +15,7 @@
 
 // background stuff
 -(void)setBackgroundWithInfo:(NSDictionary*)info;
+-(void)removeBackground;
 @end
 
 @interface WEStyleTableViewController : UITableViewController<UITextFieldDelegate>
