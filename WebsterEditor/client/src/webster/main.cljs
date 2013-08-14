@@ -139,20 +139,22 @@
 
 (defhandler "setBackgroundImage"
   (fn [data callback bridge]
-    (remove-background-image (js-obj) nil bridge))
-  (let [body (css/sel "body")
-        full-path (get data "path")
-        url (str "url(" (dir/rel-path full-path) ")")]
-    (domi/add-class! body "with-background")
-    (domi/set-style! body "background-image" url)))
-(defhandler "removeBackgroundImage"
-  (fn [data callback bridge]
+    (remove-background-image (js-obj) nil bridge)
     (let [body (css/sel "body")
-          url (second (re-matches #"url\((.*)\)" (domi/style body :background-image)))]
-      (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
-      (domi/remove-class! body "with-background")
-      (domi/set-style! body :background-image "none")
-      (if callback (callback (js-obj))))))
+          full-path (get data "path")
+          url (str "url(" (dir/rel-path full-path) ")")]
+      (domi/add-class! body "with-background")
+      (domi/set-style! body "background-image" url))))
+
+(defn remove-background-image [data callback bridge]
+  (let [body (css/sel "body")
+        url (second (re-matches #"url\((.*)\)" (domi/style body :background-image)))]
+    (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
+    (domi/remove-class! body "with-background")
+    (domi/set-style! body :background-image "none")
+    (if callback (callback (js-obj)))))
+(defhandler "removeBackgroundImage" remove-background-image)
+
 (defhandler "hasBackgroundImage"
   (fn [data callback bridge]
     (callback (js-obj "hasBackground" (if (domi/has-class? (css/sel "body") "with-background")
