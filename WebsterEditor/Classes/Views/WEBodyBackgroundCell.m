@@ -27,7 +27,7 @@
 }
 
 -(void)setBackgroundImageTapped:(id)sender {
-    NSLog(@"setting bg");
+    if (self.delegate) [self.delegate bodyBackgroundWantsToSetBackground];
 }
 
 -(void)removeBackgroundImageTapped:(id)sender {

@@ -126,7 +126,7 @@
         } else {
             [cell.deleteButton setHidden:YES];
         }
-        
+        cell.delegate = self;
         return cell;
     } else {
         return nil;
@@ -216,6 +216,11 @@
 
 -(BOOL)isBody {
     return [self.tag isEqualToString:@"BODY"];
+}
+
+// delegates
+-(void)bodyBackgroundWantsToSetBackground {
+    NSLog(@"wanting to set background");
 }
         
 

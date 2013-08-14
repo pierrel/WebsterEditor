@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol WEBodyBackgroundDelegate <NSObject>
+
+-(void)bodyBackgroundWantsToSetBackground;
+
+@end
+
 @interface WEBodyBackgroundCell : UITableViewCell
 @property (nonatomic, retain) IBOutlet UIButton *deleteButton;
+@property (nonatomic, assign) id<WEBodyBackgroundDelegate>delegate;
 
 -(IBAction)setBackgroundImageTapped:(id)sender;
 -(IBAction)removeBackgroundImageTapped:(id)sender;

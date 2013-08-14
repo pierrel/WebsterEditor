@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WEBodyBackgroundCell.h"
 
-@protocol WEStyleTableViewControllerDelegate <NSObject>
+@protocol WEStyleTableViewControllerDelegate <NSObject, WEBodyBackgroundDelegate, UIImagePickerControllerDelegate>
 
 -(void)styleResetWithData:(id)data;
 
+// background stuff
+-(void)setBackgroundWithInfo:(NSDictionary*)info;
 @end
 
 @interface WEStyleTableViewController : UITableViewController<UITextFieldDelegate>
