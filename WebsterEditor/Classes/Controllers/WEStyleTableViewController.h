@@ -22,5 +22,6 @@
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *tag;
 @property (nonatomic, assign) id<WEStyleTableViewControllerDelegate>delegate;
+@property (nonatomic, assign) UIPopoverController *parentPopover;
 -(void)setNewStyleData:(NSDictionary*)newStyleData;
 @end

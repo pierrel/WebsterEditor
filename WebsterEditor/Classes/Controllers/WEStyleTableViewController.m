@@ -225,9 +225,13 @@
 -(void)bodyBackgroundWantsToSetBackground {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    [self presentViewController:picker animated:YES completion:^{
-        NSLog(@"presented picker");
-    }];
+    if (self.parentPopover) {
+        [self.parentPopover setContentViewController:picker animated:YES];
+    } else {
+        [self presentViewController:picker animated:YES completion:^{
+            NSLog(@"presented picker");
+        }];
+    }
 }
 
 -(void) bodyBackgroundWantsToRemoveBackground {
@@ -236,9 +240,13 @@
 
 // picker delegates
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info {
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"done with picker");
-    }];
+    if (self.parentPopover) {
+        [self.parentPopover setContentViewController:self animated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            NSLog(@"done with picker");
+        }];
+    }
     if (self.delegate) [self.delegate setBackgroundWithInfo:info];
 }
 

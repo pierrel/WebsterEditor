@@ -115,6 +115,7 @@ static const int ICON_DIM = 13;
         self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleTable];
         self.stylePopover.delegate = self;
         [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
+        self.styleTable.parentPopover = self.stylePopover;
         
         self.linkPopover = [[UIPopoverController alloc] initWithContentViewController:self.linkTable];
         self.linkPopover.delegate = self;
