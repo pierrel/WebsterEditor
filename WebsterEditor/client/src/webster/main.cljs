@@ -144,7 +144,8 @@
           full-path (get data "path")
           url (str "url(" (dir/rel-path full-path) ")")]
       (domi/add-class! body "with-background")
-      (domi/set-style! body "background-image" url))))
+      (domi/set-style! body "background-image" url)
+      (if callback (callback (-> body dom/style-map clj->js))))))
 
 (defn remove-background-image [data callback bridge]
   (let [body (css/sel "body")

@@ -473,7 +473,9 @@ static const int ICON_DIM = 13;
     NSData* data = UIImageJPEGRepresentation(image, 1);
     [data writeToFile:mediaPath atomically:NO];
     
-    [pageManager setBackgroundImageToPath:mediaPath];
+    [pageManager setBackgroundImageToPath:mediaPath withCallback:^(id responseData) {
+        [self resetNodeStyle:responseData];
+    }];
 }
 
 -(void)removeBackground {

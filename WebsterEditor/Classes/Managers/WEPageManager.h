@@ -32,7 +32,7 @@ typedef void (^WEResponseCallback)(id responseData);
 /*
  *  Background handling
  */
--(void)setBackgroundImageToPath:(NSString*)path;
+-(void)setBackgroundImageToPath:(NSString*)path withCallback:(WEResponseCallback)responseCallback;
 -(void)removeBackgroundImageWithCallback:(WEResponseCallback)callback;
 -(void)hasBackgroundWithCallback:(WEResponseCallback)callback;
 

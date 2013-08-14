@@ -75,9 +75,12 @@ static WEPageManager *gSharedManager;
        }];
 }
 
--(void)setBackgroundImageToPath:(NSString *)path {
+-(void)setBackgroundImageToPath:(NSString *)path withCallback:(WEResponseCallback)responseCallback {
     [bridge callHandler:@"setBackgroundImage"
-                   data:[NSDictionary dictionaryWithObject:path forKey:@"path"]];
+                   data:[NSDictionary dictionaryWithObject:path forKey:@"path"]
+       responseCallback:^(id responseData) {
+           responseCallback(responseData);
+       }];
 }
 
 -(void)setSrcForSelectedImage:(NSString *)path {
