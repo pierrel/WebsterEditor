@@ -229,10 +229,10 @@
 
 // picker delegates
 -(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info {
-    NSLog(@"picked image with info %@", info);
     [self dismissViewControllerAnimated:YES completion:^{
         NSLog(@"done with picker");
     }];
+    if (self.delegate) [self.delegate setBackgroundWithInfo:info];
 }
 
 @end
