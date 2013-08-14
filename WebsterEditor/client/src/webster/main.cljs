@@ -151,7 +151,7 @@
         url (second (re-matches #"url\((.*)\)" (domi/style body :background-image)))]
     (if url (.callHandler bridge "removingMedia" (js-obj "media-src" (dir/rel-path url))))
     (domi/remove-class! body "with-background")
-    (domi/set-style! body :background-image "none")
+    (domi/set-style! body :background-image nil)
     (if callback (callback (js-obj)))))
 (defhandler "removeBackgroundImage" remove-background-image)
 
