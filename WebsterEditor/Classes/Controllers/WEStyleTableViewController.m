@@ -218,10 +218,21 @@
     return [self.tag isEqualToString:@"BODY"];
 }
 
-// delegates
+// type delegates
 -(void)bodyBackgroundWantsToSetBackground {
-    NSLog(@"wanting to set background");
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:^{
+        NSLog(@"presented picker");
+    }];
 }
-        
+
+// picker delegates
+-(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info {
+    NSLog(@"picked image with info %@", info);
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"done with picker");
+    }];
+}
 
 @end

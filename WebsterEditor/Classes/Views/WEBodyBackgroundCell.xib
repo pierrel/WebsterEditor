@@ -88,7 +88,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">Set &gt;</string>
+								<string key="IBUINormalTitle">Set</string>
 								<reference key="IBUIHighlightedTitleColor" ref="618812223"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
