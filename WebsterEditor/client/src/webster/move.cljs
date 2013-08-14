@@ -11,7 +11,6 @@
 (defn movable? [el]
   (loop [all-children (dom/child-seq el)]
     (let [current-el (first all-children)]
-      (domi/log current-el)
       (cond
        (nil? current-el) true
        (child-movable? current-el) (recur (rest all-children))
