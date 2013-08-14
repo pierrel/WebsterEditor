@@ -265,12 +265,16 @@ static const int ICON_DIM = 13;
     CGFloat maxX = self.view.frame.size.width - buttonSize.width;
     CGFloat maxY = self.view.frame.size.height - buttonSize.height;
     
+    CGFloat heightOffset = 0;
+    if (frame.size.height < buttonSize.height)
+        heightOffset = (buttonSize.height - frame.size.height)/2;
+    
     removeButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
-                                    MAX(frame.origin.y - (buttonSize.height/2), 0),
+                                    MAX(frame.origin.y - (buttonSize.height/2) - heightOffset, 0),
                                     buttonSize.width,
                                     buttonSize.height);
     addButton.frame = CGRectMake(MIN(frame.origin.x + frame.size.width - (buttonSize.width/2), maxX),
-                                 MAX(frame.origin.y - (buttonSize.height/2), 0),
+                                 MAX(frame.origin.y - (buttonSize.height/2) - heightOffset, 0),
                                  buttonSize.width,
                                  buttonSize.height);
     parentButton.frame = CGRectMake(frame.origin.x + (frame.size.width/2) - (buttonSize.width/2),
@@ -278,11 +282,11 @@ static const int ICON_DIM = 13;
                                     buttonSize.width,
                                     buttonSize.height);
     editTextButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
-                                      MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
+                                      MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2) + heightOffset, maxY),
                                       buttonSize.width,
                                       buttonSize.height);
     styleButton.frame = CGRectMake(MIN(frame.origin.x + frame.size.width - (buttonSize.width/2), maxX),
-                                   MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2), maxY),
+                                   MIN(frame.origin.y  + frame.size.height - (buttonSize.height/2) + heightOffset, maxY),
                                    buttonSize.width,
                                    buttonSize.height);
     imageButton.frame = CGRectMake(MAX(frame.origin.x - (buttonSize.width/2), 0),
