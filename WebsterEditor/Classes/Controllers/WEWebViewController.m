@@ -69,7 +69,9 @@ static const int ICON_DIM = 13;
         NSString *path = [data objectForKey:@"media-src"];
         NSFileManager *fs = [NSFileManager defaultManager];
         NSError *error;
-        [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:path withProjectId:self.projectId] error:&error];
+        if ([fs fileExistsAtPath:path]) {
+            [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:path withProjectId:self.projectId] error:&error];
+        }
     }];
     
     [jsBridge registerHandler:@"defaultSelectedHandler" handler:^(id data, WVJBResponseCallback responseCallback) {
