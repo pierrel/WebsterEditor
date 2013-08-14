@@ -109,12 +109,13 @@
   [el]
   (let [node (single-node el)
         frame (dom/frame node)]
-    (merge frame
-           {:tag (.-tagName node)
-            :classes (classes el)
-            :addable (elements/possible-under (elements/node-to-element el))
-            :attrs (attrs node)
-            :text (text node)})))
+    (into {} (filter second 
+                     (merge frame
+                            {:tag (.-tagName node)
+                             :classes (classes el)
+                             :addable (elements/possible-under (elements/node-to-element el))
+                             :attrs (attrs node)
+                             :text (text node)})))))
  
 (defn get-selected []
   (sel ".selected"))
