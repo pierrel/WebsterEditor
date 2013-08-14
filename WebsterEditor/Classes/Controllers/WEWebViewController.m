@@ -218,17 +218,19 @@ static const int ICON_DIM = 13;
     
     NSDictionary *addables = [data objectForKey:@"addable"];
     NSArray *classes = [data objectForKey:@"classes"];
+    NSString *tag = [data objectForKey:@"tag"];
     
     [self positionButtonsWithData:data];
     
     [removeButton setHidden:NO];
-    [parentButton setHidden:NO];
     [styleButton setHidden:NO];
     
     if ([addables count] > 0) [addButton setHidden:NO];
     
     if ([classes containsString:@"text-editable"]) [editTextButton setHidden:NO];
     else if ([classes containsString:@"image"]) [imageButton setHidden:NO];
+    
+    if (![tag isEqualToString:@"BODY"]) [parentButton setHidden:NO];
     
     // let the add popover know
     [self.addSelectionController setData:data];
