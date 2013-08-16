@@ -32,7 +32,7 @@ int const TEXT_HEIGHT = 20;
                                            frame.size.height - (buffer*1.5));
 
         self.bgView = [[WEPageBackgroundView alloc] initWithFrame:effectiveFrame];
-        [self.bgView setColor:[UIColor blueColor]];
+        [self.bgView setColor:[UIColor darkGrayColor]];
         [self.bgView setHidden:YES];
         [self addSubview:self.bgView];
         
@@ -50,7 +50,7 @@ int const TEXT_HEIGHT = 20;
                                                                      frame.size.width,
                                                                      TEXT_HEIGHT)];
         [pageNameField setBackgroundColor:[UIColor clearColor]];
-        [pageNameField setTextColor:[UIColor whiteColor]];
+        [pageNameField setTextColor:[UIColor greenColor]];
         [pageNameField setTextAlignment:NSTextAlignmentCenter];
         [pageNameField setDelegate:self];
         
