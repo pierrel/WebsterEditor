@@ -16,6 +16,9 @@
 #import "NSThread+BlockAdditions.h"
 #import "WEPageCollectionViewLayout.h"
 
+#define DELETE_ALERT_CANCEL 0
+#define DELETE_ALERT_OK 1
+
 @interface WEEditorViewController ()
 @property (nonatomic, assign) BOOL webPageLoaded;
 @property (nonatomic, strong) UIImagePickerController *picker;
@@ -467,6 +470,22 @@ Export
     }];
 }
 
+-(IBAction)deleteProjectButtonTapped:(id)sender {
+    UIAlertView *deleteAlert = [[UIAlertView alloc] initWithTitle:@"Delete project?" message:@"Are you sure you want to delete this project? This is not undoable." delegate:self cancelButtonTitle:@"Don't Delete" otherButtonTitles:@"Delete it", nil];
+    [deleteAlert show];
+}
+
+-(void)deleteProject {
+    [self closeSettingsWithTiming:0.1];
+    [self.activityView startAnimating];
+    NSError *err;
+    NSFileManager *fs = [NSFileManager defaultManager];
+    [fs removeItemAtPath:[WEUtils pathInDocumentDirectory:@"" withProjectId:self.projectId] error:&err];
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"project deleted and removed");
+    }];
+}
+
 /*
  Background Selection
  */
@@ -670,5 +689,16 @@ Export
 -(void)refresh {
     [modeSwitch setOn:NO animated:YES];
     [self.contentController refresh];
+}
+
+#pragma mark UIAlertView delegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case DELETE_ALERT_OK:
+            [self deleteProject];
+            break;
+        default:
+            break;
+    }
 }
 @end

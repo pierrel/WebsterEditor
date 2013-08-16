@@ -38,6 +38,11 @@
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_wash_wall.png"]];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [self.collectionView reloadData];
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -17,7 +17,7 @@
 -(void)didSaveViewController:(WEEditorViewController*)controller;
 @end
 
-@interface WEEditorViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate,WEWebViewDelegate>
+@interface WEEditorViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate, WEWebViewDelegate, UIAlertViewDelegate>
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;
@@ -49,4 +49,5 @@
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings;
 
 -(IBAction)modeButtonTapped:(id)sender;
+-(IBAction)deleteProjectButtonTapped:(id)sender;
 @end
