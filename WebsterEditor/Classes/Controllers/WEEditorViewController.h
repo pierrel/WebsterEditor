@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) NSString *projectId;
 @property (nonatomic, strong) WEProjectSettings *settings;
+@property (nonatomic, assign) BOOL loadingNewProject;
 
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) WEWebViewController *contentController;

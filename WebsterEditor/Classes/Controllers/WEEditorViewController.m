@@ -129,8 +129,13 @@
     [self.activityView setHidesWhenStopped:YES];
     [self.activityView stopAnimating];
     
-    // after-load stuff
-    [self switchToPage:[[self.pageCollectionController pages] objectAtIndex:0]]; // load first page
+    // load first page
+    NSString *newPageName = [[self.pageCollectionController pages] objectAtIndex:0];
+    if (self.loadingNewProject) {
+        [self switchToPageInNewProject:newPageName];
+    } else {
+        [self switchToPage:newPageName];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -620,6 +625,12 @@ Export
     [self switchToPage:pageName];
 }
 
+-(void)switchToPageInNewProject:(NSString*)pageName {
+    [self.activityView startAnimating];
+    self.webPageLoaded = NO;
+    [self.contentController loadPage:pageName]; // loading page before save
+}
+
 -(void)switchToPage:(NSString *)pageName {
     [self.activityView startAnimating];
     [self saveProjectWithCompletion:^(NSError *err) {
@@ -632,6 +643,14 @@ Export
 -(void)webViewDidLoad {
     self.webPageLoaded = YES;
     [self.activityView stopAnimating];
+    
+    // if this is a new project then save it right away
+    if (self.loadingNewProject) {
+        self.loadingNewProject = NO;
+        [self saveProjectWithCompletion:^(NSError *err) {
+            [self.pageCollectionController.collectionView reloadData];
+        }];
+    }
 }
 
 -(NSArray*)getPages {

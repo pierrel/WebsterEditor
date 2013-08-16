@@ -12,7 +12,7 @@
 #import "WEEditorViewController.h"
 
 @interface WEProjectsViewController ()
-
+@property (nonatomic, assign) BOOL transitioningToNewProject;
 @end
 
 @implementation WEProjectsViewController
@@ -163,11 +163,13 @@
     mainController.projectId = projectId;
     mainController.settings = settings;
     mainController.delegate = self;
+    mainController.loadingNewProject = self.transitioningToNewProject;
     [self presentViewController:mainController
                        animated:YES
                      completion:^{
                          [self.view setFrame:current];
                      }];
+    self.transitioningToNewProject = NO;
 }
 
 -(WEProjectSettings*)settingsForId:(NSString*)projectId {
@@ -181,6 +183,7 @@
 }
 
 -(void)transitionToNewProject {
+    self.transitioningToNewProject = YES;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSString *projectId = [WEUtils newId];
