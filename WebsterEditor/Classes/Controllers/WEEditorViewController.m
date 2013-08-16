@@ -17,7 +17,6 @@
 #import "WEPageCollectionViewLayout.h"
 
 @interface WEEditorViewController ()
-@property (nonatomic, assign) BOOL animateBack;
 @property (nonatomic, assign) BOOL webPageLoaded;
 @property (nonatomic, strong) UIImagePickerController *picker;
 @end
@@ -39,7 +38,6 @@
 {
     self = [super init];
     if (self) {        
-        self.animateBack = NO;
         self.webPageLoaded = NO;
     }
     return self;
@@ -132,8 +130,7 @@
     [self.activityView stopAnimating];
     
     // after-load stuff
-    [self switchToPage:[[self.pageCollectionController pages] objectAtIndex:0]
-              animated:NO]; // load first page
+    [self switchToPage:[[self.pageCollectionController pages] objectAtIndex:0]]; // load first page
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -620,25 +617,13 @@ Export
                  encoding:NSStringEncodingConversionAllowLossy
                     error:&error];
     
-    [self switchToPage:pageName animated:YES];
+    [self switchToPage:pageName];
 }
 
 -(void)switchToPage:(NSString *)pageName {
-    [self switchToPage:pageName animated:YES];
-}
--(void)switchToPage:(NSString*)pageName animated:(BOOL)animate {
     [self.activityView startAnimating];
     [self saveProjectWithCompletion:^(NSError *err) {
-        if (animate) {
-            self.animateBack = YES;
-            [UIView animateWithDuration:0.5 animations:^{
-                CGSize size = self.contentView.frame.size;
-                [self.contentView setFrame:CGRectMake(self.view.frame.size.width,
-                                                      0,
-                                                      size.width,
-                                                      size.height)];
-            }];
-        }
+        [self closePagesWithTiming:0.1];
         self.webPageLoaded = NO;
         [self.contentController loadPage:pageName];
     }];
@@ -646,14 +631,7 @@ Export
 
 -(void)webViewDidLoad {
     self.webPageLoaded = YES;
-    if (self.animateBack) {
-        [UIView animateWithDuration:0.4 animations:^{
-            CGSize size = self.contentView.frame.size;
-            [self.contentView setFrame:CGRectMake(0, 0, size.width, size.height)];
-        }];
-    }
     [self.activityView stopAnimating];
-    self.animateBack = NO;
 }
 
 -(NSArray*)getPages {
