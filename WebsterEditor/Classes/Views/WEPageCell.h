@@ -10,6 +10,7 @@
 
 @protocol WEPageRenameDelegate <NSObject>
 -(BOOL)page:(NSString*)pageName renamedTo:(NSString*)newName;
+-(void)deletePage:(NSString*)pageName;
 @end
 
 

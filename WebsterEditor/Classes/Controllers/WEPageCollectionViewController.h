@@ -14,10 +14,11 @@
 -(void)addAndSwitchToNewPage;
 -(void)switchToPage:(NSString*)pageName;
 -(void)page:(NSString *)pageName renamedTo:(NSString *)newName;
+-(void)pageDeleted:(NSString*)pageName;
 
 @end
 
-@interface WEPageCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegate,WEPageRenameDelegate>
+@interface WEPageCollectionViewController : UICollectionViewController<UICollectionViewDataSource,UICollectionViewDelegate,WEPageRenameDelegate,UIAlertViewDelegate>
 @property (nonatomic, strong) NSString *projectId;
 @property (nonatomic, assign) id<PageCollectionDelegate> delegate;
 

@@ -458,6 +458,16 @@ Export
     }
 }
 
+-(void)pageDeleted:(NSString *)pageName {
+    NSArray *pages = [self.pageCollectionController pages];
+    if (pages.count == 0) {
+        [self addAndSwitchToNewPage];
+    } else if ([[self.contentController getCurrentPage] isEqualToString:pageName]) {
+        [self switchToPage:[pages objectAtIndex:0]];
+    }
+    [self.pageCollectionController.collectionView reloadData];
+}
+
 -(void)backToProjects {
     [self closeSettingsWithTiming:0.1];
     [self.activityView startAnimating];

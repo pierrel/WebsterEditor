@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UITextField *pageNameField;
 @property (nonatomic, strong) WEPageBackgroundView *bgView;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIButton *deleteButton;
 @property (nonatomic, strong) NSString *name;
 @end
 
@@ -34,8 +35,6 @@ int const TEXT_HEIGHT = 20;
                                            frame.size.height - (buffer*1.5));
 
         self.bgView = [[WEPageBackgroundView alloc] initWithFrame:effectiveFrame];
-        [self.bgView setColor:[UIColor darkGrayColor]];
-        [self.bgView setHidden:YES];
         [self addSubview:self.bgView];
         
         UIView *something = [[UIView alloc] initWithFrame:effectiveFrame];
@@ -44,26 +43,43 @@ int const TEXT_HEIGHT = 20;
         [self addSubview:something];
         
         self.imageView = [[UIImageView alloc] initWithFrame:effectiveFrame];
-        [self.imageView setBackgroundColor:[UIColor clearColor]];
-        self.imageView.layer.masksToBounds = NO;
-        self.imageView.layer.shadowOffset = CGSizeMake(0, -2);
-        self.imageView.layer.shadowRadius = 5;
-        self.imageView.layer.shadowOpacity = 0.5;
-
         [self addSubview:self.imageView];
                 
         pageNameField = [[UITextField alloc] initWithFrame:CGRectMake(0,
                                                                      frame.size.height - TEXT_HEIGHT,
                                                                      frame.size.width,
                                                                      TEXT_HEIGHT)];
-        [pageNameField setBackgroundColor:[UIColor clearColor]];
-        [pageNameField setTextColor:[UIColor greenColor]];
-        [pageNameField setTextAlignment:NSTextAlignmentCenter];
-        [pageNameField setDelegate:self];
-        
+        [pageNameField setDelegate:self];        
         [self addSubview:pageNameField];
+        
+        self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.deleteButton addTarget:self action:@selector(deletePage:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.deleteButton];
     }
     return self;
+}
+
+-(void)layoutSubviews {
+    [self.bgView setColor:[UIColor darkGrayColor]];
+    [self.bgView setHidden:YES];
+
+    [self.imageView setBackgroundColor:[UIColor clearColor]];
+    self.imageView.layer.masksToBounds = NO;
+    self.imageView.layer.shadowOffset = CGSizeMake(0, -2);
+    self.imageView.layer.shadowRadius = 5;
+    self.imageView.layer.shadowOpacity = 0.5;
+
+    [pageNameField setBackgroundColor:[UIColor clearColor]];
+    [pageNameField setTextColor:[UIColor greenColor]];
+    [pageNameField setTextAlignment:NSTextAlignmentCenter];
+    
+    CGRect nameFrame = pageNameField.frame;
+    [self.deleteButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+    [self.deleteButton setContentMode:UIViewContentModeCenter];
+    [self.deleteButton setFrame:CGRectMake(nameFrame.origin.x + nameFrame.size.width - 12,
+                                          nameFrame.origin.y - 3,
+                                          nameFrame.size.height,
+                                          nameFrame.size.height)];
 }
 
 -(void)setImage:(UIImage *)image {
@@ -102,6 +118,10 @@ int const TEXT_HEIGHT = 20;
             NSLog(@"Error! Must set delegate to change page name");
         }
     }
+}
+
+-(void)deletePage:(id)sender {
+    if (self.delegate) [self.delegate deletePage:self.name];
 }
 
 /*

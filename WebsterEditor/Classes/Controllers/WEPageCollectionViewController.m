@@ -12,6 +12,7 @@
 
 @interface WEPageCollectionViewController ()
 @property (nonatomic, assign) NSInteger selectedRow;
+@property (nonatomic, strong) NSString *deletingPageName;
 -(NSArray*)pages;
 @end
 
@@ -176,6 +177,29 @@
     }
 }
 
+-(void)deletePage:(NSString *)pageName {
+    self.deletingPageName = pageName;
+    NSString *message = [NSString stringWithFormat:@"Are you sure you want to delete the page named \"%@\"? This cannot be undone.", pageName];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete page?" message:message delegate:self cancelButtonTitle:@"Don't delete" otherButtonTitles:@"Delete", nil];
+    [alert show];
+    
+}
+
+-(void)actuallyDeletePage:(NSString*)pageName {
+    NSError *err;
+    NSString *pageFile = [NSString stringWithFormat:@"%@.html", pageName];
+    [[NSFileManager defaultManager] removeItemAtPath:[WEUtils pathInDocumentDirectory:pageFile withProjectId:self.projectId] error:&err];
+    [self.collectionView reloadData];
+    
+    if (self.delegate) [self.delegate pageDeleted:pageFile];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self actuallyDeletePage:self.deletingPageName];
+    }
+    self.deletingPageName = nil;
+}
 
 
 - (void)didReceiveMemoryWarning
