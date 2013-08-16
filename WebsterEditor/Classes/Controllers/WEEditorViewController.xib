@@ -124,7 +124,7 @@
 								<string key="NSFrame">{{10, 38}, {157, 34}}</string>
 								<reference key="NSSuperview" ref="320065311"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="74491041"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -237,6 +237,7 @@
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUIText"/>
 								<int key="IBUIBorderStyle">3</int>
+								<string key="IBUIPlaceholder">Title</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
@@ -271,6 +272,7 @@
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUIText"/>
 								<int key="IBUIBorderStyle">3</int>
+								<string key="IBUIPlaceholder">AWS bucket ID</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
@@ -1488,6 +1490,7 @@
 						<reference key="object" ref="510959797"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="320065311"/>
+						<string key="objectName">Title Field</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">321</int>
@@ -1509,6 +1512,7 @@
 						<reference key="object" ref="627256746"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="320065311"/>
+						<string key="objectName">AWS bucket field</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">360</int>
