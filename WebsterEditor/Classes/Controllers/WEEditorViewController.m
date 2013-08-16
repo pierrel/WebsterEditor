@@ -392,6 +392,7 @@ Export
 }
 
 -(void)backToProjects {
+    [self closeSettingsWithTiming:0.1];
     [self saveProjectWithCompletion:^(NSError *err) {
         [self dismissViewControllerAnimated:YES
                                  completion:^{
