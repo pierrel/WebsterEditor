@@ -155,8 +155,8 @@
 Export
  */
 -(void)exportProject {
-    [self.exportButton setEnabled:NO];
     if ([self validateSettings]) {
+        [self.exportButton setEnabled:NO];
         [exportActivity startAnimating];
         [goButton setHidden:YES];
         [self saveProjectWithCompletion:^(NSError *err) {
@@ -355,8 +355,8 @@ Export
         block(nil);
     }
 }
-    
--(BOOL)validateSettings {
+
+-(BOOL)validateBucket {
     NSString *bucket = self.bucketText.text;
     NSRange emptyRange = [bucket rangeOfString:@" "];
     NSRange periodRange = [bucket rangeOfString:@"."];
@@ -387,6 +387,48 @@ Export
     } else {
         return YES;
     }
+}
+
+-(BOOL)validateAWSKey {
+    NSString *key = self.awsKeyText.text;
+    if (!key || [key isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad AWS key"
+                                                        message:@"AWS key cannot be blank"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+-(BOOL)validateAWSSecret {
+    NSString *secret = self.awsSecretText.text;
+    if (!secret || [secret isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad AWS secret"
+                                                        message:@"AWS secret cannot be blank"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+-(BOOL)validateSettings {
+    if ([self validateAWSKey]) {
+        if ([self validateAWSSecret]) {
+            if ([self validateBucket]) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
 }
 
 -(void)page:(NSString *)pageName renamedTo:(NSString *)newName {
