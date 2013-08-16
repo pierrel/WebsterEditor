@@ -72,12 +72,10 @@
        forControlEvents:UIControlEventTouchUpInside];
     [bgRemove setHidden:YES];
     
-    [exportButton useGreenConfirmStyle];
     [exportButton addTarget:self
                      action:@selector(exportProject)
            forControlEvents:UIControlEventTouchUpInside];
         
-    [backButton useBlackStyle];
     [backButton addTarget:self
                    action:@selector(backToProjects)
          forControlEvents:UIControlEventTouchUpInside];
@@ -85,7 +83,6 @@
     self.titleText.text = self.settings.title;
     self.bucketText.text = self.settings.bucket;
     
-    [goButton useGreenConfirmStyle];
     [goButton addTarget:self
                  action:@selector(gotoExportURL)
        forControlEvents:UIControlEventTouchUpInside];
@@ -94,10 +91,7 @@
     }
     
     [refreshButton addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.settingsView.backgroundColor = [UIColor clearColor];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_wash_wall.png"]];
-    
+        
     contentView.layer.masksToBounds = NO;
     contentView.layer.shadowOffset = CGSizeMake(-15, 0);
     contentView.layer.shadowRadius = 5;
