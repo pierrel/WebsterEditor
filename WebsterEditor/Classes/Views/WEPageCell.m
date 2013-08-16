@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 pierre larochelle. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "WEPageCell.h"
 #import "WEPageBackgroundView.h"
 
@@ -43,6 +45,11 @@ int const TEXT_HEIGHT = 20;
         
         self.imageView = [[UIImageView alloc] initWithFrame:effectiveFrame];
         [self.imageView setBackgroundColor:[UIColor clearColor]];
+        self.imageView.layer.masksToBounds = NO;
+        self.imageView.layer.shadowOffset = CGSizeMake(0, -2);
+        self.imageView.layer.shadowRadius = 5;
+        self.imageView.layer.shadowOpacity = 0.5;
+
         [self addSubview:self.imageView];
                 
         pageNameField = [[UITextField alloc] initWithFrame:CGRectMake(0,
