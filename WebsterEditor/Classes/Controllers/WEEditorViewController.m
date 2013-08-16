@@ -82,6 +82,8 @@
     
     self.titleText.text = self.settings.title;
     self.bucketText.text = self.settings.bucket;
+    self.awsKeyText.text = self.settings.awsKey;
+    self.awsSecretText.text = self.settings.awsSecret;
     
     [goButton addTarget:self
                  action:@selector(gotoExportURL)
@@ -307,6 +309,8 @@ Export
     // save the settings
     self.settings.title = self.titleText.text;
     self.settings.bucket = self.bucketText.text;
+    self.settings.awsKey = self.awsKeyText.text;
+    self.settings.awsSecret = self.awsSecretText.text;
     [NSKeyedArchiver archiveRootObject:self.settings
                                 toFile:[WEUtils pathInDocumentDirectory:@"settings"
                                                           withProjectId:self.projectId]];
