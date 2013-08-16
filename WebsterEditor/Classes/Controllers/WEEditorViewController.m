@@ -163,9 +163,17 @@ Export
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
                                                      (unsigned long)NULL), ^(void) {
                 [self doExportWorkWithCompletion:^(NSError *error) {
-                    [self.exportButton setEnabled:YES];
-                    [goButton setHidden:NO];
-                    [exportActivity stopAnimating];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.exportButton setEnabled:YES];
+                        [exportActivity stopAnimating];
+                        if (error) {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Exporting Website" message:@"There was an error exporting your website. Please check that your AWS credentials are correct and that you're connected to an internet connection" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                            [alert show];
+                            alert = nil;
+                        } else {
+                            [goButton setHidden:NO];
+                        }
+                    });
                 }];
             });
         }];
@@ -179,7 +187,6 @@ Export
 
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
     NSError *error;
-    NSBundle *mainBundle = [NSBundle mainBundle];
 
     // region info
     S3Region *region = [S3Region USWest];
@@ -188,21 +195,26 @@ Export
     
     
     // s3 config
-    NSString *filePath = [mainBundle pathForResource:@"config"
-                                              ofType:@"json"];
-    NSData *configData = [NSData dataWithContentsOfFile:filePath];
-    NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:configData
-                                                          options:kNilOptions
-                                                            error:&error];
+    NSString *key = self.settings.awsKey;
+    NSString *secret = self.settings.awsSecret;
     NSString *bucket = self.settings.bucket;
     
     // Initialize the S3 Client
-    AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:[json objectForKey:@"AWS_KEY"] withSecretKey:[json objectForKey:@"AWS_SECRET"]];
+    AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:key withSecretKey:secret];
     s3.endpoint = [AmazonEndpoints s3Endpoint:endpoint];
     
     // see if we have the bucket
     BOOL hasBucket = NO;
-    for (S3Bucket *liveBucket in [s3 listBuckets]) {
+    NSArray *buckets = nil;
+    @try {
+        buckets = [s3 listBuckets];
+    } @catch (NSException *exception) {
+        NSError *error = [NSError errorWithDomain:@"WE" code:0 userInfo:nil];
+        block(error);
+        return;
+    }
+    
+    for (S3Bucket *liveBucket in buckets) {
         if ([liveBucket.name isEqualToString:bucket]) {
             hasBucket = YES;
             break;
