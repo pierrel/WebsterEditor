@@ -90,8 +90,13 @@
         [goButton setHidden:YES];
     }
     
+    [refreshButton setHidden:YES];
+    
+#ifdef DEBUG
     [refreshButton addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
-        
+    [refreshButton setHidden:NO];
+#endif
+    
     contentView.layer.masksToBounds = NO;
     contentView.layer.shadowOffset = CGSizeMake(0, -15);
     contentView.layer.shadowRadius = 20;

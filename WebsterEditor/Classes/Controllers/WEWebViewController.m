@@ -184,11 +184,15 @@ static const int ICON_DIM = 13;
 
     self.currentPage = pageName;
     NSString *indexPath = [WEUtils pathInDocumentDirectory:pageName withProjectId:self.projectId];
+#ifndef DEBUG
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
+#else
     if ([self pageOverHTTP]) { // DEV MODE
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000"]]];
     } else {
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]]];
     }
+#endif
     self.webView.keyboardDisplayRequiresUserAction = NO;
 }
 
