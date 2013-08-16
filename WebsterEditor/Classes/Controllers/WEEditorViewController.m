@@ -93,8 +93,8 @@
     [refreshButton addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
         
     contentView.layer.masksToBounds = NO;
-    contentView.layer.shadowOffset = CGSizeMake(-15, 0);
-    contentView.layer.shadowRadius = 5;
+    contentView.layer.shadowOffset = CGSizeMake(0, -15);
+    contentView.layer.shadowRadius = 20;
     contentView.layer.shadowOpacity = 0.5;
     
     self.contentController = [[WEWebViewController alloc] initWithNibName:@"WEWebViewController_iPad" bundle:nil];
