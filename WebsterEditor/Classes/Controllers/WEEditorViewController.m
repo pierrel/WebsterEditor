@@ -117,7 +117,6 @@
     [closeGesture addTarget:self action:@selector(swipeLeft:)];
     [contentView addGestureRecognizer:closeGesture];
     
-    
     [modeSwitch addTarget:self action:@selector(modeSwitched:) forControlEvents:UIControlEventValueChanged];
     
     WEPageCollectionViewLayout *layout = [[WEPageCollectionViewLayout alloc] init];
@@ -571,8 +570,12 @@ Export
     return self.contentView.frame.origin.x < 0;
 }
 
+-(IBAction)modeButtonTapped:(id)sender {
+    [modeSwitch setOn:![modeSwitch isOn] animated:YES];
+}
+
 -(void)modeSwitched:(UISwitch*)switcher {
-    if ([switcher isOn]) {
+    if ([modeSwitch isOn]) {
         [[WEPageManager sharedManager] setMode:@"blueprint"];
     } else {
         [[WEPageManager sharedManager] setMode:@"content"];

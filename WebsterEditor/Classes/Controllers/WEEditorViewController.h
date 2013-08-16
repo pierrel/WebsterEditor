@@ -47,4 +47,6 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *exportActivity;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings;
+
+-(IBAction)modeButtonTapped:(id)sender;
 @end
