@@ -572,7 +572,7 @@ Export
     [self saveProjectWithCompletion:^(NSError *err) {
         if (animate) {
             self.animateBack = YES;
-            [UIView animateWithDuration:0.2 animations:^{
+            [UIView animateWithDuration:0.5 animations:^{
                 CGSize size = self.contentView.frame.size;
                 [self.contentView setFrame:CGRectMake(self.view.frame.size.width,
                                                       0,
@@ -588,7 +588,7 @@ Export
 -(void)webViewDidLoad {
     self.webPageLoaded = YES;
     if (self.animateBack) {
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.4 animations:^{
             CGSize size = self.contentView.frame.size;
             [self.contentView setFrame:CGRectMake(0, 0, size.width, size.height)];
         }];
