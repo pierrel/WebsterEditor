@@ -457,7 +457,9 @@ Export
 
 -(void)backToProjects {
     [self closeSettingsWithTiming:0.1];
+    [self.activityView startAnimating];
     [self saveProjectWithCompletion:^(NSError *err) {
+        [self.activityView startAnimating];
         [self dismissViewControllerAnimated:YES
                                  completion:^{
                                      NSLog(@"dismissed");
