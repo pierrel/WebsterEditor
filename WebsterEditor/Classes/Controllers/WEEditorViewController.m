@@ -682,6 +682,7 @@ Export
 -(void)webViewDidLoad {
     self.webPageLoaded = YES;
     [self.activityView stopAnimating];
+    [self.contentController.view setFrame:self.contentView.frame];
     
     // if this is a new project then save it right away
     if (self.loadingNewProject) {
