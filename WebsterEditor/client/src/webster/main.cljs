@@ -32,6 +32,12 @@
   (.addEventListener js/document
                      "selectionchange"
                      #(listeners/text-selected bridge))
+
+  (.addEventListener js/document
+                     "scroll"
+                     #(.callHandler bridge
+                                    "scrolled"
+                                    (clj->js {})))
   
   ;; default listener
   (events/listen! :click #(listeners/default-listener % bridge))

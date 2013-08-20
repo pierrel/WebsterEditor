@@ -90,6 +90,10 @@ static const int ICON_DIM = 13;
         [self showLinkDialogOver:[WEUtils frameFromData:data] withURLString:url];
         self.linkSelectCallback = responseCallback;
     }];
+    
+    [jsBridge registerHandler:@"scrolled" handler:^(id data, WVJBResponseCallback responseCallback) {
+        if (self.selectedData) [self closeDialog];
+    }];
 
     
     // setup the page manager
@@ -347,6 +351,7 @@ static const int ICON_DIM = 13;
     self.selectedData = nil;
     [self.webView endEditing:YES];
     [self closeActionButtons];
+    [[WEPageManager sharedManager] deselectSelectedElement];
     
     if (self.addPopover) {
         [self.addPopover dismissPopoverAnimated:YES]; // just in case
