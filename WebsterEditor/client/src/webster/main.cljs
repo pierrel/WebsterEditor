@@ -35,9 +35,10 @@
 
   (.addEventListener js/document
                      "scroll"
-                     #(.callHandler bridge
-                                    "scrolled"
-                                    (clj->js {})))
+                     #(if (nil? (domi/nodes (domi/by-class "editing")))
+                        (.callHandler bridge
+                                      "scrolled"
+                                      (clj->js {}))))
   
   ;; default listener
   (events/listen! :click #(listeners/default-listener % bridge))
