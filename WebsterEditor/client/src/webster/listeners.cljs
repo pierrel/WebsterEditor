@@ -130,7 +130,8 @@
      (if-let [selected (get-selected)]
        (make-unselected selected)))
   ([el]
-     (remove-class! el "selected")))
+     (remove-class! el "selected")
+     (dom/stop-editing)))
 
 (defn is-selected? [el]
   (has-class? el "selected"))

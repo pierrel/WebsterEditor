@@ -75,6 +75,7 @@
       (when-let [rangy (listeners/get-last-range-obj)]
         (.deleteContents rangy)
         (.insertNode rangy node)
+        (dom/stop-editing)
         (add-link-listeners! (domi/nodes node) bridge)))))
 
 (defhandler "setSelectedNodeStyle"
@@ -86,6 +87,7 @@
           (do
             (domi/set-style! el (first styles) (get data (first styles)))
             (recur (rest styles)))))
+      (dom/stop-editing)
       (callback (listeners/node-info el)))))
 
 (defhandler "getSelectedNodeStyle"
@@ -103,6 +105,7 @@
     (if (= (get data "mode") "blueprint")
       (dom/set-blueprint-mode)
       (dom/set-content-mode))
+    (dom/stop-editing)
     (callback)))
 
 (domi/log (repl/connect "http://localhost:9000/repl"))
