@@ -460,12 +460,12 @@ Export
 
 -(void)pageDeleted:(NSString *)pageName {
     NSArray *pages = [self.pageCollectionController pages];
+
     if (pages.count == 0) {
-        [self addAndSwitchToNewPage];
+        [self addAndSwitchToNewPageWithSaving:NO];
     } else if ([[self.contentController getCurrentPage] isEqualToString:pageName]) {
-        [self switchToPage:[pages objectAtIndex:0]];
+        [self switchToPage:[pages objectAtIndex:0] andSave:NO];
     }
-    [self.pageCollectionController.collectionView reloadData];
 }
 
 -(void)backToProjects {
@@ -643,11 +643,19 @@ Export
 }
 
 -(void)addAndSwitchToNewPage {
+    [self addAndSwitchToNewPageWithSaving:YES];
+}
+
+-(void)addAndSwitchToNewPageWithSaving:(BOOL)save {
     NSString *newName = [self newPageName];
-    [self addAndSwitchToPage:newName];
+    [self addAndSwitchToPage:newName andSave:save];
 }
 
 -(void)addAndSwitchToPage:(NSString*)pageName {
+    [self addAndSwitchToPage:pageName andSave:YES];
+}
+
+-(void)addAndSwitchToPage:(NSString*)pageName andSave:(BOOL)save {
     // write the html template
     NSError *error;
     NSString *fullPath = [WEUtils pathInDocumentDirectory:pageName
@@ -661,7 +669,7 @@ Export
                  encoding:NSStringEncodingConversionAllowLossy
                     error:&error];
     
-    [self switchToPage:pageName];
+    [self switchToPage:pageName andSave:save];
 }
 
 -(void)switchToPageInNewProject:(NSString*)pageName {
@@ -670,13 +678,24 @@ Export
     [self.contentController loadPage:pageName]; // loading page before save
 }
 
--(void)switchToPage:(NSString *)pageName {
+-(void)switchToPage:(NSString *)pageName andSave:(BOOL)save {
     [self.activityView startAnimating];
-    [self saveProjectWithCompletion:^(NSError *err) {
+    
+    void (^switchWork)(NSError *) = ^(NSError *err){
         [self closePagesWithTiming:0.1];
         self.webPageLoaded = NO;
         [self.contentController loadPage:pageName];
-    }];
+    };
+    
+    if (save) {
+        [self saveProjectWithCompletion:switchWork];
+    } else {
+        switchWork(nil);
+    }
+}
+
+-(void)switchToPage:(NSString *)pageName {
+    [self switchToPage:pageName andSave:YES];
 }
 
 -(void)webViewDidLoad {
