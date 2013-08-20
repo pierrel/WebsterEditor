@@ -72,9 +72,7 @@
             }
         });
         
-        if (indexPath.row == self.selectedRow) {
-            [cell setHighlighted:YES];
-        }
+        [cell setHighlighted:indexPath.row == self.selectedRow];
                 
         return cell;
     }

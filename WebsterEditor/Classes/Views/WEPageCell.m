@@ -61,7 +61,6 @@ int const TEXT_HEIGHT = 20;
 
 -(void)layoutSubviews {
     [self.bgView setColor:[UIColor darkGrayColor]];
-    [self.bgView setHidden:YES];
 
     [self.imageView setBackgroundColor:[UIColor clearColor]];
     self.imageView.layer.masksToBounds = NO;
