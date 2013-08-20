@@ -186,10 +186,17 @@
 -(void)actuallyDeletePage:(NSString*)pageName {
     NSError *err;
     NSString *pageFile = [NSString stringWithFormat:@"%@.html", pageName];
-    [[NSFileManager defaultManager] removeItemAtPath:[WEUtils pathInDocumentDirectory:pageFile withProjectId:self.projectId] error:&err];
-    [self.collectionView reloadData];
-    
+    NSString *pageProdFile = [NSString stringWithFormat:@"%@_prod.html", pageName];
+    NSString *pageThumb = [NSString stringWithFormat:@"%@.jpeg", pageName];
+    NSLog(@"removing: %@", [WEUtils pathInDocumentDirectory:pageFile withProjectId:self.projectId]);
+    [[NSFileManager defaultManager] removeItemAtPath:[WEUtils pathInDocumentDirectory:pageFile
+                                                                        withProjectId:self.projectId] error:&err];
+    [[NSFileManager defaultManager] removeItemAtPath:[WEUtils pathInDocumentDirectory:pageProdFile
+                                                                        withProjectId:self.projectId] error:&err];
+    [[NSFileManager defaultManager] removeItemAtPath:[WEUtils pathInDocumentDirectory:pageThumb
+                                                                        withProjectId:self.projectId] error:&err];
     if (self.delegate) [self.delegate pageDeleted:pageFile];
+    [self.collectionView reloadData];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
