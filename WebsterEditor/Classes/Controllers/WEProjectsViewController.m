@@ -155,12 +155,6 @@
                         error:&error];
     }
     
-    // setup the view controller
-    CGRect current = self.view.frame;
-    [UIView animateWithDuration:0.2 animations:^{
-        CGFloat diff = 20;
-        [self.view setFrame:CGRectMake(current.origin.x+diff, current.origin.y+diff, current.size.width-(diff*2), current.size.height-(diff*2))];
-    }];
     WEProjectSettings *settings = [self settingsForId:projectId];
     NSLog(@"%@", [WEUtils pathInDocumentDirectory:@"settings" withProjectId:projectId]);
     NSString *nibName = @"WEEditorViewController";
@@ -169,11 +163,9 @@
     mainController.settings = settings;
     mainController.delegate = self;
     mainController.loadingNewProject = self.transitioningToNewProject;
-    [self presentViewController:mainController
-                       animated:YES
-                     completion:^{
-                         [self.view setFrame:current];
-                     }];
+    [self presentViewController:mainController animated:YES completion:^{
+        NSLog(@"showing new project");
+    }];
     self.transitioningToNewProject = NO;
 }
 
