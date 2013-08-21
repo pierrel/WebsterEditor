@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "WEPageCell.h"
+#import "UIColor+Expanded.h"
 #import "WEPageBackgroundView.h"
 
 @interface WEPageCell()
@@ -69,7 +70,7 @@ int const TEXT_HEIGHT = 20;
     self.imageView.layer.shadowOpacity = 0.5;
 
     [pageNameField setBackgroundColor:[UIColor clearColor]];
-    [pageNameField setTextColor:[UIColor greenColor]];
+    [pageNameField setTextColor:[UIColor colorWithRGBHex:0xEE6855]];
     [pageNameField setTextAlignment:NSTextAlignmentCenter];
     
     CGRect nameFrame = pageNameField.frame;
