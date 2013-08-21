@@ -96,6 +96,7 @@
 		A2F12495170792C80012D1AF /* UIImage+WEExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F12494170792C80012D1AF /* UIImage+WEExtras.m */; };
 		A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2F80566176E57F70030A97A /* WEStyleCell.xib */; };
 		A2F8056A176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F80569176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.m */; };
+		A2F8931A17C47D8F00D0F29C /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F8931917C47D8F00D0F29C /* UIColor+Expanded.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,6 +239,8 @@
 		A2F80566176E57F70030A97A /* WEStyleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEStyleCell.xib; sourceTree = "<group>"; };
 		A2F80568176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+UITableViewControllerAdditions.h"; sourceTree = "<group>"; };
 		A2F80569176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+UITableViewControllerAdditions.m"; sourceTree = "<group>"; };
+		A2F8931817C47D8800D0F29C /* UIColor+Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Expanded.h"; sourceTree = "<group>"; };
+		A2F8931917C47D8F00D0F29C /* UIColor+Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Expanded.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,6 +426,8 @@
 				A29589E816F0287700BEDBC6 /* WEUtils.m */,
 				A2F80568176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.h */,
 				A2F80569176E84270030A97A /* UITableViewController+UITableViewControllerAdditions.m */,
+				A2F8931817C47D8800D0F29C /* UIColor+Expanded.h */,
+				A2F8931917C47D8F00D0F29C /* UIColor+Expanded.m */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -782,6 +787,7 @@
 				A2B5F3A2179201020026A982 /* WELinkViewController.m in Sources */,
 				A2B5F3A81792018C0026A982 /* WECustomLinkCell.m in Sources */,
 				A2BBBAB517B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m in Sources */,
+				A2F8931A17C47D8F00D0F29C /* UIColor+Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
