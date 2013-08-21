@@ -297,9 +297,8 @@
          (if (nil? (dom/style node "height")) (dom/set-style! node "height" height))
          (dom/set-style! node "height" "30px")))))
 
-(defn remove-forced-height! [node]
-  (set-data! node "original-height")
-  (dom/set-style! node "height"))
+(def remove-forced-height!
+     (comp #(set-data! % "original-height") #(dom/set-style! % "height")))
 
 (defn needs-force-visibility?
   "if the height is below the threshold (30) then returns the difference
