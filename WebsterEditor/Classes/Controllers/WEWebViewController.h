@@ -14,6 +14,8 @@
 #import "WEStyleTableViewController.h"
 #import "WELinkViewController.h"
 
+typedef void (^WEWithResizer)(WEColumnResizeView *resizeView);
+
 @protocol WEWebViewDelegate <NSObject>
 
 -(void)webViewDidLoad;

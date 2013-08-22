@@ -362,12 +362,23 @@ static const int ICON_DIM = 13;
     }
 }
 
--(void)removeResizers {
+-(void)doToResizers:(WEWithResizer)withResizerCallback {
+    NSMutableArray *safeArray = [[NSMutableArray alloc] init];
     for (UIView *subview in self.view.subviews) {
         if ([subview isKindOfClass:[WEColumnResizeView class]]) {
-            [subview removeFromSuperview];
+            [safeArray addObject:subview];
         }
     }
+    
+    for (WEColumnResizeView *resizeView in safeArray) {
+        withResizerCallback(resizeView);
+    }
+}
+
+-(void)removeResizers {
+    [self doToResizers:^(WEColumnResizeView *resizeView) {
+        [resizeView removeFromSuperview];
+    }];
 }
 
 -(void)closeActionButtons {
