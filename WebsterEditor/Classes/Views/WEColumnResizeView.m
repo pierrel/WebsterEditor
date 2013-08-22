@@ -16,6 +16,8 @@ static const int ICON_DIM = 25;
 @property (assign, nonatomic) CGFloat handleOriginX;
 @property (assign, nonatomic) BOOL changeRequestSent;
 @property (strong, nonatomic) UIButton *movingHandle;
+@property (strong, nonatomic) UIColor *stillColor;
+@property (strong, nonatomic) UIColor *movingColor;
 
 -(void)longPressed:(UILongPressGestureRecognizer*)recognizer;
 @end
@@ -29,7 +31,9 @@ static const int ICON_DIM = 25;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:1 alpha:0.2]];
+        self.movingColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.2];
+        self.stillColor = [UIColor clearColor];
+        [self setBackgroundColor:self.stillColor];
         
         rightResize = [[UIButton alloc] init];
         [rightResize setTitle:@"🔴" forState:UIControlStateNormal];
@@ -100,6 +104,7 @@ static const int ICON_DIM = 25;
 
 -(void)longPressed:(UILongPressGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [self showBackground:YES];
         self.changeRequestSent = NO;
         if (recognizer.view == rightResize) {
             movingHandle = rightResize;
@@ -135,6 +140,7 @@ static const int ICON_DIM = 25;
             }
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [self showBackground:NO];
         [UIView animateWithDuration:0.3 animations:^{
             movingHandle.frame = CGRectMake(self.handleOriginX,
                                             movingHandle.frame.origin.y,
@@ -144,9 +150,17 @@ static const int ICON_DIM = 25;
             movingHandle = nil;
         }];
     } else {
+        [self showBackground:NO];
         movingHandle = nil;
         NSLog(@"whatttt?");
     }
+}
+
+-(void)showBackground:(BOOL)show {
+    UIColor *newColor = (show ? self.movingColor : self.stillColor);
+    [UIView animateWithDuration:0.2 animations:^{
+        [self setBackgroundColor:newColor];
+    }];
 }
 
 -(id)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
