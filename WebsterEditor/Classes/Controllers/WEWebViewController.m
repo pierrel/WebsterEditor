@@ -352,6 +352,7 @@ static const int ICON_DIM = 13;
     [self.webView endEditing:YES];
     [self closeActionButtons];
     [[WEPageManager sharedManager] deselectSelectedElement];
+    [self removeResizers];
     
     if (self.addPopover) {
         [self.addPopover dismissPopoverAnimated:YES]; // just in case
