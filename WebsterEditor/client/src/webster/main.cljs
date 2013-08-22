@@ -253,7 +253,7 @@
     (if-let [selected (listeners/get-selected)]
       (listeners/make-unselected selected))))
 
-(defhandler "addElementHandler"
+(defhandler "addElementUnderSelectedElement"
   (fn [data callback bridge]
     (let [new-el (-> (get data "element-name") elements/get-by-name dom/new-element-with-info domi/string-to-dom)
           to-el (listeners/get-selected)
