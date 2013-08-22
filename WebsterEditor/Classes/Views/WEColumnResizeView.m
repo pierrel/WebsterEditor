@@ -35,10 +35,12 @@ static const int ICON_DIM = 25;
         self.stillColor = [UIColor clearColor];
         [self setBackgroundColor:self.stillColor];
         
+        
+        NSString *resizeIcon = @"🔴";
         rightResize = [[UIButton alloc] init];
-        [rightResize setTitle:@"🔴" forState:UIControlStateNormal];
+        [rightResize setTitle:resizeIcon forState:UIControlStateNormal];
         leftResize = [[UIButton alloc] init];
-        [leftResize setTitle:@"🔴" forState:UIControlStateNormal];
+        [leftResize setTitle:resizeIcon forState:UIControlStateNormal];
         
         [self addSubview:rightResize];
         [self addSubview:leftResize];
