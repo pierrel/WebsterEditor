@@ -341,6 +341,7 @@ Export
     NSString *thumbPath = [WEUtils pathInDocumentDirectory:thumbName
                                              withProjectId:self.projectId];
     UIView *webView = self.contentController.view;
+    CGRect oldFrame = webView.frame;
     webView.frame = CGRectMake(webView.frame.origin.x, webView.frame.origin.y, 768, 1004);
     UIGraphicsBeginImageContext(webView.frame.size);
     [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -351,6 +352,7 @@ Export
     [thumbData writeToFile:[WEUtils pathInDocumentDirectory:@"thumb.jpeg"
                                               withProjectId:self.projectId]
                 atomically:NO];
+    webView.frame = oldFrame;
     
     NSLog(@"done dev");
     
@@ -701,7 +703,6 @@ Export
 -(void)webViewDidLoad {
     self.webPageLoaded = YES;
     [self.activityView stopAnimating];
-    [self.contentController.view setFrame:self.contentView.frame];
     
     // if this is a new project then save it right away
     if (self.loadingNewProject) {
