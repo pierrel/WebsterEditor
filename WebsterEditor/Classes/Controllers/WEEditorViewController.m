@@ -608,11 +608,9 @@ Export
 }
 
 -(void)modeSwitched:(UISwitch*)switcher {
-    if ([modeSwitch isOn]) {
-        [[WEPageManager sharedManager] setMode:@"blueprint"];
-    } else {
-        [[WEPageManager sharedManager] setMode:@"content"];
-    }
+    NSString *newMode = ([modeSwitch isOn] ? @"blueprint" : @"content");
+    [[WEPageManager sharedManager] setMode:newMode];
+    [[NSNotificationCenter defaultCenter] postNotification:[NSString stringWithFormat:@"mode_switch_%@", newMode]];
 }
 
 -(void)appClosingNotification:(NSNotification*)notification {
