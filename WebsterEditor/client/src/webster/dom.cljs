@@ -207,14 +207,10 @@
 
 (defn set-blueprint-mode []
   (when (not (is-blueprint-mode?))
-    (dom/add-class! (css/sel "body") "blueprint")
-    (doseq [draggable (dom/nodes (dom/by-class "draggable"))]
-      (force-visible! draggable))))
+    (dom/add-class! (css/sel "body") "blueprint")))
 (defn set-content-mode []
   (when (not (is-content-mode?))
-    (dom/remove-class! (css/sel "body") "blueprint")
-    (doseq [draggable (dom/nodes (dom/by-class "draggable"))]
-      (remove-forced-visibility! draggable))))
+    (dom/remove-class! (css/sel "body") "blueprint")))
 
 (defn scale-transform [scale]
   (if scale
@@ -266,8 +262,6 @@
 (defn clear-droppable!
   ([]
      (doseq [node (dom/nodes (dom/by-class "droppable"))]
-       (when (not (is-blueprint-mode?))
-         (remove-forced-visibility! node))
        (clear-droppable! node)))
   ([node]
      (dom/remove-class! node "droppable")))
@@ -284,43 +278,6 @@
         (concat acc [el] inodes)
         (recur (rest inodes) (conj acc node)))
       (seq (conj acc el)))))
-
-(defn force-visible!
-  "if given, makes the given node visible otherwise makes all selectables visible"
-  ([]
-     (doseq [node (dom/nodes (dom/by-class "selectable"))]
-       (make-visible node)))
-  ([node]
-     (let [height (-> node frame :height)]
-       (when (and (not (data node "original-height")) (needs-force-visibility? node))
-         (set-data! node "original-height" (str height "px"))
-         (if (nil? (dom/style node "height")) (dom/set-style! node "height" height))
-         (dom/set-style! node "height" "30px")))))
-
-(def remove-forced-height!
-     (comp #(set-data! % "original-height") #(dom/set-style! % "height")))
-
-(defn needs-force-visibility?
-  "if the height is below the threshold (30) then returns the difference
-otherwise returns false"
-  [node]
-  (let [diff (- 30 (-> node frame :height))]
-    (if (> diff 0)
-      diff
-      false)))
-
-(defn remove-forced-visibility!
-  ([]
-     (doseq [node (dom/nodes (dom/by-class "selectable"))]
-       (remove-forced-visibility! node)))
-  ([node]
-     (let [height (data node "height")]
-       (if height
-         (do
-           (dom/set-style! node "height" height)
-           (events/listen! node :webkitTransitionEnd
-                           #(remove-forced-height node))))
-       (remove-forced-height! node))))
 
 (defn dragging?
   ([el]
@@ -362,7 +319,6 @@ otherwise returns false"
                                          :y diff-y}
                              :scale 1.05})
     (doseq [node droppables]
-      (force-visible! node)
       (make-droppable! node))))
 
 (defn get-mode []
