@@ -25,7 +25,7 @@
 @end
 
 @implementation WEEditorViewController
-@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, backButton, goButton, refreshButton, modeSwitch, picker;
+@synthesize contentView, settingsView, bgRemove, bgSelect, exportButton, exportActivity, goButton, refreshButton, modeSwitch, picker;
 
 -(id)initWithProjectId:(NSString*)projectId withSettings:(WEProjectSettings*)settings {
     self = [self init];
@@ -76,10 +76,6 @@
     [exportButton addTarget:self
                      action:@selector(exportProject)
            forControlEvents:UIControlEventTouchUpInside];
-        
-    [backButton addTarget:self
-                   action:@selector(backToProjects)
-         forControlEvents:UIControlEventTouchUpInside];
     
     self.titleText.text = self.settings.title;
     self.bucketText.text = self.settings.bucket;

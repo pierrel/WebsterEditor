@@ -34,7 +34,6 @@
 @property (nonatomic, strong) IBOutlet GradientButton *bgSelect;
 @property (nonatomic, strong) IBOutlet GradientButton *bgRemove;
 @property (nonatomic, strong) IBOutlet UIButton *exportButton;
-@property (nonatomic, strong) IBOutlet UIButton *backButton;
 @property (nonatomic, strong) IBOutlet UIButton *goButton;
 @property (nonatomic, strong) IBOutlet UIButton *refreshButton;
 @property (nonatomic, strong) IBOutlet UITextField *titleText;
