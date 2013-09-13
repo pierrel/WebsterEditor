@@ -20,6 +20,7 @@
 {
     [self createDirectories];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setTintColor:[UIColor colorWithRed:0.933 green:0.408 blue:0.333 alpha:1.0]];
     
     // Override point for customization after application launch.
 //    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
