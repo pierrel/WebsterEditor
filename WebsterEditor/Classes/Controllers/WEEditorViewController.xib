@@ -29,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="497" userLabel="PageView">
-                    <rect key="frame" x="618" y="62" width="150" height="962"/>
+                    <rect key="frame" x="618" y="0.0" width="150" height="1024"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.3132509202" green="0.23598435379999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -37,7 +37,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="13" userLabel="SettingsView">
-                    <rect key="frame" x="0.0" y="62" width="167" height="962"/>
+                    <rect key="frame" x="0.0" y="0.0" width="167" height="1024"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24">
@@ -250,7 +250,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="62" width="768" height="962"/>
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
@@ -261,21 +261,20 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="13" firstAttribute="top" secondItem="2" secondAttribute="top" constant="62" id="19"/>
+                <constraint firstItem="13" firstAttribute="top" secondItem="2" secondAttribute="top" id="19"/>
                 <constraint firstItem="13" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="20"/>
                 <constraint firstItem="13" firstAttribute="bottom" secondItem="2" secondAttribute="bottom" id="22"/>
                 <constraint firstAttribute="trailing" secondItem="589" secondAttribute="trailing" constant="20" symbolic="YES" id="633"/>
                 <constraint firstItem="497" firstAttribute="bottom" secondItem="2" secondAttribute="bottom" id="644"/>
-                <constraint firstItem="497" firstAttribute="top" secondItem="2" secondAttribute="top" constant="62" id="647"/>
+                <constraint firstItem="497" firstAttribute="top" secondItem="2" secondAttribute="top" id="647"/>
                 <constraint firstItem="497" firstAttribute="trailing" secondItem="2" secondAttribute="trailing" id="778"/>
                 <constraint firstItem="589" firstAttribute="top" secondItem="2" secondAttribute="top" constant="7" id="1276"/>
-                <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" constant="62" id="1288"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="2" secondAttribute="top" id="1288"/>
                 <constraint firstItem="4" firstAttribute="bottom" secondItem="2" secondAttribute="bottom" id="1289"/>
                 <constraint firstItem="4" firstAttribute="trailing" secondItem="2" secondAttribute="trailing" id="1290"/>
                 <constraint firstItem="4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="1291"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>
     </objects>
     <resources>

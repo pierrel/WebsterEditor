@@ -142,6 +142,10 @@
         [self.navigationItem setLeftBarButtonItem:back];
     }
     
+    // make sure it's below the nav
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     // load first page
     NSString *newPageName = [[self.pageCollectionController pages] objectAtIndex:0];
     if (self.loadingNewProject) {
