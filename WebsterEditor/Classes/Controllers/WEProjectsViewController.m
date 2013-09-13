@@ -163,7 +163,8 @@
     mainController.settings = settings;
     mainController.delegate = self;
     mainController.loadingNewProject = self.transitioningToNewProject;
-    [self presentViewController:mainController animated:YES completion:^{
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainController];
+    [self presentViewController:nav animated:YES completion:^{
         NSLog(@"showing new project");
     }];
     self.transitioningToNewProject = NO;

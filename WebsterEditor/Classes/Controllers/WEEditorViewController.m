@@ -136,6 +136,12 @@
     [self.activityView setHidesWhenStopped:YES];
     [self.activityView stopAnimating];
     
+    // setup back button
+    if (self.navigationController) {
+        UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-left.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backToProjects)];
+        [self.navigationItem setLeftBarButtonItem:back];
+    }
+    
     // load first page
     NSString *newPageName = [[self.pageCollectionController pages] objectAtIndex:0];
     if (self.loadingNewProject) {
