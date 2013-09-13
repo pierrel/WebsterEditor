@@ -572,16 +572,18 @@ Export
 
 -(void)closeSettingsWithTiming:(NSTimeInterval)timing {
     [UIView animateWithDuration:timing animations:^{
+        CGPoint origin = self.contentView.frame.origin;
         CGSize size = self.contentView.frame.size;
-        self.contentView.frame = CGRectMake(0, 0, size.width, size.height);
+        self.contentView.frame = CGRectMake(0, origin.y, size.width, size.height);
     }];
 }
 
 -(void)openSettingsWithTiming:(NSTimeInterval)timing {
     [UIView animateWithDuration:timing animations:^{
+        CGPoint origin = self.contentView.frame.origin;
         CGSize size = self.contentView.frame.size;
         CGFloat openSize = self.settingsView.frame.size.width;
-        self.contentView.frame = CGRectMake(openSize, 0, size.width, size.height);
+        self.contentView.frame = CGRectMake(openSize, origin.y, size.width, size.height);
     }];
 }
 
@@ -591,16 +593,18 @@ Export
 
 -(void)closePagesWithTiming:(NSTimeInterval)timing {
     [UIView animateWithDuration:timing animations:^{
+        CGPoint origin = self.contentView.frame.origin;
         CGSize size = self.contentView.frame.size;
-        self.contentView.frame = CGRectMake(0, 0, size.width, size.height);
+        self.contentView.frame = CGRectMake(0, origin.y, size.width, size.height);
     }];
 }
 
 -(void)openPagesWithTiming:(NSTimeInterval)timing {
     [UIView animateWithDuration:timing animations:^{
+        CGPoint origin = self.contentView.frame.origin;
         CGSize size = self.contentView.frame.size;
         CGFloat openSize = -1 * self.pagesView.frame.size.width;
-        self.contentView.frame = CGRectMake(openSize, 0, size.width, size.height);
+        self.contentView.frame = CGRectMake(openSize, origin.y, size.width, size.height);
     }];
 }
 
