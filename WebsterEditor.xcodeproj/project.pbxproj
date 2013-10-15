@@ -76,6 +76,15 @@
 		A2B5F3AA179201A90026A982 /* WECustomLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2B5F3A9179201A90026A982 /* WECustomLinkCell.xib */; };
 		A2BBBAB217B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2BBBAB117B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib */; };
 		A2BBBAB517B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2BBBAB417B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m */; };
+		A2C2316E18084EF900783ACD /* Icon-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316518084EF900783ACD /* Icon-iPad.png */; };
+		A2C2316F18084EF900783ACD /* Icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316618084EF900783ACD /* Icon-iPad@2x.png */; };
+		A2C2317018084EF900783ACD /* icon-orig.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316718084EF900783ACD /* icon-orig.png */; };
+		A2C2317118084EF900783ACD /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316818084EF900783ACD /* Icon-Settings.png */; };
+		A2C2317218084EF900783ACD /* Icon-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316918084EF900783ACD /* Icon-Settings@2x.png */; };
+		A2C2317318084EF900783ACD /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316A18084EF900783ACD /* Icon-Small.png */; };
+		A2C2317418084EF900783ACD /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316B18084EF900783ACD /* Icon-Small@2x.png */; };
+		A2C2317518084EF900783ACD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316C18084EF900783ACD /* Icon.png */; };
+		A2C2317618084EF900783ACD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2C2316D18084EF900783ACD /* Icon@2x.png */; };
 		A2E77230176D4B41006D281D /* WEStyleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2E7722F176D4B41006D281D /* WEStyleCell.m */; };
 		A2ECB8F21718E416003F9E36 /* bootstrap-responsive.css in Resources */ = {isa = PBXBuildFile; fileRef = A2ECB8E01718E416003F9E36 /* bootstrap-responsive.css */; };
 		A2ECB8F31718E416003F9E36 /* bootstrap-responsive.min.css in Resources */ = {isa = PBXBuildFile; fileRef = A2ECB8E11718E416003F9E36 /* bootstrap-responsive.min.css */; };
@@ -211,6 +220,15 @@
 		A2BBBAB117B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEBodyBackgroundCell.xib; sourceTree = "<group>"; };
 		A2BBBAB317B9FDAE00DFD1E1 /* WEBodyBackgroundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEBodyBackgroundCell.h; sourceTree = "<group>"; };
 		A2BBBAB417B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEBodyBackgroundCell.m; sourceTree = "<group>"; };
+		A2C2316518084EF900783ACD /* Icon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad.png"; sourceTree = "<group>"; };
+		A2C2316618084EF900783ACD /* Icon-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad@2x.png"; sourceTree = "<group>"; };
+		A2C2316718084EF900783ACD /* icon-orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-orig.png"; sourceTree = "<group>"; };
+		A2C2316818084EF900783ACD /* Icon-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Settings.png"; sourceTree = "<group>"; };
+		A2C2316918084EF900783ACD /* Icon-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Settings@2x.png"; sourceTree = "<group>"; };
+		A2C2316A18084EF900783ACD /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		A2C2316B18084EF900783ACD /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		A2C2316C18084EF900783ACD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		A2C2316D18084EF900783ACD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		A2D15F15171243C4009FF2D8 /* elements.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = elements.cljs; sourceTree = "<group>"; };
 		A2E00C56170945510024EA42 /* dir.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dir.cljs; sourceTree = "<group>"; };
 		A2E00C57170945510024EA42 /* html.cljs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = html.cljs; sourceTree = "<group>"; };
@@ -355,6 +373,7 @@
 		A27D62BF16FC2063005C114A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A2C2316418084EF900783ACD /* app icons */,
 				A24E68EC17BBCF800090D2F1 /* icons */,
 				A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */,
 				A27C9FF9170A7D3A0095D273 /* grey_wash_wall.png */,
@@ -566,6 +585,22 @@
 			path = js;
 			sourceTree = "<group>";
 		};
+		A2C2316418084EF900783ACD /* app icons */ = {
+			isa = PBXGroup;
+			children = (
+				A2C2316518084EF900783ACD /* Icon-iPad.png */,
+				A2C2316618084EF900783ACD /* Icon-iPad@2x.png */,
+				A2C2316718084EF900783ACD /* icon-orig.png */,
+				A2C2316818084EF900783ACD /* Icon-Settings.png */,
+				A2C2316918084EF900783ACD /* Icon-Settings@2x.png */,
+				A2C2316A18084EF900783ACD /* Icon-Small.png */,
+				A2C2316B18084EF900783ACD /* Icon-Small@2x.png */,
+				A2C2316C18084EF900783ACD /* Icon.png */,
+				A2C2316D18084EF900783ACD /* Icon@2x.png */,
+			);
+			path = "app icons";
+			sourceTree = "<group>";
+		};
 		A2ECB8DD1718E416003F9E36 /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +686,11 @@
 				CLASSPREFIX = WE;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "pierre larochelle";
+				TargetAttributes = {
+					A20CB1BF16B8F4CF00AF858B = {
+						DevelopmentTeam = DBJR258M83;
+					};
+				};
 			};
 			buildConfigurationList = A20CB1BB16B8F4CF00AF858B /* Build configuration list for PBXProject "WebsterEditor" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -681,16 +721,19 @@
 				A2ECB9061718E465003F9E36 /* jquery-1.9.0.min.js in Resources */,
 				A2ECB9071718E465003F9E36 /* rangy.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
+				A2C2317018084EF900783ACD /* icon-orig.png in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
 				A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */,
 				A20CB1E016B8F4CF00AF858B /* WEWebViewController_iPhone.xib in Resources */,
 				A20CB1E316B8F4CF00AF858B /* WEWebViewController_iPad.xib in Resources */,
+				A2C2316E18084EF900783ACD /* Icon-iPad.png in Resources */,
 				A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */,
 				A29CF1E316EBD37C00AB6D38 /* glyphicons-halflings-white.png in Resources */,
 				A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */,
 				A27D62BE16FC17FB005C114A /* WEEditorViewController.xib in Resources */,
 				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
+				A2C2317518084EF900783ACD /* Icon.png in Resources */,
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 				A22BEB0417016FE40039625D /* config.json in Resources */,
 				A27C9FFA170A7D3A0095D273 /* grey_wash_wall_@2X.png in Resources */,
@@ -700,11 +743,15 @@
 				A2ECB8F41718E416003F9E36 /* bootstrap.css in Resources */,
 				A2ECB8F51718E416003F9E36 /* bootstrap.min.css in Resources */,
 				A2ECB8F61718E416003F9E36 /* development.css in Resources */,
+				A2C2317218084EF900783ACD /* Icon-Settings@2x.png in Resources */,
 				A2ECB8F71718E416003F9E36 /* override.css in Resources */,
+				A2C2317118084EF900783ACD /* Icon-Settings.png in Resources */,
 				A2ECB8F91718E416003F9E36 /* development.html in Resources */,
 				A2ECB8FA1718E416003F9E36 /* production.html in Resources */,
+				A2C2317418084EF900783ACD /* Icon-Small@2x.png in Resources */,
 				A2ECB8FB1718E416003F9E36 /* test.html in Resources */,
 				A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */,
+				A2C2317618084EF900783ACD /* Icon@2x.png in Resources */,
 				A2B5F3AA179201A90026A982 /* WECustomLinkCell.xib in Resources */,
 				A2BBBAB217B9FD7700DFD1E1 /* WEBodyBackgroundCell.xib in Resources */,
 				A24E68FB17BBCF800090D2F1 /* add_image.png in Resources */,
@@ -713,6 +760,8 @@
 				A24E68FE17BBCF800090D2F1 /* add@2x.png in Resources */,
 				A24E68FF17BBCF800090D2F1 /* delete.png in Resources */,
 				A24E690017BBCF800090D2F1 /* delete@2x.png in Resources */,
+				A2C2317318084EF900783ACD /* Icon-Small.png in Resources */,
+				A2C2316F18084EF900783ACD /* Icon-iPad@2x.png in Resources */,
 				A24E690117BBCF800090D2F1 /* edit_text.png in Resources */,
 				A24E690217BBCF800090D2F1 /* edit_text@2x.png in Resources */,
 				A24E690317BBCF800090D2F1 /* information.png in Resources */,
@@ -846,7 +895,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -871,7 +920,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -882,6 +931,8 @@
 		A20CB1E716B8F4CF00AF858B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -890,6 +941,7 @@
 				GCC_PREFIX_HEADER = "WebsterEditor/WebsterEditor-Prefix.pch";
 				INFOPLIST_FILE = "WebsterEditor/WebsterEditor-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -897,6 +949,8 @@
 		A20CB1E816B8F4CF00AF858B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -905,6 +959,7 @@
 				GCC_PREFIX_HEADER = "WebsterEditor/WebsterEditor-Prefix.pch";
 				INFOPLIST_FILE = "WebsterEditor/WebsterEditor-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
