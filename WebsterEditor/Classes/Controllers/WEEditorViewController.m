@@ -15,6 +15,7 @@
 #import "NSArray+WEExtras.h"
 #import "NSThread+BlockAdditions.h"
 #import "WEPageCollectionViewLayout.h"
+#import "WEPageThumbGenerator.h"
 
 #define DELETE_ALERT_CANCEL 0
 #define DELETE_ALERT_OK 1
@@ -22,6 +23,7 @@
 @interface WEEditorViewController ()
 @property (nonatomic, assign) BOOL webPageLoaded;
 @property (nonatomic, strong) UIImagePickerController *picker;
+@property (nonatomic, strong) WEPageThumbGenerator *thumbGenerator;
 @end
 
 @implementation WEEditorViewController
@@ -49,6 +51,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!self.thumbGenerator) self.thumbGenerator = [[WEPageThumbGenerator alloc] init];
     
     picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
@@ -342,24 +346,16 @@ Export
                                 toFile:[WEUtils pathInDocumentDirectory:@"settings"
                                                           withProjectId:self.projectId]];
     
-    // save the thumbnail
-    NSString *thumbName = [currentPage stringByReplacingOccurrencesOfString:@".html" withString:@".jpeg"];
-    NSString *thumbPath = [WEUtils pathInDocumentDirectory:thumbName
-                                             withProjectId:self.projectId];
-    UIView *webView = self.contentController.view;
-    CGRect oldFrame = webView.frame;
-    webView.frame = CGRectMake(webView.frame.origin.x, webView.frame.origin.y, 768, 1004);
-    UIGraphicsBeginImageContext(webView.frame.size);
-    [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    NSData *thumbData = UIImageJPEGRepresentation(img, 0.8);
-    [thumbData writeToFile:thumbPath atomically:NO];
-    [thumbData writeToFile:[WEUtils pathInDocumentDirectory:@"thumb.jpeg"
-                                              withProjectId:self.projectId]
-                atomically:NO];
-    webView.frame = oldFrame;
-    
+    if (currentPage) {
+        // save the thumbnail
+        NSString *thumbName = [currentPage stringByReplacingOccurrencesOfString:@".html" withString:@".jpeg"];
+        NSString *pageThumbPath = [WEUtils pathInDocumentDirectory:thumbName
+                                                 withProjectId:self.projectId];
+        NSString *mainThumbPath = [WEUtils pathInDocumentDirectory:@"thumb.jpeg" withProjectId:self.projectId];
+        NSString *indexPath = [WEUtils pathInDocumentDirectory:currentPage withProjectId:self.projectId];
+        [self.thumbGenerator generateThumbForPage:indexPath atLocations:@[pageThumbPath, mainThumbPath]];
+        NSLog(@"generating thumbs at %@ and /thumb.jpeg", pageThumbPath);
+    }
     NSLog(@"done dev");
     
     if (self.webPageLoaded) {

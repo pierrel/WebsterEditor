@@ -54,6 +54,7 @@
 		A27D62BE16FC17FB005C114A /* WEEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A27D62BC16FC17FB005C114A /* WEEditorViewController.xib */; };
 		A27D62C216FC2063005C114A /* dark_exa.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C016FC2063005C114A /* dark_exa.png */; };
 		A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27D62C116FC2063005C114A /* dark_exa_@2X.png */; };
+		A28B36B21818176800C32837 /* WEPageThumbGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A28B36B11818176800C32837 /* WEPageThumbGenerator.m */; };
 		A29459F116FACC19004AA401 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F016FACC19004AA401 /* GradientButton.m */; };
 		A29459F516FB59B9004AA401 /* NSArray+WEExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = A29459F416FB59B9004AA401 /* NSArray+WEExtras.m */; };
 		A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A29589E516F0280600BEDBC6 /* WEViewController+ImagePicker.m */; };
@@ -170,6 +171,8 @@
 		A27D62BC16FC17FB005C114A /* WEEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WEEditorViewController.xib; sourceTree = "<group>"; };
 		A27D62C016FC2063005C114A /* dark_exa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_exa.png; sourceTree = "<group>"; };
 		A27D62C116FC2063005C114A /* dark_exa_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_exa_@2X.png"; sourceTree = "<group>"; };
+		A28B36B01818176800C32837 /* WEPageThumbGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageThumbGenerator.h; sourceTree = "<group>"; };
+		A28B36B11818176800C32837 /* WEPageThumbGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageThumbGenerator.m; sourceTree = "<group>"; };
 		A29459EF16FACC19004AA401 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		A29459F016FACC19004AA401 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		A29459F316FB59B9004AA401 /* NSArray+WEExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+WEExtras.h"; path = "Categories/NSArray+WEExtras.h"; sourceTree = "<group>"; };
@@ -466,6 +469,8 @@
 			children = (
 				A29CF1B616EBD37400AB6D38 /* WEPageManager.h */,
 				A29CF1B716EBD37400AB6D38 /* WEPageManager.m */,
+				A28B36B01818176800C32837 /* WEPageThumbGenerator.h */,
+				A28B36B11818176800C32837 /* WEPageThumbGenerator.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -809,6 +814,7 @@
 				A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */,
 				A29CF1BC16EBD37400AB6D38 /* WEWebViewController.m in Sources */,
 				A29CF1BE16EBD37400AB6D38 /* WebViewJavascriptBridge.m in Sources */,
+				A28B36B21818176800C32837 /* WEPageThumbGenerator.m in Sources */,
 				A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */,
 				A29CF1C016EBD37400AB6D38 /* WEColumnResizeView.m in Sources */,
 				A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */,
