@@ -24,6 +24,7 @@
 @property (nonatomic, assign) BOOL webPageLoaded;
 @property (nonatomic, strong) UIImagePickerController *picker;
 @property (nonatomic, strong) WEPageThumbGenerator *thumbGenerator;
+@property (nonatomic, strong) UIBarButtonItem *deselectButton;
 @end
 
 @implementation WEEditorViewController
@@ -53,6 +54,8 @@
     [super viewDidLoad];
     
     if (!self.thumbGenerator) self.thumbGenerator = [[WEPageThumbGenerator alloc] init];
+    
+    self.deselectButton = [[UIBarButtonItem alloc] initWithTitle:@"Deselect" style:UIBarButtonItemStylePlain target:self action:@selector(closeDialog)];
     
     picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
@@ -718,6 +721,18 @@ Export
 
 -(NSArray*)getPages {
     return [self.pageCollectionController pages];
+}
+
+-(void)dialogOpened {
+    [self.navigationItem setRightBarButtonItem:self.deselectButton animated:YES];
+}
+
+-(void)dialogClosed {
+    [self.navigationItem setRightBarButtonItem:nil animated:YES];
+}
+
+-(void)closeDialog {
+    [self.contentController closeDialog];
 }
 
 -(void)refresh {

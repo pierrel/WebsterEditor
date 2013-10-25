@@ -228,6 +228,8 @@ static const int ICON_DIM = 13;
 }
 
 - (void)openDialogWithData:(id)data {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dialogOpened)])
+        [self.delegate dialogOpened];
     [self closeActionButtons];
     self.selectedData = data;
     
@@ -348,6 +350,8 @@ static const int ICON_DIM = 13;
 }
 
 - (void)closeDialog {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dialogClosed)])
+        [self.delegate dialogClosed];
     self.selectedData = nil;
     [self.webView endEditing:YES];
     [self closeActionButtons];

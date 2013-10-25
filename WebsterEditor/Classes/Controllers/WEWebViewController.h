@@ -21,6 +21,9 @@ typedef void (^WEWithResizer)(WEColumnResizeView *resizeView);
 -(void)webViewDidLoad;
 -(NSArray*)getPages;
 
+@optional
+-(void)dialogOpened;
+-(void)dialogClosed;
 @end
 
 @interface WEWebViewController : UIViewController <UIWebViewDelegate,WEResizeColumnDelegate,UIPopoverControllerDelegate,WEActionSelectDelegate,UINavigationControllerDelegate,WEStyleTableViewControllerDelegate,WELinkViewControllerDelegate>
@@ -33,6 +36,7 @@ typedef void (^WEWithResizer)(WEColumnResizeView *resizeView);
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
+-(void)closeDialog;
 -(NSString*)getCurrentPage;
 -(NSString*)stringFromCurrentPage;
 -(void)currentPageRenamedTo:(NSString*)newName;
