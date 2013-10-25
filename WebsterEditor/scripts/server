@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cd client
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/../client
 lein ring server-headless
