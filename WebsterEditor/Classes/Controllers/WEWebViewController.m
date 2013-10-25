@@ -496,9 +496,9 @@ static const int ICON_DIM = 13;
                          permittedArrowDirections:UIPopoverArrowDirectionAny
                                          animated:YES];
     } else {
-        [self presentViewController:self.styleNav animated:YES completion:^{
-            NSLog(@"showing style edit");
-        }];
+        if (self.delegate) {
+            [self.delegate webViewControllerPresentViewController:self.styleNav];
+        }
     }
 }
 

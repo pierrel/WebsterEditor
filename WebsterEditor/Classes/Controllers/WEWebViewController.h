@@ -18,6 +18,7 @@ typedef void (^WEWithResizer)(WEColumnResizeView *resizeView);
 
 @protocol WEWebViewDelegate <NSObject>
 
+-(void)webViewControllerPresentViewController:(UIViewController*)controller;
 -(void)webViewDidLoad;
 -(NSArray*)getPages;
 

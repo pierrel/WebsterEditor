@@ -735,6 +735,10 @@ Export
     [self.contentController closeDialog];
 }
 
+-(void)webViewControllerPresentViewController:(UIViewController *)controller {
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 -(void)refresh {
     [modeSwitch setOn:NO animated:YES];
     [self.contentController refresh];
