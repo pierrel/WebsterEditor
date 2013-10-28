@@ -16,6 +16,7 @@
 #import "NSThread+BlockAdditions.h"
 #import "WEPageCollectionViewLayout.h"
 #import "WEPageThumbGenerator.h"
+#import "WEPageTemplateManager.h"
 
 #define DELETE_ALERT_CANCEL 0
 #define DELETE_ALERT_OK 1
@@ -651,6 +652,8 @@ Export
 }
 
 -(void)addAndSwitchToNewPage {
+    WEPageTemplateManager *templateMan = [WEPageTemplateManager sharedManager];
+    NSLog(@"templates: %@", [templateMan templates]);
     [self addAndSwitchToNewPageWithSaving:YES];
 }
 

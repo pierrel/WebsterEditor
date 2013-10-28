@@ -46,6 +46,8 @@
 		A24E691517BDCCED0090D2F1 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E691117BDCCED0090D2F1 /* share@2x.png */; };
 		A24E691817BDCDDC0090D2F1 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E691617BDCDDC0090D2F1 /* arrow-left@2x.png */; };
 		A24E691917BDCDDC0090D2F1 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E691717BDCDDC0090D2F1 /* arrow-left.png */; };
+		A25CF0C8181EB5980095A22A /* WEPageTemplateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */; };
+		A25CF0CA181EB5ED0095A22A /* PageTemplates.plist in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */; };
 		A25EF895176D3D7700222144 /* WEStyleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25EF894176D3D7700222144 /* WEStyleTableViewController.m */; };
 		A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A27C9FEE170A6C490095D273 /* WEProjectSettings.m */; };
 		A27C9FFA170A7D3A0095D273 /* grey_wash_wall_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */; };
@@ -160,6 +162,9 @@
 		A24E691117BDCCED0090D2F1 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
 		A24E691617BDCDDC0090D2F1 /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left@2x.png"; sourceTree = "<group>"; };
 		A24E691717BDCDDC0090D2F1 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left.png"; sourceTree = "<group>"; };
+		A25CF0C6181EB5980095A22A /* WEPageTemplateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageTemplateManager.h; sourceTree = "<group>"; };
+		A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageTemplateManager.m; sourceTree = "<group>"; };
+		A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PageTemplates.plist; sourceTree = "<group>"; };
 		A25EF893176D3D7700222144 /* WEStyleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEStyleTableViewController.h; sourceTree = "<group>"; };
 		A25EF894176D3D7700222144 /* WEStyleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEStyleTableViewController.m; sourceTree = "<group>"; };
 		A27C9FED170A6C490095D273 /* WEProjectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEProjectSettings.h; path = Models/WEProjectSettings.h; sourceTree = "<group>"; };
@@ -364,6 +369,13 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
+		A25CF0CB181EB67B0095A22A /* templates */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = templates;
+			sourceTree = "<group>";
+		};
 		A27C9FEC170A6C2B0095D273 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,12 +388,14 @@
 		A27D62BF16FC2063005C114A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A25CF0CB181EB67B0095A22A /* templates */,
 				A2C2316418084EF900783ACD /* app icons */,
 				A24E68EC17BBCF800090D2F1 /* icons */,
 				A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */,
 				A27C9FF9170A7D3A0095D273 /* grey_wash_wall.png */,
 				A27D62C016FC2063005C114A /* dark_exa.png */,
 				A27D62C116FC2063005C114A /* dark_exa_@2X.png */,
+				A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -471,6 +485,8 @@
 				A29CF1B716EBD37400AB6D38 /* WEPageManager.m */,
 				A28B36B01818176800C32837 /* WEPageThumbGenerator.h */,
 				A28B36B11818176800C32837 /* WEPageThumbGenerator.m */,
+				A25CF0C6181EB5980095A22A /* WEPageTemplateManager.h */,
+				A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -755,6 +771,7 @@
 				A2ECB8FA1718E416003F9E36 /* production.html in Resources */,
 				A2C2317418084EF900783ACD /* Icon-Small@2x.png in Resources */,
 				A2ECB8FB1718E416003F9E36 /* test.html in Resources */,
+				A25CF0CA181EB5ED0095A22A /* PageTemplates.plist in Resources */,
 				A2F80567176E57F70030A97A /* WEStyleCell.xib in Resources */,
 				A2C2317618084EF900783ACD /* Icon@2x.png in Resources */,
 				A2B5F3AA179201A90026A982 /* WECustomLinkCell.xib in Resources */,
@@ -842,6 +859,7 @@
 				A2B5F3A2179201020026A982 /* WELinkViewController.m in Sources */,
 				A2B5F3A81792018C0026A982 /* WECustomLinkCell.m in Sources */,
 				A2BBBAB517B9FDAE00DFD1E1 /* WEBodyBackgroundCell.m in Sources */,
+				A25CF0C8181EB5980095A22A /* WEPageTemplateManager.m in Sources */,
 				A2F8931A17C47D8F00D0F29C /* UIColor+Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
