@@ -77,7 +77,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *template = [self.templateManager.templates objectAtIndex:indexPath.row];
-    if (self.delegate) [self.delegate templateViewController:self didSelectPageAtPath:@"someting"];
+    NSString *filename = [template objectForKey:@"file"];
+    NSError *error;
+    NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename
+                                                                                            ofType:@"html"]
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:&error];
+    if (self.delegate) [self.delegate templateViewController:self
+                               didSelectTemplateWithContents:contents];
 }
 
 /*

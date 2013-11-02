@@ -6,13 +6,13 @@
 		<key>name</key>
 		<string>Landing Page</string>
 		<key>file</key>
-		<string>landing.html</string>
+		<string>landing_template</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>About Page</string>
 		<key>file</key>
-		<string>about.html</string>
+		<string>about_template</string>
 	</dict>
 </array>
 </plist>

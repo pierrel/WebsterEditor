@@ -659,10 +659,12 @@ Export
     //[self addAndSwitchToNewPageWithSaving:YES];
 }
 
--(void)templateViewController:(WEPageTempaltesTableViewController *)controller
-          didSelectPageAtPath:(NSString *)pageTemplatePath {
+-(void)templateViewController:(WEPageTempaltesTableViewController*)controller
+didSelectTemplateWithContents:(NSString*)pageTemplateContents {
     [controller dismissViewControllerAnimated:YES completion:^{
-        [self addAndSwitchToNewPageWithSaving:YES];
+        [self addAndSwitchToPage:[self newPageName]
+                    withContents:pageTemplateContents
+                         andSave:YES];
     }];
 }
 
@@ -678,17 +680,21 @@ Export
 -(void)addAndSwitchToPage:(NSString*)pageName andSave:(BOOL)save {
     // write the html template
     NSError *error;
-    NSString *fullPath = [WEUtils pathInDocumentDirectory:pageName
-                                            withProjectId:self.projectId];
     NSString *contents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"development"
                                                                                             ofType:@"html"]
                                                    encoding:NSUTF8StringEncoding
                                                       error:&error];
+    [self addAndSwitchToPage:pageName withContents:contents andSave:save];
+}
+
+-(void)addAndSwitchToPage:(NSString*)pageName withContents:(NSString*)contents andSave:(BOOL)save {
+    NSError *error;
+    NSString *fullPath = [WEUtils pathInDocumentDirectory:pageName
+                                            withProjectId:self.projectId];
     [contents writeToFile:fullPath
                atomically:NO
                  encoding:NSStringEncodingConversionAllowLossy
                     error:&error];
-    
     [self switchToPage:pageName andSave:save];
 }
 

@@ -15,5 +15,5 @@
 @end
 
 @protocol WEPageTempaltesTableViewControllerDelegate <NSObject>
--(void)templateViewController:(WEPageTempaltesTableViewController*)controller didSelectPageAtPath:(NSString*)pageTemplatePath;
+-(void)templateViewController:(WEPageTempaltesTableViewController*)controller didSelectTemplateWithContents:(NSString*)pageTemplateContents;
 @end

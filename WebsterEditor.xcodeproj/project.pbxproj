@@ -48,8 +48,8 @@
 		A24E691917BDCDDC0090D2F1 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E691717BDCDDC0090D2F1 /* arrow-left.png */; };
 		A25CF0C8181EB5980095A22A /* WEPageTemplateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */; };
 		A25CF0CA181EB5ED0095A22A /* PageTemplates.plist in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */; };
-		A25CF0D01825B74B0095A22A /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0CE1825B74B0095A22A /* about.html */; };
-		A25CF0D11825B74B0095A22A /* landing.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0CF1825B74B0095A22A /* landing.html */; };
+		A25CF0D01825B74B0095A22A /* about_template.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0CE1825B74B0095A22A /* about_template.html */; };
+		A25CF0D11825B74B0095A22A /* landing_template.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0CF1825B74B0095A22A /* landing_template.html */; };
 		A25CF0D41825B9720095A22A /* WEPageTempaltesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25CF0D31825B9720095A22A /* WEPageTempaltesTableViewController.m */; };
 		A25EF895176D3D7700222144 /* WEStyleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25EF894176D3D7700222144 /* WEStyleTableViewController.m */; };
 		A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A27C9FEE170A6C490095D273 /* WEProjectSettings.m */; };
@@ -168,8 +168,8 @@
 		A25CF0C6181EB5980095A22A /* WEPageTemplateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageTemplateManager.h; sourceTree = "<group>"; };
 		A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageTemplateManager.m; sourceTree = "<group>"; };
 		A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PageTemplates.plist; sourceTree = "<group>"; };
-		A25CF0CE1825B74B0095A22A /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
-		A25CF0CF1825B74B0095A22A /* landing.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = landing.html; sourceTree = "<group>"; };
+		A25CF0CE1825B74B0095A22A /* about_template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about_template.html; sourceTree = "<group>"; };
+		A25CF0CF1825B74B0095A22A /* landing_template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = landing_template.html; sourceTree = "<group>"; };
 		A25CF0D21825B9720095A22A /* WEPageTempaltesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageTempaltesTableViewController.h; sourceTree = "<group>"; };
 		A25CF0D31825B9720095A22A /* WEPageTempaltesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageTempaltesTableViewController.m; sourceTree = "<group>"; };
 		A25EF893176D3D7700222144 /* WEStyleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEStyleTableViewController.h; sourceTree = "<group>"; };
@@ -376,18 +376,11 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
-		A25CF0CB181EB67B0095A22A /* templates */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = templates;
-			sourceTree = "<group>";
-		};
 		A25CF0CD1825B74B0095A22A /* templates */ = {
 			isa = PBXGroup;
 			children = (
-				A25CF0CE1825B74B0095A22A /* about.html */,
-				A25CF0CF1825B74B0095A22A /* landing.html */,
+				A25CF0CE1825B74B0095A22A /* about_template.html */,
+				A25CF0CF1825B74B0095A22A /* landing_template.html */,
 			);
 			path = templates;
 			sourceTree = "<group>";
@@ -404,7 +397,6 @@
 		A27D62BF16FC2063005C114A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A25CF0CB181EB67B0095A22A /* templates */,
 				A2C2316418084EF900783ACD /* app icons */,
 				A24E68EC17BBCF800090D2F1 /* icons */,
 				A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */,
@@ -762,7 +754,7 @@
 				A2ECB9071718E465003F9E36 /* rangy.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
 				A2C2317018084EF900783ACD /* icon-orig.png in Resources */,
-				A25CF0D01825B74B0095A22A /* about.html in Resources */,
+				A25CF0D01825B74B0095A22A /* about_template.html in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
 				A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */,
@@ -807,7 +799,7 @@
 				A24E690117BBCF800090D2F1 /* edit_text.png in Resources */,
 				A24E690217BBCF800090D2F1 /* edit_text@2x.png in Resources */,
 				A24E690317BBCF800090D2F1 /* information.png in Resources */,
-				A25CF0D11825B74B0095A22A /* landing.html in Resources */,
+				A25CF0D11825B74B0095A22A /* landing_template.html in Resources */,
 				A24E690417BBCF800090D2F1 /* information@2x.png in Resources */,
 				A24E690517BBCF800090D2F1 /* link.png in Resources */,
 				A24E690617BBCF800090D2F1 /* link@2x.png in Resources */,
