@@ -11,13 +11,14 @@
 #import "WEWebViewController.h"
 #import "WEProjectSettings.h"
 #import "WEPageCollectionViewController.h"
+#import "WEPageTempaltesTableViewController.h"
 
 @class WEEditorViewController;
 @protocol WEViewControllerDelegate <NSObject>
 -(void)didSaveViewController:(WEEditorViewController*)controller;
 @end
 
-@interface WEEditorViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate, WEWebViewDelegate, UIAlertViewDelegate>
+@interface WEEditorViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, PageCollectionDelegate, WEWebViewDelegate, UIAlertViewDelegate,WEPageTempaltesTableViewControllerDelegate>
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) NSString *projectId;

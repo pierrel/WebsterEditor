@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WEPageTempaltesTableViewController : UITableViewController
+@protocol WEPageTempaltesTableViewControllerDelegate;
 
+@interface WEPageTempaltesTableViewController : UITableViewController
+@property (nonatomic, assign) id<WEPageTempaltesTableViewControllerDelegate> delegate;
+@end
+
+@protocol WEPageTempaltesTableViewControllerDelegate <NSObject>
+-(void)templateViewController:(WEPageTempaltesTableViewController*)controller didSelectPageAtPath:(NSString*)pageTemplatePath;
 @end

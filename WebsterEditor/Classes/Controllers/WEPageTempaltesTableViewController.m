@@ -75,6 +75,11 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *template = [self.templateManager.templates objectAtIndex:indexPath.row];
+    if (self.delegate) [self.delegate templateViewController:self didSelectPageAtPath:@"someting"];
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
