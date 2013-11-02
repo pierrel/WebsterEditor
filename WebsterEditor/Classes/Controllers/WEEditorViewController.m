@@ -17,6 +17,7 @@
 #import "WEPageCollectionViewLayout.h"
 #import "WEPageThumbGenerator.h"
 #import "WEPageTemplateManager.h"
+#import "WEPageTempaltesTableViewController.h"
 
 #define DELETE_ALERT_CANCEL 0
 #define DELETE_ALERT_OK 1
@@ -652,9 +653,10 @@ Export
 }
 
 -(void)addAndSwitchToNewPage {
-    WEPageTemplateManager *templateMan = [WEPageTemplateManager sharedManager];
-    NSLog(@"templates: %@", [templateMan templates]);
-    [self addAndSwitchToNewPageWithSaving:YES];
+    WEPageTempaltesTableViewController *templateController = [[WEPageTempaltesTableViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:templateController];
+    [self presentViewController:nav animated:YES completion:nil];
+    //[self addAndSwitchToNewPageWithSaving:YES];
 }
 
 -(void)addAndSwitchToNewPageWithSaving:(BOOL)save {

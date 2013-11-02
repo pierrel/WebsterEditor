@@ -11,7 +11,7 @@
 static WEPageTemplateManager *gSharedManager;
 
 @interface WEPageTemplateManager()
-@property (nonatomic, strong) NSDictionary *fileTemplates;
+@property (nonatomic, strong) NSArray *fileTemplates;
 @end
 
 @implementation WEPageTemplateManager
@@ -26,13 +26,13 @@ static WEPageTemplateManager *gSharedManager;
 -(id)init {
     if (self = [super init]) {
         NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"PageTemplates" ofType:@"plist"];
-        self.fileTemplates = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+        self.fileTemplates = [NSArray arrayWithContentsOfFile:plistPath];
     }
     
     return self;
 }
 
 -(NSArray*)templates {
-    return [self.fileTemplates allKeys];
+    return self.fileTemplates;
 }
 @end
