@@ -22,5 +22,6 @@
 @property (nonatomic, strong) NSString *projectId;
 @property (nonatomic, assign) id<PageCollectionDelegate> delegate;
 
+-(void)refreshAfterAddingPage;
 -(NSArray*)pages;
 @end

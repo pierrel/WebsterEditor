@@ -656,7 +656,6 @@ Export
     templateController.delegate = self;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:templateController];
     [self presentViewController:nav animated:YES completion:nil];
-    //[self addAndSwitchToNewPageWithSaving:YES];
 }
 
 -(void)templateViewController:(WEPageTempaltesTableViewController*)controller
@@ -696,6 +695,7 @@ didSelectTemplateWithContents:(NSString*)pageTemplateContents {
                  encoding:NSStringEncodingConversionAllowLossy
                     error:&error];
     [self switchToPage:pageName andSave:save];
+    [self.pageCollectionController refreshAfterAddingPage];
 }
 
 -(void)switchToPageInNewProject:(NSString*)pageName {

@@ -78,6 +78,14 @@
     }
 }
 
+-(void)refreshAfterAddingPage {
+    // prepare the new one to be highlighted
+    self.selectedRow = 0;
+    
+    // refresh the collection
+    [self.collectionView reloadData];
+}
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     // deselect the old row
     NSIndexPath *oldPath = [NSIndexPath indexPathForItem:self.selectedRow inSection:0];
