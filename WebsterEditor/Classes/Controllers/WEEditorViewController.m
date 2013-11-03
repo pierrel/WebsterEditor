@@ -26,6 +26,9 @@
 @property (nonatomic, strong) UIImagePickerController *picker;
 @property (nonatomic, strong) WEPageThumbGenerator *thumbGenerator;
 @property (nonatomic, strong) UIBarButtonItem *deselectButton;
+@property (nonatomic, strong) UIPopoverController *pageTemplatePopover;
+@property (nonatomic, strong) WEPageTempaltesTableViewController *pageTemplateController;
+@property (nonatomic, strong) UINavigationController *pageTemplateNav;
 @end
 
 @implementation WEEditorViewController
@@ -61,10 +64,18 @@
     picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
+    self.pageTemplateController = [[WEPageTempaltesTableViewController alloc] init];
+    self.pageTemplateController.delegate = self;
+    
+    self.pageTemplateNav = [[UINavigationController alloc] initWithRootViewController:self.pageTemplateController];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.popover = [[UIPopoverController alloc] initWithContentViewController:picker];
         self.popover.delegate = self;
+        
+        self.pageTemplatePopover = [[UIPopoverController alloc] initWithContentViewController:self.pageTemplateNav];
+        self.pageTemplatePopover.delegate = self;
     }
     
     [exportActivity setHidesWhenStopped:YES];
@@ -651,20 +662,31 @@ Export
     return [self.pageCollectionController pages];
 }
 
--(void)addAndSwitchToNewPage {
-    WEPageTempaltesTableViewController *templateController = [[WEPageTempaltesTableViewController alloc] init];
-    templateController.delegate = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:templateController];
-    [self presentViewController:nav animated:YES completion:nil];
+-(void)addAndSwitchToNewPageFromController:(WEPageCollectionViewController *)controller {
+    if (self.pageTemplatePopover) {
+        UIView *controllerView = controller.view;
+        [self.pageTemplatePopover presentPopoverFromRect:controllerView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [self presentViewController:self.pageTemplateNav animated:YES completion:nil];
+    }
 }
 
 -(void)templateViewController:(WEPageTempaltesTableViewController*)controller
 didSelectTemplateWithContents:(NSString*)pageTemplateContents {
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [self addAndSwitchToPage:[self newPageName]
-                    withContents:pageTemplateContents
-                         andSave:YES];
-    }];
+    if (self.pageTemplatePopover) {
+        [self.pageTemplatePopover dismissPopoverAnimated:YES];
+        [self addAndSwitchToNewPageWithContents:pageTemplateContents];
+    } else {
+        [controller dismissViewControllerAnimated:YES completion:^{
+            [self addAndSwitchToNewPageWithContents:pageTemplateContents];
+        }];
+    }
+}
+
+-(void)addAndSwitchToNewPageWithContents:(NSString*)contents {
+    [self addAndSwitchToPage:[self newPageName]
+                withContents:contents
+                     andSave:YES];
 }
 
 -(void)addAndSwitchToNewPageWithSaving:(BOOL)save {

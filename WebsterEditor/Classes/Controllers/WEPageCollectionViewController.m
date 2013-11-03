@@ -94,7 +94,7 @@
     
     if ([self isIndexPathAddPage:indexPath]) {
         // let the content know
-        if (self.delegate) [self.delegate addAndSwitchToNewPage];
+        if (self.delegate) [self.delegate addAndSwitchToNewPageFromController:self];
                 
         // prepare the new one to be highlighted
         self.selectedRow = 0;
