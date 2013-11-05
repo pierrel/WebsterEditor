@@ -93,8 +93,14 @@
     [cell setHighlighted:NO];
     
     if ([self isIndexPathAddPage:indexPath]) {
+        UICollectionViewCell *addCell = [collectionView cellForItemAtIndexPath:indexPath];
+        
         // let the content know
-        if (self.delegate) [self.delegate addAndSwitchToNewPageFromController:self];
+        if (self.delegate) {
+            CGRect frame = [addCell.superview convertRect:addCell.frame toView:nil];
+            [self.delegate addAndSwitchToNewPageFromController:self
+                                                     fromFrame:frame];
+        }
                 
         // prepare the new one to be highlighted
         self.selectedRow = 0;

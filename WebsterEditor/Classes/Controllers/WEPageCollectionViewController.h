@@ -21,7 +21,7 @@
 
 @protocol PageCollectionDelegate<NSObject>
 
--(void)addAndSwitchToNewPageFromController:(WEPageCollectionViewController*)controller;
+-(void)addAndSwitchToNewPageFromController:(WEPageCollectionViewController*)controller fromFrame:(CGRect)frame;
 -(void)switchToPage:(NSString*)pageName;
 -(void)page:(NSString *)pageName renamedTo:(NSString *)newName;
 -(void)pageDeleted:(NSString*)pageName;

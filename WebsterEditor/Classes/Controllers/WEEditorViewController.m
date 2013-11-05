@@ -662,10 +662,12 @@ Export
     return [self.pageCollectionController pages];
 }
 
--(void)addAndSwitchToNewPageFromController:(WEPageCollectionViewController *)controller {
+-(void)addAndSwitchToNewPageFromController:(WEPageCollectionViewController*)controller fromFrame:(CGRect)frame {
     if (self.pageTemplatePopover) {
-        UIView *controllerView = controller.view;
-        [self.pageTemplatePopover presentPopoverFromRect:controllerView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [self.pageTemplatePopover presentPopoverFromRect:frame
+                                                  inView:self.view
+                                permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                animated:YES];
     } else {
         [self presentViewController:self.pageTemplateNav animated:YES completion:nil];
     }
