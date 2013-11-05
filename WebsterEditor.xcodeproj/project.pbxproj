@@ -48,9 +48,11 @@
 		A24E691917BDCDDC0090D2F1 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = A24E691717BDCDDC0090D2F1 /* arrow-left.png */; };
 		A25CF0C8181EB5980095A22A /* WEPageTemplateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */; };
 		A25CF0CA181EB5ED0095A22A /* PageTemplates.plist in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */; };
-		A25CF0D01825B74B0095A22A /* about_template.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0CE1825B74B0095A22A /* about_template.html */; };
-		A25CF0D11825B74B0095A22A /* landing_template.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0CF1825B74B0095A22A /* landing_template.html */; };
 		A25CF0D41825B9720095A22A /* WEPageTempaltesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25CF0D31825B9720095A22A /* WEPageTempaltesTableViewController.m */; };
+		A25CF0D91828B0F70095A22A /* advanced_grid.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0D51828B0F70095A22A /* advanced_grid.html */; };
+		A25CF0DA1828B0F70095A22A /* feature.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0D61828B0F70095A22A /* feature.html */; };
+		A25CF0DB1828B0F70095A22A /* gallery.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0D71828B0F70095A22A /* gallery.html */; };
+		A25CF0DC1828B0F70095A22A /* three.html in Resources */ = {isa = PBXBuildFile; fileRef = A25CF0D81828B0F70095A22A /* three.html */; };
 		A25EF895176D3D7700222144 /* WEStyleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A25EF894176D3D7700222144 /* WEStyleTableViewController.m */; };
 		A27C9FEF170A6C490095D273 /* WEProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = A27C9FEE170A6C490095D273 /* WEProjectSettings.m */; };
 		A27C9FFA170A7D3A0095D273 /* grey_wash_wall_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = A27C9FF8170A7D3A0095D273 /* grey_wash_wall_@2X.png */; };
@@ -168,10 +170,12 @@
 		A25CF0C6181EB5980095A22A /* WEPageTemplateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageTemplateManager.h; sourceTree = "<group>"; };
 		A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageTemplateManager.m; sourceTree = "<group>"; };
 		A25CF0C9181EB5ED0095A22A /* PageTemplates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PageTemplates.plist; sourceTree = "<group>"; };
-		A25CF0CE1825B74B0095A22A /* about_template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about_template.html; sourceTree = "<group>"; };
-		A25CF0CF1825B74B0095A22A /* landing_template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = landing_template.html; sourceTree = "<group>"; };
 		A25CF0D21825B9720095A22A /* WEPageTempaltesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageTempaltesTableViewController.h; sourceTree = "<group>"; };
 		A25CF0D31825B9720095A22A /* WEPageTempaltesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageTempaltesTableViewController.m; sourceTree = "<group>"; };
+		A25CF0D51828B0F70095A22A /* advanced_grid.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = advanced_grid.html; sourceTree = "<group>"; };
+		A25CF0D61828B0F70095A22A /* feature.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = feature.html; sourceTree = "<group>"; };
+		A25CF0D71828B0F70095A22A /* gallery.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gallery.html; sourceTree = "<group>"; };
+		A25CF0D81828B0F70095A22A /* three.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = three.html; sourceTree = "<group>"; };
 		A25EF893176D3D7700222144 /* WEStyleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEStyleTableViewController.h; sourceTree = "<group>"; };
 		A25EF894176D3D7700222144 /* WEStyleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEStyleTableViewController.m; sourceTree = "<group>"; };
 		A27C9FED170A6C490095D273 /* WEProjectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEProjectSettings.h; path = Models/WEProjectSettings.h; sourceTree = "<group>"; };
@@ -379,8 +383,10 @@
 		A25CF0CD1825B74B0095A22A /* templates */ = {
 			isa = PBXGroup;
 			children = (
-				A25CF0CE1825B74B0095A22A /* about_template.html */,
-				A25CF0CF1825B74B0095A22A /* landing_template.html */,
+				A25CF0D51828B0F70095A22A /* advanced_grid.html */,
+				A25CF0D61828B0F70095A22A /* feature.html */,
+				A25CF0D71828B0F70095A22A /* gallery.html */,
+				A25CF0D81828B0F70095A22A /* three.html */,
 			);
 			path = templates;
 			sourceTree = "<group>";
@@ -754,7 +760,6 @@
 				A2ECB9071718E465003F9E36 /* rangy.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
 				A2C2317018084EF900783ACD /* icon-orig.png in Resources */,
-				A25CF0D01825B74B0095A22A /* about_template.html in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,
 				A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */,
@@ -766,6 +771,7 @@
 				A29CF1E416EBD37C00AB6D38 /* glyphicons-halflings.png in Resources */,
 				A27D62BE16FC17FB005C114A /* WEEditorViewController.xib in Resources */,
 				A27D62C216FC2063005C114A /* dark_exa.png in Resources */,
+				A25CF0DC1828B0F70095A22A /* three.html in Resources */,
 				A2C2317518084EF900783ACD /* Icon.png in Resources */,
 				A27D62C316FC2063005C114A /* dark_exa_@2X.png in Resources */,
 				A22BEB0417016FE40039625D /* config.json in Resources */,
@@ -776,9 +782,11 @@
 				A2ECB8F41718E416003F9E36 /* bootstrap.css in Resources */,
 				A2ECB8F51718E416003F9E36 /* bootstrap.min.css in Resources */,
 				A2ECB8F61718E416003F9E36 /* development.css in Resources */,
+				A25CF0DA1828B0F70095A22A /* feature.html in Resources */,
 				A2C2317218084EF900783ACD /* Icon-Settings@2x.png in Resources */,
 				A2ECB8F71718E416003F9E36 /* override.css in Resources */,
 				A2C2317118084EF900783ACD /* Icon-Settings.png in Resources */,
+				A25CF0DB1828B0F70095A22A /* gallery.html in Resources */,
 				A2ECB8F91718E416003F9E36 /* development.html in Resources */,
 				A2ECB8FA1718E416003F9E36 /* production.html in Resources */,
 				A2C2317418084EF900783ACD /* Icon-Small@2x.png in Resources */,
@@ -795,11 +803,11 @@
 				A24E68FF17BBCF800090D2F1 /* delete.png in Resources */,
 				A24E690017BBCF800090D2F1 /* delete@2x.png in Resources */,
 				A2C2317318084EF900783ACD /* Icon-Small.png in Resources */,
+				A25CF0D91828B0F70095A22A /* advanced_grid.html in Resources */,
 				A2C2316F18084EF900783ACD /* Icon-iPad@2x.png in Resources */,
 				A24E690117BBCF800090D2F1 /* edit_text.png in Resources */,
 				A24E690217BBCF800090D2F1 /* edit_text@2x.png in Resources */,
 				A24E690317BBCF800090D2F1 /* information.png in Resources */,
-				A25CF0D11825B74B0095A22A /* landing_template.html in Resources */,
 				A24E690417BBCF800090D2F1 /* information@2x.png in Resources */,
 				A24E690517BBCF800090D2F1 /* link.png in Resources */,
 				A24E690617BBCF800090D2F1 /* link@2x.png in Resources */,

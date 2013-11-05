@@ -4,15 +4,27 @@
 <array>
 	<dict>
 		<key>name</key>
-		<string>Landing Page</string>
+		<string>Advanced Grid</string>
 		<key>file</key>
-		<string>landing_template</string>
+		<string>advanced_grid</string>
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>About Page</string>
+		<string>Featured Image</string>
 		<key>file</key>
-		<string>about_template</string>
+		<string>feature</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Gallery</string>
+		<key>file</key>
+		<string>gallery</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Three Boxes</string>
+		<key>file</key>
+		<string>three</string>
 	</dict>
 </array>
 </plist>
