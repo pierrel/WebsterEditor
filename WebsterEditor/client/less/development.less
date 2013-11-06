@@ -88,6 +88,24 @@ body {
 }
 
 // animations
+.drop {
+	-webkit-animation-duration: 1.5s;
+}
+@-webkit-keyframes drop {
+    from {
+        -webkit-transform: rotate(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        -webkit-transform: rotate(10deg) translateY(700px);
+        opacity: 0;
+    }
+}
+.drop {
+	-webkit-animation-name: drop;
+	animation-name: hinge;
+}
+
 .hinge {
 	-webkit-animation-duration: 2s;
 }

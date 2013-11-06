@@ -244,7 +244,7 @@
 (defhandler "removeElementHandler"
   (fn [data callback bridge]
     (let [selected (-> "selected" domi/by-class domi/single-node first)]
-      (domi/add-class! selected "hinge")
+      (domi/add-class! selected "drop")
       (.addEventListener selected
                          "webkitAnimationEnd"
                          #(domi/detach! selected)))
