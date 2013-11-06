@@ -457,9 +457,8 @@ static const int ICON_DIM = 13;
                        permittedArrowDirections:UIPopoverArrowDirectionAny
                                        animated:YES];
     } else {
-        [self presentViewController:self.navController animated:YES completion:^{
-            NSLog(@"showing add selection");
-        }];
+        if (self.delegate)
+            [self.delegate webViewControllerPresentViewController:self.navController];
     }
 }
 
