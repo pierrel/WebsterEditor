@@ -588,7 +588,11 @@ static const int ICON_DIM = 13;
     [self.webView reload];
 }
 
-
+-(void)resetSelectedButtons {
+    [[WEPageManager sharedManager] getSelectedElementDataWithCallback:^(id responseData) {
+        [self positionButtonsWithData:responseData];
+    }];
+}
 
 - (void)didReceiveMemoryWarning
 {

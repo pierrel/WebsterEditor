@@ -45,5 +45,6 @@ typedef void (^WEWithResizer)(WEColumnResizeView *resizeView);
 -(void)setBackgroundWithInfo:(NSDictionary *)info;
 -(void)removeBackground;
 -(void)refresh;
+-(void)resetSelectedButtons;
 @end
 

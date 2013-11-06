@@ -20,6 +20,7 @@ typedef void (^WEResponseCallback)(id responseData);
 -(void)editSelectedElement;
 -(void)addGalleryUnderSelectedElement;
 -(void)addElementUnderSelectedElement:(NSString*)elementName;
+-(void)getSelectedElementDataWithCallback:(WEResponseCallback)responseCallback;
 
 /*
  *  Row edits

@@ -179,6 +179,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"appClosing" object:nil];
 }
 
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.contentController resetSelectedButtons];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -34,6 +34,11 @@ static WEPageManager *gSharedManager;
                                                                                            forKey:@"element-name"]];
 }
 
+-(void)getSelectedElementDataWithCallback:(WEResponseCallback)responseCallback {
+    [bridge callHandler:@"getSelectedElementData" data:[NSDictionary dictionary] responseCallback:responseCallback];
+}
+
+
 -(void)addGalleryUnderSelectedElement {
     [bridge callHandler:@"addGalleryUnderSelectedElement" data:[NSDictionary dictionary]];
 }
