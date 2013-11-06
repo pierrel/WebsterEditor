@@ -107,15 +107,16 @@
 
 (defn node-info-map
   [el]
-  (let [node (single-node el)
-        frame (dom/frame node)]
-    (into {} (filter second 
-                     (merge frame
-                            {:tag (.-tagName node)
-                             :classes (classes el)
-                             :addable (elements/possible-under (elements/node-to-element el))
-                             :attrs (attrs node)
-                             :text (text node)})))))
+  (let [node (single-node el)]
+    (if node
+      (into {} (filter second 
+                       (merge (dom/frame node)
+                              {:tag (.-tagName node)
+                               :classes (classes el)
+                               :addable (elements/possible-under (elements/node-to-element el))
+                               :attrs (attrs node)
+                               :text (text node)})))
+      {})))
  
 (defn get-selected []
   (sel ".selected"))
