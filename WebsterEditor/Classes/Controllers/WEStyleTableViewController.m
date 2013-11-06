@@ -67,9 +67,8 @@
 }
 
 -(void)doneTapped:(id)button {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"done editing styles");
-    }];
+    if (self.delegate)
+        [self.delegate doneWithStyleTableController:self];
 }
 
 - (void)didReceiveMemoryWarning

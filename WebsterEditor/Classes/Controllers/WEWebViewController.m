@@ -110,13 +110,15 @@ static const int ICON_DIM = 13;
     self.linkTable = [[WELinkViewController alloc] initWithStyle:UITableViewStylePlain];
     self.linkTable.delegate = self;
     
+    self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
+    
     // popover
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.addPopover = [[UIPopoverController alloc] initWithContentViewController:self.addSelectionController];
         self.addPopover.delegate = self;
         [self.addPopover setPopoverContentSize:CGSizeMake(300, 500)];
         
-        self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleTable];
+        self.stylePopover =  [[UIPopoverController alloc] initWithContentViewController:self.styleNav];
         self.stylePopover.delegate = self;
         [self.stylePopover setPopoverContentSize:CGSizeMake(300, 500)];
         self.styleTable.parentPopover = self.stylePopover;
@@ -126,7 +128,6 @@ static const int ICON_DIM = 13;
         [self.linkPopover setPopoverContentSize:CGSizeMake(300, 500)];
     } else {
         self.navController = [[UINavigationController alloc] initWithRootViewController:self.addSelectionController];
-        self.styleNav = [[UINavigationController alloc] initWithRootViewController:self.styleTable];
         self.linkNav = [[UINavigationController alloc] initWithRootViewController:self.linkTable];
     }
     
@@ -555,6 +556,14 @@ static const int ICON_DIM = 13;
 
 -(void)styleResetWithData:(id)data {
     [self positionButtonsWithData:data];
+}
+
+-(void)doneWithStyleTableController:(WEStyleTableViewController *)controller {
+    if (self.stylePopover) {
+        [self.stylePopover dismissPopoverAnimated:YES];
+    } else {
+        [self.styleNav dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(void)linkViewController:(WELinkViewController *)viewController setSelectedTextURL:(NSString *)url {

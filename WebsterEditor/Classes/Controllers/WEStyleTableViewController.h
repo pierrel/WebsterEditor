@@ -9,14 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WEBodyBackgroundCell.h"
 
-@protocol WEStyleTableViewControllerDelegate <NSObject, WEBodyBackgroundDelegate, UIImagePickerControllerDelegate>
-
--(void)styleResetWithData:(id)data;
-
-// background stuff
--(void)setBackgroundWithInfo:(NSDictionary*)info;
--(void)removeBackground;
-@end
+@protocol WEStyleTableViewControllerDelegate;
 
 @interface WEStyleTableViewController : UITableViewController<UITextFieldDelegate>
 @property (nonatomic, strong) NSString *type;
@@ -25,3 +18,15 @@
 @property (nonatomic, assign) UIPopoverController *parentPopover;
 -(void)setNewStyleData:(NSDictionary*)newStyleData;
 @end
+
+@protocol WEStyleTableViewControllerDelegate <NSObject, WEBodyBackgroundDelegate, UIImagePickerControllerDelegate>
+
+-(void)styleResetWithData:(id)data;
+
+-(void)doneWithStyleTableController:(WEStyleTableViewController*)controller;
+
+// background stuff
+-(void)setBackgroundWithInfo:(NSDictionary*)info;
+-(void)removeBackground;
+@end
+
