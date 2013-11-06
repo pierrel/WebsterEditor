@@ -268,7 +268,6 @@
           new-selectables (conj (domi/nodes (css/sel new-el-in-dom ".selectable")) new-el-in-dom)]
       (doseq [new-selectable new-selectables]
         (add-selectable-listeners! new-selectable bridge))
-      (listeners/default-listener nil bridge)
       (listeners/select-node new-el-in-dom bridge))))
 
 ;; IMAGE GALLERY STUFF

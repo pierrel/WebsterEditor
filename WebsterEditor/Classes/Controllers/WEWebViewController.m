@@ -229,6 +229,8 @@ static const int ICON_DIM = 13;
 }
 
 - (void)openDialogWithData:(id)data {
+    [self closeAddController];
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(dialogOpened)])
         [self.delegate dialogOpened];
     [self closeActionButtons];
@@ -357,8 +359,12 @@ static const int ICON_DIM = 13;
     [[WEPageManager sharedManager] deselectSelectedElement];
     [self removeResizers];
     
+    [self closeAddController];
+}
+
+-(void)closeAddController {
     if (self.addPopover) {
-        [self.addPopover dismissPopoverAnimated:YES]; // just in case
+        [self.addPopover dismissPopoverAnimated:YES];
     } else {
         [self.addSelectionController dismissViewControllerAnimated:YES completion:^{
             NSLog(@"something");
