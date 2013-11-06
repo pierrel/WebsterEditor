@@ -66,6 +66,10 @@
                                  (first handler)
                                  (second handler)))))
 
+(defhandler "getSelectedElementData"
+  (fn [data callback bridge]
+    (callback (listeners/node-info (listeners/get-selected)))))
+
 (defhandler "setSelectedTextLink"
   (fn [data callback bridge]
     (let [url (get data "url")
