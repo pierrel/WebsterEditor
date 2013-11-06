@@ -68,7 +68,10 @@
 
 (defhandler "getSelectedElementData"
   (fn [data callback bridge]
-    (callback (listeners/node-info (listeners/get-selected)))))
+    (callback
+     (if (listeners/nothing-selected)
+       (clj->js {})
+       (listeners/node-info (listeners/get-selected))))))
 
 (defhandler "setSelectedTextLink"
   (fn [data callback bridge]

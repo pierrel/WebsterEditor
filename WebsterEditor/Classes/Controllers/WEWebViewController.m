@@ -590,7 +590,9 @@ static const int ICON_DIM = 13;
 
 -(void)resetSelectedButtons {
     [[WEPageManager sharedManager] getSelectedElementDataWithCallback:^(id responseData) {
-        [self positionButtonsWithData:responseData];
+        NSDictionary *el = (NSDictionary*)responseData;
+        if ([el count] > 0)
+            [self positionButtonsWithData:responseData];
     }];
 }
 
