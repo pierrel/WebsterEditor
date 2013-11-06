@@ -344,9 +344,7 @@ static const int ICON_DIM = 13;
     if (self.linkPopover) {
         [self.linkPopover presentPopoverFromRect:frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     } else {
-        [self presentViewController:self.linkNav animated:YES completion:^{
-            NSLog(@"done with link nav");
-        }];
+        if (self.delegate) [self.delegate webViewControllerPresentViewController:self.linkNav];
     }
 }
 
