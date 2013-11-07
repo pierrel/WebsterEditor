@@ -734,6 +734,7 @@ didSelectTemplateWithContents:(NSString*)pageTemplateContents {
 
 -(void)switchToPage:(NSString *)pageName andSave:(BOOL)save {
     [self.activityView startAnimating];
+    [self.contentController closeDialog];
     
     void (^switchWork)(NSError *) = ^(NSError *err){
         [self closePagesWithTiming:0.1];
