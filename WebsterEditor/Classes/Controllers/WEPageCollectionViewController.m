@@ -107,7 +107,7 @@
         
         // refresh the collection
         [self.collectionView reloadData];
-    } else {        
+    } else if (self.selectedRow != indexPath.row) {
         // let the content know
         NSString *pageName = [[self pages] objectAtIndex:indexPath.row];
         if (self.delegate) [self.delegate switchToPage:pageName];
