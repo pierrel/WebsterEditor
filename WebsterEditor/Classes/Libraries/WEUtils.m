@@ -123,4 +123,9 @@
     
     return final;
 }
+
++(UIImage*)tintedImageNamed:(NSString*)filename {
+    UIImage *image = [UIImage imageNamed:filename];
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+}
 @end

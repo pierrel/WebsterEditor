@@ -17,4 +17,5 @@
 + (NSString*)pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString*)projectId;
 + (id)getObjectInDictionary:(NSDictionary*)dict withPath:(NSString *)firstString, ...
 NS_REQUIRES_NIL_TERMINATION;
++(UIImage*)tintedImageNamed:(NSString*)filename;
 @end

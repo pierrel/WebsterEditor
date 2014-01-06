@@ -8,6 +8,7 @@
 
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
+#import "UIColor+Expanded.h"
 #import "WEColumnResizeView.h"
 #import "WEViewController+ImagePicker.h"
 #import "WEUtils.h"
@@ -132,50 +133,50 @@ static const int ICON_DIM = 13;
     }
     
     // Buttons
-    self.removeButton = [[UIButton alloc] init];
-    [removeButton setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    self.removeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [removeButton setImage:[WEUtils tintedImageNamed:@"delete.png"] forState:UIControlStateNormal];
     [removeButton addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [removeButton.imageView setContentMode:UIViewContentModeCenter];
     [removeButton setHidden:YES];
     [self.view addSubview:removeButton];
     
     self.addButton = [[UIButton alloc] init];
-    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [addButton setImage:[WEUtils tintedImageNamed:@"add.png"] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [addButton.imageView setContentMode:UIViewContentModeCenter];
     [addButton setHidden:YES];
     [self.view addSubview:addButton];
     
     self.parentButton = [[UIButton alloc] init];
-    [parentButton setImage:[UIImage imageNamed:@"up.png"] forState:UIControlStateNormal];
+    [parentButton setImage:[WEUtils tintedImageNamed:@"up.png"] forState:UIControlStateNormal];
     [parentButton addTarget:self action:@selector(parentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [parentButton.imageView setContentMode:UIViewContentModeCenter];
     [parentButton setHidden:YES];
     [self.view addSubview:parentButton];
     
     self.editTextButton = [[UIButton alloc] init];
-    [editTextButton setImage:[UIImage imageNamed:@"edit_text.png"] forState:UIControlStateNormal];
+    [editTextButton setImage:[WEUtils tintedImageNamed:@"edit_text.png"] forState:UIControlStateNormal];
     [editTextButton addTarget:self action:@selector(editTextButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [editTextButton.imageView setContentMode:UIViewContentModeCenter];
     [editTextButton setHidden:YES];
     [self.view addSubview:editTextButton];
     
     self.styleButton = [[UIButton alloc] init];
-    [styleButton setImage:[UIImage imageNamed:@"information.png"] forState:UIControlStateNormal];
+    [styleButton setImage:[WEUtils tintedImageNamed:@"information.png"] forState:UIControlStateNormal];
     [styleButton addTarget:self action:@selector(styleButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [styleButton.imageView setContentMode:UIViewContentModeCenter];
     [styleButton setHidden:YES];
     [self.view addSubview:styleButton];
     
     self.imageButton = [[UIButton alloc] init];
-    [imageButton setImage:[UIImage imageNamed:@"add_image.png"] forState:UIControlStateNormal];
+    [imageButton setImage:[WEUtils tintedImageNamed:@"add_image.png"] forState:UIControlStateNormal];
     [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [imageButton.imageView setContentMode:UIViewContentModeCenter];
     [imageButton setHidden:YES];
     [self.view addSubview:imageButton];
     
     self.linkButton = [[UIButton alloc] init];
-    [linkButton setImage:[UIImage imageNamed:@"link.png"] forState:UIControlStateNormal];
+    [linkButton setImage:[WEUtils tintedImageNamed:@"link.png"] forState:UIControlStateNormal];
     [linkButton addTarget:self action:@selector(showLinkDialog) forControlEvents:UIControlEventTouchUpInside];
     [linkButton.imageView setContentMode:UIViewContentModeCenter];
     [linkButton setHidden:YES];
