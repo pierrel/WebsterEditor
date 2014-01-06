@@ -133,52 +133,31 @@ static const int ICON_DIM = 13;
     }
     
     // Buttons
-    self.removeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [removeButton setImage:[WEUtils tintedImageNamed:@"delete.png"] forState:UIControlStateNormal];
-    [removeButton addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [removeButton.imageView setContentMode:UIViewContentModeCenter];
+    self.removeButton = [self buttonWithImageNamed:@"delete.png" withAction:@selector(removeButtonTapped:)];
     [removeButton setHidden:YES];
     [self.view addSubview:removeButton];
     
-    self.addButton = [[UIButton alloc] init];
-    [addButton setImage:[WEUtils tintedImageNamed:@"add.png"] forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton.imageView setContentMode:UIViewContentModeCenter];
+    self.addButton = [self buttonWithImageNamed:@"add.png" withAction:@selector(addButtonTapped:)];
     [addButton setHidden:YES];
     [self.view addSubview:addButton];
     
-    self.parentButton = [[UIButton alloc] init];
-    [parentButton setImage:[WEUtils tintedImageNamed:@"up.png"] forState:UIControlStateNormal];
-    [parentButton addTarget:self action:@selector(parentButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [parentButton.imageView setContentMode:UIViewContentModeCenter];
+    self.parentButton = [self buttonWithImageNamed:@"up.png" withAction:@selector(parentButtonTapped:)];
     [parentButton setHidden:YES];
     [self.view addSubview:parentButton];
     
-    self.editTextButton = [[UIButton alloc] init];
-    [editTextButton setImage:[WEUtils tintedImageNamed:@"edit_text.png"] forState:UIControlStateNormal];
-    [editTextButton addTarget:self action:@selector(editTextButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [editTextButton.imageView setContentMode:UIViewContentModeCenter];
+    self.editTextButton = [self buttonWithImageNamed:@"edit_text.png" withAction:@selector(editTextButtonTapped:)];
     [editTextButton setHidden:YES];
     [self.view addSubview:editTextButton];
     
-    self.styleButton = [[UIButton alloc] init];
-    [styleButton setImage:[WEUtils tintedImageNamed:@"information.png"] forState:UIControlStateNormal];
-    [styleButton addTarget:self action:@selector(styleButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [styleButton.imageView setContentMode:UIViewContentModeCenter];
+    self.styleButton = [self buttonWithImageNamed:@"information.png" withAction:@selector(styleButtonTapped:)];
     [styleButton setHidden:YES];
     [self.view addSubview:styleButton];
     
-    self.imageButton = [[UIButton alloc] init];
-    [imageButton setImage:[WEUtils tintedImageNamed:@"add_image.png"] forState:UIControlStateNormal];
-    [imageButton addTarget:self action:@selector(imageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [imageButton.imageView setContentMode:UIViewContentModeCenter];
+    self.imageButton = [self buttonWithImageNamed:@"add_image.png" withAction:@selector(imageButtonTapped:)];
     [imageButton setHidden:YES];
     [self.view addSubview:imageButton];
     
-    self.linkButton = [[UIButton alloc] init];
-    [linkButton setImage:[WEUtils tintedImageNamed:@"link.png"] forState:UIControlStateNormal];
-    [linkButton addTarget:self action:@selector(showLinkDialog) forControlEvents:UIControlEventTouchUpInside];
-    [linkButton.imageView setContentMode:UIViewContentModeCenter];
+    self.linkButton = [self buttonWithImageNamed:@"link.png" withAction:@selector(showLinkDialog)];
     [linkButton setHidden:YES];
     [self.view addSubview:linkButton];
 }
@@ -598,6 +577,22 @@ static const int ICON_DIM = 13;
         if ([el count] > 0)
             [self positionButtonsWithData:responseData];
     }];
+}
+
+-(UIButton*)buttonWithImageNamed:(NSString*)filename withAction:(SEL)action {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.layer.cornerRadius = 20;
+    button.backgroundColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.7];
+    button.layer.masksToBounds = NO;
+    button.layer.shadowColor = [UIColor blackColor].CGColor;
+    button.layer.shadowOpacity = 0.5;
+    button.layer.shadowRadius = 12;
+    button.layer.shadowOffset = CGSizeMake(2.0f, 2.0f);
+    [button setImage:[WEUtils tintedImageNamed:filename] forState:UIControlStateNormal];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [button.imageView setContentMode:UIViewContentModeCenter];
+
+    return button;
 }
 
 - (void)didReceiveMemoryWarning
