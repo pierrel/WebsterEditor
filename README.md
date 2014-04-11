@@ -6,18 +6,17 @@
 ## No Bullshit Version
 * Thin wrapper over the amazingly easy-to-use bootstrap 2.0 (http://getbootstrap.com)
 * Basic DOM manipulation
-* Wrote it to practice clojure
+* Wrote it to practice my clojure
 
 # Running the thing
 
-## Prereqs
-clone it (duh…)
-install lein (https://github.com/technomancy/leiningen)
+## Prereq(s)
+* install lein (https://github.com/technomancy/leiningen)
 
 
 ## Quick start
-cd WebsterEditor/WebsterEditor
-create config.json and put in your AWS credentials as below:
+* `$ cd WebsterEditor/WebsterEditor`
+* create config.json and put in your AWS credentials as below:
 
 ```
 {
@@ -26,12 +25,10 @@ create config.json and put in your AWS credentials as below:
 }
 ```
 
-./scripts/lesscss
-./scripts/watchcljs
-
-
-Open WebsterEditor.xcodeproj
-Press “build and then run”
+* ./scripts/lesscss
+* ./scripts/watchcljs
+* Open WebsterEditor.xcodeproj
+* Press “build and then run”
 
 ## Dev Mode
 TODO: add emacs commands (for repl) (I know I know, I’ll get to it – I promise)
