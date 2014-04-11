@@ -36,17 +36,17 @@ TODO: add emacs commands (for repl) (I know I know, I’ll get to it – I promi
 # Application Structure
 
 ## javascript
-* src lives in WebsterEditor/WebsterEditor/client/src/webster
-* compiled from clojurescript to WebsterEditor/WebsterEditor/client/resources/public/js/development.js
+* src lives in `WebsterEditor/WebsterEditor/client/src/webster`
+* compiled from clojurescript to `WebsterEditor/WebsterEditor/client/resources/public/js/development.js`
 * handles all page-related interactions (DOM element level)
 
 ## html
 * templates for new pages (on prod) and a dev template for repl
-* lives in WebsterEditor/WebsterEditor/client/resources/public/templates
+* lives in `WebsterEditor/WebsterEditor/client/resources/public/html/`
 
 ## styling
-* compiled LESS to WebsterEditor/WebsterEditor/client/resources/development.css
-* src lives in WebsterEditor/WebsterEditor/less/development.less
+* compiled LESS to `WebsterEditor/WebsterEditor/client/resources/development.css`
+* src lives in `WebsterEditor/WebsterEditor/less/development.less`
 * Extra style rules for when a user is editing the page (as in blueprint mode)
 
 ## iOS interaction
