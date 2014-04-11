@@ -1,13 +1,12 @@
 # Features!
-- Out of the box grid-based responsiveness
-- Quick deployment to S3
-- In-line text editing
-- 
+* Out of the box grid-based responsiveness
+* Quick deployment to S3
+* In-line text editing
 
 ## No Bullshit Version
-- Thin wrapper over the amazingly easy-to-use bootstrap 2.0 (http://getbootstrap.com)
-- Basic DOM manipulation
-- Wrote it to practice clojure
+* Thin wrapper over the amazingly easy-to-use bootstrap 2.0 (http://getbootstrap.com)
+* Basic DOM manipulation
+* Wrote it to practice clojure
 
 # Running the thing
 
@@ -62,4 +61,3 @@ Messages to the client have to use the `bridge` object (returned as a callback t
 
 ## S3
 All S3 stuff is handled in WEEditorViewController-doExportWorkWithCompletion
-
