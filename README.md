@@ -18,15 +18,15 @@
 * `$ cd WebsterEditor/WebsterEditor`
 * create config.json and put in your AWS credentials as below:
 
-```
+```json
 {
     "AWS_KEY": “[aws key]”,
     "AWS_SECRET": “[aws secret]"
 }
 ```
 
-* ./scripts/lesscss
-* ./scripts/watchcljs
+* `$ ./scripts/lesscss`
+* `$ ./scripts/watchcljs`
 * Open WebsterEditor.xcodeproj
 * Press “build and then run”
 
