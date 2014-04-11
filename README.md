@@ -53,8 +53,7 @@ TODO: add emacs commands (for repl) (I know I know, I’ll get to it – I promi
 All js interaction handled by WebViewJavascriptBridge (https://github.com/marcuswestin/WebViewJavascriptBridge). Look at WEPageManager for all messages you want to send TO the page. Look in WEWebViewController-viewDidLoad for all messages FROM the page.
 
 ## JS interaction
-All messages FROM the client are received using the `defhandler` function (defined in main.cljs, I know it’s ugly I didn’t have time to figure out macros for cljs)
-Messages to the client have to use the `bridge` object (returned as a callback to hander methods and originating from the on-bridge-ready function)
+All messages FROM the client are received using the `defhandler` function (defined in main.cljs, I know it’s ugly I didn’t have time to figure out macros for cljs). Messages to the client have to use the `bridge` object (returned as a callback to hander methods and originating from the on-bridge-ready function).
 
 ## S3
 All S3 stuff is handled in WEEditorViewController-doExportWorkWithCompletion
