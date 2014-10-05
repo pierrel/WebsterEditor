@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 pierre larochelle. All rights reserved.
 //
 
-#import <AWSiOSSDK/S3/AmazonS3Client.h>
-#import <AWSiOSSDK/AmazonEndpoints.h>
 #import "WEEditorViewController.h"
 #import "WEWebViewController.h"
 #import "WEPageManager.h"
@@ -17,6 +15,7 @@
 #import "WEPageCollectionViewLayout.h"
 #import "WEPageThumbGenerator.h"
 #import "WEPageTemplateManager.h"
+#import "WES3Manager.h"
 
 #define DELETE_ALERT_CANCEL 0
 #define DELETE_ALERT_OK 1
@@ -193,29 +192,37 @@
 Export
  */
 -(void)exportProject {
-    if ([self validateSettings]) {
-        [self.exportButton setEnabled:NO];
-        [exportActivity startAnimating];
-        [goButton setHidden:YES];
-        [self saveProjectWithCompletion:^(NSError *err) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
-                                                     (unsigned long)NULL), ^(void) {
-                [self doExportWorkWithCompletion:^(NSError *error) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.exportButton setEnabled:YES];
-                        [exportActivity stopAnimating];
-                        if (error) {
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Exporting Website" message:@"There was an error exporting your website. Please check that your AWS credentials are correct and that you're connected to an internet connection" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                            [alert show];
-                            alert = nil;
-                        } else {
-                            [goButton setHidden:NO];
-                        }
-                    });
-                }];
-            });
-        }];
-    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Export disabled"
+                                                    message:@"Export has been disabled until I can figure out Amazon's new authentication scheme"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil, nil];
+    [alert show];
+    
+// TODO: put this functionality back in
+//    if ([self validateSettings]) {
+//        [self.exportButton setEnabled:NO];
+//        [exportActivity startAnimating];
+//        [goButton setHidden:YES];
+//        [self saveProjectWithCompletion:^(NSError *err) {
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+//                                                     (unsigned long)NULL), ^(void) {
+//                [self doExportWorkWithCompletion:^(NSError *error) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [self.exportButton setEnabled:YES];
+//                        [exportActivity stopAnimating];
+//                        if (error) {
+//                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Exporting Website" message:@"There was an error exporting your website. Please check that your AWS credentials are correct and that you're connected to an internet connection" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                            [alert show];
+//                            alert = nil;
+//                        } else {
+//                            [goButton setHidden:NO];
+//                        }
+//                    });
+//                }];
+//            });
+//        }];
+//    }
 }
 
 -(void)gotoExportURL {
@@ -226,125 +233,116 @@ Export
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
     NSError *error;
 
-    // region info
-    S3Region *region = [S3Region USWest];
-    AmazonRegion endpoint = US_WEST_1;
-    NSString *webSuffix = @"s3-website-us-west-1.amazonaws.com";
     
-    
-    // s3 config
-    NSString *key = self.settings.awsKey;
-    NSString *secret = self.settings.awsSecret;
-    NSString *bucket = self.settings.bucket;
-    
-    // Initialize the S3 Client
-    AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:key withSecretKey:secret];
-    s3.endpoint = [AmazonEndpoints s3Endpoint:endpoint];
+    AWSS3 *s3 = [[WES3Manager sharedManager] getS3];
     
     // see if we have the bucket
-    BOOL hasBucket = NO;
-    NSArray *buckets = nil;
-    @try {
-        buckets = [s3 listBuckets];
-    } @catch (NSException *exception) {
-        NSError *error = [NSError errorWithDomain:@"WE" code:0 userInfo:nil];
-        block(error);
-        return;
-    }
-    
-    for (S3Bucket *liveBucket in buckets) {
-        if ([liveBucket.name isEqualToString:bucket]) {
-            hasBucket = YES;
-            break;
+    BFTask *listBucketsTask = [s3 listBuckets:[[AWSRequest alloc] init]];
+    NSLog(@"SOMETHING");
+    [listBucketsTask continueWithBlock:^id(BFTask *task) {
+        if (task.isCancelled) {
+            NSLog(@"CANCELLED?");
+            block(nil);
+        } else if (task.error) {
+            block(task.error);
+        } else {
+            NSLog(@"All good?");
+            block(nil);
         }
-    }
+        return nil;
+    }];
+//    for (S3Bucket *liveBucket in buckets) {
+//        if ([liveBucket.name isEqualToString:bucket]) {
+//            hasBucket = YES;
+//            break;
+//        }
+//    }
+//    
+//    if (hasBucket) {
+//        // delete all the old stuff
+//        for (S3ObjectSummary *objectSummary in [s3 listObjectsInBucket:bucket]) {
+//            AWSS3DeleteObjectRequest *delReq = [[S3DeleteObjectRequest alloc] init];
+//            [delReq setBucket:bucket];
+//            [delReq setKey:objectSummary.key];
+//            NSLog(@"deleting %@", objectSummary.key);
+//            S3DeleteObjectResponse *resp = [s3 deleteObject:delReq];
+//            if (resp.error != nil) NSLog(@"error: %@", resp.error);
+//        }
+//    } else {
+//        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
+//                                                                                andRegion:region];
+//        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
+//        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
+//        
+//    }
+//    BucketWebsiteConfiguration *bucketConfig = [[BucketWebsiteConfiguration alloc] initWithIndexDocumentSuffix:@"index.html"];
+//    S3SetBucketWebsiteConfigurationRequest *configReq = [[S3SetBucketWebsiteConfigurationRequest alloc] initWithBucketName:bucket withConfiguration:bucketConfig];
+//    S3SetBucketWebsiteConfigurationResponse *bucketWebResp = [s3 setBucketWebsiteConfiguration:configReq];
+//    if (bucketWebResp.error != nil) NSLog(@"Error setting website config: %@", bucketWebResp.error);
+//    
+//    S3CannedACL *acl = [S3CannedACL publicRead];
+//    S3PutObjectRequest *put;
+//    
+//    //html
+//    for (NSString *pagePath in [self.pageCollectionController pages]) {
+//        NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
+//        NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
+//        NSString *html = [NSString stringWithContentsOfFile:fullPagePath
+//                                                   encoding:NSUTF8StringEncoding
+//                                                      error:&error];
+//        NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
+//        put = [[S3PutObjectRequest alloc] initWithKey:pagePath inBucket:bucket];
+//        put.contentType = @"text/html";
+//        put.data = htmlData;
+//        put.cannedACL = acl;
+//        S3PutObjectResponse *resp = [s3 putObject:put];
+//        if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
+//    }
+//    
+//
+//    // media
+//    NSString *pathPrefix = @"media";
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
+//                                             withProjectId:self.projectId];
+//    for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
+//        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
+//        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
+//        NSLog(@"file: %@", fullPath);
+//        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+//        put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
+//        put.contentType = @"image/jpeg";
+//        put.data = fileData;
+//        put.cannedACL = acl;
+//        S3PutObjectResponse *resp = [s3 putObject:put];
+//        if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
+//    }
+//    
+//    // js/css
+//    NSArray *filePaths = [NSArray arrayWithObjects:
+//                          @"js/jquery-1.9.0.min.js",
+//                          @"js/bootstrap.min.js",
+//                          @"js/bootstrap-lightbox.js",
+//                          @"css/override.css",
+//                          @"css/bootstrap.min.css",
+//                          @"css/bootstrap-responsive.min.css",
+//                          nil];
+//    for (NSString *filePath in filePaths) {
+//        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
+//        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
+//        NSLog(@"adding %@", filePath);
+//        put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
+//        if ([filePath hasSuffix:@".css"]) put.contentType = @"text/css";
+//        else put.contentType = @"text/javascript";
+//        put.data = fileData;
+//        put.cannedACL = acl;
+//        S3PutObjectResponse *resp = [s3 putObject:put];
+//        if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
+//    }
+//    
+//    // save the bucket url
+//    self.settings.lastExportURL = [NSString stringWithFormat:@"http://%@.%@", bucket, webSuffix];
     
-    if (hasBucket) {
-        // delete all the old stuff
-        for (S3ObjectSummary *objectSummary in [s3 listObjectsInBucket:bucket]) {
-            S3DeleteObjectRequest *delReq = [[S3DeleteObjectRequest alloc] init];
-            [delReq setBucket:bucket];
-            [delReq setKey:objectSummary.key];
-            NSLog(@"deleting %@", objectSummary.key);
-            S3DeleteObjectResponse *resp = [s3 deleteObject:delReq];
-            if (resp.error != nil) NSLog(@"error: %@", resp.error);
-        }
-    } else {
-        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
-                                                                                andRegion:region];
-        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
-        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
-        
-    }
-    BucketWebsiteConfiguration *bucketConfig = [[BucketWebsiteConfiguration alloc] initWithIndexDocumentSuffix:@"index.html"];
-    S3SetBucketWebsiteConfigurationRequest *configReq = [[S3SetBucketWebsiteConfigurationRequest alloc] initWithBucketName:bucket withConfiguration:bucketConfig];
-    S3SetBucketWebsiteConfigurationResponse *bucketWebResp = [s3 setBucketWebsiteConfiguration:configReq];
-    if (bucketWebResp.error != nil) NSLog(@"Error setting website config: %@", bucketWebResp.error);
-    
-    S3CannedACL *acl = [S3CannedACL publicRead];
-    S3PutObjectRequest *put;
-    
-    //html
-    for (NSString *pagePath in [self.pageCollectionController pages]) {
-        NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
-        NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
-        NSString *html = [NSString stringWithContentsOfFile:fullPagePath
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:&error];
-        NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-        put = [[S3PutObjectRequest alloc] initWithKey:pagePath inBucket:bucket];
-        put.contentType = @"text/html";
-        put.data = htmlData;
-        put.cannedACL = acl;
-        S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
-    }
-    
-
-    // media
-    NSString *pathPrefix = @"media";
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
-                                             withProjectId:self.projectId];
-    for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
-        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
-        NSLog(@"file: %@", fullPath);
-        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
-        put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
-        put.contentType = @"image/jpeg";
-        put.data = fileData;
-        put.cannedACL = acl;
-        S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
-    }
-    
-    // js/css
-    NSArray *filePaths = [NSArray arrayWithObjects:
-                          @"js/jquery-1.9.0.min.js",
-                          @"js/bootstrap.min.js",
-                          @"js/bootstrap-lightbox.js",
-                          @"css/override.css",
-                          @"css/bootstrap.min.css",
-                          @"css/bootstrap-responsive.min.css",
-                          nil];
-    for (NSString *filePath in filePaths) {
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
-        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
-        NSLog(@"adding %@", filePath);
-        put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
-        if ([filePath hasSuffix:@".css"]) put.contentType = @"text/css";
-        else put.contentType = @"text/javascript";
-        put.data = fileData;
-        put.cannedACL = acl;
-        S3PutObjectResponse *resp = [s3 putObject:put];
-        if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
-    }
-    
-    // save the bucket url
-    self.settings.lastExportURL = [NSString stringWithFormat:@"http://%@.%@", bucket, webSuffix];
-    
-    block(nil);
 }
 
 -(void)saveProjectWithCompletion:(void (^)(NSError*))block {
