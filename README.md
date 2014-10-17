@@ -31,7 +31,15 @@
 * Press “build and then run”
 
 ## Dev Mode
-TODO: add emacs commands (for repl) (I know I know, I’ll get to it – I promise)
+
+1. Eval the elisp in .emacs-config.el (or use the AMAZING [auto-project.el](https://github.com/pierrel/auto-project.el))
+2. Run the server (`$ ./scripts/server`)
+3. Run webster-repl (`M-x webster-repl`)
+4. Open a browser to localhost:3000
+5. Do things in the \*inferior-lisp\* (`ClojureScript:cljs.user> (js/alert "hello from clojurescript!")`)
+6. Load a namespace (`ClojureScript:cljs.user> (in-ns 'webster.main)`)
+
+If you have the server running when the Obj-C is run in a simulator it will automatically load from localhost:3000 instead of a flat html file. In this way you'll be able to run arbitrary clojurescript right in the app. Just replace step 4 with "Build and Run WebsterEditor and open any project/page." Note that the actual project html structure will not load instead it'll load the default development html.
 
 # Application Structure
 
