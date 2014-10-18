@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A203453519F2E9A900DDA140 /* AWSiOSSDKv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203452D19F2E9A900DDA140 /* AWSiOSSDKv2.framework */; };
+		A203453719F2E9A900DDA140 /* GZIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203452F19F2E9A900DDA140 /* GZIP.framework */; };
+		A203453819F2E9A900DDA140 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203453019F2E9A900DDA140 /* Mantle.framework */; };
+		A203453919F2E9A900DDA140 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203453119F2E9A900DDA140 /* Reachability.framework */; };
+		A203453A19F2E9A900DDA140 /* TMCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203453219F2E9A900DDA140 /* TMCache.framework */; };
+		A203453B19F2E9A900DDA140 /* UICKeyChainStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203453319F2E9A900DDA140 /* UICKeyChainStore.framework */; };
+		A203453C19F2E9A900DDA140 /* XMLDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203453419F2E9A900DDA140 /* XMLDictionary.framework */; };
+		A203453E19F2EC3000DDA140 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A203453D19F2EC2F00DDA140 /* Bolts.framework */; };
 		A20CB1C416B8F4CF00AF858B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20CB1C316B8F4CF00AF858B /* UIKit.framework */; };
 		A20CB1C616B8F4CF00AF858B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20CB1C516B8F4CF00AF858B /* Foundation.framework */; };
 		A20CB1C816B8F4CF00AF858B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20CB1C716B8F4CF00AF858B /* CoreGraphics.framework */; };
@@ -18,20 +26,12 @@
 		A20CB1DA16B8F4CF00AF858B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */; };
 		A20CB1E016B8F4CF00AF858B /* WEWebViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1DE16B8F4CF00AF858B /* WEWebViewController_iPhone.xib */; };
 		A20CB1E316B8F4CF00AF858B /* WEWebViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20CB1E116B8F4CF00AF858B /* WEWebViewController_iPad.xib */; };
-		A21B6A6319DBB9B700362BDE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A5C19DBB9B600362BDE /* Bolts.framework */; };
-		A21B6A6419DBB9B700362BDE /* GZIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A5D19DBB9B600362BDE /* GZIP.framework */; };
-		A21B6A6519DBB9B700362BDE /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A5E19DBB9B600362BDE /* Mantle.framework */; };
-		A21B6A6619DBB9B700362BDE /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A5F19DBB9B600362BDE /* Reachability.framework */; };
-		A21B6A6719DBB9B700362BDE /* TMCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A6019DBB9B600362BDE /* TMCache.framework */; };
-		A21B6A6819DBB9B700362BDE /* UICKeyChainStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A6119DBB9B700362BDE /* UICKeyChainStore.framework */; };
-		A21B6A6919DBB9B700362BDE /* XMLDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A6219DBB9B700362BDE /* XMLDictionary.framework */; };
 		A21B6A7C19DC485700362BDE /* autoscaling-2011-01-01.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A6D19DC485700362BDE /* autoscaling-2011-01-01.json */; };
 		A21B6A7D19DC485700362BDE /* cib-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A6E19DC485700362BDE /* cib-2014-06-30.json */; };
 		A21B6A7E19DC485700362BDE /* css-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A6F19DC485700362BDE /* css-2014-06-30.json */; };
 		A21B6A7F19DC485700362BDE /* dynamodb-2012-08-10.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7019DC485700362BDE /* dynamodb-2012-08-10.json */; };
 		A21B6A8019DC485700362BDE /* ec2-2014-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7119DC485700362BDE /* ec2-2014-06-15.json */; };
 		A21B6A8119DC485700362BDE /* elasticloadbalancing-2012-06-01.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7219DC485700362BDE /* elasticloadbalancing-2012-06-01.json */; };
-		A21B6A8219DC485700362BDE /* email-2010-12-01.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7319DC485700362BDE /* email-2010-12-01.json */; };
 		A21B6A8319DC485700362BDE /* kinesis-2013-12-02.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7419DC485700362BDE /* kinesis-2013-12-02.json */; };
 		A21B6A8419DC485700362BDE /* mobileanalytics-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7519DC485700362BDE /* mobileanalytics-2014-06-30.json */; };
 		A21B6A8519DC485700362BDE /* monitoring-2010-08-01.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7619DC485700362BDE /* monitoring-2010-08-01.json */; };
@@ -41,7 +41,6 @@
 		A21B6A8919DC485700362BDE /* sqs-2012-11-05.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7A19DC485700362BDE /* sqs-2012-11-05.json */; };
 		A21B6A8A19DC485700362BDE /* sts-2011-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7B19DC485700362BDE /* sts-2011-06-15.json */; };
 		A21B6A8E19DC49D200362BDE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A8D19DC49D200362BDE /* Security.framework */; };
-		A21B6A8F19DC4BDE00362BDE /* AWSiOSSDKv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A5A19DBB91E00362BDE /* AWSiOSSDKv2.framework */; };
 		A2282F75170349250034214A /* NSThread+BlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2282F74170349250034214A /* NSThread+BlockAdditions.m */; };
 		A22BEB0417016FE40039625D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = A22BEB0317016FE40039625D /* config.json */; };
 		A239B6201708D2EA00109734 /* WEProjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A239B61E1708D2EA00109734 /* WEProjectsViewController.m */; };
@@ -143,6 +142,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A203452D19F2E9A900DDA140 /* AWSiOSSDKv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDKv2.framework; sourceTree = "<group>"; };
+		A203452F19F2E9A900DDA140 /* GZIP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GZIP.framework; sourceTree = "<group>"; };
+		A203453019F2E9A900DDA140 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
+		A203453119F2E9A900DDA140 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reachability.framework; sourceTree = "<group>"; };
+		A203453219F2E9A900DDA140 /* TMCache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TMCache.framework; sourceTree = "<group>"; };
+		A203453319F2E9A900DDA140 /* UICKeyChainStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UICKeyChainStore.framework; sourceTree = "<group>"; };
+		A203453419F2E9A900DDA140 /* XMLDictionary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XMLDictionary.framework; sourceTree = "<group>"; };
+		A203453D19F2EC2F00DDA140 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		A20CB1C016B8F4CF00AF858B /* WebsterEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebsterEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20CB1C316B8F4CF00AF858B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A20CB1C516B8F4CF00AF858B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -158,14 +165,6 @@
 		A20CB1D916B8F4CF00AF858B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A20CB1DF16B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEWebViewController_iPhone.xib; sourceTree = "<group>"; };
 		A20CB1E216B8F4CF00AF858B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WEWebViewController_iPad.xib; sourceTree = "<group>"; };
-		A21B6A5A19DBB91E00362BDE /* AWSiOSSDKv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDKv2.framework; path = WebsterEditor/Frameworks/AWSiOSSDKv2.framework; sourceTree = "<group>"; };
-		A21B6A5C19DBB9B600362BDE /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = WebsterEditor/Frameworks/Bolts.framework; sourceTree = "<group>"; };
-		A21B6A5D19DBB9B600362BDE /* GZIP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GZIP.framework; path = WebsterEditor/Frameworks/GZIP.framework; sourceTree = "<group>"; };
-		A21B6A5E19DBB9B600362BDE /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = WebsterEditor/Frameworks/Mantle.framework; sourceTree = "<group>"; };
-		A21B6A5F19DBB9B600362BDE /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = WebsterEditor/Frameworks/Reachability.framework; sourceTree = "<group>"; };
-		A21B6A6019DBB9B600362BDE /* TMCache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMCache.framework; path = WebsterEditor/Frameworks/TMCache.framework; sourceTree = "<group>"; };
-		A21B6A6119DBB9B700362BDE /* UICKeyChainStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UICKeyChainStore.framework; path = WebsterEditor/Frameworks/UICKeyChainStore.framework; sourceTree = "<group>"; };
-		A21B6A6219DBB9B700362BDE /* XMLDictionary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XMLDictionary.framework; path = WebsterEditor/Frameworks/XMLDictionary.framework; sourceTree = "<group>"; };
 		A21B6A6D19DC485700362BDE /* autoscaling-2011-01-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "autoscaling-2011-01-01.json"; sourceTree = "<group>"; };
 		A21B6A6E19DC485700362BDE /* cib-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cib-2014-06-30.json"; sourceTree = "<group>"; };
 		A21B6A6F19DC485700362BDE /* css-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "css-2014-06-30.json"; sourceTree = "<group>"; };
@@ -338,18 +337,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A21B6A8F19DC4BDE00362BDE /* AWSiOSSDKv2.framework in Frameworks */,
 				A21B6A8E19DC49D200362BDE /* Security.framework in Frameworks */,
-				A21B6A6319DBB9B700362BDE /* Bolts.framework in Frameworks */,
 				A20CB1C416B8F4CF00AF858B /* UIKit.framework in Frameworks */,
-				A21B6A6519DBB9B700362BDE /* Mantle.framework in Frameworks */,
-				A21B6A6619DBB9B700362BDE /* Reachability.framework in Frameworks */,
-				A21B6A6719DBB9B700362BDE /* TMCache.framework in Frameworks */,
+				A203453C19F2E9A900DDA140 /* XMLDictionary.framework in Frameworks */,
+				A203453E19F2EC3000DDA140 /* Bolts.framework in Frameworks */,
 				A20CB1C616B8F4CF00AF858B /* Foundation.framework in Frameworks */,
-				A21B6A6419DBB9B700362BDE /* GZIP.framework in Frameworks */,
-				A21B6A6819DBB9B700362BDE /* UICKeyChainStore.framework in Frameworks */,
-				A21B6A6919DBB9B700362BDE /* XMLDictionary.framework in Frameworks */,
+				A203453A19F2E9A900DDA140 /* TMCache.framework in Frameworks */,
+				A203453B19F2E9A900DDA140 /* UICKeyChainStore.framework in Frameworks */,
+				A203453919F2E9A900DDA140 /* Reachability.framework in Frameworks */,
 				A20CB1C816B8F4CF00AF858B /* CoreGraphics.framework in Frameworks */,
+				A203453819F2E9A900DDA140 /* Mantle.framework in Frameworks */,
+				A203453519F2E9A900DDA140 /* AWSiOSSDKv2.framework in Frameworks */,
+				A203453719F2E9A900DDA140 /* GZIP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,20 +375,21 @@
 		A20CB1C216B8F4CF00AF858B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A203453D19F2EC2F00DDA140 /* Bolts.framework */,
+				A203452D19F2E9A900DDA140 /* AWSiOSSDKv2.framework */,
+				A203452F19F2E9A900DDA140 /* GZIP.framework */,
+				A203453019F2E9A900DDA140 /* Mantle.framework */,
+				A203453119F2E9A900DDA140 /* Reachability.framework */,
+				A203453219F2E9A900DDA140 /* TMCache.framework */,
+				A203453319F2E9A900DDA140 /* UICKeyChainStore.framework */,
+				A203453419F2E9A900DDA140 /* XMLDictionary.framework */,
 				A21B6A8D19DC49D200362BDE /* Security.framework */,
-				A21B6A5C19DBB9B600362BDE /* Bolts.framework */,
-				A21B6A5D19DBB9B600362BDE /* GZIP.framework */,
-				A21B6A5E19DBB9B600362BDE /* Mantle.framework */,
-				A21B6A5F19DBB9B600362BDE /* Reachability.framework */,
-				A21B6A6019DBB9B600362BDE /* TMCache.framework */,
-				A21B6A6119DBB9B700362BDE /* UICKeyChainStore.framework */,
-				A21B6A6219DBB9B700362BDE /* XMLDictionary.framework */,
-				A21B6A5A19DBB91E00362BDE /* AWSiOSSDKv2.framework */,
 				A20CB1C316B8F4CF00AF858B /* UIKit.framework */,
 				A20CB1C516B8F4CF00AF858B /* Foundation.framework */,
 				A20CB1C716B8F4CF00AF858B /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			path = WebsterEditor/Frameworks;
 			sourceTree = "<group>";
 		};
 		A20CB1C916B8F4CF00AF858B /* WebsterEditor */ = {
@@ -858,7 +858,6 @@
 				A2ECB9061718E465003F9E36 /* jquery-1.9.0.min.js in Resources */,
 				A2ECB9071718E465003F9E36 /* rangy.js in Resources */,
 				A20CB1CE16B8F4CF00AF858B /* InfoPlist.strings in Resources */,
-				A21B6A8219DC485700362BDE /* email-2010-12-01.json in Resources */,
 				A2C2317018084EF900783ACD /* icon-orig.png in Resources */,
 				A20CB1D616B8F4CF00AF858B /* Default.png in Resources */,
 				A20CB1D816B8F4CF00AF858B /* Default@2x.png in Resources */,

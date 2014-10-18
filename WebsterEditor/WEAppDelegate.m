@@ -10,6 +10,7 @@
 #import "WEUtils.h"
 #import "UIColor+Expanded.h"
 #import "WEProjectCollectionViewLayout.h"
+#import "WES3Manager.h"
 
 @interface WEAppDelegate ()
 -(void)createDirectories;
@@ -38,6 +39,8 @@
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    WES3Manager *man = [WES3Manager sharedManager];
     
     return YES;
 }
