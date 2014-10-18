@@ -28,8 +28,8 @@ static WES3Manager *gSharedManager;
 
         gSharedManager = [[WES3Manager alloc] initWithAccountId:[json objectForKey:@"accountId"]
                                                  identityPoolId:[json objectForKey:@"identityPoolId"]
-                                                    authRoleArn:[json objectForKey:@"authRoleArn"]
-                                                  unauthRoleArn:[json objectForKey:@"unauthRoleArn"]];
+                                                  unauthRoleArn:[json objectForKey:@"unauthRoleArn"]
+                                                    authRoleArn:[json objectForKey:@"authRoleArn"]];
     }
     
     return gSharedManager;
@@ -46,8 +46,8 @@ static WES3Manager *gSharedManager;
 
 -(id) initWithAccountId:(NSString*)accountId
          identityPoolId:(NSString*)identityPoolId
-            authRoleArn:(NSString*)authRoleArn
-          unauthRoleArn:(NSString*)unauthRoleArn {
+          unauthRoleArn:(NSString*)unauthRoleArn
+            authRoleArn:(NSString*)authRoleArn {
     if (self = [super init]) {
         self.accountId = accountId;
         self.identityPoolId = identityPoolId;
@@ -62,10 +62,10 @@ static WES3Manager *gSharedManager;
     // region info
     AWSCognitoCredentialsProvider *credentialsProvider = [AWSCognitoCredentialsProvider
                                                           credentialsWithRegionType:AWSRegionUSEast1
-                                                          accountId:@""
-                                                          identityPoolId:@""
-                                                          unauthRoleArn:@""
-                                                          authRoleArn:@""];
+                                                          accountId:self.accountId
+                                                          identityPoolId:self.identityPoolId
+                                                          unauthRoleArn:self.unauthRoleArn
+                                                          authRoleArn:self.authRoleArn];
     
     // Store and sync?
 //    AWSCognito *syncClient = [AWSCognito defaultCognito];
