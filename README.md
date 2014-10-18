@@ -18,12 +18,16 @@
 * `$ cd WebsterEditor/WebsterEditor`
 * create config.json and put in your AWS credentials as below:
 
-```json
-{
-    "AWS_KEY": “[aws key]”,
-    "AWS_SECRET": “[aws secret]"
-}
-```
+    ```json
+    {
+      "accountId": "[account id]",
+      "identityPoolId": "[identity pool id]",
+      "unauthRoleArn": "[unauth role arn]",
+      "authRoleArn": "[auth role arn]"
+    }
+    ```
+
+    You can get this information by following the instructions [here](http://docs.aws.amazon.com/mobile/sdkforios/developerguide/cognito-auth.html#providing-creds).
 
 * `$ ./scripts/lesscss`
 * `$ ./scripts/watchcljs`
