@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A20A13FB19DEEFF4008D0EC7 /* AWSCognitoSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20A13FA19DEEFF4008D0EC7 /* AWSCognitoSync.framework */; };
 		A20CB1C416B8F4CF00AF858B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20CB1C316B8F4CF00AF858B /* UIKit.framework */; };
 		A20CB1C616B8F4CF00AF858B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20CB1C516B8F4CF00AF858B /* Foundation.framework */; };
 		A20CB1C816B8F4CF00AF858B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20CB1C716B8F4CF00AF858B /* CoreGraphics.framework */; };
@@ -41,7 +40,6 @@
 		A21B6A8819DC485700362BDE /* sns-2010-03-31.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7919DC485700362BDE /* sns-2010-03-31.json */; };
 		A21B6A8919DC485700362BDE /* sqs-2012-11-05.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7A19DC485700362BDE /* sqs-2012-11-05.json */; };
 		A21B6A8A19DC485700362BDE /* sts-2011-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = A21B6A7B19DC485700362BDE /* sts-2011-06-15.json */; };
-		A21B6A8C19DC492500362BDE /* AWSCognitoSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A8B19DC492500362BDE /* AWSCognitoSync.framework */; };
 		A21B6A8E19DC49D200362BDE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A8D19DC49D200362BDE /* Security.framework */; };
 		A21B6A8F19DC4BDE00362BDE /* AWSiOSSDKv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A21B6A5A19DBB91E00362BDE /* AWSiOSSDKv2.framework */; };
 		A2282F75170349250034214A /* NSThread+BlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2282F74170349250034214A /* NSThread+BlockAdditions.m */; };
@@ -145,7 +143,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A20A13FA19DEEFF4008D0EC7 /* AWSCognitoSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognitoSync.framework; path = WebsterEditor/Frameworks/AWSCognitoSync.framework; sourceTree = "<group>"; };
 		A20CB1C016B8F4CF00AF858B /* WebsterEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebsterEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20CB1C316B8F4CF00AF858B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A20CB1C516B8F4CF00AF858B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -184,7 +181,6 @@
 		A21B6A7919DC485700362BDE /* sns-2010-03-31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sns-2010-03-31.json"; sourceTree = "<group>"; };
 		A21B6A7A19DC485700362BDE /* sqs-2012-11-05.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sqs-2012-11-05.json"; sourceTree = "<group>"; };
 		A21B6A7B19DC485700362BDE /* sts-2011-06-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sts-2011-06-15.json"; sourceTree = "<group>"; };
-		A21B6A8B19DC492500362BDE /* AWSCognitoSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognitoSync.framework; path = WebsterEditor/Frameworks/AWSCognitoSync.framework; sourceTree = "<group>"; };
 		A21B6A8D19DC49D200362BDE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A2282F73170349250034214A /* NSThread+BlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+BlockAdditions.h"; sourceTree = "<group>"; };
 		A2282F74170349250034214A /* NSThread+BlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+BlockAdditions.m"; sourceTree = "<group>"; };
@@ -345,7 +341,6 @@
 				A21B6A8F19DC4BDE00362BDE /* AWSiOSSDKv2.framework in Frameworks */,
 				A21B6A8E19DC49D200362BDE /* Security.framework in Frameworks */,
 				A21B6A6319DBB9B700362BDE /* Bolts.framework in Frameworks */,
-				A20A13FB19DEEFF4008D0EC7 /* AWSCognitoSync.framework in Frameworks */,
 				A20CB1C416B8F4CF00AF858B /* UIKit.framework in Frameworks */,
 				A21B6A6519DBB9B700362BDE /* Mantle.framework in Frameworks */,
 				A21B6A6619DBB9B700362BDE /* Reachability.framework in Frameworks */,
@@ -355,7 +350,6 @@
 				A21B6A6819DBB9B700362BDE /* UICKeyChainStore.framework in Frameworks */,
 				A21B6A6919DBB9B700362BDE /* XMLDictionary.framework in Frameworks */,
 				A20CB1C816B8F4CF00AF858B /* CoreGraphics.framework in Frameworks */,
-				A21B6A8C19DC492500362BDE /* AWSCognitoSync.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,9 +376,7 @@
 		A20CB1C216B8F4CF00AF858B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A20A13FA19DEEFF4008D0EC7 /* AWSCognitoSync.framework */,
 				A21B6A8D19DC49D200362BDE /* Security.framework */,
-				A21B6A8B19DC492500362BDE /* AWSCognitoSync.framework */,
 				A21B6A5C19DBB9B600362BDE /* Bolts.framework */,
 				A21B6A5D19DBB9B600362BDE /* GZIP.framework */,
 				A21B6A5E19DBB9B600362BDE /* Mantle.framework */,
