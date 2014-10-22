@@ -11,8 +11,9 @@
 #import <AWSiOSSDKv2/CognitoIdentity.h>
 #import <AWSiOSSDKv2/STS.h>
 #import <AWSiOSSDKv2/AWSS3.h>
+#import <Bolts/Bolts.h>
 
 @interface WES3Manager : NSObject
 +(WES3Manager*)sharedManager;
--(AWSS3*)getS3;
+-(BFTask*)prepareBucketNamed:(NSString*)bucketName;
 @end
