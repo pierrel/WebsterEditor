@@ -40,12 +40,7 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    WES3Manager *man = [WES3Manager sharedManager];
-    AWSS3 *s3 = [man getS3];
-    [[s3 listBuckets:[[AWSRequest alloc] init]] continueWithBlock:^id(BFTask *task) {
-        NSLog(@"SOMETHING!?");
-        return nil;
-    }];
+    [[WES3Manager sharedManager] prepareBucketNamed:@"pierreshowthingsinthisbucket"];
     
     return YES;
 }

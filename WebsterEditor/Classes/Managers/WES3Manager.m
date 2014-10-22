@@ -141,42 +141,72 @@ static WES3Manager *gSharedManager;
     AWSRequest *req = [[AWSRequest alloc] init];
     // see if we have the bucket
     return [[s3 listBuckets:req] continueWithBlock:^id(BFTask *task) {
-        AWSS3ListBucketsOutput *output = task.result;
-        
-        for (AWSS3Bucket *bucket in output.buckets) {
-            if ([bucket.name isEqualToString:bucketName]) {
-                return [self deleteEverythingInBucket:bucket];
+        if (task.error) {
+            NSLog(@"Error listing buckets: %@", task.error);
+        } else if (task.completed) {
+            AWSS3ListBucketsOutput *output = task.result;
+            
+            for (AWSS3Bucket *bucket in output.buckets) {
+                if ([bucket.name isEqualToString:bucketName]) {
+                    return [self deleteEverythingInBucket:bucket];
+                }
             }
+            return [self createBucketNamed:bucketName];
+        } else {
+            NSLog(@"Problem listing buckets");
         }
-        return [self createBucketNamed:bucketName];
+        
+        return nil;
     }];
-    
-//    if (hasBucket) {
-//        // delete all the old stuff
-//        for (S3ObjectSummary *objectSummary in [s3 listObjectsInBucket:bucket]) {
-//            AWSS3DeleteObjectRequest *delReq = [[S3DeleteObjectRequest alloc] init];
-//            [delReq setBucket:bucket];
-//            [delReq setKey:objectSummary.key];
-//            NSLog(@"deleting %@", objectSummary.key);
-//            S3DeleteObjectResponse *resp = [s3 deleteObject:delReq];
-//            if (resp.error != nil) NSLog(@"error: %@", resp.error);
-//        }
-//    } else {
-//        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
-//                                                                                andRegion:region];
-//        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
-//        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
-//        
-//    }
 }
 
 -(BFTask*)deleteEverythingInBucket:(AWSS3Bucket*)bucket {
-    NSLog(@"deleting everything");
+    AWSS3 *s3 = [self getS3];
+    AWSS3ListObjectsRequest *listObjectsRequest = [[AWSS3ListObjectsRequest alloc] init];
+    listObjectsRequest.bucket = bucket.name;
+    return [[s3 listObjects:listObjectsRequest] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            NSLog(@"Error listing object in %@: %@", bucket.name, task.error);
+        } else if (task.completed) {
+            
+            AWSS3ListObjectsOutput *output = task.result;
+            for (AWSS3Object *s3Object in output.contents) {
+                NSLog(@"did it!");
+                AWSS3DeleteObjectRequest *deleteRequest = [[AWSS3DeleteObjectRequest alloc] init];
+                deleteRequest.bucket = bucket.name;
+                deleteRequest.key = s3Object.key;
+                [[s3 deleteObject:deleteRequest] waitUntilFinished];
+            }
+            
+            return [self transferInitialAssetsToBucket:bucket]; // maybe fix creds just in case?
+        } else {
+            NSLog(@"Problem listing objects in %@", bucket.name);
+        }
+        
+        return nil;
+    }];
+}
+
+-(BFTask*)fixBucketCredentials:(AWSS3Bucket*)bucket {
+    NSLog(@"fixing creds");
     return nil;
 }
 
 -(BFTask*)createBucketNamed:(NSString*)bucketName {
+    //    if (hasBucket) {
+    //    } else {
+    //        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
+    //                                                                                andRegion:region];
+    //        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
+    //        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
+    //
+    //    }
     NSLog(@"creating bucket everything");
+    return nil;
+}
+
+-(BFTask*)transferInitialAssetsToBucket:(AWSS3Bucket*)bucket {
+    NSLog(@"filling bucket!");
     return nil;
 }
 
