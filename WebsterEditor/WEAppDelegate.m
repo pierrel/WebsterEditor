@@ -40,7 +40,7 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    [[WES3Manager sharedManager] prepareBucketNamed:@"pierreshowthingsinthisbucket"];
+    [[WES3Manager sharedManager] prepareBucketNamed:@"pierreshasdasdowthiasdngsinthisbucket3"];
     
     return YES;
 }

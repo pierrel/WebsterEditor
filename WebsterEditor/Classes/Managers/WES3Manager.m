@@ -213,16 +213,24 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)createBucketNamed:(NSString*)bucketName {
-    //    if (hasBucket) {
-    //    } else {
-    //        S3CreateBucketRequest *createBucket = [[S3CreateBucketRequest alloc] initWithName:bucket
-    //                                                                                andRegion:region];
-    //        S3CreateBucketResponse *createBucketResp = [s3 createBucket:createBucket];
-    //        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
-    //
-    //    }
-    NSLog(@"named it");
-    return nil;
+    AWSS3CreateBucketRequest *createRequest = [AWSS3CreateBucketRequest new];
+    createRequest.ACL = AWSS3BucketCannedACLPublicRead;
+    createRequest.bucket = bucketName;
+    
+    return [[self.s3 createBucket:createRequest] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            NSLog(@"Problem creating bucket %@: %@", bucketName, task.error);
+        } else if (task.completed) {
+            AWSS3Bucket *bucket = [AWSS3Bucket new];
+            bucket.name = bucketName;
+            bucket.creationDate = [NSDate dateWithTimeIntervalSinceNow:0];
+            return [self fixBucketCredentials:bucket];
+        } else {
+            NSLog(@"Problem creating bucket %@", bucketName);
+        }
+        
+        return nil;
+    }];
 }
 
 -(AWSS3*)getS3 {
