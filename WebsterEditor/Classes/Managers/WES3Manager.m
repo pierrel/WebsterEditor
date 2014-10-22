@@ -15,7 +15,7 @@ static WES3Manager *gSharedManager;
 @property (nonatomic, strong) NSString *identityPoolId;
 @property (nonatomic, strong) NSString *unauthRoleArn;
 @property (nonatomic, strong) NSString *authRoleArn;
-@property (nonatomic, strong) AWSS3 *s3;
+@property (nonatomic, strong, getter=getS3) AWSS3 *s3;
 @end
 
 
@@ -65,14 +65,6 @@ static WES3Manager *gSharedManager;
         return nil;
     }];
     
-//    BucketWebsiteConfiguration *bucketConfig = [[BucketWebsiteConfiguration alloc] initWithIndexDocumentSuffix:@"index.html"];
-//    S3SetBucketWebsiteConfigurationRequest *configReq = [[S3SetBucketWebsiteConfigurationRequest alloc] initWithBucketName:bucket withConfiguration:bucketConfig];
-//    S3SetBucketWebsiteConfigurationResponse *bucketWebResp = [s3 setBucketWebsiteConfiguration:configReq];
-//    if (bucketWebResp.error != nil) NSLog(@"Error setting website config: %@", bucketWebResp.error);
-//    
-//    S3CannedACL *acl = [S3CannedACL publicRead];
-//    S3PutObjectRequest *put;
-//    
 //    //html
 //    for (NSString *pagePath in [self.pageCollectionController pages]) {
 //        NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
@@ -137,10 +129,9 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)listAndDeleteOrCreateBucketNamed:(NSString*)bucketName {
-    AWSS3 *s3 = [self getS3];
     AWSRequest *req = [[AWSRequest alloc] init];
     // see if we have the bucket
-    return [[s3 listBuckets:req] continueWithBlock:^id(BFTask *task) {
+    return [[self.s3 listBuckets:req] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Error listing buckets: %@", task.error);
         } else if (task.completed) {
@@ -161,21 +152,19 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)deleteEverythingInBucket:(AWSS3Bucket*)bucket {
-    AWSS3 *s3 = [self getS3];
     AWSS3ListObjectsRequest *listObjectsRequest = [[AWSS3ListObjectsRequest alloc] init];
     listObjectsRequest.bucket = bucket.name;
-    return [[s3 listObjects:listObjectsRequest] continueWithBlock:^id(BFTask *task) {
+    return [[self.s3 listObjects:listObjectsRequest] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Error listing object in %@: %@", bucket.name, task.error);
         } else if (task.completed) {
-            
             AWSS3ListObjectsOutput *output = task.result;
+
             for (AWSS3Object *s3Object in output.contents) {
-                NSLog(@"did it!");
                 AWSS3DeleteObjectRequest *deleteRequest = [[AWSS3DeleteObjectRequest alloc] init];
                 deleteRequest.bucket = bucket.name;
                 deleteRequest.key = s3Object.key;
-                [[s3 deleteObject:deleteRequest] waitUntilFinished];
+                [[self.s3 deleteObject:deleteRequest] waitUntilFinished];
             }
             
             return [self fixBucketCredentials:bucket];
@@ -188,8 +177,31 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)fixBucketCredentials:(AWSS3Bucket*)bucket {
-    NSLog(@"fixing creds");
-    return nil;
+    // make it a website
+    AWSS3IndexDocument *indexDoc = [[AWSS3IndexDocument alloc] init];
+    indexDoc.suffix = @"index.html";
+    AWSS3WebsiteConfiguration *bucketConfig = [[AWSS3WebsiteConfiguration alloc] init];
+    bucketConfig.indexDocument= indexDoc;
+    AWSS3PutBucketWebsiteRequest *req = [[AWSS3PutBucketWebsiteRequest alloc] init];
+    req.bucket = bucket.name;
+    req.websiteConfiguration = bucketConfig;
+    return [[self.s3 putBucketWebsite:req] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            NSLog(@"Error making bucket %@ a website: %@", bucket.name, task.error);
+        } else if (task.completed) {
+            AWSS3PutBucketAclRequest *aclRequest = [[AWSS3PutBucketAclRequest alloc] init];
+            aclRequest.ACL = AWSS3ObjectCannedACLPublicRead;
+            aclRequest.bucket = bucket.name;
+            
+            return [[self.s3 putBucketAcl:aclRequest] continueWithBlock:^id(BFTask *task) {
+                return [self transferInitialAssetsToBucket:bucket];
+            }];
+        } else {
+            NSLog(@"Problem making bucket %@ a website", bucket.name);
+        }
+        
+        return nil;
+    }];
 }
 
 -(BFTask*)createBucketNamed:(NSString*)bucketName {
@@ -201,7 +213,7 @@ static WES3Manager *gSharedManager;
     //        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
     //
     //    }
-    NSLog(@"creating bucket everything");
+
     return nil;
 }
 
@@ -211,7 +223,7 @@ static WES3Manager *gSharedManager;
 }
 
 -(AWSS3*)getS3 {
-    if (!self.s3) {
+    if (!_s3) {
         // region info
         AWSCognitoCredentialsProvider *credentialsProvider = [AWSCognitoCredentialsProvider
                                                               credentialsWithRegionType:AWSRegionUSEast1
@@ -229,7 +241,7 @@ static WES3Manager *gSharedManager;
         self.s3 = [[AWSS3 alloc] initWithConfiguration:configuration];
     }
     
-    return self.s3;
+    return _s3;
 }
 
 @end
