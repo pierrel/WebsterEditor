@@ -178,7 +178,7 @@ static WES3Manager *gSharedManager;
                 [[s3 deleteObject:deleteRequest] waitUntilFinished];
             }
             
-            return [self transferInitialAssetsToBucket:bucket]; // maybe fix creds just in case?
+            return [self fixBucketCredentials:bucket];
         } else {
             NSLog(@"Problem listing objects in %@", bucket.name);
         }
