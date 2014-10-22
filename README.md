@@ -15,7 +15,7 @@
 
 ## Set up AWS
 
-You must have a Cognito identity pool (http://docs.aws.amazon.com/mobile/sdkforios/developerguide/cognito-auth.html, make sure to "Enable Access to Unauthenticated Identities") with IAM default roles. Once they're created make sure the add the following roles:
+You must have a Cognito identity pool (http://docs.aws.amazon.com/mobile/sdkforios/developerguide/cognito-auth.html, make sure to "Enable Access to Unauthenticated Identities") with IAM default roles. Once they're created make sure the add the following rules to the unathenticated role:
 
 For any access at all
 
@@ -24,7 +24,7 @@ For any access at all
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "Stmt1413944627000",
+      "Sid": "",
       "Effect": "Allow",
       "Action": [
         "sts:*"
