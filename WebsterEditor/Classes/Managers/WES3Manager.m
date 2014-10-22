@@ -61,7 +61,7 @@ static WES3Manager *gSharedManager;
 
 -(BFTask*)prepareBucketNamed:(NSString*)bucketName {
     return [[self listAndDeleteOrCreateBucketNamed:bucketName] continueWithBlock:^id(BFTask *task) {
-        NSLog(@"done list with the thing");
+        NSLog(@"Transfer all the stuff");
         return nil;
     }];
     
@@ -194,7 +194,15 @@ static WES3Manager *gSharedManager;
             aclRequest.bucket = bucket.name;
             
             return [[self.s3 putBucketAcl:aclRequest] continueWithBlock:^id(BFTask *task) {
-                return [self transferInitialAssetsToBucket:bucket];
+                if (task.error) {
+                    NSLog(@"Error setting public read ACL to bucket %@: %@", bucket.name, task.error);
+                } else if (task.completed) {
+                    return bucket;
+                } else {
+                    NSLog(@"Problect setting public read ACL to bucket %@", bucket.name);
+                }
+                
+                return nil;
             }];
         } else {
             NSLog(@"Problem making bucket %@ a website", bucket.name);
@@ -213,12 +221,7 @@ static WES3Manager *gSharedManager;
     //        if (createBucketResp.error != nil) NSLog(@"ERROR: %@", createBucketResp.error);
     //
     //    }
-
-    return nil;
-}
-
--(BFTask*)transferInitialAssetsToBucket:(AWSS3Bucket*)bucket {
-    NSLog(@"filling bucket!");
+    NSLog(@"named it");
     return nil;
 }
 
