@@ -128,6 +128,8 @@ static WES3Manager *gSharedManager;
 //    return [[BFTask alloc] init];
 }
 
+
+
 -(BFTask*)listAndDeleteOrCreateBucketNamed:(NSString*)bucketName {
     AWSRequest *req = [[AWSRequest alloc] init];
     // see if we have the bucket
@@ -155,8 +157,11 @@ static WES3Manager *gSharedManager;
     AWSS3ListObjectsRequest *listObjectsRequest = [[AWSS3ListObjectsRequest alloc] init];
     listObjectsRequest.bucket = bucket.name;
     return [[self.s3 listObjects:listObjectsRequest] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
+        if (task.error) { // actually bubble this error up
             NSLog(@"Error listing object in %@: %@", bucket.name, task.error);
+            NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Could not list objects in bucket", @"listBucket", nil];
+            NSError *error = [NSError errorWithDomain:@"com.webstereditor.aws" code:0 userInfo:errDict];
+            return error;
         } else if (task.completed) {
             AWSS3ListObjectsOutput *output = task.result;
 
