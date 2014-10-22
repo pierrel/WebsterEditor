@@ -67,32 +67,14 @@ static WES3Manager *gSharedManager;
                                                           unauthRoleArn:self.unauthRoleArn
                                                           authRoleArn:self.authRoleArn];
     
-    // Store and sync?
-//    AWSCognito *syncClient = [AWSCognito defaultCognito];
-//    AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:@"myDataset"];
-//    [dataset setString:@"myValue" forKey:@"myKey"];
-//    [dataset synchronize];
-    
-//    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1
-//                                                                          credentialsProvider:credentialsProvider];
-//    
-//    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;    // Initialize the S3 Client
-//    AWSServiceConfiguration *config  = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1
-//                                                                    credentialsProvider:creds];
-//    NSString *identityId = creds.identityId;
-//    NSLog(@"\n\nidentity is %@\n\n", identityId);
-//    
-//    AWSSTS *sts = [[AWSSTS alloc] initWithConfiguration:config];
-//    AWSSTSGetSessionTokenRequest *getToken = [[AWSSTSGetSessionTokenRequest alloc] init];
-//    BFTask *task = [sts getSessionToken:getToken];
-//    [task continueWithBlock:^id(BFTask *task) {
-//        return [self doTheContinueThing:task];
-//    }];
-    
+    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1
+                                                                          credentialsProvider:credentialsProvider];
+
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
     
     // do something with the id
-//    return [[AWSS3 alloc] initWithConfiguration:config];
-    return [[AWSS3 alloc] init];
+    AWSS3 *s3 = [[AWSS3 alloc] initWithConfiguration:configuration];
+    return s3;
 }
 
 -(id)doTheContinueThing:(BFTask*)task {

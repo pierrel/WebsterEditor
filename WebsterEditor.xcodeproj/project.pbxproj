@@ -93,6 +93,9 @@
 		A297EBFB1739F9E0004BBB24 /* WEPageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A297EBFA1739F9E0004BBB24 /* WEPageCollectionViewController.m */; };
 		A297EBFE1739FA67004BBB24 /* WEPageCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A297EBFD1739FA66004BBB24 /* WEPageCollectionViewLayout.m */; };
 		A297EC011739FC31004BBB24 /* WEPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A297EC001739FC31004BBB24 /* WEPageCell.m */; };
+		A29B102619F74EFD0042CC18 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29B102519F74EFD0042CC18 /* SystemConfiguration.framework */; };
+		A29B102819F74F1A0042CC18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A29B102719F74F1A0042CC18 /* libz.dylib */; };
+		A29B102A19F74F290042CC18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29B102919F74F290042CC18 /* MobileCoreServices.framework */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
 		A29CF1BC16EBD37400AB6D38 /* WEWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AF16EBD37400AB6D38 /* WEWebViewController.m */; };
 		A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1B316EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt */; };
@@ -254,6 +257,9 @@
 		A297EBFD1739FA66004BBB24 /* WEPageCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageCollectionViewLayout.m; sourceTree = "<group>"; };
 		A297EBFF1739FC31004BBB24 /* WEPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPageCell.h; sourceTree = "<group>"; };
 		A297EC001739FC31004BBB24 /* WEPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEPageCell.m; sourceTree = "<group>"; };
+		A29B102519F74EFD0042CC18 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A29B102719F74F1A0042CC18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A29B102919F74F290042CC18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		A29CF1AC16EBD37400AB6D38 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
 		A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
 		A29CF1AE16EBD37400AB6D38 /* WEWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEWebViewController.h; sourceTree = "<group>"; };
@@ -337,6 +343,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29B102A19F74F290042CC18 /* MobileCoreServices.framework in Frameworks */,
+				A29B102819F74F1A0042CC18 /* libz.dylib in Frameworks */,
+				A29B102619F74EFD0042CC18 /* SystemConfiguration.framework in Frameworks */,
 				A21B6A8E19DC49D200362BDE /* Security.framework in Frameworks */,
 				A20CB1C416B8F4CF00AF858B /* UIKit.framework in Frameworks */,
 				A203453C19F2E9A900DDA140 /* XMLDictionary.framework in Frameworks */,
@@ -375,6 +384,9 @@
 		A20CB1C216B8F4CF00AF858B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A29B102919F74F290042CC18 /* MobileCoreServices.framework */,
+				A29B102719F74F1A0042CC18 /* libz.dylib */,
+				A29B102519F74EFD0042CC18 /* SystemConfiguration.framework */,
 				A203453D19F2EC2F00DDA140 /* Bolts.framework */,
 				A203452D19F2E9A900DDA140 /* AWSiOSSDKv2.framework */,
 				A203452F19F2E9A900DDA140 /* GZIP.framework */,
@@ -1106,6 +1118,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				New_Setting = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1131,6 +1144,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				New_Setting = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
