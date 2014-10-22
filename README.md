@@ -13,6 +13,46 @@
 ## Prereq(s)
 * install lein (https://github.com/technomancy/leiningen)
 
+## Set up AWS
+
+You must have a Cognito identity pool (http://docs.aws.amazon.com/mobile/sdkforios/developerguide/cognito-auth.html, make sure to "Enable Access to Unauthenticated Identities") with IAM default roles. Once they're created make sure the add the following roles:
+
+For any access at all
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1413944627000",
+      "Effect": "Allow",
+      "Action": [
+        "sts:*"
+      ],
+      "Resource": [
+        "[Your unauthed identity arn, looks like "arn:aws:iam::some numbers:role/Cognito_ProjectNameUnauth_DefaultRole"]"
+      ]
+    }
+  ]
+}
+```
+
+And for full S3 access:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+You can do this from the Roles > Permissions > Role Policies section of the [IAM console](https://console.aws.amazon.com/iam/home).
 
 ## Quick start
 * `$ cd WebsterEditor/WebsterEditor`
