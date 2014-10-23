@@ -193,14 +193,14 @@ static WES3Manager *gSharedManager;
     req.bucket = bucket.name;
     req.websiteConfiguration = bucketConfig;
     
-    return [[self.s3 putBucketWebsite:req] continueWithSuccessBlock:^id(BFTask *task) {
+    return [[[self.s3 putBucketWebsite:req] continueWithSuccessBlock:^id(BFTask *task) {
         AWSS3PutBucketAclRequest *aclRequest = [[AWSS3PutBucketAclRequest alloc] init];
         aclRequest.ACL = AWSS3ObjectCannedACLPublicRead;
         aclRequest.bucket = bucket.name;
         
-        return [[self.s3 putBucketAcl:aclRequest] continueWithSuccessBlock:^id(BFTask *task) {
-            return bucket;
-        }];
+        return [self.s3 putBucketAcl:aclRequest];
+    }] continueWithSuccessBlock:^id(BFTask *task) {
+        return bucket;
     }];
 }
 
