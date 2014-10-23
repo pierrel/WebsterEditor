@@ -60,9 +60,17 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)prepareBucketNamed:(NSString*)bucketName {
-    return [[self listAndDeleteOrCreateBucketNamed:bucketName] continueWithBlock:^id(BFTask *task) {
-        NSLog(@"Transfer all the stuff");
-        return nil;
+    return [[self bucketExists:bucketName] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            NSLog(@"Problem checking if bucket %@ exists: %@", bucketName, task.error);
+            return nil;
+        }
+        
+        if (task.result) { // has a bucket
+            return [self deleteEverythingInBucket:task.result];
+        } else {
+            return [self createBucketNamed:bucketName];
+        }
     }];
     
 //    //html
@@ -128,11 +136,8 @@ static WES3Manager *gSharedManager;
 //    return [[BFTask alloc] init];
 }
 
-
-
--(BFTask*)listAndDeleteOrCreateBucketNamed:(NSString*)bucketName {
+-(BFTask*)bucketExists:(NSString*)bucketName {
     AWSRequest *req = [[AWSRequest alloc] init];
-    // see if we have the bucket
     return [[self.s3 listBuckets:req] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Error listing buckets: %@", task.error);
@@ -141,10 +146,11 @@ static WES3Manager *gSharedManager;
             
             for (AWSS3Bucket *bucket in output.buckets) {
                 if ([bucket.name isEqualToString:bucketName]) {
-                    return [self deleteEverythingInBucket:bucket];
+                    return bucket;
                 }
             }
-            return [self createBucketNamed:bucketName];
+            
+            return nil;
         } else {
             NSLog(@"Problem listing buckets");
         }
