@@ -60,21 +60,16 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)prepareBucketNamed:(NSString*)bucketName {
-    return [[[[self bucketExists:bucketName] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
-            NSLog(@"Problem checking if bucket %@ exists: %@", bucketName, task.error);
-            return nil;
-        }
-        
+    return [[[[self bucketExists:bucketName] continueWithSuccessBlock:^id(BFTask *task) {
         if (task.result) { // has a bucket
             // TODO: check region before deleting to see if we can access it
             return [self deleteEverythingInBucket:task.result];
         } else {
             return [self createBucketNamed:bucketName];
         }
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithSuccessBlock:^id(BFTask *task) {
         return [self fixBucketCredentials:task.result];
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithSuccessBlock:^id(BFTask *task) {
         // We not have a fresh bucket with correct creds
         return nil;
     }];
@@ -144,23 +139,15 @@ static WES3Manager *gSharedManager;
 
 -(BFTask*)bucketExists:(NSString*)bucketName {
     AWSRequest *req = [[AWSRequest alloc] init];
-    return [[self.s3 listBuckets:req] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
-            NSLog(@"Error listing buckets: %@", task.error);
-        } else if (task.completed) {
-            AWSS3ListBucketsOutput *output = task.result;
-            
-            for (AWSS3Bucket *bucket in output.buckets) {
-                if ([bucket.name isEqualToString:bucketName]) {
-                    return bucket;
-                }
-            }
-            
-            return nil;
-        } else {
-            NSLog(@"Problem listing buckets");
-        }
+    return [[self.s3 listBuckets:req] continueWithSuccessBlock:^id(BFTask *task) {
+        AWSS3ListBucketsOutput *output = task.result;
         
+        for (AWSS3Bucket *bucket in output.buckets) {
+            if ([bucket.name isEqualToString:bucketName]) {
+                return bucket;
+            }
+        }
+
         return nil;
     }];
 }
@@ -168,28 +155,17 @@ static WES3Manager *gSharedManager;
 -(BFTask*)deleteEverythingInBucket:(AWSS3Bucket*)bucket {
     AWSS3ListObjectsRequest *listObjectsRequest = [[AWSS3ListObjectsRequest alloc] init];
     listObjectsRequest.bucket = bucket.name;
-    return [[self.s3 listObjects:listObjectsRequest] continueWithBlock:^id(BFTask *task) {
-        if (task.error) { // actually bubble this error up
-            NSLog(@"Error listing object in %@: %@", bucket.name, task.error);
-            NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Could not list objects in bucket", @"listBucket", nil];
-            NSError *error = [NSError errorWithDomain:@"com.webstereditor.aws" code:0 userInfo:errDict];
-            return error;
-        } else if (task.completed) {
-            AWSS3ListObjectsOutput *output = task.result;
+    return [[self.s3 listObjects:listObjectsRequest] continueWithSuccessBlock:^id(BFTask *task) {
+        AWSS3ListObjectsOutput *output = task.result;
 
-            for (AWSS3Object *s3Object in output.contents) {
-                AWSS3DeleteObjectRequest *deleteRequest = [[AWSS3DeleteObjectRequest alloc] init];
-                deleteRequest.bucket = bucket.name;
-                deleteRequest.key = s3Object.key;
-                [[self.s3 deleteObject:deleteRequest] waitUntilFinished];
-            }
-            
-            return bucket;
-        } else {
-            NSLog(@"Problem listing objects in %@", bucket.name);
+        for (AWSS3Object *s3Object in output.contents) {
+            AWSS3DeleteObjectRequest *deleteRequest = [[AWSS3DeleteObjectRequest alloc] init];
+            deleteRequest.bucket = bucket.name;
+            deleteRequest.key = s3Object.key;
+            [[self.s3 deleteObject:deleteRequest] waitUntilFinished];
         }
         
-        return nil;
+        return bucket;
     }];
 }
 
@@ -198,20 +174,12 @@ static WES3Manager *gSharedManager;
     createRequest.ACL = AWSS3BucketCannedACLPublicRead;
     createRequest.bucket = bucketName;
     
-    return [[self.s3 createBucket:createRequest] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
-            NSLog(@"Problem creating bucket %@: %@", bucketName, task.error);
-        } else if (task.completed) {
-            AWSS3Bucket *bucket = [AWSS3Bucket new];
-            bucket.name = bucketName;
-            bucket.creationDate = [NSDate dateWithTimeIntervalSinceNow:0];
-            
-            return bucket;
-        } else {
-            NSLog(@"Problem creating bucket %@", bucketName);
-        }
+    return [[self.s3 createBucket:createRequest] continueWithSuccessBlock:^id(BFTask *task) {
+        AWSS3Bucket *bucket = [AWSS3Bucket new];
+        bucket.name = bucketName;
+        bucket.creationDate = [NSDate dateWithTimeIntervalSinceNow:0];
         
-        return nil;
+        return bucket;
     }];
 }
 
@@ -224,30 +192,15 @@ static WES3Manager *gSharedManager;
     AWSS3PutBucketWebsiteRequest *req = [[AWSS3PutBucketWebsiteRequest alloc] init];
     req.bucket = bucket.name;
     req.websiteConfiguration = bucketConfig;
-    return [[self.s3 putBucketWebsite:req] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
-            NSLog(@"Error making bucket %@ a website: %@", bucket.name, task.error);
-        } else if (task.completed) {
-            AWSS3PutBucketAclRequest *aclRequest = [[AWSS3PutBucketAclRequest alloc] init];
-            aclRequest.ACL = AWSS3ObjectCannedACLPublicRead;
-            aclRequest.bucket = bucket.name;
-            
-            return [[self.s3 putBucketAcl:aclRequest] continueWithBlock:^id(BFTask *task) {
-                if (task.error) {
-                    NSLog(@"Error setting public read ACL to bucket %@: %@", bucket.name, task.error);
-                } else if (task.completed) {
-                    return bucket;
-                } else {
-                    NSLog(@"Problect setting public read ACL to bucket %@", bucket.name);
-                }
-                
-                return nil;
-            }];
-        } else {
-            NSLog(@"Problem making bucket %@ a website", bucket.name);
-        }
+    
+    return [[self.s3 putBucketWebsite:req] continueWithSuccessBlock:^id(BFTask *task) {
+        AWSS3PutBucketAclRequest *aclRequest = [[AWSS3PutBucketAclRequest alloc] init];
+        aclRequest.ACL = AWSS3ObjectCannedACLPublicRead;
+        aclRequest.bucket = bucket.name;
         
-        return nil;
+        return [[self.s3 putBucketAcl:aclRequest] continueWithSuccessBlock:^id(BFTask *task) {
+            return bucket;
+        }];
     }];
 }
 

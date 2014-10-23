@@ -40,7 +40,7 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    NSString *bucketname = @"pierreshasdasdowthiasdngsinthisbucket3";
+    NSString *bucketname = @"pierreshasdasdowthiasdngsinthisbucket4";
     [[[WES3Manager sharedManager] prepareBucketNamed:bucketname] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Problem preparing bucket %@: %@", bucketname, task.error);
