@@ -60,17 +60,23 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)prepareBucketNamed:(NSString*)bucketName {
-    return [[self bucketExists:bucketName] continueWithBlock:^id(BFTask *task) {
+    return [[[[self bucketExists:bucketName] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Problem checking if bucket %@ exists: %@", bucketName, task.error);
             return nil;
         }
         
         if (task.result) { // has a bucket
+            // TODO: check region before deleting to see if we can access it
             return [self deleteEverythingInBucket:task.result];
         } else {
             return [self createBucketNamed:bucketName];
         }
+    }] continueWithBlock:^id(BFTask *task) {
+        return [self fixBucketCredentials:task.result];
+    }] continueWithBlock:^id(BFTask *task) {
+        // We not have a fresh bucket with correct creds
+        return nil;
     }];
     
 //    //html
@@ -178,9 +184,31 @@ static WES3Manager *gSharedManager;
                 [[self.s3 deleteObject:deleteRequest] waitUntilFinished];
             }
             
-            return [self fixBucketCredentials:bucket];
+            return bucket;
         } else {
             NSLog(@"Problem listing objects in %@", bucket.name);
+        }
+        
+        return nil;
+    }];
+}
+
+-(BFTask*)createBucketNamed:(NSString*)bucketName {
+    AWSS3CreateBucketRequest *createRequest = [AWSS3CreateBucketRequest new];
+    createRequest.ACL = AWSS3BucketCannedACLPublicRead;
+    createRequest.bucket = bucketName;
+    
+    return [[self.s3 createBucket:createRequest] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            NSLog(@"Problem creating bucket %@: %@", bucketName, task.error);
+        } else if (task.completed) {
+            AWSS3Bucket *bucket = [AWSS3Bucket new];
+            bucket.name = bucketName;
+            bucket.creationDate = [NSDate dateWithTimeIntervalSinceNow:0];
+            
+            return bucket;
+        } else {
+            NSLog(@"Problem creating bucket %@", bucketName);
         }
         
         return nil;
@@ -217,27 +245,6 @@ static WES3Manager *gSharedManager;
             }];
         } else {
             NSLog(@"Problem making bucket %@ a website", bucket.name);
-        }
-        
-        return nil;
-    }];
-}
-
--(BFTask*)createBucketNamed:(NSString*)bucketName {
-    AWSS3CreateBucketRequest *createRequest = [AWSS3CreateBucketRequest new];
-    createRequest.ACL = AWSS3BucketCannedACLPublicRead;
-    createRequest.bucket = bucketName;
-    
-    return [[self.s3 createBucket:createRequest] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
-            NSLog(@"Problem creating bucket %@: %@", bucketName, task.error);
-        } else if (task.completed) {
-            AWSS3Bucket *bucket = [AWSS3Bucket new];
-            bucket.name = bucketName;
-            bucket.creationDate = [NSDate dateWithTimeIntervalSinceNow:0];
-            return [self fixBucketCredentials:bucket];
-        } else {
-            NSLog(@"Problem creating bucket %@", bucketName);
         }
         
         return nil;
