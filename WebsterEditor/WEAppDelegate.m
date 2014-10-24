@@ -56,6 +56,23 @@
     return YES;
 }
 
+-(NSArray*)testPages {
+    return @[@"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/index_prod.html"];
+}
+
+-(NSArray*)testLibs {
+    return @[@"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/js/jquery-1.9.0.min.js",
+                @"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/js/bootstrap.min.js",
+                @"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/js/bootstrap-lightbox.js",
+                @"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/css/override.css",
+                @"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/css/bootstrap.min.css",
+             @"/Users/pierrelarochelle/Library/Developer/CoreSimulator/Devices/DD3D7A2D-E81E-4D49-864F-239202FC3AF7/data/Containers/Data/Application/EDFD7294-CBEA-47D4-A0DC-300F7091F554/Documents/projects/D1D97CA3-178D-44C5-8033-1DAF7389501D/css/bootstrap-responsive.min.css"];
+}
+
+-(NSArray*)testMedia {
+    return @[];
+}
+
 -(void)createDirectories {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *projects = [WEUtils pathInDocumentDirectory:@"/projects"];

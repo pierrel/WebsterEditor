@@ -15,5 +15,5 @@
 
 @interface WES3Manager : NSObject
 +(WES3Manager*)sharedManager;
--(BFTask*)prepareBucketNamed:(NSString*)bucketName;
+-(BFTask*)prepareBucketNamed:(NSString *)bucketName withProjectId:(NSString*)projectId withPages:(NSArray*)pages withLibs:(NSArray*)libs withMedia:(NSArray*)media;
 @end

@@ -192,37 +192,29 @@
 Export
  */
 -(void)exportProject {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Export disabled"
-                                                    message:@"Export has been disabled until I can figure out Amazon's new authentication scheme"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil, nil];
-    [alert show];
-    
-// TODO: put this functionality back in
-//    if ([self validateSettings]) {
-//        [self.exportButton setEnabled:NO];
-//        [exportActivity startAnimating];
-//        [goButton setHidden:YES];
-//        [self saveProjectWithCompletion:^(NSError *err) {
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
-//                                                     (unsigned long)NULL), ^(void) {
-//                [self doExportWorkWithCompletion:^(NSError *error) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        [self.exportButton setEnabled:YES];
-//                        [exportActivity stopAnimating];
-//                        if (error) {
-//                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Exporting Website" message:@"There was an error exporting your website. Please check that your AWS credentials are correct and that you're connected to an internet connection" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                            [alert show];
-//                            alert = nil;
-//                        } else {
-//                            [goButton setHidden:NO];
-//                        }
-//                    });
-//                }];
-//            });
-//        }];
-//    }
+    if ([self validateSettings]) {
+        [self.exportButton setEnabled:NO];
+        [exportActivity startAnimating];
+        [goButton setHidden:YES];
+        [self saveProjectWithCompletion:^(NSError *err) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+                                                     (unsigned long)NULL), ^(void) {
+                [self doExportWorkWithCompletion:^(NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.exportButton setEnabled:YES];
+                        [exportActivity stopAnimating];
+                        if (error) {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Exporting Website" message:@"There was an error exporting your website. Please check that your AWS credentials are correct and that you're connected to an internet connection" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                            [alert show];
+                            alert = nil;
+                        } else {
+                            [goButton setHidden:NO];
+                        }
+                    });
+                }];
+            });
+        }];
+    }
 }
 
 -(void)gotoExportURL {
@@ -231,11 +223,52 @@ Export
 }
 
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
-    WES3Manager *s3 = [WES3Manager sharedManager];
-    [[s3 prepareBucketNamed:@"CHANGEMEEEMFALKSNAS!!@#!@#!@#"] continueWithBlock:^id(BFTask *task) {
-        block(nil);
-        return nil;
-    }];
+//    WES3Manager *s3 = [WES3Manager sharedManager];
+//    [[s3 prepareBucketNamed:@"CHANGEMEEEMFALKSNAS!!@#!@#!@#"] continueWithBlock:^id(BFTask *task) {
+//        block(nil);
+//        return nil;
+//    }];
+    
+    // id
+    NSString *projectId = self.projectId;
+    
+    // pages
+    NSMutableArray *pagesArray = [NSMutableArray new];
+    for (NSString *pagePath in [self.pageCollectionController pages]) {
+        
+        [pagesArray addObject:fullPagePath];
+    }
+    
+    // media
+    NSMutableArray *mediaArray = [NSMutableArray new];
+    NSError *error;
+    NSString *pathPrefix = @"media";
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
+                                             withProjectId:self.projectId];
+    for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
+        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
+        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
+        [mediaArray addObject:fullPath];
+    }
+    
+    // libs
+    NSMutableArray *libsArray = [NSMutableArray new];
+    NSArray *filePaths = [NSArray arrayWithObjects:
+                          @"js/jquery-1.9.0.min.js",
+                          @"js/bootstrap.min.js",
+                          @"js/bootstrap-lightbox.js",
+                          @"css/override.css",
+                          @"css/bootstrap.min.css",
+                          @"css/bootstrap-responsive.min.css",
+                          nil];
+    for (NSString *filePath in filePaths) {
+        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
+        [libsArray addObject:fullPath];
+    }
+    
+    NSLog(@"yay got it!");
+    block(nil);
 }
 
 -(void)saveProjectWithCompletion:(void (^)(NSError*))block {
@@ -324,45 +357,10 @@ Export
     }
 }
 
--(BOOL)validateAWSKey {
-    NSString *key = self.awsKeyText.text;
-    if (!key || [key isEqualToString:@""]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad AWS key"
-                                                        message:@"AWS key cannot be blank"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        return NO;
-    } else {
-        return YES;
-    }
-}
-
--(BOOL)validateAWSSecret {
-    NSString *secret = self.awsSecretText.text;
-    if (!secret || [secret isEqualToString:@""]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bad AWS secret"
-                                                        message:@"AWS secret cannot be blank"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        return NO;
-    } else {
-        return YES;
-    }
-}
-
 -(BOOL)validateSettings {
-    if ([self validateAWSKey]) {
-        if ([self validateAWSSecret]) {
-            if ([self validateBucket]) {
-                return YES;
-            }
-        }
+    if ([self validateBucket]) {
+        return YES;
     }
-    
     return NO;
 }
 
