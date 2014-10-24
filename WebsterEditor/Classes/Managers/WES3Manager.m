@@ -70,7 +70,7 @@ static WES3Manager *gSharedManager;
     }] continueWithSuccessBlock:^id(BFTask *task) {
         return [self fixBucketCredentials:task.result];
     }] continueWithSuccessBlock:^id(BFTask *task) {
-        // We not have a fresh bucket with correct creds
+        // We now have a fresh bucket with correct creds
         return nil;
     }];
     
