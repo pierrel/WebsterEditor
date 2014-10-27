@@ -9,15 +9,26 @@
 import UIKit
 
 class WEProjectFileManager: NSObject {
-    var pageKeys: [String] = ["index.html"] // TODO: make it dynamic
     var projectId : String = ""
     
     var pagePathsAndKeys: Dictionary<String, String> {
         var pathsAndKeys = [String:String]()
-        
-        for pageKey : String in pageKeys {
-            let prodPagePath : String = pageKey.stringByReplacingOccurrencesOfString(".html", withString:"_prod.html")
-            pathsAndKeys[pageKey] = WEUtils.pathInDocumentDirectory(prodPagePath, withProjectId:projectId)
+        var maybeError:NSError?
+        let topPath = WEUtils.pathInDocumentDirectory("", withProjectId:projectId)
+        let fileManager = NSFileManager.defaultManager()
+
+        if let contents = fileManager.contentsOfDirectoryAtPath(topPath, error:&maybeError) {
+            for file in contents {
+                let fileString = file as NSString
+                if fileString.hasSuffix("_prod.html") {
+                    let pageKey = fileString.stringByReplacingOccurrencesOfString("_prod.html", withString:".html")
+                    let pagePath = WEUtils.pathInDocumentDirectory(fileString, withProjectId:projectId)
+                    
+                    pathsAndKeys[pageKey] = pagePath
+                }
+            }
+        } else if let error = maybeError {
+            NSLog("Could not list contents of /")
         }
         
         return pathsAndKeys
