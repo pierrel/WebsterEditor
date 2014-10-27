@@ -98,10 +98,20 @@ static WES3Manager *gSharedManager;
         NSURL *pageFileURL = [NSURL fileURLWithPath:pageFilePath];
         transfer.key = pageKey;
         transfer.body = pageFileURL;
+        transfer.contentType = [self contentTypeOf:pageKey];
         [tasks addObject:[transferManager upload:transfer]];
     }
     
     return [BFTask taskForCompletionOfAllTasks:tasks];
+}
+
+-(NSString*)contentTypeOf:(NSString*)fileKey {
+    NSString *ext = [fileKey pathExtension];
+    if ([ext isEqualToString:@"css"] || [ext isEqualToString:@"html"] || [ext isEqualToString:@"js"]) {
+        return [NSString stringWithFormat:@"text/%@", ext];
+    } else {
+        return @"binary/octet-stream";
+    }
 }
 
 -(BFTask*)bucketExists:(NSString*)bucketName {
