@@ -16,6 +16,7 @@
 #import "WEPageThumbGenerator.h"
 #import "WEPageTemplateManager.h"
 #import "WES3Manager.h"
+#import "WebsterEditor-Swift.h"
 
 #define DELETE_ALERT_CANCEL 0
 #define DELETE_ALERT_OK 1
@@ -223,28 +224,26 @@ Export
 }
 
 -(void)doExportWorkWithCompletion:(void (^)(NSError*))block {
-//    WES3Manager *s3 = [WES3Manager sharedManager];
-//    [[s3 prepareBucketNamed:@"CHANGEMEEEMFALKSNAS!!@#!@#!@#"] continueWithBlock:^id(BFTask *task) {
-//        block(nil);
-//        return nil;
-//    }];
-    
-    // TODO: Refactor all this stuff into a new class (ProjectFileManager)
-    
-    // pages
-    NSMutableDictionary *pagesArray = [NSMutableDictionary new];
-    for (NSString *pagePath in [self.pageCollectionController pages]) {
-            //html
-                NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
-                NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
-        [pagesArray setObject:fullPagePath forKey:pagePath];
-    }
-    
-    // media
-    
-    // libs
-    
-    NSLog(@"yay got it!");
+    WEProjectFileManager *projectFileManager = [[WEProjectFileManager alloc] init];
+    projectFileManager.projectId = self.projectId;
+    NSString *bucketName = self.bucketText.text;
+    WES3Manager *s3 = [WES3Manager sharedManager];
+    BFTask *task = [[s3 prepareBucketNamed:bucketName
+                             withPagesKeys:[projectFileManager pagePathsAndKeys]
+                              withLibsKeys:[projectFileManager libPathsAndKeys]
+                             withMediaKeys:[projectFileManager mediaPathsAndKeys]] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            NSLog(@"Problem preparing bucket %@: %@", bucketName, task.error);
+        } else if (task.completed) {
+            NSLog(@"successfully prepared bucket");
+        } else {
+            NSLog(@"Problem preparing bucket %@", bucketName);
+        }
+        
+        return nil;
+    }];
+     
+    [task waitUntilFinished];
     block(nil);
 }
 

@@ -92,6 +92,7 @@ static WES3Manager *gSharedManager;
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     AWSS3TransferManagerUploadRequest *transfer = [AWSS3TransferManagerUploadRequest new];
     transfer.bucket = bucketName;
+    transfer.ACL = AWSS3BucketCannedACLPublicRead;
     for (NSString *pageKey in [pages allKeys]) {
         NSString *pageFilePath = [pages objectForKey:pageKey];
         NSURL *pageFileURL = [NSURL fileURLWithPath:pageFilePath];
@@ -141,11 +142,7 @@ static WES3Manager *gSharedManager;
     createRequest.bucket = bucketName;
     
     return [[self.s3 createBucket:createRequest] continueWithSuccessBlock:^id(BFTask *task) {
-        AWSS3Bucket *bucket = [AWSS3Bucket new];
-        bucket.name = bucketName;
-        bucket.creationDate = [NSDate dateWithTimeIntervalSinceNow:0];
-        
-        return bucket;
+        return bucketName;
     }];
 }
 
