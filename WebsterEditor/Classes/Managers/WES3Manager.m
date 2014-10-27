@@ -61,10 +61,9 @@ static WES3Manager *gSharedManager;
 }
 
 -(BFTask*)prepareBucketNamed:(NSString *)bucketName
-               withProjectId:(NSString *)projectId
-                   withPages:(NSArray *)pages
-                    withLibs:(NSArray *)libs
-                   withMedia:(NSArray *)media {
+               withPagesKeys:(NSDictionary *)pages
+                withLibsKeys:(NSDictionary *)libs
+               withMediaKeys:(NSDictionary *)media {
     return [[[[self bucketExists:bucketName] continueWithSuccessBlock:^id(BFTask *task) {
         if (task.result) { // has a bucket
             // TODO: check region before deleting to see if we can access it
@@ -75,7 +74,11 @@ static WES3Manager *gSharedManager;
     }] continueWithSuccessBlock:^id(BFTask *task) {
         return [self fixBucketCredentials:task.result];
     }] continueWithSuccessBlock:^id(BFTask *task) {
-        return [self sendPages:pages withProjectId:projectId];
+        BFTask *pagesTask = [self sendPages:pages toBucket:bucketName];
+        BFTask *mediaTask = [self sendPages:media toBucket:bucketName];
+        BFTask *libsTask = [self sendPages:libs toBucket:bucketName];
+        
+        return [BFTask taskForCompletionOfAllTasks:@[pagesTask, mediaTask, libsTask]];
     }];
     
 //    // save the bucket url
@@ -84,84 +87,20 @@ static WES3Manager *gSharedManager;
 //    return [[BFTask alloc] init];
 }
 
--(BFTask*)sendPages:(NSArray*)pages toBucket:(AWSS3Bucket*)bucket withProjectId:(NSString*)projectId {
-    //    //html
-    //    for (NSString *pagePath in [self.pageCollectionController pages]) {
-    //        NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
-    //        NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
-    //        NSString *html = [NSString stringWithContentsOfFile:fullPagePath
-    //                                                   encoding:NSUTF8StringEncoding
-    //                                                      error:&error];
-    //        NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-    //        put = [[S3PutObjectRequest alloc] initWithKey:pagePath inBucket:bucket];
-    //        put.contentType = @"text/html";
-    //        put.data = htmlData;
-    //        put.cannedACL = acl;
-    //        S3PutObjectResponse *resp = [s3 putObject:put];
-    //        if (resp.error != nil) NSLog(@"Error writing html: %@", resp.error);
-    //    }
-
-    NSError *error;
+-(BFTask*)sendPages:(NSDictionary*)pages toBucket:(NSString*)bucketName {
+    NSMutableArray *tasks = [NSMutableArray new];
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     AWSS3TransferManagerUploadRequest *transfer = [AWSS3TransferManagerUploadRequest new];
-    transfer.bucket = bucket.name;
-    for (NSString *pagePath in pages) {
-        NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
-        NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:projectId];
-        NSURL *fileUrl = [NSURL fileURLWithPath:fullPagePath];
-        AWSS3TransferManager *transferManager = [AWSS3TransferManager new];
-        NSString *html = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-        NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-        AWSS3PutObjectRequest *put = [AWSS3PutObjectRequest new];
-//        put.bo
+    transfer.bucket = bucketName;
+    for (NSString *pageKey in [pages allKeys]) {
+        NSString *pageFilePath = [pages objectForKey:pageKey];
+        NSURL *pageFileURL = [NSURL fileURLWithPath:pageFilePath];
+        transfer.key = pageKey;
+        transfer.body = pageFileURL;
+        [tasks addObject:[transferManager upload:transfer]];
     }
-}
-
--(BFTask*)sendLibs:(NSArray*)libs withProjectId:(NSString*)projectId {
-    //    // js/css
-    //    NSArray *filePaths = [NSArray arrayWithObjects:
-    //                          @"js/jquery-1.9.0.min.js",
-    //                          @"js/bootstrap.min.js",
-    //                          @"js/bootstrap-lightbox.js",
-    //                          @"css/override.css",
-    //                          @"css/bootstrap.min.css",
-    //                          @"css/bootstrap-responsive.min.css",
-    //                          nil];
-    //    for (NSString *filePath in filePaths) {
-    //        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
-    //        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
-    //        NSLog(@"adding %@", filePath);
-    //        put = [[S3PutObjectRequest alloc] initWithKey:filePath inBucket:bucket];
-    //        if ([filePath hasSuffix:@".css"]) put.contentType = @"text/css";
-    //        else put.contentType = @"text/javascript";
-    //        put.data = fileData;
-    //        put.cannedACL = acl;
-    //        S3PutObjectResponse *resp = [s3 putObject:put];
-    //        if (resp.error != nil) NSLog(@"ERROR in JS or CSS: %@", resp.error);
-    //    }
-
-    return nil;
-}
-
--(BFTask*)sendMedia:(NSArray*)media withProjectId:(NSString*)projectId {
-    //    // media
-    //    NSString *pathPrefix = @"media";
-    //    NSFileManager *fileManager = [NSFileManager defaultManager];
-    //    NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
-    //                                             withProjectId:self.projectId];
-    //    for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
-    //        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
-    //        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
-    //        NSLog(@"file: %@", fullPath);
-    //        NSData *fileData = [NSData dataWithContentsOfFile:fullPath];
-    //        put = [[S3PutObjectRequest alloc] initWithKey:s3FileKey inBucket:bucket];
-    //        put.contentType = @"image/jpeg";
-    //        put.data = fileData;
-    //        put.cannedACL = acl;
-    //        S3PutObjectResponse *resp = [s3 putObject:put];
-    //        if (resp.error != nil) NSLog(@"ERROR: %@", resp.error);
-    //    }
-
-    return nil;
+    
+    return [BFTask taskForCompletionOfAllTasks:tasks];
 }
 
 -(BFTask*)bucketExists:(NSString*)bucketName {
@@ -171,7 +110,7 @@ static WES3Manager *gSharedManager;
         
         for (AWSS3Bucket *bucket in output.buckets) {
             if ([bucket.name isEqualToString:bucketName]) {
-                return bucket;
+                return bucketName;
             }
         }
 
@@ -179,20 +118,20 @@ static WES3Manager *gSharedManager;
     }];
 }
 
--(BFTask*)deleteEverythingInBucket:(AWSS3Bucket*)bucket {
+-(BFTask*)deleteEverythingInBucket:(NSString*)bucketName {
     AWSS3ListObjectsRequest *listObjectsRequest = [[AWSS3ListObjectsRequest alloc] init];
-    listObjectsRequest.bucket = bucket.name;
+    listObjectsRequest.bucket = bucketName;
     return [[self.s3 listObjects:listObjectsRequest] continueWithSuccessBlock:^id(BFTask *task) {
         AWSS3ListObjectsOutput *output = task.result;
 
         for (AWSS3Object *s3Object in output.contents) {
             AWSS3DeleteObjectRequest *deleteRequest = [[AWSS3DeleteObjectRequest alloc] init];
-            deleteRequest.bucket = bucket.name;
+            deleteRequest.bucket = bucketName;
             deleteRequest.key = s3Object.key;
             [[self.s3 deleteObject:deleteRequest] waitUntilFinished];
         }
         
-        return bucket;
+        return bucketName;
     }];
 }
 
@@ -210,24 +149,24 @@ static WES3Manager *gSharedManager;
     }];
 }
 
--(BFTask*)fixBucketCredentials:(AWSS3Bucket*)bucket {
+-(BFTask*)fixBucketCredentials:(NSString*)bucketName {
     // make it a website
     AWSS3IndexDocument *indexDoc = [[AWSS3IndexDocument alloc] init];
     indexDoc.suffix = @"index.html";
     AWSS3WebsiteConfiguration *bucketConfig = [[AWSS3WebsiteConfiguration alloc] init];
     bucketConfig.indexDocument= indexDoc;
     AWSS3PutBucketWebsiteRequest *req = [[AWSS3PutBucketWebsiteRequest alloc] init];
-    req.bucket = bucket.name;
+    req.bucket = bucketName;
     req.websiteConfiguration = bucketConfig;
     
     return [[[self.s3 putBucketWebsite:req] continueWithSuccessBlock:^id(BFTask *task) {
         AWSS3PutBucketAclRequest *aclRequest = [[AWSS3PutBucketAclRequest alloc] init];
         aclRequest.ACL = AWSS3ObjectCannedACLPublicRead;
-        aclRequest.bucket = bucket.name;
+        aclRequest.bucket = bucketName;
         
         return [self.s3 putBucketAcl:aclRequest];
     }] continueWithSuccessBlock:^id(BFTask *task) {
-        return bucket;
+        return bucketName;
     }];
 }
 

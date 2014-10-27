@@ -69,7 +69,7 @@
                       height);
 }
 
-+ (NSString*) pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString *)projectId {
++ (NSString*)pathInDocumentDirectory:(NSString *)filename withProjectId:(NSString *)projectId {
     NSString *projectsPath = [WEUtils pathInDocumentDirectory:@"projects"];
     NSString *projectPath = [projectsPath stringByAppendingPathComponent:projectId];
     if (!filename) {

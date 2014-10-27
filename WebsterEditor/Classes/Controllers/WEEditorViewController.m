@@ -229,43 +229,20 @@ Export
 //        return nil;
 //    }];
     
-    // id
-    NSString *projectId = self.projectId;
+    // TODO: Refactor all this stuff into a new class (ProjectFileManager)
     
     // pages
-    NSMutableArray *pagesArray = [NSMutableArray new];
+    NSMutableDictionary *pagesArray = [NSMutableDictionary new];
     for (NSString *pagePath in [self.pageCollectionController pages]) {
-        
-        [pagesArray addObject:fullPagePath];
+            //html
+                NSString *prodPage = [pagePath stringByReplacingOccurrencesOfString:@".html" withString:@"_prod.html"];
+                NSString *fullPagePath = [WEUtils pathInDocumentDirectory:prodPage withProjectId:self.projectId];
+        [pagesArray setObject:fullPagePath forKey:pagePath];
     }
     
     // media
-    NSMutableArray *mediaArray = [NSMutableArray new];
-    NSError *error;
-    NSString *pathPrefix = @"media";
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *mediaPath = [WEUtils pathInDocumentDirectory:pathPrefix
-                                             withProjectId:self.projectId];
-    for (NSString *file in [fileManager contentsOfDirectoryAtPath:mediaPath error:&error]) {
-        NSString *s3FileKey = [NSString stringWithFormat:@"%@/%@", pathPrefix, file];
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:s3FileKey withProjectId:self.projectId];
-        [mediaArray addObject:fullPath];
-    }
     
     // libs
-    NSMutableArray *libsArray = [NSMutableArray new];
-    NSArray *filePaths = [NSArray arrayWithObjects:
-                          @"js/jquery-1.9.0.min.js",
-                          @"js/bootstrap.min.js",
-                          @"js/bootstrap-lightbox.js",
-                          @"css/override.css",
-                          @"css/bootstrap.min.css",
-                          @"css/bootstrap-responsive.min.css",
-                          nil];
-    for (NSString *filePath in filePaths) {
-        NSString *fullPath = [WEUtils pathInDocumentDirectory:filePath withProjectId:self.projectId];
-        [libsArray addObject:fullPath];
-    }
     
     NSLog(@"yay got it!");
     block(nil);

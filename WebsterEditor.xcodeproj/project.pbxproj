@@ -96,6 +96,7 @@
 		A29B102619F74EFD0042CC18 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29B102519F74EFD0042CC18 /* SystemConfiguration.framework */; };
 		A29B102819F74F1A0042CC18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A29B102719F74F1A0042CC18 /* libz.dylib */; };
 		A29B102A19F74F290042CC18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29B102919F74F290042CC18 /* MobileCoreServices.framework */; };
+		A29BFB7419FDB497000F54D6 /* WEProjectFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BFB7319FDB497000F54D6 /* WEProjectFileManager.swift */; };
 		A29CF1BB16EBD37400AB6D38 /* WEDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */; };
 		A29CF1BC16EBD37400AB6D38 /* WEWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29CF1AF16EBD37400AB6D38 /* WEWebViewController.m */; };
 		A29CF1BD16EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = A29CF1B316EBD37400AB6D38 /* WebViewJavascriptBridge.js.txt */; };
@@ -260,6 +261,8 @@
 		A29B102519F74EFD0042CC18 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A29B102719F74F1A0042CC18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A29B102919F74F290042CC18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		A29BFB7219FDB497000F54D6 /* WebsterEditor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WebsterEditor-Bridging-Header.h"; sourceTree = "<group>"; };
+		A29BFB7319FDB497000F54D6 /* WEProjectFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WEProjectFileManager.swift; sourceTree = "<group>"; };
 		A29CF1AC16EBD37400AB6D38 /* WEDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEDialogViewController.h; sourceTree = "<group>"; };
 		A29CF1AD16EBD37400AB6D38 /* WEDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEDialogViewController.m; sourceTree = "<group>"; };
 		A29CF1AE16EBD37400AB6D38 /* WEWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEWebViewController.h; sourceTree = "<group>"; };
@@ -612,6 +615,8 @@
 				A25CF0C7181EB5980095A22A /* WEPageTemplateManager.m */,
 				A24296A819DD9EC700168FC4 /* WES3Manager.h */,
 				A24296A619DD9E6100168FC4 /* WES3Manager.m */,
+				A29BFB7319FDB497000F54D6 /* WEProjectFileManager.swift */,
+				A29BFB7219FDB497000F54D6 /* WebsterEditor-Bridging-Header.h */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -980,6 +985,7 @@
 				A29CF1BF16EBD37400AB6D38 /* WEPageManager.m in Sources */,
 				A29CF1C016EBD37400AB6D38 /* WEColumnResizeView.m in Sources */,
 				A29589E616F0280600BEDBC6 /* WEViewController+ImagePicker.m in Sources */,
+				A29BFB7419FDB497000F54D6 /* WEProjectFileManager.swift in Sources */,
 				A29589E916F0287700BEDBC6 /* WEUtils.m in Sources */,
 				A2F0540416F975B3008061EE /* WEImagePopoverViewController.m in Sources */,
 				A29459F116FACC19004AA401 /* GradientButton.m in Sources */,
@@ -1102,6 +1108,7 @@
 		A20CB1E716B8F4CF00AF858B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1113,6 +1120,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WebsterEditor/WebsterEditor-Prefix.pch";
 				INFOPLIST_FILE = "WebsterEditor/WebsterEditor-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
@@ -1121,6 +1129,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "WebsterEditor/Classes/Managers/WebsterEditor-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1128,6 +1138,7 @@
 		A20CB1E816B8F4CF00AF858B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1139,6 +1150,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WebsterEditor/WebsterEditor-Prefix.pch";
 				INFOPLIST_FILE = "WebsterEditor/WebsterEditor-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
@@ -1147,6 +1159,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "WebsterEditor/Classes/Managers/WebsterEditor-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

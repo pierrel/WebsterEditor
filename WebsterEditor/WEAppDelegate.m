@@ -11,6 +11,7 @@
 #import "UIColor+Expanded.h"
 #import "WEProjectCollectionViewLayout.h"
 #import "WES3Manager.h"
+#import "WebsterEditor-Swift.h"
 
 @interface WEAppDelegate ()
 -(void)createDirectories;
@@ -41,7 +42,12 @@
     [self.window makeKeyAndVisible];
     
     NSString *bucketname = @"pierreshasdasdowthiasdngsinthisbucket5";
-    [[[WES3Manager sharedManager] prepareBucketNamed:bucketname] continueWithBlock:^id(BFTask *task) {
+    WEProjectFileManager *projectFileManager = [[WEProjectFileManager alloc] init];
+    projectFileManager.projectId = @"B7DDE728-CFE9-4A4D-9EA5-47964D0C4576";
+    [[[WES3Manager sharedManager] prepareBucketNamed:bucketname
+                                       withPagesKeys:[projectFileManager pagePathsAndKeys]
+                                        withLibsKeys:[projectFileManager libPathsAndKeys]
+                                       withMediaKeys:[projectFileManager mediaPathsAndKeys]] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Problem preparing bucket %@: %@", bucketname, task.error);
         } else if (task.completed) {
