@@ -236,6 +236,7 @@ Export
             NSLog(@"Problem preparing bucket %@: %@", bucketName, task.error);
         } else if (task.completed) {
             NSLog(@"successfully prepared bucket");
+            self.settings.lastExportURL = task.result;
         } else {
             NSLog(@"Problem preparing bucket %@", bucketName);
         }

@@ -64,7 +64,7 @@ static WES3Manager *gSharedManager;
                withPagesKeys:(NSDictionary *)pages
                 withLibsKeys:(NSDictionary *)libs
                withMediaKeys:(NSDictionary *)media {
-    return [[[[self bucketExists:bucketName] continueWithSuccessBlock:^id(BFTask *task) {
+    return [[[[[self bucketExists:bucketName] continueWithSuccessBlock:^id(BFTask *task) {
         if (task.result) { // has a bucket
             // TODO: check region before deleting to see if we can access it
             return [self deleteEverythingInBucket:task.result];
@@ -79,12 +79,9 @@ static WES3Manager *gSharedManager;
         BFTask *libsTask = [self sendPages:libs toBucket:bucketName];
         
         return [BFTask taskForCompletionOfAllTasks:@[pagesTask, mediaTask, libsTask]];
+    }] continueWithSuccessBlock:^id(BFTask *task) {
+        return [NSString stringWithFormat:@"http://%@.s3-website-us-east-1.amazonaws.com", bucketName];
     }];
-    
-//    // save the bucket url
-//    self.settings.lastExportURL = [NSString stringWithFormat:@"http://%@.%@", bucket, webSuffix];
-//    
-//    return [[BFTask alloc] init];
 }
 
 -(BFTask*)sendPages:(NSDictionary*)pages toBucket:(NSString*)bucketName {
